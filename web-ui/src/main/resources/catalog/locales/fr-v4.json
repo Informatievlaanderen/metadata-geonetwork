@@ -31,7 +31,6 @@
   "language.id": "Identifiant",
   "language.remove": "Supprimer la langue",
   "layerName": "Couche",
-  "layerNameTooltip": "A layer name from the GetCapabilities document",
   "ogcServiceUrl": "URL du service",
   "translation.addFor": "Ajouter une nouvelle traduction pour",
   "translation.add": "Créer",
@@ -419,8 +418,5 @@
   "associationType": "Type d'association",
   "initiativeType": "Type d'initiative",
   "associatedTo": "Ressources associées",
-  "overviewDescription": "Overview description",
-  "overviewUrl": "Overview URL",
-  "restApiUrl": "REST API URL",
   "filterHelp": "Veuillez cliquer sur l'un des boutons ci-dessous pour activer le filtre"
 }

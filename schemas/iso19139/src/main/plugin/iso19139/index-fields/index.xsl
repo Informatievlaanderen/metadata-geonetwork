@@ -343,12 +343,12 @@
               <xsl:otherwise>
                 <indexingErrorMsg type="object">
                   {
-                  "string": "indexingErrorMsg-invalidDateFormat",
-                  "type": "warning",
-                  "values": {
-                  "dateType": "<xsl:value-of select="util:escapeForJson($dateType)"/>",
-                  "date": "<xsl:value-of select="util:escapeForJson($date)"/>"
-                  }
+                    "string": "indexingErrorMsg-invalidDateFormat",
+                    "type": "warning",
+                    "values": {
+                      "dateType": "<xsl:value-of select="util:escapeForJson($dateType)"/>",
+                      "date": "<xsl:value-of select="util:escapeForJson($date)"/>"
+                    }
                   }
                 </indexingErrorMsg>
               </xsl:otherwise>
@@ -598,23 +598,23 @@
                       in current catalogue, checked the keyword exists in the thesaurus.
                       If not, report an error in indexingErrorMsg field.
 
-                      This case may trigger editor warning message when a keyword is not
-                       found in the thesaurus. Try to anticipate this and advertise those
-                       records in the admin. -->
-                      <xsl:if test="$thesaurusId != '' and $keywordUri = ''">
-                        <errors>
-                          <indexingErrorMsg type="object">
-                            {
+                    This case may trigger editor warning message when a keyword is not
+                     found in the thesaurus. Try to anticipate this and advertise those
+                     records in the admin. -->
+                    <xsl:if test="$thesaurusId != '' and $keywordUri = ''">
+                      <errors>
+                        <indexingErrorMsg type="object">
+                          {
                             "string": "indexingErrorMsg-keywordNotFoundInThesaurus",
                             "type": "warning",
                             "values": {
-                            "keyword": "<xsl:value-of select="util:escapeForJson((*/text())[1])"/>",
-                            "thesaurus": "<xsl:value-of select="util:escapeForJson($thesaurusId)"/>"
+                              "keyword": "<xsl:value-of select="util:escapeForJson((*/text())[1])"/>",
+                              "thesaurus": "<xsl:value-of select="util:escapeForJson($thesaurusId)"/>"
                             }
-                            }
-                          </indexingErrorMsg>
-                        </errors>
-                      </xsl:if>
+                          }
+                        </indexingErrorMsg>
+                      </errors>
+                    </xsl:if>
 
                       <tree>
                         <defaults>
@@ -883,9 +883,9 @@
               <xsl:otherwise>
                 <indexingErrorMsg type="object">
                   {
-                  "string": "indexingErrorMsg-invalidBounds",
-                  "type": "warning",
-                  "values": { }
+                    "string": "indexingErrorMsg-invalidBounds",
+                    "type": "warning",
+                    "values": { }
                   }
                 </indexingErrorMsg>
               </xsl:otherwise>
@@ -896,12 +896,12 @@
                           and $start &gt; $end">
               <indexingErrorMsg type="object">
                 {
-                "string": "indexingErrorMsg-temporalRangeLowerGreaterThanUpper",
-                "type": "warning",
-                "values": {
-                "lowerBound": "<xsl:value-of select="util:escapeForJson($start)"/>",
-                "upperBound": "<xsl:value-of select="util:escapeForJson($end)"/>"
-                }
+                  "string": "indexingErrorMsg-temporalRangeLowerGreaterThanUpper",
+                  "type": "warning",
+                  "values": {
+                    "lowerBound": "<xsl:value-of select="util:escapeForJson($start)"/>",
+                    "upperBound": "<xsl:value-of select="util:escapeForJson($end)"/>"
+                  }
                 }
               </indexingErrorMsg>
             </xsl:if>
@@ -1278,7 +1278,9 @@
                                               else if (starts-with(gmd:protocol/gco:CharacterString, 'WWW:DOWNLOAD:'))
                                               then util:escapeForJson(replace(gmd:protocol/gco:CharacterString, 'WWW:DOWNLOAD:', ''))
                                               else ''"/>",
-            "urlObject":{"default": "<xsl:value-of select="util:escapeForJson(gmd:linkage/gmd:URL)"/>"},
+            "urlObject":{
+              "default": "<xsl:value-of select="util:escapeForJson(gmd:linkage/gmd:URL)"/>",
+              "lang<xsl:value-of select="$mainLanguage"/>": "<xsl:value-of select="util:escapeForJson(gmd:linkage/gmd:URL)"/>"},
             <xsl:if test="normalize-space(gmd:name) != ''">
               "nameObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
                                 'name', gmd:name, $allLanguages, true())"/>,
@@ -1418,17 +1420,6 @@
           <xsl:element name="{concat('agg_associated_', $associationType)}"><xsl:value-of select="$code"/></xsl:element>
         </xsl:if>
       </xsl:for-each>
-
-
-      <xsl:variable name="indexingTimeRecordLink"
-                    select="util:getSettingValue('system/index/indexingTimeRecordLink')" />
-      <xsl:if test="$indexingTimeRecordLink = 'true'">
-        <xsl:variable name="recordsLinks"
-                      select="util:getTargetAssociatedResourcesAsNode(
-                                        $identifier,
-                                        gmd:parentIdentifier/*[text() != '']/text())"/>
-        <xsl:copy-of select="$recordsLinks//recordLink"/>
-      </xsl:if>
 
       <!-- Index more fields in this element -->
       <xsl:apply-templates mode="index-extra-fields" select=".">
