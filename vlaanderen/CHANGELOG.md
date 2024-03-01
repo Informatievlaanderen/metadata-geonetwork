@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. These chang
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.1.17-SNAPSHOT]
+
 ## [8.1.16] - 2024-03-01
 - Bugfix for service accounts, reviewers are now also assigned editor role - [pr](https://agiv.visualstudio.com/Metadata/_git/0a154993-bcec-4021-98e4-034a6161db36/pullrequest/33201)
 - Bugfix for CSW properties update request: fix gmd:dateStamps/gco:Date parsed as DateTime - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33223)
