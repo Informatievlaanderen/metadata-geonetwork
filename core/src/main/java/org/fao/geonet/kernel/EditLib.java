@@ -936,14 +936,21 @@ public class EditLib {
         // Initialize the Xpath with all schema namespaces
         Map<String, String> mapNs = metadataSchema.getSchemaNSWithPrefix();
 
+        // VL: override the gml namespace
+        // issue: partial CSW update doesn't work if it concerns a GML element (gml / gml320 discussion)
+        if(mapNs.containsKey("gml")) {
+            mapNs.put("gml", "http://www.opengis.net/gml");
+        }
 
         try {
             JDOMXPath xpath = new JDOMXPath(xpathProperty);
             xpath.setNamespaceContext(new SimpleNamespaceContext(mapNs));
             // Select the node to update and check it exists
             if (allNodes) {
+//                return SelectResult.of((List<Object>)Xml.selectNodes(metadataRecord, xpathProperty)); // TODO works, but ignores namespaces?
                 return SelectResult.of(xpath.selectNodes(metadataRecord));
             } else {
+//                return SelectResult.of(Xml.selectElement(metadataRecord, xpathProperty)); // TODO should we use this as well?
                 return SelectResult.of(xpath.selectSingleNode(metadataRecord));
             }
         } catch (JaxenException e) {
