@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Improvement in record view - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33256) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7811)
 
 
+## [8.1.17-SNAPSHOT]
+
 ## [8.1.16] - 2024-03-01
 
 - Bugfix for service accounts, reviewers are now also assigned editor role - [pr](https://agiv.visualstudio.com/Metadata/_git/0a154993-bcec-4021-98e4-034a6161db36/pullrequest/33201)
