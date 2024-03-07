@@ -29,8 +29,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jeeves.server.context.ServiceContext;
 import org.apache.commons.lang.NotImplementedException;
 import org.fao.geonet.ApplicationContextHolder;
+import org.fao.geonet.api.API;
 import org.fao.geonet.api.ApiUtils;
 import org.fao.geonet.kernel.search.EsSearchManager;
+import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.springframework.context.ApplicationContext;
@@ -81,6 +83,14 @@ public class SearchApi {
         @RequestParam
             Map<String, String> allRequestParams
     ) throws Exception {
+        // pre-empt the "not implemented in ES error" so we don't pollute logs with stacktraces.
+        if(true) {
+            String message = "Not implemented in Elasticsearch (getFieldInfo).";
+            Log.error(API.LOG_MODULE_NAME, message);
+            response.sendError(org.apache.commons.httpclient.HttpStatus.SC_NOT_IMPLEMENTED, message);
+            return;
+        }
+
         boolean isRdf = APPLICATION_RDF_XML.equals(accept);
         boolean isXml = MediaType.APPLICATION_XML_VALUE.equals(accept);
         boolean isJson = MediaType.APPLICATION_JSON_VALUE.equals(accept);
