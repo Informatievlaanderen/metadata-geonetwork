@@ -3,11 +3,17 @@ All notable changes to this project will be documented in this file. These chang
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.1.17-SNAPSHOT]
+
+### core-geonetwork
+- Improvement in record view - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33256) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7811)
+
 
 ## [8.1.16-SNAPSHOT]
 - Bugfix for service accounts, reviewers are now also assigned editor role - [pr](https://agiv.visualstudio.com/Metadata/_git/0a154993-bcec-4021-98e4-034a6161db36/pullrequest/33201)
 - Bugfix for CSW properties update request: fix gmd:dateStamps/gco:Date parsed as DateTime - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33223)
 - Enforce `gco:Date` for creation, publication, modification dates - [pr](agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33243)
+
 
 ## [R8] - 2024-02-26
 
@@ -35,8 +41,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Create `modelLicentieObject` index field to limit number of licenses in facet - [pr](agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/32980)
 - Added `inspire` portal - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33102)
 
-### Core 
+### core-geonetwork
 - Fix srv:operatesOn indexing when dataset uuid is not last argument of URL - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/32979) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7803)
+ 
 
 ## [8.1.14] - 2024-02-21
 
@@ -45,6 +52,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Ensure correct ISO-19139 namespaces and GML version is enforced when editing a record - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/32717)
 - Fix "Domain" facet to include missing "Vlaamse Open data Service" - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/32717)
 - Fix accessRight facet for DCAT records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/32717)
+
 
 ## [8.1.13] 2024-02-12
 
@@ -181,7 +189,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - Fix cookies path when deployed on root "/" context
   - Security / Jolokia update
 - Added capability to validate after harvesting - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/27953) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7370)
- 
 
 
 ## [8.1.6] - 2023-11-17
@@ -245,7 +252,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [8.1.2] - 2023-10-16
 - Ordering workflow statuses in logical way - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/27923)
 - Publishing draft now sets group owner correctly - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/28255)
- 
 
 
 ## [8.1.1] - 2023-09-29

@@ -83,7 +83,7 @@
   "---below-to-be-transifexed---": "all labels are pending to be either incorporated into the core or to be deleted at some point",
   "approvedRecord": "Goedgekeurd record",
   "measureDate": "Datum",
-  "COMPUTE_VALIDATION_AFTER_HARVEST": "Valideer records na harvest",
+  "cl_couplingType": "Type koppeling",
   "---end-of-file---": ""
 
 

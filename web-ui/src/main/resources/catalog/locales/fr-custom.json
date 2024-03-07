@@ -82,5 +82,6 @@
   "---below-to-be-transifexed---": "all labels are pending to be either incorporated into the core or to be deleted at some point",
   "approvedRecord": "Record approuvé",
   "measureDate": "date",
+  "cl_couplingType": "Type d'accouplement",
   "---end-of-file---": ""
 }
