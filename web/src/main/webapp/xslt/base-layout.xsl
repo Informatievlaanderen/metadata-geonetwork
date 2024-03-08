@@ -37,6 +37,7 @@
   <xsl:include href="common/base-variables.xsl"/>
   <xsl:include href="base-layout-cssjs-loader.xsl"/>
   <xsl:include href="skin/default/skin.xsl"/>
+  <xsl:include href="base-layout-vl-loader.xsl"/>
 
   <xsl:template match="/">
     <html ng-app="{$angularModule}" lang="{$lang2chars}" id="ng-app">
@@ -77,7 +78,6 @@
         <meta name="description" content="{$htmlHeadDescription}"/>
         <meta name="keywords" content=""/>
 
-
         <link rel="icon" sizes="16x16 32x32 48x48" type="image/png"
               href="../../images/logos/favicon.png"/>
         <xsl:if test="$env/system/microservicesEnabled = 'true'">
@@ -90,6 +90,9 @@
 
 
         <xsl:call-template name="css-load"/>
+
+        <!-- load the VL-specific js libraries -->
+        <xsl:call-template name="define-libraries"/>
       </head>
 
 
@@ -98,6 +101,9 @@
       and a facet search to get main site information.
       -->
       <body data-ng-controller="GnCatController" data-ng-class="[isHeaderFixed ? 'gn-header-fixed' : 'gn-header-relative', isLogoInHeader ? 'gn-logo-in-header' : 'gn-logo-in-navbar', isFooterEnabled ? 'gn-show-footer' : 'gn-hide-footer']">
+
+        <!-- load the vl header -->
+        <xsl:call-template name="load-header"/>
 
         <div data-gn-alert-manager=""></div>
 
@@ -130,6 +136,9 @@
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
+
+        <!-- load the vl footer -->
+        <xsl:call-template name="load-footer"/>
       </body>
     </html>
   </xsl:template>
