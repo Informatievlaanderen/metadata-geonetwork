@@ -546,11 +546,11 @@
     "addLayerPrefix": "Ajouter une couche",
     "addLayerPostfix": "à la carte",
     "submit": "Soumettre",
-    "indexingErrorMsg-invalidBounds": "Warning / Field resourceTemporalDateRange / Lower and upper bounds empty or not valid dates. Date range not indexed.",
-    "indexingErrorMsg-invalidDateFormat": "Warning / Date {{dateType}} with value '{{date}}' was not a valid date format.",
-    "indexingErrorMsg-keywordNotFoundInThesaurus": "Warning / Keyword {{keyword}} not found in {{thesaurus}}.",
-    "indexingErrorMsg-temporalDateRangeLowerGreaterThanUpper": "Warning / Field resourceTemporalDateRange / Lower range bound {{lowerBound}} can not be greater than upper bound {{upperBound}}. Date range not indexed.",
-    "indexingErrorMsg-temporalRangeLowerGreaterThanUpper": "Warning / Field resourceTemporalDateRange / Lower range bound {{lowerBound}} can not be greater than upper bound {{upperBound}}.",
-    "indexingErrorMsg-schemaNotRegistered": "Record {{record}} / Schema '{{schema}}' is not registered in this catalog. Install it or remove those records. Record is indexed indexing error flag.",
-    "indexingErrorMsg-indexingStyleSheetError": "Indexing stylesheet contains errors: {{message}} \n  Marking the metadata as _indexingError=1 in index."
+    "indexingErrorMsg-invalidBounds": "Attention / Champ ressourceTemporalDateRange / Limites inférieure et supérieure vides ou dates non valides. Plage de dates non indexée.",
+    "indexingErrorMsg-invalidDateFormat": "Avertissement / La date {{dateType}} avec la valeur '{{date}}' n'était pas un format de date valide.",
+    "indexingErrorMsg-keywordNotFoundInThesaurus": "Avertissement / Mot-clé {{keyword}} introuvable dans {{thesaurus}}.",
+    "indexingErrorMsg-temporalDateRangeLowerGreaterThanUpper": "Avertissement / Champ ressourceTemporalDateRange / La limite inférieure de la plage {{lowerBound}} ne peut pas être supérieure à la limite supérieure {{upperBound}}. Plage de dates non indexée.",
+    "indexingErrorMsg-temporalRangeLowerGreaterThanUpper": "Avertissement / Champ ressourceTemporalDateRange / La limite inférieure de la plage {{lowerBound}} ne peut pas être supérieure à la limite supérieure {{upperBound}}.",
+    "indexingErrorMsg-schemaNotRegistered": "L'enregistrement {{record}} / Le schéma '{{schema}}' n'est pas supporté par catalogue. Installez-le ou supprimez ces enregistrements.",
+    "indexingErrorMsg-indexingStyleSheetError": "La feuille de style d'indexation contient des erreurs : {{message}}\nLes métadonnées sont marquées avec indexingError=1 dans l'index."
 }
