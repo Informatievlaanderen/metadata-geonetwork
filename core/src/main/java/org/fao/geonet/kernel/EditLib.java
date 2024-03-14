@@ -947,10 +947,8 @@ public class EditLib {
             xpath.setNamespaceContext(new SimpleNamespaceContext(mapNs));
             // Select the node to update and check it exists
             if (allNodes) {
-//                return SelectResult.of((List<Object>)Xml.selectNodes(metadataRecord, xpathProperty)); // TODO works, but ignores namespaces?
                 return SelectResult.of(xpath.selectNodes(metadataRecord));
             } else {
-//                return SelectResult.of(Xml.selectElement(metadataRecord, xpathProperty)); // TODO should we use this as well?
                 return SelectResult.of(xpath.selectSingleNode(metadataRecord));
             }
         } catch (JaxenException e) {
