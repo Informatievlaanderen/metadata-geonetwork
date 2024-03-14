@@ -936,6 +936,11 @@ public class EditLib {
         // Initialize the Xpath with all schema namespaces
         Map<String, String> mapNs = metadataSchema.getSchemaNSWithPrefix();
 
+        // VL: override the gml namespace
+        // issue: partial CSW update doesn't work if it concerns a GML element (gml / gml320 discussion)
+        if(mapNs.containsKey("gml")) {
+            mapNs.put("gml", "http://www.opengis.net/gml");
+        }
 
         try {
             JDOMXPath xpath = new JDOMXPath(xpathProperty);
