@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <!-- the following test records contain /metadatacenter references -->
+  <property name="record1.uuid" value="43f9e1ef-4458-4da3-a6fe-3f325c92f264"/>
+  <property name="record2.uuid" value="b6934c23-bffa-40de-ac34-7f1f6e1dbdf1"/>
+
+  <!-- remove the /metadatacenter references -->
+  <changeSet id="00049-test-records-metadatacenter" author="joachim" contextFilter="!prd">
+    <update tableName="metadata">
+      <column name="data"
+              valueComputed="replace(data, 'https://metadata.vlaanderen.be/metadatacenter/', 'https://metadata.vlaanderen.be/')"/>
+      <where>uuid in ('${record1.uuid}', '${record2.uuid}')</where>
+    </update>
+  </changeSet>
+
+</databaseChangeLog>

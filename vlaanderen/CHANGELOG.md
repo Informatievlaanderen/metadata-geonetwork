@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### vlaanderen
 - CSW now uses the gml namespace instead of the gml/3.2 namespace - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33444)
+- Fixed metadatacenter reference in RDF - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetworkMicroservices/pullrequest/34567) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/34566)
 
 ### core-geonetwork
 - Improvements in record view - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33256) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7811)
