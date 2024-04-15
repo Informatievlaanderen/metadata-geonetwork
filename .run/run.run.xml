@@ -13,6 +13,7 @@
               <entry key="GEONETWORK_DB_PASSWORD" value="geonetwork" />
               <entry key="GEONETWORK_DB_PORT" value="5432" />
               <entry key="GEONETWORK_DB_USERNAME" value="geonetwork" />
+              <entry key="GEONETWORK_MICROSERVICESPROXY_TARGETURI" value="http://localhost:8081" />
             </map>
           </option>
           <option name="jreName" value="#USE_PROJECT_JDK" />
