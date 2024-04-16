@@ -5,7 +5,7 @@
   <artifactId>geonetwork</artifactId>
   <!-- used to indicate vlaanderen-specific versioning -->
   <!-- picked up in azure pipeline, for example, to tag docker images -->
-  <version>8.1.17-SNAPSHOT</version>
+  <version>8.1.17</version>
 
   <properties>
     <!-- don't generate backup pom.xml files when changing them -->
