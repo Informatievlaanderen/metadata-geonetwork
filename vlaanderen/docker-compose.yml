@@ -1,5 +1,3 @@
-version: '3.8'
-
 x-geonetwork-environment:
   &default-geonetwork-environment
   # requestHeaderSize/maxFormContentSize: added to improve editing large forms
