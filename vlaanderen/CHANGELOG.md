@@ -7,7 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [8.1.18-SNAPSHOT]
 
 ### vlaanderen
-- Hotfix: added missing `/id/GDI-Vlaanderen-Vlaamse-Administratieve-Eenheden` file - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/34937)
+- Added missing `/id/GDI-Vlaanderen-Vlaamse-Administratieve-Eenheden` file - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/34937)
+- Editor now correctly handling large forms - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35087)
  
 
 ## [8.1.17] - 2024-04-16
