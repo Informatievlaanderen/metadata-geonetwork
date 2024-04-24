@@ -8,8 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### vlaanderen
 - Added missing `/id/GDI-Vlaanderen-Vlaamse-Administratieve-Eenheden` file - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/34937)
-- Editor now correctly handling large forms - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35087)
- 
+- Editor now correctly handling large forms - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35087) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35091)
+
+### core
+- Added groupOwner check while testing for permissions in Elasticsearch - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35160) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7980)
 
 ## [8.1.17] - 2024-04-16
 
