@@ -25,6 +25,8 @@ package org.fao.geonet.util;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.mail.*;
+import org.apache.commons.validator.routines.EmailValidator;
+import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.utils.Log;
@@ -38,6 +40,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Utility class to send mails. Supports both html and plain text. It usually
@@ -49,6 +52,8 @@ public class MailUtil {
     public static final Pattern metadataLuceneField = Pattern.compile("\\{\\{index:([^\\}]+)\\}\\}");
 
     public static final String LOG_MODULE_NAME = "geonetwork";
+
+    private static final EmailValidator EMAIL_VALIDATOR = EmailValidator.getInstance();
 
     /**
      * Send an html mail. Will look on the settings directly to know the
@@ -183,6 +188,7 @@ public class MailUtil {
             }
         }
 
+        Log.debug(Geonet.DATA_MANAGER, "MailUtil.sendEmail(bcc=" + email.getBccAddresses().stream().map(InternetAddress::getAddress).collect(Collectors.joining(";")) + ")");
         return send(email);
     }
 
@@ -489,6 +495,9 @@ public class MailUtil {
         email.send();
     }
 
+    public static boolean isValidMailAddress(String email) {
+        return EMAIL_VALIDATOR.isValid(email);
+    }
 
     /**
      *
