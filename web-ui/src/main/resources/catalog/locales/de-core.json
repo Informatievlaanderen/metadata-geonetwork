@@ -551,6 +551,7 @@
     "cancelWorkingCopy": "Arbeitskopie abbrechen",
     "deleteWorkingCopyRecordConfirm": "Möchten Sie die Arbeitskopie „{{resourceTitle}}“ wirklich entfernen?",
     "workingCopy": "Arbeitskopie",
+    "approvedRecord": "Approved record",
     "onTheWeb": "Weiterführende Online-Informationen",
     "pdfReportTocTitle": "Inhalte",
     "metadataValidated": "Metadaten validiert.",

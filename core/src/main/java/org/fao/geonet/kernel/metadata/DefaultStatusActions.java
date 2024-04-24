@@ -213,7 +213,7 @@ public class DefaultStatusActions implements StatusActions {
                 String msg = String.format(
                     "Failed to send notification on status change for metadata %s with status %s. Error is: %s",
                     status.getMetadataId(), status.getStatusValue().getId(), e.getMessage());
-                Log.debug(Geonet.DATA_MANAGER, msg);
+                Log.error(Geonet.DATA_MANAGER, msg);
                 context.warning(msg);
             }
 
@@ -411,7 +411,10 @@ public class DefaultStatusActions implements StatusActions {
 
         // send out the mails
         for (User user : userToNotify) {
-            sendEmail(user.getEmail(), subject, message);
+            String email = user.getEmail();
+            if(MailUtil.isValidMailAddress(email)) {
+                sendEmail(user.getEmail(), subject, message);
+            }
         }
     }
 
@@ -557,13 +560,15 @@ public class DefaultStatusActions implements StatusActions {
         if (status.getStatusValue().getId() == Integer.parseInt(StatusValue.Status.DRAFT) &&
             ((StringUtils.isEmpty(status.getPreviousState())) ||
                 (Integer.parseInt(status.getPreviousState()) != Integer.parseInt(StatusValue.Status.SUBMITTED)))) {
+            Log.debug(Geonet.DATA_MANAGER, "DefaultStatusActions.vlGetUserToNotify(not sending, creating a working copy)");
             return new ArrayList<>();
         }
 
         // get the record owner group of the record
         Optional<Group> recordOwnerGroup = groupRepository.findById(metadata.getSourceInfo().getGroupOwner());
-        if(recordOwnerGroup.isEmpty()) {
+        if (recordOwnerGroup.isEmpty()) {
             // if we have no record owner group we cannot determine our next action - do nothing
+            Log.debug(Geonet.DATA_MANAGER, "DefaultStatusActions.vlGetUserToNotify(not sending, record has no groupOwner)");
             return new ArrayList<>();
         }
         boolean isDatapublicatie = recordOwnerGroup.get().getVlType().equals("datapublicatie");
@@ -714,7 +719,7 @@ public class DefaultStatusActions implements StatusActions {
      * @param message Text of the mail
      */
     protected void sendEmail(String sendTo, String subject, String message) {
-
+        Log.debug(Geonet.DATA_MANAGER, "DefaultStatusActions.sendEmail(" + sendTo + ")");
         if (!emailNotes) {
             context.info("Would send email \nTo: " + sendTo + "\nSubject: " + subject + "\n Message:\n" + message);
         } else {

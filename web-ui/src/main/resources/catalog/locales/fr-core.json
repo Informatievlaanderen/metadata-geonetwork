@@ -551,6 +551,7 @@
     "cancelWorkingCopy": "Annuler la copie de travail",
     "deleteWorkingCopyRecordConfirm": "Voulez-vous vraiment supprimer la copie de travail '{{resourceTitle}}'?",
     "workingCopy": "Brouillon",
+    "approvedRecord": "Approved record",
     "onTheWeb": "Plus d'information en ligne",
     "pdfReportTocTitle": "Titre de la table des matières",
     "metadataValidated": "Fiches validées",
