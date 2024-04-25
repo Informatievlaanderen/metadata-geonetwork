@@ -1,0 +1,98 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+  <changeSet id="00050-harvester-mail-newlines" author="joachim">
+    <update tableName="settings">
+      <column name="value">
+        <![CDATA[
+<p>
+  <b>SUCCESS</b>
+  - The harvest-job of $$harvesterType$$-harvester '<b>$$harvesterName$$</b>' was successful and has
+  imported $$total$$ records. There were $$doesNotValidate$$ records that are not valid against the validation rules.
+
+  <ul style="list-style-type: none; padding-inline-start: 0;">
+    <li>Total number of metadata imported: $$total$$.</li>
+    <li>Number of metadata added: $$added$$.</li>
+    <li>Number of metadata updated: $$updated$$.</li>
+    <li>Number of metadata unchanged: $$unchanged$$.</li>
+    <li>Number of retrievable metadata: $$retrievable$$.</li>
+    <li>Number of unretrievable metadata: $$unretrievable$$.</li>
+    <li>Number of metadata removed: $$removed$$.</li>
+    <li>Number of invalid metadata records: $$doesNotValidate$$.</li>
+  </ul>
+
+  <ul style="list-style-type: none; padding-inline-start: 0;">
+    <li>Harvester Name: $$harvesterName$$.</li>
+    <li>Harvester Type: $$harvesterType$$.</li>
+    <li>Harvester Validation: $$harvestValidate$$</li>
+  </ul>
+
+  Further information is available in the log file at <a href="$$logURL$$">$$logURL$$</a>.
+</p>
+        ]]>
+      </column>
+      <where>name='system/harvesting/mail/template'</where>
+    </update>
+    <update tableName="settings">
+      <column name="value">
+        <![CDATA[
+<p>
+  <b>ERROR</b>
+  - The harvest-job of $$harvesterType$$-harvester '<b>$$harvesterName$$</b>' was NOT successful
+
+  <ul style="list-style-type: none; padding-inline-start: 0;">
+    <li>Total number of metadata imported: $$total$$.</li>
+    <li>Number of metadata added: $$added$$.</li>
+    <li>Number of metadata updated: $$updated$$.</li>
+    <li>Number of metadata unchanged: $$unchanged$$.</li>
+    <li>Number of retrievable metadata: $$retrievable$$.</li>
+    <li>Number of unretrievable metadata: $$unretrievable$$.</li>
+    <li>Number of metadata removed: $$removed$$.</li>
+    <li>Number of invalid metadata records: $$doesNotValidate$$.</li>
+  </ul>
+
+  <ul style="list-style-type: none; padding-inline-start: 0;">
+    <li>Harvester Name: $$harvesterName$$.</li>
+    <li>Harvester Type: $$harvesterType$$.</li>
+    <li>Harvester Validation: $$harvestValidate$$</li>
+  </ul>
+
+  Further information is available in the log file at <a href="$$logURL$$">$$logURL$$</a>.
+</p>
+        ]]>
+      </column>
+      <where>name='system/harvesting/mail/templateError'</where>
+    </update>
+    <update tableName="settings">
+      <column name="value">
+        <![CDATA[
+<p>
+  <b>WARNING</b>
+  - The harvest-job of $$harvesterType$$-harvester '<b>$$harvesterName$$</b>' was NOT successful
+
+  <ul style="list-style-type: none; padding-inline-start: 0;">
+    <li>Total number of metadata imported: $$total$$.</li>
+    <li>Number of metadata added: $$added$$.</li>
+    <li>Number of metadata updated: $$updated$$.</li>
+    <li>Number of metadata unchanged: $$unchanged$$.</li>
+    <li>Number of retrievable metadata: $$retrievable$$.</li>
+    <li>Number of unretrievable metadata: $$unretrievable$$.</li>
+    <li>Number of metadata removed: $$removed$$.</li>
+    <li>Number of invalid metadata records: $$doesNotValidate$$.</li>
+  </ul>
+
+  <ul style="list-style-type: none; padding-inline-start: 0;">
+    <li>Harvester Name: $$harvesterName$$.</li>
+    <li>Harvester Type: $$harvesterType$$.</li>
+    <li>Harvester Validation: $$harvestValidate$$</li>
+  </ul>
+
+  Further information is available in the log file at <a href="$$logURL$$">$$logURL$$</a>.
+</p>
+        ]]>
+      </column>
+      <where>name='system/harvesting/mail/templateWarning'</where>
+    </update>
+  </changeSet>
+</databaseChangeLog>
