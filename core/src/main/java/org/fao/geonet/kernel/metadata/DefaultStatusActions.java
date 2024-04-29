@@ -419,25 +419,23 @@ public class DefaultStatusActions implements StatusActions {
     }
 
     private static VlEnvironment getEnvironment(String nodeUrl) {
-        if (nodeUrl.contains("localhost:8080")) {
-            return VlEnvironment.LOC;
-        } else if (nodeUrl.contains("metadata.bet-vlaanderen.be")) {
+        if (nodeUrl.contains("metadata.vlaanderen.be")) {
+            return VlEnvironment.PRD;
+        } else if (nodeUrl.contains("metadata.beta-vlaanderen.be")) {
             return VlEnvironment.BET;
         } else if (nodeUrl.contains("metadata.dev-vlaanderen.be")) {
             return VlEnvironment.DEV;
-        } else return VlEnvironment.PRD;
+        } else return VlEnvironment.LOC;
     }
 
     private enum VlEnvironment {
         LOC("Local"), DEV("Dev"), BET("Beta"), PRD("Productie");
 
-        private String longText;
+        private final String longText;
 
         VlEnvironment(String longText) {
             this.longText = longText;
         }
-
-        ;
 
         public String getLongText() {
             return longText;
