@@ -28,7 +28,7 @@
     <li>Harvester Validation: $$harvestValidate$$</li>
   </ul>
 
-  Further information is available in the log file at <a href="./logs/$$logfile$$">$$logfile$$</a>.
+  Further information is available in <a href="$$logURL$$">the log file</a>.
 </p>
         ]]>
       </column>
@@ -58,7 +58,7 @@
     <li>Harvester Validation: $$harvestValidate$$</li>
   </ul>
 
-  Further information is available in the log file at <a href="./logs/$$logfile$$">$$logfile$$</a>.
+  Further information is available in <a href="$$logURL$$">the log file</a>.
 </p>
         ]]>
       </column>
@@ -88,11 +88,35 @@
     <li>Harvester Validation: $$harvestValidate$$</li>
   </ul>
 
-  Further information is available in the log file at <a href="./logs/$$logfile$$">$$logfile$$</a>.
+  Further information is available in <a href="$$logURL$$">the log file</a>.
 </p>
         ]]>
       </column>
       <where>name='system/harvesting/mail/templateWarning'</where>
+    </update>
+  </changeSet>
+  <changeSet id="00050-harvester-mail-logfile-loc" author="joachim" contextFilter="loc">
+    <update tableName="settings">
+      <column name="value" value="[MD-VL-LOC] [$$harvesterType$$] $$harvesterName$$ finished harvesting."/>
+      <where>name='system/harvesting/mail/subject'</where>
+    </update>
+  </changeSet>
+  <changeSet id="00050-harvester-mail-logfile-dev" author="joachim" contextFilter="dev">
+    <update tableName="settings">
+      <column name="value" value="[MD-VL-DEV] [$$harvesterType$$] $$harvesterName$$ finished harvesting."/>
+      <where>name='system/harvesting/mail/subject'</where>
+    </update>
+  </changeSet>
+  <changeSet id="00050-harvester-mail-logfile-bet" author="joachim" contextFilter="bet">
+    <update tableName="settings">
+      <column name="value" value="[MD-VL-BET] [$$harvesterType$$] $$harvesterName$$ finished harvesting."/>
+      <where>name='system/harvesting/mail/subject'</where>
+    </update>
+  </changeSet>
+  <changeSet id="00050-harvester-mail-logfile-prd" author="joachim" contextFilter="prd">
+    <update tableName="settings">
+      <column name="value" value="[MD-VL-PRD] [$$harvesterType$$] $$harvesterName$$ finished harvesting."/>
+      <where>name='system/harvesting/mail/subject'</where>
     </update>
   </changeSet>
 </databaseChangeLog>
