@@ -9,6 +9,7 @@ x-geonetwork-environment:
     -Dorg.eclipse.jetty.server.Request.maxFormContentSize=500000
     -Dorg.eclipse.jetty.server.Request.maxFormKeys=8000
     -Xms512M -Xss512M -Xmx2G -XX:+UseConcMarkSweepGC
+    -Dlog_dir=/geonetwork-data/logs
   DATA_DIR: /geonetwork-data
   ES_HOST: elasticsearch
   ES_PORT: 9200
