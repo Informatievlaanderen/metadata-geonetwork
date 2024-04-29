@@ -2,7 +2,7 @@
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
-  <changeSet id="00050-harvester-mail-newlines" author="joachim">
+  <changeSet id="00050-harvester-mail-logfile" author="joachim">
     <update tableName="settings">
       <column name="value">
         <![CDATA[
@@ -28,7 +28,7 @@
     <li>Harvester Validation: $$harvestValidate$$</li>
   </ul>
 
-  Further information is available in the log file at <a href="$$logURL$$">$$logURL$$</a>.
+  Further information is available in the log file at <a href="./logs/$$logfile$$">$$logfile$$</a>.
 </p>
         ]]>
       </column>
@@ -58,7 +58,7 @@
     <li>Harvester Validation: $$harvestValidate$$</li>
   </ul>
 
-  Further information is available in the log file at <a href="$$logURL$$">$$logURL$$</a>.
+  Further information is available in the log file at <a href="./logs/$$logfile$$">$$logfile$$</a>.
 </p>
         ]]>
       </column>
@@ -88,7 +88,7 @@
     <li>Harvester Validation: $$harvestValidate$$</li>
   </ul>
 
-  Further information is available in the log file at <a href="$$logURL$$">$$logURL$$</a>.
+  Further information is available in the log file at <a href="./logs/$$logfile$$">$$logfile$$</a>.
 </p>
         ]]>
       </column>

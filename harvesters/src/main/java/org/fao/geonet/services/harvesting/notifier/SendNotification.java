@@ -42,7 +42,7 @@ public class SendNotification {
     // values to be replaced in the email templates
     static String[] templateValues = new String[]{"total", "added", "updated",
         "removed", "unchanged", "unretrievable",
-        "doesNotValidate", "retrievable"};
+        "doesNotValidate", "retrievable", "logfile"};
 
     /**
      * Launches the notification manager
