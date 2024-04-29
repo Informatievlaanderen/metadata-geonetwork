@@ -1,0 +1,23 @@
+<p>
+  <b>WARNING</b>
+  - The harvest-job of $$harvesterType$$-harvester '<b>$$harvesterName$$</b>' was NOT successful
+
+  <ul style="list-style-type: none; padding-inline-start: 0;">
+    <li>Total number of metadata imported: $$total$$.</li>
+    <li>Number of metadata added: $$added$$.</li>
+    <li>Number of metadata updated: $$updated$$.</li>
+    <li>Number of metadata unchanged: $$unchanged$$.</li>
+    <li>Number of retrievable metadata: $$retrievable$$.</li>
+    <li>Number of unretrievable metadata: $$unretrievable$$.</li>
+    <li>Number of metadata removed: $$removed$$.</li>
+    <li>Number of invalid metadata records: $$doesNotValidate$$.</li>
+  </ul>
+
+  <ul style="list-style-type: none; padding-inline-start: 0;">
+    <li>Harvester Name: $$harvesterName$$.</li>
+    <li>Harvester Type: $$harvesterType$$.</li>
+    <li>Harvester Validation: $$harvestValidate$$</li>
+  </ul>
+
+  Further information is available in <a href="$$logURL$$">the log file</a>.
+</p>
