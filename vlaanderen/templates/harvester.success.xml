@@ -20,5 +20,5 @@
     <li>Harvester Validation: $$harvestValidate$$</li>
   </ul>
 
-  Further information is available in the log file at <a href="$$logURL$$">$$logURL$$</a>.
+  Further information is available in <a href="$$logURL$$">the log file</a>.
 </p>
