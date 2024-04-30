@@ -6,7 +6,7 @@ variables:
 
 stages:
   - stage: e2e
-    pool: dv-dev-ubuntu2204
+    pool: dv-prd-ubuntu2204
     jobs:
     - job: cypress
       steps:

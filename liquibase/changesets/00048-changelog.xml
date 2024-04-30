@@ -1,0 +1,77 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+  <!-- first setup of the pages, assumes they are not present yet-->
+  <changeSet id="00048-changelog-create" author="joachim">
+    <insert tableName="spg_page">
+      <!-- dutch -->
+      <column name="language">dut</column>
+      <column name="linktext">changelog</column>
+      <column name="format">TEXT</column>
+      <column name="link">../api/pages/dut/changelog/content</column>
+      <column name="status">PUBLIC</column>
+      <column name="label">changelog</column>
+      <column name="icon">fa-angle-double-up</column>
+    </insert>
+    <insert tableName="spg_sections">
+      <column name="spg_page_language">dut</column>
+      <column name="spg_page_linktext">changelog</column>
+      <column name="section">TOP</column>
+    </insert>
+    <!-- german -->
+    <insert tableName="spg_page">
+      <column name="language">ger</column>
+      <column name="linktext">changelog</column>
+      <column name="format">TEXT</column>
+      <column name="link">../api/pages/ger/changelog/content</column>
+      <column name="status">PUBLIC</column>
+      <column name="label">changelog</column>
+      <column name="icon">fa-angle-double-up</column>
+    </insert>
+    <insert tableName="spg_sections">
+      <column name="spg_page_language">ger</column>
+      <column name="spg_page_linktext">changelog</column>
+      <column name="section">TOP</column>
+    </insert>
+    <!-- english -->
+    <insert tableName="spg_page">
+      <column name="language">eng</column>
+      <column name="linktext">changelog</column>
+      <column name="format">TEXT</column>
+      <column name="link">../api/pages/eng/changelog/content</column>
+      <column name="status">PUBLIC</column>
+      <column name="label">changelog</column>
+      <column name="icon">fa-angle-double-up</column>
+    </insert>
+    <insert tableName="spg_sections">
+      <column name="spg_page_language">eng</column>
+      <column name="spg_page_linktext">changelog</column>
+      <column name="section">TOP</column>
+    </insert>
+    <!-- french -->
+    <insert tableName="spg_page">
+      <column name="language">fre</column>
+      <column name="linktext">changelog</column>
+      <column name="format">TEXT</column>
+      <column name="link">../api/pages/fre/changelog/content</column>
+      <column name="status">PUBLIC</column>
+      <column name="label">changelog</column>
+      <column name="icon">fa-angle-double-up</column>
+    </insert>
+    <insert tableName="spg_sections">
+      <column name="spg_page_language">fre</column>
+      <column name="spg_page_linktext">changelog</column>
+      <column name="section">TOP</column>
+    </insert>
+  </changeSet>
+
+  <!-- this will run repeatedly, continuously updating the changelog when the content changes -->
+  <changeSet id="00048-changelog-update" author="joachim" runAlways="true">
+    <update tableName="spg_page">
+      <column name="data" valueBlobFile="public.changelog.html"/>
+      <where>linktext = 'changelog'</where>
+    </update>
+  </changeSet>
+</databaseChangeLog>

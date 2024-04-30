@@ -4,12 +4,41 @@ All notable changes to this project will be documented in this file. These chang
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [8.1.16-SNAPSHOT]
+## [8.1.19-SNAPSHOT]
+
+## [8.1.18] - 2024-04-30
+
+### vlaanderen
+- Added missing `/id/GDI-Vlaanderen-Vlaamse-Administratieve-Eenheden` file - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/34937)
+- Editor now correctly handling large forms - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35087) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35091) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35203)
+- ACM/IDM integration now handles parallel requests - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35168) 
+- Handling invalid emails correctly - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35175)
+- Removed incorrect characters from harvester mail templates - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35189)
+- Harvester logs now accessible through mail template - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35189)
+- Now using beta environment as intended for status change mails - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35272)
+
+
+## [8.1.17] - 2024-04-16
+
+### vlaanderen
+- CSW now uses the gml namespace instead of the gml/3.2 namespace - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33444)
+- Fixed metadatacenter reference in RDF - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetworkMicroservices/pullrequest/34567) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/34566)
+
+### core-geonetwork
+- Improvements in record view - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33256) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7811)
+
+
+## [8.1.16] - 2024-03-01
+
+### vlaanderen
 - Bugfix for service accounts, reviewers are now also assigned editor role - [pr](https://agiv.visualstudio.com/Metadata/_git/0a154993-bcec-4021-98e4-034a6161db36/pullrequest/33201)
+- Bugfix for CSW properties update request: fix gmd:dateStamps/gco:Date parsed as DateTime - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33223)
+- Enforce `gco:Date` for creation, publication, modification dates - [pr](agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33243)
+- Automated changelog generation and publication - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33279)
+- Translation fixes - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33301)
 
 
 ## [R8] - 2024-02-26
-
 - Digitaal Vlaanderen implementeert een aanzienlijke administratieve vereenvoudiging door het aantal metadata-knooppunten te reduceren en door de publicatieprocesflow te optimaliseren
     - Het metadatacenter wordt samengevoegd met Metadata Vlaanderen
     - Het traject van een metadatarecord van ontwerp tot publicatie wordt aanzienlijk gestroomlijnd
@@ -24,7 +53,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [8.1.15] - 2024-02-23
 
 ### vlaanderen
-
 - Fix RDF output XML formatting - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetworkMicroservices/pullrequest/32889)
 - Fix DCAT indexing issues - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/32888)
 - Add DCAT full view missing endpointURL label - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/32888)
@@ -34,8 +62,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Create `modelLicentieObject` index field to limit number of licenses in facet - [pr](agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/32980)
 - Added `inspire` portal - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33102)
 
-### Core 
+### core-geonetwork
 - Fix srv:operatesOn indexing when dataset uuid is not last argument of URL - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/32979) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7803)
+ 
 
 ## [8.1.14] - 2024-02-21
 
@@ -44,6 +73,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Ensure correct ISO-19139 namespaces and GML version is enforced when editing a record - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/32717)
 - Fix "Domain" facet to include missing "Vlaamse Open data Service" - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/32717)
 - Fix accessRight facet for DCAT records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/32717)
+
 
 ## [8.1.13] 2024-02-12
 
@@ -153,6 +183,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 ## [8.1.8] - 2023-12-08
+
+### vlaanderen
 - Added custom mailing to workflow notifications - [pr1](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/30315) / [pr2](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/30496)
 - Header/footer improvements, responsiveness - [pr](https://agiv.visualstudio.com/DefaultCollection/Metadata/_git/MetadataGeonetwork/pullrequest/29987)
 - Translations - [pr1](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/30481) / [pr2](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/30641)
@@ -180,7 +212,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - Fix cookies path when deployed on root "/" context
   - Security / Jolokia update
 - Added capability to validate after harvesting - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/27953) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7370)
- 
 
 
 ## [8.1.6] - 2023-11-17
@@ -225,6 +256,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 ## [8.1.4] - 2023-10-25
+
+### vlaanderen
 - Removed DataPublicatie portal - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/28851)
 - Workflow optimisation - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/28849)
 
@@ -242,9 +275,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 ## [8.1.2] - 2023-10-16
+
+### vlaanderen
 - Ordering workflow statuses in logical way - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/27923)
 - Publishing draft now sets group owner correctly - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/28255)
- 
 
 
 ## [8.1.1] - 2023-09-29
@@ -263,7 +297,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [8.1.0] - 2023-09-26
 
 ### vlaanderen
-
 - Backport facets and search options from old application - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/26987)
 - Display groups by pair in the editor group dropdown - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/26988)
 - Workflow tweaks and fixes - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/27062)
@@ -277,6 +310,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 
 ## [8.0.4] - 2023-09-04
+
+### vlaanderen
 - Synced translations files with Transifex nl_BE - [pr1](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/25634) / [pr2](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/26995) / [docs](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork?path=/vlaanderen/docs/translation.md&version=GBdevelop)
 - Remove unused core metadata templates from ISO19139 plugin to avoid including them when loading the templates
 
@@ -284,7 +319,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [8.0.3] - 2023-07-14
 
 ### vlaanderen
-
 - Backport changes & customization made on the ISO19139 update-fixed-info.xsl & OGC Web service harvester logic
 - Fix DCAT editor issues with date field
 - Added capability to disable harvester scheduling - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/25303)

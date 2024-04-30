@@ -17,6 +17,8 @@
 
 package org.fao.geonet.services.harvesting.notifier;
 
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.mail.EmailException;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
@@ -150,6 +152,12 @@ public class SendNotification {
                         subject = replace(result, subject, value);
                     }
                 }
+            }
+
+            String logFile = StringEscapeUtils.escapeHtml(result.getChildText("logfile").trim());
+            if(StringUtils.isNotBlank(logFile)) {
+                String logURL = settings.getSiteURL("eng") + "admin.harvester.log?file=" + logFile;
+                htmlMessage = htmlMessage.replace("$$logURL$$", logURL);
             }
         }
 

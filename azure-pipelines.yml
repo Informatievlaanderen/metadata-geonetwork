@@ -12,7 +12,7 @@ variables:
 
 stages:
   - stage: prebuild
-    pool: dv-dev-ubuntu2204
+    pool: dv-prd-ubuntu2204
     jobs:
     # check whether we can/should skip this pipeline, e.g., for comment-only fixes
     - job: skipcheck
@@ -34,7 +34,7 @@ stages:
           COMMIT_MESSAGE: $(Build.SourceVersionMessage)
 
   - stage: build
-    pool: dv-dev-ubuntu2204
+    pool: dv-prd-ubuntu2204
     dependsOn: prebuild
     condition: and(succeeded('prebuild'),eq(dependencies.prebuild.outputs['skipcheck.skipcheck.skip'], 'false'))
     jobs:

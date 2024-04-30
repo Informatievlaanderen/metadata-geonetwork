@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
@@ -22,6 +23,7 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
     private static String clientIdAttribute = "client_id";
 
     @Override
+    @Transactional
     public UserDetails getUserDetails(OidcIdToken idToken, Map attributes, boolean withDbUpdate) throws Exception {
         SimpleOidcUser simpleUser = simpleOidcUserFactory.create(idToken, attributes);
         if (!StringUtils.hasText(simpleUser.getUsername()))
@@ -143,7 +145,7 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
             idToken.hasClaim(clientIdAttribute);
     }
 
-    protected void updateGroups(Map<Profile, List<String>> profileGroups, User user, OidcIdToken idToken) {
+    private void updateGroups(Map<Profile, List<String>> profileGroups, User user, OidcIdToken idToken) {
         // First we remove all previous groups
         userGroupRepository.deleteAll(UserGroupSpecs.hasUserId(user.getId()));
 

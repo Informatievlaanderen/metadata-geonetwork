@@ -42,8 +42,8 @@
     <msg id="a" xml:lang="eng">Add attribute table description from CSV</msg>
     <msg id="a" xml:lang="dut">Add attribute table description from CSV</msg>
     <msg id="a" xml:lang="fre">Ajouter le modèle de données (colonnes) à partir d'un fichier CSV</msg>
-    <msg id="b" xml:lang="eng">Add columns from CSV for table </msg>
-    <msg id="b" xml:lang="dut">Add columns from CSV for table </msg>
+    <msg id="b" xml:lang="eng">Add columns from CSV for table</msg>
+    <msg id="b" xml:lang="dut">Voeg kolommen toe uit een CSV bestand voor de tabel</msg>
     <msg id="b" xml:lang="fre">Ajouter les colonnes à partir d'un fichier CSV pour la table </msg>
   </xsl:variable>
 

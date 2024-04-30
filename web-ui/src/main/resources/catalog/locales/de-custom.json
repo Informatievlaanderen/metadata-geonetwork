@@ -1,4 +1,5 @@
 {
+  "GeoNetwork recommendations": "GeoNetwork Empfehlungen",
   "MD_Constraints": "Inhaltliche Nutzungsbeschränkungen",
   "MD_LegalConstraints": "Rechtliche Einschränkungen",
   "MD_SecurityConstraints": "Sicherheitseinschränkungen",
@@ -34,12 +35,6 @@
   "groupManagedByDataPublicatie": "Managed by DataPublicatie",
   "groupManagedByYourself": "Managed by yourself",
   "host.name": "Hostname",
-  "indexingErrorMsg-indexingStyleSheetError": "Index stylesheet contains errors: \"{{message}}\". The metadata was marked in the index with _indexingError=1.",
-  "indexingErrorMsg-invalidBounds": "Warning / Field resourceTemporalDateRange / Lower and upper bounds empty or not valid dates. Date range not indexed.",
-  "indexingErrorMsg-invalidDateFormat": "Warning / Date {{dateType}} with value '{{date}}' was not a valid date format.",
-  "indexingErrorMsg-keywordNotFoundInThesaurus": "Warning / Keyword {{keyword}} not found in {{thesaurus}}.",
-  "indexingErrorMsg-temporalDateRangeLowerGreaterThanUpper": "Warning / Field resourceTemporalDateRange / Lower range bound {{lowerBound}} can not be greater than upper bound {{upperBound}}. Date range not indexed.",
-  "indexingErrorMsg-temporalRangeLowerGreaterThanUpper": "Warning / Field resourceTemporalDateRange / Lower range bound {{lowerBound}} can not be greater than upper bound {{upperBound}}.",
   "link": "Herunterladen",
   "linkToFeatureCatalog": "Link zu einem Feature-Katalog",
   "linkToParent": "Link zu einer Datenreihe",
@@ -82,5 +77,6 @@
   "---below-to-be-transifexed---": "all labels are pending to be either incorporated into the core or to be deleted at some point",
   "approvedRecord": "Genehmigt record",
   "measureDate": "Datum",
+  "cl_couplingType": "Kupplungstyp",
   "---end-of-file---": ""
 }

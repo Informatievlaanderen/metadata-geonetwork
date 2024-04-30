@@ -42,6 +42,7 @@ import jeeves.xlink.Processor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.QuoteMode;
+import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.text.StrSubstitutor;
@@ -718,6 +719,14 @@ public class CatalogApi {
         HttpServletResponse response,
         HttpServletRequest request
     ) throws Exception {
+        // pre-empt the "not implemented in ES error" so we don't pollute logs with stacktraces.
+        if(true) {
+            String message = "Not implemented in Elasticsearch (GET /api/records).";
+            Log.error(API.LOG_MODULE_NAME, message);
+            response.sendError(HttpStatus.SC_NOT_IMPLEMENTED, message);
+            return;
+        }
+
         //Retrieve the host URL from the GeoNetwork settings
         String hostURL = getHostURL();
 

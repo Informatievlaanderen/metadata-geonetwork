@@ -1,2 +1,4 @@
 postgresql-*.jar
 liquibase.properties
+changesets/public.changelog.html
+changesets/public.changelog.md

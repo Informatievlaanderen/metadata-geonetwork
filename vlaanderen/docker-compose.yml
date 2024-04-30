@@ -1,14 +1,15 @@
-version: '3.8'
-
 x-geonetwork-environment:
   &default-geonetwork-environment
-  # requestHeaderSize/maxFormContentSize: added to improve editing large forms
+  # requestHeaderSize/maxFormContentSize/maxFormKeys: added to improve editing large forms
   JAVA_OPTS: >
-    -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true
+    -Djava.security.egd=file:/dev/./urandom
+    -Djava.awt.headless=true
     -Djetty.httpConfig.requestHeaderSize=32768
     -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
     -Dorg.eclipse.jetty.server.Request.maxFormContentSize=500000
+    -Dorg.eclipse.jetty.server.Request.maxFormKeys=8000
     -Xms512M -Xss512M -Xmx2G -XX:+UseConcMarkSweepGC
+    -Dlog_dir=/geonetwork-data/logs
   DATA_DIR: /geonetwork-data
   ES_HOST: elasticsearch
   ES_PORT: 9200

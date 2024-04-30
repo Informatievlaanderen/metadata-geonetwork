@@ -200,7 +200,14 @@
       <xsl:when test="/root/env/changeDate">
         <xsl:copy copy-namespaces="no">
           <gco:Date>
-            <xsl:value-of select="format-dateTime(/root/env/changeDate,'[Y0001]-[M01]-[D01]')"/>
+            <xsl:choose>
+              <xsl:when test="contains(/root/env/changeDate, 'T')">
+                <xsl:value-of select="format-dateTime(/root/env/changeDate, '[Y0001]-[M01]-[D01]')"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="format-date(/root/env/changeDate, '[Y0001]-[M01]-[D01]')"/>
+              </xsl:otherwise>
+            </xsl:choose>
           </gco:Date>
         </xsl:copy>
       </xsl:when>
@@ -392,6 +399,18 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="gmd:date/gco:DateTime|gmd:date/gco:Date" priority="9000">
+    <gco:Date>
+      <xsl:choose>
+        <xsl:when test="contains(string(), 'T')">
+          <xsl:value-of select="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="format-date(., '[Y0001]-[M01]-[D01]')"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </gco:Date>
+  </xsl:template>
 
   <xsl:template name="handle-root-attributes">
     <xsl:choose>

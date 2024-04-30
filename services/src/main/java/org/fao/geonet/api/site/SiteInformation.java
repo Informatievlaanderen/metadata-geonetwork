@@ -209,7 +209,8 @@ public class SiteInformation {
     private void loadEnvInfo(){
         String[] variables = {
             "harvester.scheduler.enabled",
-            "db.migration_onstartup"
+            "db.migration_onstartup",
+            "org.eclipse.jetty.server.Request.maxFormKeys"
         };
         for (String variable : variables) {
             String value = Env.getPropertyFromEnv(variable, "");

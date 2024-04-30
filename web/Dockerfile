@@ -19,13 +19,15 @@ ENV JAVA_OPTS -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF \
         -Dgeonetwork.upload.dir=${DATA_DIR}/upload \
         -Dgeonetwork.config.dir=${DATA_DIR}/config \
         -Dgeonetwork.data.dir=${DATA_DIR}/data \
+        -Dlog_dir=${DATA_DIR}/logs \
         # separate this, otherwise it lands within the geonetwork.resources.dir folder
         -Dgeonetwork.htmlcache.dir=/var/lib/jetty/webapps/${WEBAPP_NAME}/WEB-INF/data/resources/htmlcache \
         -Dgeonetwork.schemapublication.dir=/var/lib/jetty/webapps/${WEBAPP_NAME}/WEB-INF/data/resources/schemapublication \
         -Dgeonetwork.indexConfig.dir=/var/lib/jetty/webapps/${WEBAPP_NAME}/WEB-INF/data/config/index \
         # improve performance of editing large forms
         -Djetty.httpConfig.requestHeaderSize=32768 \
-        -Dorg.eclipse.jetty.server.Request.maxFormContentSize=500000
+        -Dorg.eclipse.jetty.server.Request.maxFormContentSize=5000000 \
+        -Dorg.eclipse.jetty.server.Request.maxFormKeys=8000
 
 USER root
 RUN apt-get -y update && \
