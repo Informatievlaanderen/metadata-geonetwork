@@ -83,7 +83,10 @@
           sortBy: "changeDate",
           sortOrder: "desc",
           isTemplate: ["y", "n"],
-          draft: ["y", "n"],
+          draft: gnGlobalSettings.gnCfg.mods.editor.workflowSearchRecordTypes || [
+            "n",
+            "e"
+          ],
           resultType: $scope.facetsSummaryType,
           from: 1,
           to: 20
@@ -92,7 +95,10 @@
           sortBy: "changeDate",
           sortOrder: "desc",
           isTemplate: ["y", "n"],
-          draft: ["y", "n"],
+          draft: gnGlobalSettings.gnCfg.mods.editor.workflowSearchRecordTypes || [
+            "n",
+            "e"
+          ],
           resultType: $scope.facetsSummaryType,
           from: 1,
           to: 20

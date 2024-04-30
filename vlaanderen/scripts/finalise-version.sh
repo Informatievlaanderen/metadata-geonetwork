@@ -91,7 +91,7 @@ echo "Created local branch $branch"
 git checkout -b "$branch"
 git add $pomfile
 git add ../CHANGELOG.md
-git commit -m "[skipci] Starting $new_version"
+git commit -m "Starting $new_version [skipci]"
 git push --set-upstream $remote "$branch"
 git checkout "$current_branch"
 git branch -D "$branch"

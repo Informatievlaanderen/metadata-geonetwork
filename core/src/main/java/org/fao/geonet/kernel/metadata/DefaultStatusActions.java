@@ -162,7 +162,7 @@ public class DefaultStatusActions implements StatusActions {
      * @return
      * @throws Exception
      */
-    public Map<Integer, StatusChangeType> onStatusChange(List<MetadataStatus> listOfStatus) throws Exception {
+    public Map<Integer, StatusChangeType> onStatusChange(List<MetadataStatus> listOfStatus, boolean updateIndex) throws Exception {
 
         if (listOfStatus.stream().map(MetadataStatus::getMetadataId).distinct().count() != listOfStatus.size()) {
             throw new IllegalArgumentException("Multiple status update received on the same metadata");
@@ -204,18 +204,7 @@ public class DefaultStatusActions implements StatusActions {
                 context.debug("Change status of metadata with id " + status.getMetadataId() + " from " + currentStatusId + " to " + statusId);
 
             // we know we are allowed to do the change, apply any side effects
-            boolean deleted = applyStatusChange(status.getMetadataId(), status, statusId, metadata);
-
-            // inform content reviewers if the status is submitted
-            try {
-                vlNotify(vlGetUserToNotify(currentStatus, status, metadata), currentStatus, status);
-            } catch (Exception e) {
-                String msg = String.format(
-                    "Failed to send notification on status change for metadata %s with status %s. Error is: %s",
-                    status.getMetadataId(), status.getStatusValue().getId(), e.getMessage());
-                Log.error(Geonet.DATA_MANAGER, msg);
-                context.warning(msg);
-            }
+            boolean deleted = applyStatusChange(status.getMetadataId(), status, statusId, metadata, updateIndex);
 
             if (deleted) {
                 results.put(status.getMetadataId(), StatusChangeType.DELETED);
@@ -234,12 +223,28 @@ public class DefaultStatusActions implements StatusActions {
                     ));
                 }
             }
+
+            // inform content reviewers if the status is submitted
+            try {
+                vlNotify(vlGetUserToNotify(currentStatus, status, metadata), currentStatus, status);
+            } catch (Exception e) {
+                String msg = String.format(
+                    "Failed to send notification on status change for metadata %s with status %s. Error is: %s",
+                    status.getMetadataId(), status.getStatusValue().getId(), e.getMessage());
+                Log.error(Geonet.DATA_MANAGER, msg);
+                context.warning(msg);
+            }
         }
 
         return results;
     }
 
-    private boolean applyStatusChange(int metadataId, MetadataStatus status, String toStatusId, AbstractMetadata metadata) throws Exception {
+    /**
+     * Placeholder to apply any side effects.
+     * eg. if APPROVED, publish a record,
+     * if RETIRED, unpublish or delete the record.
+     */
+    private boolean applyStatusChange(int metadataId, MetadataStatus status, String toStatusId, AbstractMetadata metadata, boolean updateIndex) throws Exception {
         // in the case of rejected for retired/removed: fall back to the previous status
         boolean deleted = false;
         if (Sets.newHashSet(StatusValue.Status.REJECTED_FOR_RETIRED, StatusValue.Status.REJECTED_FOR_REMOVED)
@@ -257,7 +262,7 @@ public class DefaultStatusActions implements StatusActions {
                 metadataStatus.setMetadataId(status.getMetadataId());
                 metadataStatus.setChangeMessage(status.getChangeMessage());
 
-                metadataStatusManager.setStatusExt(metadataStatus);
+                metadataStatusManager.setStatusExt(metadataStatus, updateIndex);
             }
         }
         // if we're approving, automatically publish
@@ -284,7 +289,7 @@ public class DefaultStatusActions implements StatusActions {
         }
 
         if (!deleted) {
-            metadataStatusManager.setStatusExt(status);
+            metadataStatusManager.setStatusExt(status, updateIndex);
         }
         return deleted;
     }

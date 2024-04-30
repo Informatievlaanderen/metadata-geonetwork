@@ -135,8 +135,12 @@ public abstract class AbstractHarvester<T extends HarvestResult, P extends Abstr
     protected P params;
     protected T result;
 
+
     protected Logger log = Log.createLogger(Geonet.HARVESTER);
 
+    public Logger getLogger() {
+        return log;
+    }
     private Element loadedInfo;
     private String id;
     private volatile Status status;
