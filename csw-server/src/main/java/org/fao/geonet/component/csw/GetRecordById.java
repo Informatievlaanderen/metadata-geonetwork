@@ -50,6 +50,7 @@ import org.fao.geonet.kernel.csw.CatalogService;
 import org.fao.geonet.kernel.csw.services.AbstractOperation;
 import org.fao.geonet.kernel.csw.services.getrecords.SearchController;
 import org.fao.geonet.lib.Lib;
+import org.fao.geonet.utils.Log;
 import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
