@@ -88,8 +88,9 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
      * @param user    the service account user
      * @param profile the desired profile
      */
-    private void updateUserGroupsForClient(User user, Profile profile) {
-        userGroupRepository.deleteAll(UserGroupSpecs.hasUserId(user.getId()));
+    @Transactional
+    public void updateUserGroupsForClient(User user, Profile profile) {
+        userGroupRepository.deleteAll(userGroupRepository.findAll(UserGroupSpecs.hasUserId(user.getId())));
         if (profile.equals(Profile.Administrator)) {
             // As we are assigning to a group, it is UserAdmin instead
             profile = Profile.UserAdmin;
