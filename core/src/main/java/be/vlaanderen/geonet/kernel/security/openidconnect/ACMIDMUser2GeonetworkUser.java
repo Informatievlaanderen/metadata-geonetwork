@@ -4,6 +4,7 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.security.openidconnect.OidcUser2GeonetworkUser;
 import org.fao.geonet.kernel.security.openidconnect.SimpleOidcUser;
+import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.utils.Log;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -145,9 +146,10 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
             idToken.hasClaim(clientIdAttribute);
     }
 
-    private void updateGroups(Map<Profile, List<String>> profileGroups, User user, OidcIdToken idToken) {
+    @Transactional
+    public void updateGroups(Map<Profile, List<String>> profileGroups, User user, OidcIdToken idToken) {
         // First we remove all previous groups
-        userGroupRepository.deleteAll(UserGroupSpecs.hasUserId(user.getId()));
+        userGroupRepository.deleteAll(userGroupRepository.findAll(UserGroupSpecs.hasUserId(user.getId())));
 
         // ACM/IDM specific claims
         String userOrgCode = idToken.getClaimAsString("vo_orgcode");
