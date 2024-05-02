@@ -39,6 +39,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
@@ -70,8 +71,8 @@ public class OidcUser2GeonetworkUser {
     @Autowired
     protected GeonetworkAuthenticationProvider geonetworkAuthenticationProvider;
 
-
-    public UserDetails getUserDetails(Map attributes, boolean withDbUpdate) throws Exception {
+    @Transactional
+    public synchronized UserDetails getUserDetails(Map attributes, boolean withDbUpdate) throws Exception {
         SimpleOidcUser simpleUser = simpleOidcUserFactory.create(attributes);
         if (!StringUtils.hasText(simpleUser.getUsername()))
             return null;
@@ -126,7 +127,8 @@ public class OidcUser2GeonetworkUser {
      * @param withDbUpdate
      * @return
      */
-    public UserDetails getUserDetails(OidcIdToken idToken, Map attributes, boolean withDbUpdate) throws Exception {
+    @Transactional
+    public synchronized UserDetails getUserDetails(OidcIdToken idToken, Map attributes, boolean withDbUpdate) throws Exception {
         SimpleOidcUser simpleUser = simpleOidcUserFactory.create(idToken, attributes);
         if (!StringUtils.hasText(simpleUser.getUsername()))
             return null;
@@ -175,7 +177,8 @@ public class OidcUser2GeonetworkUser {
      * @param user          to apply the changes to.
      */
     //from keycloak
-    protected void updateGroups(Map<Profile, List<String>> profileGroups, User user) {
+    @Transactional
+    public synchronized void updateGroups(Map<Profile, List<String>> profileGroups, User user) {
         Set<UserGroup> userGroups = new HashSet<>();
 
         // Now we add the groups

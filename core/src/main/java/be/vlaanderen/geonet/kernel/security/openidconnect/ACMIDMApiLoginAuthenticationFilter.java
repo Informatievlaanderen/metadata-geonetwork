@@ -68,7 +68,7 @@ public class ACMIDMApiLoginAuthenticationFilter extends AbstractAuthenticationPr
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
+    public synchronized Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         String bearerToken = getBearerToken(request).orElseThrow(() -> new InvalidBearerTokenException("No bearer token supplied."));
 
         // if we can return the Authentication straight from the cache, do it
