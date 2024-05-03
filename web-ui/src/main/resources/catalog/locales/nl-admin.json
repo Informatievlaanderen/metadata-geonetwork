@@ -445,7 +445,7 @@
     "metadataIdentifierTemplateDeletedError": "Er is een fout opgetreden bij het verwijderen van de template",
     "metadataInternalId": "Kies een metadata interne identificatie",
     "metadataStatus": "metagegevens",
-    "metadataWithIndexingErrors": "Metadata with indexing errors / warnings",
+    "metadataWithIndexingErrors": "Metadata met indexeringsfouten / -waarschuwingen",
     "top10IndexingErrors": "Top 10 van indexeringsfouten:",
     "metadataErrorReport": "Fouten rapport",
     "moreExamples": "meer voorbeelden",
