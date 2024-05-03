@@ -150,7 +150,7 @@
   "isPublishedToAll-false": "Afgeschermde records",
   "dateTypeForStatus": "Datum type",
   "dateValueForStatus": "Datum",
-  "indexRecordsWithErrors": "Records met een indexeringsfout",
+  "indexRecordsWithErrors": "Index records with errors / warnings",
   "top10IndexingErrors": "Top 10 van indexeringsfouten:",
   "facet-indexingErrorMsg": "Indexeringsfouten",
   "facet-indexingWarningMsg": "Indexeringswaarschuwingen",

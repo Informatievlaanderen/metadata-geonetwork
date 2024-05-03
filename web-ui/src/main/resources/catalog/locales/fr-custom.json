@@ -72,7 +72,7 @@
   "system/vlaanderen": "GeoNetwork fork Flamand",
   "system/vlaanderen/version": "Version",
   "useConstraintCodelist": "Contraintes d'utilisation (juridiques)",
-  "versionDetails": "version <span class='gn-version'>{{vlversion}}</span>, propulsé par GeoNetwork <span class='gn-version'>{{platform}} {{version}}.{{subversion}}</span>",
+  "versionDetails": "version <span class='gn-version'>{{vlversion}}</span>, propulsé par GeoNetwork <span class='gn-version'>{{platform}} {{version}}-{{subversion}}</span>",
 
   "---below-to-be-transifexed---": "all labels are pending to be either incorporated into the core or to be deleted at some point",
   "approvedRecord": "Record approuvé",

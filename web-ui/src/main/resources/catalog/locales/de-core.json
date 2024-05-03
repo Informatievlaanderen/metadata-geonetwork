@@ -87,6 +87,7 @@
     "chi": "中文",
     "city": "Stadt",
     "cl_status": "Status",
+    "cl_couplingType": "Coupling type",
     "associatedResources": "Verlinkte Ressourcen",
     "brothersAndSisters": "Geschwister",
     "moreInfoOnRecord": "mehr ...",
