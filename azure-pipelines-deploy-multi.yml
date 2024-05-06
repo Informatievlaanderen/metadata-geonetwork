@@ -1,0 +1,151 @@
+parameters:
+  - name: subscription
+  - name: clusterRg
+  - name: clusterName
+  - name: namespace
+  - name: acr
+  - name: serviceConnection
+  - name: devopsKeyVault
+
+stages:
+  - stage: ${{ parameters.namespace }}
+    dependsOn: build
+    jobs:
+    - deployment: deploy
+      environment: ${{ parameters.namespace }}
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - checkout: self
+              displayName: Set up repository
+              submodules: recursive
+            - task: Bash@3
+              displayName: Set git commit sha as env var
+              inputs:
+                targetType: 'inline'
+                script: |
+                  GIT_COMMIT_SHA=$(git rev-parse HEAD)
+                  echo "GIT_COMMIT_SHA: ${GIT_COMMIT_SHA}"
+                  echo "##vso[task.setvariable variable=GIT_COMMIT_SHA]${GIT_COMMIT_SHA}"
+            - task: AzureKeyVault@1
+              name: configureKeyVault
+              displayName: Set up connection to keyvault to fetch pipeline variables
+              inputs:
+                azureSubscription: ${{ parameters.serviceConnection }}
+                KeyVaultName: ${{ parameters.devopsKeyVault }}
+                SecretsFilter: '*'
+                RunAsPreJob: false
+            - task: Bash@3
+              name: retrieveSecrets
+              displayName: Retrieve environment-specific variables from keyvault
+              inputs:
+                targetType: 'inline'
+                script: |
+                  echo "##vso[task.setvariable variable=LIQUIBASE_GN_SYSTEM_FEEDBACK_MAILSERVER_PASSWORD]$(${{ parameters.namespace }}-liquibase-gn-system-feedback-mailserver-password)"
+                  echo "##vso[task.setvariable variable=LIQUIBASE_MDV_PASSWORDHASH]$(${{ parameters.namespace }}-liquibase-mdv-passwordhash)"
+                  echo "##vso[task.setvariable variable=LIQUIBASE_MAILPIT_PORT]$(${{ parameters.namespace }}-liquibase-mailpit-port)"
+                  echo "##vso[task.setvariable variable=LIQUIBASE_MAILPIT_HOST]$(${{ parameters.namespace }}-liquibase-mailpit-host)"
+            - task: Bash@3
+              displayName: Retrieve project version
+              inputs:
+                targetType: 'inline'
+                workingDirectory: 'vlaanderen'
+                script: |
+                  VL_GEONETWORK_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+                  echo "VL_GEONETWORK_VERSION: ${VL_GEONETWORK_VERSION}"
+                  echo "##vso[task.setvariable variable=VL_GEONETWORK_VERSION]${VL_GEONETWORK_VERSION}"
+            - task: Bash@3
+              displayName: Prepare public changelog
+              inputs:
+                targetType: 'inline'
+                workingDirectory: 'vlaanderen/scripts'
+                script: |
+                  bash public.changelog.sh
+                  changelogFile=../../liquibase/changesets/public.changelog.html
+                  if [ -f "$changelogFile" ]; then
+                    echo "$changelogFile was created, proceeding."
+                  else
+                    echo "$changelogFile does not exist, pipeline broken?"
+                    exit 1
+                  fi
+            - task: AzureCLI@2
+              displayName: Configure access to aks cluster
+              inputs:
+                azureSubscription: ${{ parameters.serviceConnection }}
+                addSpnToEnvironment: true
+                scriptType: bash
+                scriptLocation: inlineScript
+                inlineScript: |
+                  # download kubectl and kubelogin
+                  sudo az aks install-cli --subscription ${{ parameters.subscription }} --client-version latest --kubelogin-version latest --only-show-errors
+
+                  # set the right subscription
+                  az account set --subscription ${{ parameters.subscription }}
+
+                  # download ~/.kube/config file
+                  az aks get-credentials --subscription ${{ parameters.subscription }} --resource-group ${{ parameters.clusterRg }} --name ${{ parameters.clusterName }} --only-show-errors
+
+                  # convert ~/.kube/config to a format compatible with kubelogin
+                  kubelogin convert-kubeconfig --login spn
+
+                  # create secure azure devops variables for later steps
+                  echo "##vso[task.setvariable variable=spnId;isSecret=true]$servicePrincipalId"
+                  echo "##vso[task.setvariable variable=spnSecret;isSecret=true]$servicePrincipalKey"
+            - task: Docker@2
+              displayName: Login to ACR
+              inputs:
+                containerRegistry: ${{ parameters.acr }}
+                repository: 'metadata/geonetwork'
+                command: 'login'
+            - task: Bash@3
+              displayName: Re-tag docker image
+              inputs:
+                targetType: 'inline'
+                workingDirectory: 'liquibase'
+                script: |
+                  image=$ACR.azurecr.io/metadata/geonetwork:$GIT_COMMIT_SHA
+                  newimage=$ACR.azurecr.io/metadata/geonetwork:$NAMESPACE
+                  echo "acr: $acr"
+                  echo "image: $image"
+                  echo "new image: $newimage"
+                  echo "gitcommitsha2: $GIT2"
+                  docker image ls $ACR.azurecr.io/metadata/geonetwork
+                  docker pull $image
+                  docker tag $image $newimage
+                  docker push $newimage
+              env:
+                NAMESPACE: ${{ parameters.namespace }}
+                GIT_COMMIT_SHA: $(GIT_COMMIT_SHA)
+                ACR: ${{ parameters.acr }}
+            - task: Bash@3
+              displayName: Execute liquibase
+              env:
+                # get the keyvault variables into our task
+                LIQUIBASE_GN_SYSTEM_FEEDBACK_MAILSERVER_PASSWORD: $(LIQUIBASE_GN_SYSTEM_FEEDBACK_MAILSERVER_PASSWORD)
+                LIQUIBASE_MDV_PASSWORDHASH: $(LIQUIBASE_MDV_PASSWORDHASH)
+                LIQUIBASE_MAILPIT_PORT: $(LIQUIBASE_MAILPIT_PORT)
+                LIQUIBASE_MAILPIT_HOST: $(LIQUIBASE_MAILPIT_HOST)
+                # get additional variables into our task
+                LIQUIBASE_GN_SYSTEM_VLAANDEREN_VERSION: $(VL_GEONETWORK_VERSION)
+                # needed for kube access
+                AAD_SERVICE_PRINCIPAL_CLIENT_ID: $(spnId)
+                AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(spnSecret)
+              inputs:
+                targetType: 'inline'
+                workingDirectory: 'liquibase'
+                script: |
+                  # create an empty liquibase.properties file
+                  touch liquibase.properties
+                  # necessary variables are found in environment
+                  bash execute-on-env.sh -n ${{ parameters.namespace }}
+            - task: Bash@3
+              displayName: Rolling restart of geonetwork (${{ parameters.namespace }})
+              env:
+                AAD_SERVICE_PRINCIPAL_CLIENT_ID: $(spnId)
+                AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(spnSecret)
+              inputs:
+                targetType: 'inline'
+                script: |
+                  kubectl rollout restart --cluster ${{ parameters.clusterName }} -n ${{ parameters.namespace }} deployment/geonetwork
+                  kubectl rollout restart --cluster ${{ parameters.clusterName }} -n ${{ parameters.namespace }} deployment/geonetwork-replica
