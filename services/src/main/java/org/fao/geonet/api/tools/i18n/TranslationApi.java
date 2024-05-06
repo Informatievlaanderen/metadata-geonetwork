@@ -275,7 +275,6 @@ public class TranslationApi {
         }
     }
 
-
     @io.swagger.v3.oas.annotations.Operation(
         summary = "List database translations (used to overrides client application translations).")
     @GetMapping(value = "/db/translations",
@@ -289,10 +288,11 @@ public class TranslationApi {
                 "{" +
                     "  \"translationKey1\": \"Translated Key One\",\n" +
                     "  \"translationKey2\": \"Translated Key Two\",\n" +
-                    "  \"translationKey3\": \"Translated Key Two\"\n" +
+                    "  \"translationKey3\": \"Translated Key Three\"\n" +
                     "}")
-        }, schema = @Schema(type = "{ < * >: string }"))
+        }, schema = @Schema(type = "object", additionalPropertiesSchema = String.class))
     )
+    @ResponseStatus(OK)
     @ResponseBody
     public Map<String, String> getDbTranslations(
         ServletRequest request
@@ -316,7 +316,7 @@ public class TranslationApi {
             MediaType.APPLICATION_JSON_VALUE
         })
     @ResponseBody
-    public Map<String, List<String>> getTranslationsPackage() {
+    public Map<String, List<String>> getTranslationsPackages() {
         return translationPackBuilder.getPackages();
     }
 

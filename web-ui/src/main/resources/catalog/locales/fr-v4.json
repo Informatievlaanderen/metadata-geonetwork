@@ -150,7 +150,7 @@
   "isPublishedToAll-false": "Non",
   "dateTypeForStatus": "Type de date",
   "dateValueForStatus": "Date",
-  "indexRecordsWithErrors": "Fiches avec des erreurs d'indexation",
+  "indexRecordsWithErrors": "Index records with errors / warnings",
   "top10IndexingErrors": "Les principales erreurs d'indexation",
   "facet-indexingErrorMsg": "Erreurs d'indexation",
   "facet-indexingWarningMsg": "Avertissements d'indexation",

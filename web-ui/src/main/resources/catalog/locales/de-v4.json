@@ -150,7 +150,7 @@
   "isPublishedToAll-false": "Eingegrenzte Datensätze",
   "dateTypeForStatus": "Datumstyp",
   "dateValueForStatus": "Datum",
-  "indexRecordsWithErrors": "Indexiere Datensätze mit Fehlern",
+  "indexRecordsWithErrors": "Index records with errors / warnings",
   "top10IndexingErrors": "Top 10 der Index-Fehler:",
   "facet-indexingErrorMsg": "Indexierungsfehler",
   "facet-indexingWarningMsg": "Indizierungswarnungen",

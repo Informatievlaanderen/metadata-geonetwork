@@ -51,7 +51,7 @@
                 aria-label="{$i18n/selectView}"
                 title="{$i18n/selectView}"
                 aria-expanded="false">
-          <i class="fa fa-eye"></i>
+          <i class="fa fa-fw fa-eye"></i>
           <span>{{'chooseAView' | translate}}</span>
           <span class="caret"></span>
         </button>

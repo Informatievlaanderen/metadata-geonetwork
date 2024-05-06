@@ -35,6 +35,8 @@
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 xmlns:gn-fn-index="http://geonetwork-opensource.org/xsl/functions/index"
                 xmlns:index="java:org.fao.geonet.kernel.search.EsSearchManager"
+                xmlns:digestUtils="java:org.apache.commons.codec.digest.DigestUtils"
+                xmlns:exslt="http://exslt.org/common"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
                 xmlns:date-util="java:org.fao.geonet.utils.DateUtil"
                 xmlns:daobs="http://daobs.org"
@@ -343,12 +345,12 @@
               <xsl:otherwise>
                 <indexingErrorMsg type="object">
                   {
-                  "string": "indexingErrorMsg-invalidDateFormat",
-                  "type": "warning",
-                  "values": {
-                  "dateType": "<xsl:value-of select="util:escapeForJson($dateType)"/>",
-                  "date": "<xsl:value-of select="util:escapeForJson($date)"/>"
-                  }
+                    "string": "indexingErrorMsg-invalidDateFormat",
+                    "type": "warning",
+                    "values": {
+                      "dateType": "<xsl:value-of select="util:escapeForJson($dateType)"/>",
+                      "date": "<xsl:value-of select="util:escapeForJson($date)"/>"
+                    }
                   }
                 </indexingErrorMsg>
               </xsl:otherwise>
@@ -568,7 +570,7 @@
                             select="gn-fn-index:build-thesaurus-index-field-name($thesaurusId, $thesaurusTitle)"/>
 
               <xsl:variable name="keywords"
-                            select="gmd:keyword[*/normalize-space() != '']"/>
+                          select="current-group()/gmd:keyword[*/normalize-space() != '']"/>
 
               <thesaurus>
                 <info type="{$thesaurusType}"
@@ -598,23 +600,23 @@
                       in current catalogue, checked the keyword exists in the thesaurus.
                       If not, report an error in indexingErrorMsg field.
 
-                      This case may trigger editor warning message when a keyword is not
-                       found in the thesaurus. Try to anticipate this and advertise those
-                       records in the admin. -->
-                      <xsl:if test="$thesaurusId != '' and $keywordUri = ''">
-                        <errors>
-                          <indexingErrorMsg type="object">
-                            {
+                    This case may trigger editor warning message when a keyword is not
+                     found in the thesaurus. Try to anticipate this and advertise those
+                     records in the admin. -->
+                    <xsl:if test="$thesaurusId != '' and $keywordUri = ''">
+                      <errors>
+                        <indexingErrorMsg type="object">
+                          {
                             "string": "indexingErrorMsg-keywordNotFoundInThesaurus",
                             "type": "warning",
                             "values": {
-                            "keyword": "<xsl:value-of select="util:escapeForJson((*/text())[1])"/>",
-                            "thesaurus": "<xsl:value-of select="util:escapeForJson($thesaurusId)"/>"
+                              "keyword": "<xsl:value-of select="util:escapeForJson((*/text())[1])"/>",
+                              "thesaurus": "<xsl:value-of select="util:escapeForJson($thesaurusId)"/>"
                             }
-                            }
-                          </indexingErrorMsg>
-                        </errors>
-                      </xsl:if>
+                          }
+                        </indexingErrorMsg>
+                      </errors>
+                    </xsl:if>
 
                       <tree>
                         <defaults>
@@ -717,7 +719,9 @@
 
           <xsl:for-each select="gmd:distance/gco:Distance[. != '']">
             <resolutionDistance>
-              <xsl:value-of select="concat(., ' ', @uom)"/>
+              <xsl:value-of select="if (contains(@uom, '#'))
+                                    then concat(., ' ', tokenize(@uom, '#')[2])
+                                    else  concat(., ' ', @uom)"/>
             </resolutionDistance>
           </xsl:for-each>
         </xsl:for-each>
@@ -766,7 +770,6 @@
             <xsl:copy-of select="gn-fn-index:add-multilingual-field('extentIdentifier', */gmd:code, $allLanguages)"/>
           </xsl:for-each>
 
-          <!-- TODO: index bounding polygon -->
           <xsl:variable name="bboxes"
                         select=".//gmd:EX_GeographicBoundingBox[
                                 ./gmd:westBoundLongitude/gco:Decimal castable as xs:decimal and
@@ -813,6 +816,10 @@
                 <xsl:choose>
                   <xsl:when test="$e = $w and $s = $n">
                     <location><xsl:value-of select="concat($s, ',', $w)"/></location>
+                    <geom type="object">
+                      <xsl:text>{"type": "Point", "coordinates": </xsl:text>
+                      <xsl:value-of select="concat('[', $w, ',', $s, ']}')"/>
+                    </geom>
                   </xsl:when>
                   <xsl:when
                     test="($e = $w and $s != $n) or ($e != $w and $s = $n)">
@@ -883,9 +890,9 @@
               <xsl:otherwise>
                 <indexingErrorMsg type="object">
                   {
-                  "string": "indexingErrorMsg-invalidBounds",
-                  "type": "warning",
-                  "values": { }
+                    "string": "indexingErrorMsg-invalidBounds",
+                    "type": "warning",
+                    "values": { }
                   }
                 </indexingErrorMsg>
               </xsl:otherwise>
@@ -896,12 +903,12 @@
                           and $start &gt; $end">
               <indexingErrorMsg type="object">
                 {
-                "string": "indexingErrorMsg-temporalRangeLowerGreaterThanUpper",
-                "type": "warning",
-                "values": {
-                "lowerBound": "<xsl:value-of select="util:escapeForJson($start)"/>",
-                "upperBound": "<xsl:value-of select="util:escapeForJson($end)"/>"
-                }
+                  "string": "indexingErrorMsg-temporalRangeLowerGreaterThanUpper",
+                  "type": "warning",
+                  "values": {
+                    "lowerBound": "<xsl:value-of select="util:escapeForJson($start)"/>",
+                    "upperBound": "<xsl:value-of select="util:escapeForJson($end)"/>"
+                  }
                 }
               </indexingErrorMsg>
             </xsl:if>
@@ -1268,13 +1275,17 @@
             <atomfeed><xsl:value-of select="gmd:linkage/gmd:URL"/></atomfeed>
           </xsl:if>
           <link type="object">{
+            "hash": "<xsl:value-of select="digestUtils:md5Hex(string(exslt:node-set(normalize-space(.))))"/>",
+            "idx": <xsl:value-of select="position()"/>,
             "protocol":"<xsl:value-of select="util:escapeForJson((gmd:protocol/*/text())[1])"/>",
             "mimeType":"<xsl:value-of select="if (*/gmx:MimeFileType)
                                               then util:escapeForJson(*/gmx:MimeFileType/@type)
                                               else if (starts-with(gmd:protocol/gco:CharacterString, 'WWW:DOWNLOAD:'))
                                               then util:escapeForJson(replace(gmd:protocol/gco:CharacterString, 'WWW:DOWNLOAD:', ''))
                                               else ''"/>",
-            "urlObject":{"default": "<xsl:value-of select="util:escapeForJson(gmd:linkage/gmd:URL)"/>"},
+            "urlObject":{
+              "default": "<xsl:value-of select="util:escapeForJson(gmd:linkage/gmd:URL)"/>",
+              "lang<xsl:value-of select="$mainLanguage"/>": "<xsl:value-of select="util:escapeForJson(gmd:linkage/gmd:URL)"/>"},
             <xsl:if test="normalize-space(gmd:name) != ''">
               "nameObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
                                 'name', gmd:name, $allLanguages, true())"/>,
@@ -1287,7 +1298,7 @@
               "nilReason": "<xsl:value-of select="../@gco:nilReason"/>",
             </xsl:if>
             "function":"<xsl:value-of select="gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue"/>",
-            "applicationProfile":"<xsl:value-of select="util:escapeForJson(gmd:applicationProfile/gco:CharacterString/text())"/>",
+            "applicationProfile":"<xsl:value-of select="util:escapeForJson(gmd:applicationProfile/(gco:CharacterString|gmx:Anchor)/text())"/>",
             "group": <xsl:value-of select="$transferGroup"/>
             }
             <!--Link object in Angular used to be
@@ -1414,17 +1425,6 @@
           <xsl:element name="{concat('agg_associated_', $associationType)}"><xsl:value-of select="$code"/></xsl:element>
         </xsl:if>
       </xsl:for-each>
-
-
-      <xsl:variable name="indexingTimeRecordLink"
-                    select="util:getSettingValue('system/index/indexingTimeRecordLink')" />
-      <xsl:if test="$indexingTimeRecordLink = 'true'">
-        <xsl:variable name="recordsLinks"
-                      select="util:getTargetAssociatedResourcesAsNode(
-                                        $identifier,
-                                        gmd:parentIdentifier/*[text() != '']/text())"/>
-        <xsl:copy-of select="$recordsLinks//recordLink"/>
-      </xsl:if>
 
       <!-- Index more fields in this element -->
       <xsl:apply-templates mode="index-extra-fields" select=".">

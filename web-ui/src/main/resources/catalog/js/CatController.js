@@ -299,7 +299,7 @@
                 // Start boosting down records more than 3 months old
                 {
                   gauss: {
-                    dateStamp: {
+                    changeDate: {
                       scale: "365d",
                       offset: "90d",
                       decay: 0.5
@@ -1038,8 +1038,11 @@
             bingKey: "",
             listOfServices: {
               wms: [],
-              wmts: []
+              wmts: [],
+              wps: []
             },
+            // wpsSource: ["list", "url", "recent"],
+            wpsSource: ["url", "recent"],
             projection: "EPSG:3857",
             projectionList: [
               {
@@ -1124,32 +1127,28 @@
               // 'layout': 'tabset',
               layout: "",
               sections: [
-                // {'types': 'services', 'title': 'Services', 'layout': 'card'},
                 {
-                  types: "onlines",
-                  filter: "protocol:OGC:.*|ESRI:.*|atom.*",
+                  filter:
+                    "protocol:OGC:WMS|OGC:WMTS|ESRI:.*|atom.*|REST|OGC API Maps|OGC API Records",
                   title: "API"
                 },
                 {
-                  types: "onlines",
-                  filter: "protocol:.*DOWNLOAD.*|DB:.*|FILE:.*",
+                  filter:
+                    "protocol:OGC:WFS|OGC:WCS|.*DOWNLOAD.*|DB:.*|FILE:.*|OGC API Features|OGC API Coverages",
                   title: "download"
                 },
-                { types: "onlines", filter: "function:legend", title: "mapLegend" },
+                { filter: "function:legend", title: "mapLegend" },
                 {
-                  types: "onlines",
                   filter: "function:featureCatalogue",
                   title: "featureCatalog"
                 },
                 {
-                  types: "onlines",
                   filter: "function:dataQualityReport",
                   title: "quality"
                 },
                 {
-                  types: "onlines",
                   filter:
-                    "-protocol:OGC:.*|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.* AND -function:legend|featureCatalogue|dataQualityReport",
+                    "-protocol:OGC.*|REST|ESRI:.*|atom.*|.*DOWNLOAD.*|DB:.*|FILE:.* AND -function:legend|featureCatalogue|dataQualityReport",
                   title: "links"
                 }
               ]
@@ -1192,6 +1191,7 @@
             createPageTpl: "../../catalog/templates/editor/new-metadata-horizontal.html",
             editorIndentType: "",
             allowRemoteRecordLink: true,
+            workflowSearchRecordTypes: ["y", "n"],
             facetConfig: {
               resourceType: {
                 terms: {
@@ -1423,7 +1423,7 @@
                     prefix: "fa fa-fw ",
                     map: {
                       false: "fa-lock",
-                      true: "fa-unlock"
+                      true: "fa-lock-open"
                     }
                   }
                 }
@@ -1639,6 +1639,7 @@
           "languageWhitelist",
           "hitsperpageValues",
           "sortbyValues",
+          "wpsSource",
           "resultViewTpls",
           "formatter",
           "downloadFormatter",
@@ -1672,6 +1673,7 @@
           "distributionConfig",
           "collectionTableConfig",
           "queryBaseOptions",
+          "workflowSearchRecordTypes",
           "workflowAssistApps"
         ],
         current: null,
@@ -2063,7 +2065,8 @@
         chi: "中文",
         slo: "Slovenčina",
         swe: "Svenska",
-        dan: "Dansk"
+        dan: "Dansk",
+        wel: "Cymraeg"
       };
       $scope.url = "";
       $scope.gnUrl = gnGlobalSettings.gnUrl;
@@ -2249,6 +2252,17 @@
                 profile !== ""
                   ? "is" + profile[0].toUpperCase() + profile.substring(1) + "OrMore"
                   : "";
+            return angular.isFunction(this[fnName]) ? this[fnName]() : false;
+          },
+          canViewMetadataHistory: function () {
+            var profile = gnConfig["metadata.history.accesslevel"] || "Editor",
+              fnName =
+                profile !== ""
+                  ? "is" + profile[0].toUpperCase() + profile.substring(1) + "OrMore"
+                  : "";
+            if (profile === "RegisteredUser") {
+              return true;
+            }
             return angular.isFunction(this[fnName]) ? this[fnName]() : false;
           },
           canDeletePublishedMetadata: function () {

@@ -35,6 +35,7 @@ import org.fao.geonet.domain.*;
 import org.fao.geonet.events.md.MetadataStatusChanged;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.datamanager.*;
+import org.fao.geonet.kernel.search.EsSearchManager;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.*;
@@ -45,6 +46,7 @@ import org.fao.geonet.util.XslUtil;
 import org.fao.geonet.utils.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import java.text.MessageFormat;
 import java.util.*;
@@ -71,6 +73,7 @@ public class DefaultStatusActions implements StatusActions {
     private IMetadataUtils metadataRepository;
     private IMetadataManager metadataManager;
     private IMetadataOperations metadataOperations;
+    private EsSearchManager searchManager;
 
 
     /**
@@ -111,12 +114,14 @@ public class DefaultStatusActions implements StatusActions {
 
         dm = applicationContext.getBean(DataManager.class);
         metadataStatusManager = applicationContext.getBean(IMetadataStatus.class);
+        searchManager = applicationContext.getBean(EsSearchManager.class);
         siteUrl = sm.getSiteURL(context);
 
         metadataValidator = context.getBean(IMetadataValidator.class);
         metadataOperations = context.getBean(IMetadataOperations.class);
         metadataManager = context.getBean(IMetadataManager.class);
         metadataRepository = context.getBean(IMetadataUtils.class);
+
     }
 
     /**
@@ -162,7 +167,7 @@ public class DefaultStatusActions implements StatusActions {
      * @return
      * @throws Exception
      */
-    public Map<Integer, StatusChangeType> onStatusChange(List<MetadataStatus> listOfStatus) throws Exception {
+    public Map<Integer, StatusChangeType> onStatusChange(List<MetadataStatus> listOfStatus, boolean updateIndex) throws Exception {
 
         if (listOfStatus.stream().map(MetadataStatus::getMetadataId).distinct().count() != listOfStatus.size()) {
             throw new IllegalArgumentException("Multiple status update received on the same metadata");
@@ -204,7 +209,7 @@ public class DefaultStatusActions implements StatusActions {
                 context.debug("Change status of metadata with id " + status.getMetadataId() + " from " + currentStatusId + " to " + statusId);
 
             // we know we are allowed to do the change, apply any side effects
-            boolean deleted = applyStatusChange(status.getMetadataId(), status, statusId, metadata);
+            boolean deleted = applyStatusChange(status.getMetadataId(), status, statusId, metadata, updateIndex);
 
             // inform content reviewers if the status is submitted
             try {
@@ -239,7 +244,12 @@ public class DefaultStatusActions implements StatusActions {
         return results;
     }
 
-    private boolean applyStatusChange(int metadataId, MetadataStatus status, String toStatusId, AbstractMetadata metadata) throws Exception {
+    /**
+     * Placeholder to apply any side effects.
+     * eg. if APPROVED, publish a record,
+     * if RETIRED, unpublish or delete the record.
+     */
+    private boolean applyStatusChange(int metadataId, MetadataStatus status, String toStatusId, AbstractMetadata metadata, boolean updateIndex) throws Exception {
         // in the case of rejected for retired/removed: fall back to the previous status
         boolean deleted = false;
         if (Sets.newHashSet(StatusValue.Status.REJECTED_FOR_RETIRED, StatusValue.Status.REJECTED_FOR_REMOVED)
@@ -257,7 +267,7 @@ public class DefaultStatusActions implements StatusActions {
                 metadataStatus.setMetadataId(status.getMetadataId());
                 metadataStatus.setChangeMessage(status.getChangeMessage());
 
-                metadataStatusManager.setStatusExt(metadataStatus);
+                metadataStatusManager.setStatusExt(metadataStatus, updateIndex);
             }
         }
         // if we're approving, automatically publish
@@ -284,7 +294,7 @@ public class DefaultStatusActions implements StatusActions {
         }
 
         if (!deleted) {
-            metadataStatusManager.setStatusExt(status);
+            metadataStatusManager.setStatusExt(status, updateIndex);
         }
         return deleted;
     }
@@ -361,8 +371,25 @@ public class DefaultStatusActions implements StatusActions {
         boolean isDraft = metadata instanceof MetadataDraft;
         String userFullName = String.join(" ", context.getUserSession().getName(), context.getUserSession().getSurname());
         Optional<Group> groupOwner = groupRepository.findById(metadata.getSourceInfo().getGroupOwner());
-        String dpPrefix = groupOwner.filter(g -> g.getVlType().equals("datapublicatie")).isPresent() ? "Datapublicatie " : "";
+        String dpPrefix = groupOwner.filter(g -> StringUtils.equals(g.getVlType(), "datapublicatie")).isPresent() ? "Datapublicatie " : "";
         String statusChangeReason = status.getChangeMessage().trim();
+
+        String metadataTitle = XslUtil.getIndexField(null, metadata.getUuid(), "resourceTitleObject", this.language);
+        // TODO below is a temporary workaround for the "todo multilingual" in XslUtil.getIndexField
+        if(StringUtils.isBlank(metadataTitle)) {
+            try {
+                Map<String, Object> document = searchManager.getDocument(metadata.getUuid());
+                Object resourceTitleObject = document.get("resourceTitleObject");
+                if(resourceTitleObject instanceof Map && ((Map) resourceTitleObject).containsKey("default")) {
+                    metadataTitle = String.valueOf(((Map<?, ?>)resourceTitleObject).get("default"));
+                }
+            } catch (Exception e) {
+                String msg = String.format(
+                    "Could not fetch the metadata title for uuid %s. Error is: %s",
+                    metadata.getUuid(), e.getMessage());
+                Log.error(Geonet.DATA_MANAGER, msg);
+            }
+        }
 
         // gather parameters for the email
         // top-level, the mail is composed of 'sections', these need to be replaced first
@@ -386,7 +413,7 @@ public class DefaultStatusActions implements StatusActions {
         Map<String, String> values = new HashMap<>();
         values.put("environment", environment.getLongText());
         values.put("userFullName", userFullName);
-        values.put("recordTitle", XslUtil.getIndexField(null, metadata.getUuid(), "resourceTitleObject", this.language));
+        values.put("recordTitle", metadataTitle);
         values.put("previousStatus", currentStatusName);
         values.put("newStatus", statusName);
         values.put("organisationName", (groupOfUser.map(g -> g.getGroup().getName())).orElse("<error>"));
@@ -569,7 +596,7 @@ public class DefaultStatusActions implements StatusActions {
             Log.debug(Geonet.DATA_MANAGER, "DefaultStatusActions.vlGetUserToNotify(not sending, record has no groupOwner)");
             return new ArrayList<>();
         }
-        boolean isDatapublicatie = recordOwnerGroup.get().getVlType().equals("datapublicatie");
+        boolean isDatapublicatie = StringUtils.equals(recordOwnerGroup.get().getVlType(), "datapublicatie");
         // all users from the record owner group
         List<UserGroup> recordOwnerGroupUsers = userGroupRepository.findAll(UserGroupSpecs.hasGroupId(metadata.getSourceInfo().getGroupOwner()));
         // all admins of Digitaal Vlaanderen

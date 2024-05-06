@@ -29,7 +29,7 @@
                 xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
                 xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0"
                 xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
-                xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.1"
+                xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0"
                 xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
                 xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0"
                 xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/2.0"
@@ -566,7 +566,7 @@
                           select="gn-fn-index:build-thesaurus-index-field-name($thesaurusId, $thesaurusTitle)"/>
 
             <xsl:variable name="keywords"
-                          select="mri:keyword[*/normalize-space() != '']"/>
+                          select="current-group()/mri:keyword[*/normalize-space() != '']"/>
 
             <thesaurus>
               <info type="{$thesaurusType}"
@@ -692,7 +692,9 @@
 
           <xsl:for-each select="mri:distance/gco:Distance[. != '']">
             <resolutionDistance>
-              <xsl:value-of select="concat(., ' ', @uom)"/>
+              <xsl:value-of select="if (contains(@uom, '#'))
+                                    then concat(., ' ', tokenize(@uom, '#')[2])
+                                    else  concat(., ' ', @uom)"/>
             </resolutionDistance>
           </xsl:for-each>
         </xsl:for-each>
@@ -749,7 +751,6 @@
             <xsl:copy-of select="gn-fn-index:add-multilingual-field('extentDescription', ., $allLanguages)"/>
           </xsl:for-each>
 
-          <!-- TODO: index bounding polygon -->
           <xsl:for-each select=".//gex:EX_GeographicBoundingBox[
                                 ./gex:westBoundLongitude/gco:Decimal castable as xs:decimal and
                                 ./gex:eastBoundLongitude/gco:Decimal castable as xs:decimal and
@@ -767,25 +768,6 @@
             <xsl:variable name="s"
                           select="format-number(./gex:southBoundLatitude/gco:Decimal/text(), $format)"/>
 
-            <!-- Example: ENVELOPE(-10, 20, 15, 10) which is minX, maxX, maxY, minY order
-            http://wiki.apache.org/solr/SolrAdaptersForLuceneSpatial4
-            https://cwiki.apache.org/confluence/display/solr/Spatial+Search
-
-            bbox field type limited to one. TODO
-            <xsl:if test="position() = 1">
-              <bbox>
-                <xsl:text>ENVELOPE(</xsl:text>
-                <xsl:value-of select="$w"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$e"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$n"/>
-                <xsl:text>,</xsl:text>
-                <xsl:value-of select="$s"/>
-                <xsl:text>)</xsl:text>
-              </field>
-            </xsl:if>
-            -->
             <xsl:choose>
               <xsl:when test="-180 &lt;= number($e) and number($e) &lt;= 180 and
                               -180 &lt;= number($w) and number($w) &lt;= 180 and
@@ -794,6 +776,10 @@
                 <xsl:choose>
                   <xsl:when test="$e = $w and $s = $n">
                     <location><xsl:value-of select="concat($s, ',', $w)"/></location>
+                    <geom type="object">
+                      <xsl:text>{"type": "Point", "coordinates": </xsl:text>
+                      <xsl:value-of select="concat('[', $w, ',', $s, ']}')"/>
+                    </geom>
                   </xsl:when>
                   <xsl:when
                     test="($e = $w and $s != $n) or ($e != $w and $s = $n)">
@@ -902,6 +888,7 @@
                 <xsl:if test="$max castable as xs:double
                               and xs:double($min) &lt; xs:double($max)">
                   ,"lte": <xsl:value-of select="normalize-space($max)"/>
+                  ,"unit": "m"
                 </xsl:if>
                 }</resourceVerticalRange>
             </xsl:if>
@@ -1201,12 +1188,12 @@
         <xsl:for-each select="mdq:report/*[
                 normalize-space(mdq:measure/*/mdq:nameOfMeasure/gco:CharacterString) != ''
                 or normalize-space(mdq:measure/*/mdq:measureDescription/gco:CharacterString) != ''
-                ]/mdq:result/mdq:DQ_QuantitativeResult">
+                ]/mdq:result/(mdq:DQ_QuantitativeResult|mdq:DQ_DescriptiveResult)">
 
           <xsl:variable name="name"
                         select="(../../mdq:measure/*/mdq:nameOfMeasure/gco:CharacterString)[1]"/>
           <xsl:variable name="value"
-                        select="mdq:value"/>
+                        select="mdq:value/gco:Record[. != '']|mdq:statement/gco:CharacterString[. != '']"/>
           <xsl:variable name="unit"
                         select="mdq:valueUnit//gml:identifier"/>
           <xsl:variable name="description"
@@ -1224,7 +1211,7 @@
               "date": "<xsl:value-of select="util:escapeForJson($measureDate)"/>",
             </xsl:if>
             <!-- First value only. -->
-            "value": "<xsl:value-of select="util:escapeForJson($value/gco:Record[1])"/>",
+            "value": "<xsl:value-of select="util:escapeForJson($value[1])"/>",
             <xsl:if test="$unit != ''">
               "unit": "<xsl:value-of select="util:escapeForJson($unit)"/>",
             </xsl:if>
@@ -1232,7 +1219,7 @@
             }
           </measure>
 
-          <xsl:for-each select="mdq:value/gco:Record[. != '']">
+          <xsl:for-each select="$value">
             <xsl:element name="measure_{gn-fn-index:build-field-name($name)}">
               <xsl:value-of select="."/>
             </xsl:element>
@@ -1300,7 +1287,7 @@
               "nilReason": "<xsl:value-of select="../@gco:nilReason"/>",
             </xsl:if>
             "function":"<xsl:value-of select="cit:function/cit:CI_OnLineFunctionCode/@codeListValue"/>",
-            "applicationProfile":"<xsl:value-of select="util:escapeForJson(cit:applicationProfile/gco:CharacterString/text())"/>",
+            "applicationProfile":"<xsl:value-of select="util:escapeForJson(cit:applicationProfile/(gco:CharacterString|gcx:Anchor)/text())"/>",
             "group": <xsl:value-of select="$transferGroup"/>
             }
           </link>
@@ -1380,18 +1367,6 @@
           <xsl:element name="{concat('agg_associated_', $associationType)}"><xsl:value-of select="$code"/></xsl:element>
         </xsl:if>
       </xsl:for-each>
-
-      <xsl:variable name="indexingTimeRecordLink"
-                    select="util:getSettingValue('system/index/indexingTimeRecordLink')" />
-      <xsl:if test="$indexingTimeRecordLink = 'true'">
-        <xsl:variable name="parentUuid"
-                      select=".//mri:associatedResource/*[mri:associationType/*/@codeListValue = $parentAssociatedResourceType]/mri:metadataReference/@uuidref[. != '']"/>
-        <xsl:variable name="recordsLinks"
-                      select="util:getTargetAssociatedResourcesAsNode(
-                                        $identifier,
-                                        if ($parentUuid) then $parentUuid else mdb:parentMetadata[@uuidref != '']/@uuidref)"/>
-        <xsl:copy-of select="$recordsLinks//recordLink"/>
-      </xsl:if>
     </doc>
 
     <!-- Index more documents for this element -->

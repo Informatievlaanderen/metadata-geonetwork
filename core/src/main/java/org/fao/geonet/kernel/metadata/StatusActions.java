@@ -40,6 +40,6 @@ public interface StatusActions {
 
     public void cancelEditStatus(ServiceContext context, int id) throws Exception;
 
-    public Map<Integer, StatusChangeType> onStatusChange(List<MetadataStatus> status) throws Exception;
+    public Map<Integer, StatusChangeType> onStatusChange(List<MetadataStatus> status, boolean updateIndex) throws Exception;
 
 }
