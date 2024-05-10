@@ -4,34 +4,12 @@ parameters:
   - name: clusterName
   - name: namespace
   - name: acr
+  - name: serviceConnection
+  - name: devopsKeyVault
 
 stages:
-  - stage: skipcheck
-    pool: dv-prd-ubuntu2204
-    jobs:
-      # check whether we can/should skip this pipeline, e.g., for comment-only fixes
-      - job: skipcheck
-        steps:
-          - bash: |
-              echo "Testing whether we need to skip the pipeline."
-              substring='skipci'
-              echo "> substring: $substring"
-              echo "> commit message: $COMMIT_MESSAGE"
-              if [[ "$COMMIT_MESSAGE" == *"$substring"* ]];
-              then
-                echo "> '$substring' was found in the commit message."
-                echo "##vso[task.setvariable variable=skip;isoutput=true]true"
-              else
-                echo "##vso[task.setvariable variable=skip;isoutput=true]false"
-              fi
-            name: skipcheck
-            env:
-              COMMIT_MESSAGE: $(Build.SourceVersionMessage)
-  # environment specific deployment steps, repeatable on each env/namespace
   - stage: ${{ parameters.namespace }}
-    pool: dv-prd-ubuntu2204
-    dependsOn: skipcheck
-    condition: and(succeeded('skipcheck'),eq(dependencies.skipcheck.outputs['skipcheck.skipcheck.skip'], 'false'))
+    dependsOn: build
     jobs:
     - deployment: deploy
       environment: ${{ parameters.namespace }}
@@ -41,7 +19,7 @@ stages:
             steps:
             - checkout: self
               displayName: Set up repository
-              submodules: recursive # needed for submodules
+              submodules: recursive
             - task: Bash@3
               displayName: Set git commit sha as env var
               inputs:
@@ -50,6 +28,24 @@ stages:
                   GIT_COMMIT_SHA=$(git rev-parse HEAD)
                   echo "GIT_COMMIT_SHA: ${GIT_COMMIT_SHA}"
                   echo "##vso[task.setvariable variable=GIT_COMMIT_SHA]${GIT_COMMIT_SHA}"
+            - task: AzureKeyVault@1
+              name: configureKeyVault
+              displayName: Set up connection to keyvault to fetch pipeline variables
+              inputs:
+                azureSubscription: ${{ parameters.serviceConnection }}
+                KeyVaultName: ${{ parameters.devopsKeyVault }}
+                SecretsFilter: '*'
+                RunAsPreJob: false
+            - task: Bash@3
+              name: retrieveSecrets
+              displayName: Retrieve environment-specific variables from keyvault
+              inputs:
+                targetType: 'inline'
+                script: |
+                  echo "##vso[task.setvariable variable=LIQUIBASE_GN_SYSTEM_FEEDBACK_MAILSERVER_PASSWORD]$(${{ parameters.namespace }}-liquibase-gn-system-feedback-mailserver-password)"
+                  echo "##vso[task.setvariable variable=LIQUIBASE_MDV_PASSWORDHASH]$(${{ parameters.namespace }}-liquibase-mdv-passwordhash)"
+                  echo "##vso[task.setvariable variable=LIQUIBASE_MAILPIT_PORT]$(${{ parameters.namespace }}-liquibase-mailpit-port)"
+                  echo "##vso[task.setvariable variable=LIQUIBASE_MAILPIT_HOST]$(${{ parameters.namespace }}-liquibase-mailpit-host)"
             - task: Bash@3
               displayName: Retrieve project version
               inputs:
@@ -76,7 +72,7 @@ stages:
             - task: AzureCLI@2
               displayName: Configure access to aks cluster
               inputs:
-                azureSubscription: 'md-azuredevops-sc'
+                azureSubscription: ${{ parameters.serviceConnection }}
                 addSpnToEnvironment: true
                 scriptType: bash
                 scriptLocation: inlineScript
@@ -125,11 +121,11 @@ stages:
             - task: Bash@3
               displayName: Execute liquibase
               env:
-                # get the pipeline variables into our task
-                LIQUIBASE_GN_SYSTEM_FEEDBACK_MAILSERVER_PASSWORD: $(liquibase.gn.system.feedback.mailserver.password)
-                LIQUIBASE_MDV_PASSWORDHASH: $(liquibase.mdv.passwordhash)
-                LIQUIBASE_MAILPIT_PORT: $(liquibase.mailpit.port)
-                LIQUIBASE_MAILPIT_HOST: $(liquibase.mailpit.host)
+                # get the keyvault variables into our task
+                LIQUIBASE_GN_SYSTEM_FEEDBACK_MAILSERVER_PASSWORD: $(LIQUIBASE_GN_SYSTEM_FEEDBACK_MAILSERVER_PASSWORD)
+                LIQUIBASE_MDV_PASSWORDHASH: $(LIQUIBASE_MDV_PASSWORDHASH)
+                LIQUIBASE_MAILPIT_PORT: $(LIQUIBASE_MAILPIT_PORT)
+                LIQUIBASE_MAILPIT_HOST: $(LIQUIBASE_MAILPIT_HOST)
                 # get additional variables into our task
                 LIQUIBASE_GN_SYSTEM_VLAANDEREN_VERSION: $(VL_GEONETWORK_VERSION)
                 # needed for kube access
