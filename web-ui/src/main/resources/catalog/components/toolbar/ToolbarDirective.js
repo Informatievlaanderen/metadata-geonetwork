@@ -122,14 +122,16 @@
 
           $scope.initials = function (user) {
             var result = "";
-            if (user.name && user.name.length > 0) {
-              result += user.name.charAt(0) + ".";
-            }
-            if (user.surname && user.surname.length > 0) {
-              result += user.surname.charAt(0) + ".";
-            }
-            if (result.length === 0 && user.username && user.username.length > 0) {
-              result += user.username.charAt(0) + ".";
+            if(user) {
+              if (user.name && user.name.length > 0) {
+                result += user.name.charAt(0) + ".";
+              }
+              if (user.surname && user.surname.length > 0) {
+                result += user.surname.charAt(0) + ".";
+              }
+              if (result.length === 0 && user.username && user.username.length > 0) {
+                result += user.username.charAt(0) + ".";
+              }
             }
             if (result.length === 0) {
               result = "?";
