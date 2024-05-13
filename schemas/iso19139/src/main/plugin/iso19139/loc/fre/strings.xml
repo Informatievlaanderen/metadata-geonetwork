@@ -23,39 +23,151 @@
   -->
 
 <strings>
-  <understandResource>Comprendre la ressource</understandResource>
-  <relatedResources>Service disponible et données associées</relatedResources>
-  <techInfo>Les informations techniques</techInfo>
-  <contactInfo>Les contacts</contactInfo>
-  <mdContactInfo>Contacts pour les métadonnées</mdContactInfo>
-  <temporalRef>Référence(s) temporelle(s)</temporalRef>
-  <refDate>Date(s) de référence</refDate>
-  <constraintInfo>Contraintes d'accès et d'utilisation</constraintInfo>
-  <overviews>Aperçus</overviews>
-  <metadataInXML>XML</metadataInXML>
-  <providedBy>Fourni par</providedBy>
-  <shareOnSocialSite>Partager</shareOnSocialSite>
-  <viewMode>Mode d'affichage</viewMode>
-  <linkToPortal>Lien vers le catalogue</linkToPortal>
-  <linkToPortal-help>Consultez l'intégralité des métadonnées et accédez à la donnée.</linkToPortal-help>
+  <mdConstraintsSection>Inhoudelijke beperkingen</mdConstraintsSection>
+  <mdAccessConstraints>Toegangsbeperkingen</mdAccessConstraints>
+  <mdUseConstraints>Gebruiksvoorwaarden</mdUseConstraints>
+  <mdOtherConstraints>Regeling</mdOtherConstraints>
+  <mdLegalConstraintsSection>Legale beperkingen</mdLegalConstraintsSection>
+  <mdLegalAndSecurityConstraintsSection>Legale en veiligheidsbeperkingen</mdLegalAndSecurityConstraintsSection>
 
+  <vl-add-DQ_AbsoluteExternalPositionalAccuracy>Geometric accuracy</vl-add-DQ_AbsoluteExternalPositionalAccuracy>
+  <vl-add-DQ_CompletenessCommission>Superfluous/Additional data</vl-add-DQ_CompletenessCommission>
+  <vl-add-DQ_CompletenessOmission>Completeness</vl-add-DQ_CompletenessOmission>
+  <vl-add-DQ_ThematicClassificationCorrectness>Thematic classification</vl-add-DQ_ThematicClassificationCorrectness>
+  <vl-add-conformity>Conformity</vl-add-conformity>
+  <vl-add-crs-1094>High Water (EPSG(version 8.0 released 10/8/2012):1094)</vl-add-crs-1094>
+  <vl-add-crs-21500>Belge 1950 (Brussels) / Belge Lambert 50 (EPSG:21500)</vl-add-crs-21500>
+  <vl-add-crs-23031>ED50 / UTM zone 31N (EPSG:23031)</vl-add-crs-23031>
+  <vl-add-crs-23032>ED50 / UTM zone 32N (EPSG:23032)</vl-add-crs-23032>
+  <vl-add-crs-31370>Belge 1972 / Belgian Lambert 72 (EPSG:31370)</vl-add-crs-31370>
+  <vl-add-crs-3812>ETRS89 / Belgian Lambert 2008</vl-add-crs-3812>
+  <vl-add-crs-4258>ETRS89</vl-add-crs-4258>
+  <vl-add-crs-5710>Ostend height (EPSG:5710)</vl-add-crs-5710>
+  <vl-add-crs-anchor>Add your own CRS Anchor...</vl-add-crs-anchor>
+  <vl-add-crs-string>Add your own CRS CharacterString...</vl-add-crs-string>
+  <vl-add-crs>Horizontal and/or vertical reference system</vl-add-crs>
+  <vl-add-distributionFormat>Distribution format</vl-add-distributionFormat>
+  <vl-add-distributor>Distributor</vl-add-distributor>
+  <vl-add-featureCatalog>Add feature catalogue</vl-add-featureCatalog>
+  <vl-add-featureCatalogueCitation>Feature catalogue citation</vl-add-featureCatalogueCitation>
+  <vl-add-metadataContact>Metadata author</vl-add-metadataContact>
+  <vl-add-pointOfContact>Point of contact</vl-add-pointOfContact>
+  <vl-add-processStep>Process steps</vl-add-processStep>
+  <vl-add-processor>Processor</vl-add-processor>
+  <vl-add-qualityReport>Quality report</vl-add-qualityReport>
+  <vl-add-representationType>Spatial schema</vl-add-representationType>
+  <vl-add-resolution>Resolution (Distance)</vl-add-resolution>
+  <vl-add-resourceConstraints>Constraints</vl-add-resourceConstraints>
+  <vl-add-scale>Scale</vl-add-scale>
+  <vl-add-source>Source</vl-add-source>
+  <vl-add-status>Status</vl-add-status>
+  <vl-add-transferOptions>Online source</vl-add-transferOptions>
+  <vl-constraints-use>Invulblok legale beperkingen voor gebruik</vl-constraints-use>
+  <vl-constraints-access>Invulblok legale beperkingen voor toegang</vl-constraints-access>
+  <vl-constraints-security>Invulblok veiligheidsbeperkingen</vl-constraints-security>
+  <vl-inspire-ad>INSPIRE Data Specification on Addresses - Technical Guidelines</vl-inspire-ad>
+  <vl-inspire-au>INSPIRE Data Specification on Administrative Units - Technical Guidelines</vl-inspire-au>
+  <vl-inspire-cp>INSPIRE Data Specification on Cadastral Parcels - Technical Guidelines</vl-inspire-cp>
+  <vl-inspire-rs>INSPIRE Data Specification on Coordinate Reference Systems - Technical Guidelines</vl-inspire-rs>
+  <vl-inspire-gg>INSPIRE Data Specification on Geographical Grid Systems - Technical Guidelines</vl-inspire-gg>
+  <vl-inspire-gn>INSPIRE Data Specification on Geographical Names - Technical Guidelines</vl-inspire-gn>
+  <vl-inspire-hy>INSPIRE Data Specification on Hydrography - Technical Guidelines</vl-inspire-hy>
+  <vl-inspire-af>INSPIRE Data Specification on Agricultural and Aquaculture Facilities - Technical Guidelines</vl-inspire-af>
+  <vl-inspire-am>INSPIRE Data Specification on Area Management/Restriction/Regulation Zones and Reporting Units - Technical Guidelines</vl-inspire-am>
+  <vl-inspire-ac>INSPIRE Data Specification on Atmospheric Conditions and Meteorological Geographical Features - Technical Guidelines</vl-inspire-ac>
+  <vl-inspire-br>INSPIRE Data Specification on Bio-geographical Regions - Technical Guidelines</vl-inspire-br>
+  <vl-inspire-bu>INSPIRE Data Specification on Buildings - Technical Guidelines</vl-inspire-bu>
+  <vl-inspire-el>INSPIRE Data Specification on Elevation - Technical Guidelines</vl-inspire-el>
+  <vl-inspire-er>INSPIRE Data Specification on Energy Resources - Technical Guidelines</vl-inspire-er>
+  <vl-inspire-ef>INSPIRE Data Specification on Environmental Monitoring Facilities - Technical Guidelines</vl-inspire-ef>
+  <vl-inspire-ge>INSPIRE Data Specification on Geology - Technical Guidelines</vl-inspire-ge>
+  <vl-inspire-hb>INSPIRE Data Specification on Habitats and Biotopes - Technical Guidelines</vl-inspire-hb>
+  <vl-inspire-hh>INSPIRE Data Specification on Human Health and Safety - Technical Guidelines</vl-inspire-hh>
+  <vl-inspire-lc>INSPIRE Data Specification on Land Cover - Technical Guidelines</vl-inspire-lc>
+  <vl-inspire-lu>INSPIRE Data Specification on Land Use - Technical Guidelines</vl-inspire-lu>
+  <vl-inspire-tn>INSPIRE Data Specification on Transport Networks - Technical Guidelines</vl-inspire-tn>
+  <vl-inspire-oi>INSPIRE Data Specification on Orthoimagery - Technical Guidelines</vl-inspire-oi>
+  <vl-inspire-mf>INSPIRE Data Specification on Meteorological Features - Technical Guidelines</vl-inspire-mf>
+  <vl-inspire-mr>INSPIRE Data Specification on Mineral Resources - Technical Guidelines</vl-inspire-mr>
+  <vl-inspire-nz>INSPIRE Data Specification on Natural Risk Zones - Technical Guidelines</vl-inspire-nz>
+  <vl-inspire-of>INSPIRE Data Specification on Oceanographic geographical features - Technical Guidelines</vl-inspire-of>
+  <vl-inspire-pd>INSPIRE Data Specification on Population Distribution - Technical Guidelines</vl-inspire-pd>
+  <vl-inspire-pf>INSPIRE Data Specification on Production and Industrial Facilities - Technical Guidelines</vl-inspire-pf>
+  <vl-inspire-sr>INSPIRE Data Specification on Sea Regions - Technical Guidelines</vl-inspire-sr>
+  <vl-inspire-so>INSPIRE Data Specification on Soil - Technical Guidelines</vl-inspire-so>
+  <vl-inspire-sd>INSPIRE Data Specification on Species Distribution - Technical Guidelines</vl-inspire-sd>
+  <vl-inspire-su>INSPIRE Data Specification on Statistical Units - Technical Guidelines</vl-inspire-su>
+  <vl-inspire-us>INSPIRE Data Specification on Utility and Government Services - Technical Guidelines</vl-inspire-us>
+  <vl-inspire-download>Technical Guidance for the implementation of INSPIRE Download Services</vl-inspire-download>
+  <vl-inspire-view>Technical Guidance for the implementation of INSPIRE View Services</vl-inspire-view>
+  <vl-inspire-976>Verordening (EG) n r. 976/2009 van de Commissie van 19 oktober 2009 tot uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad wat betreft de netwerkdiensten</vl-inspire-976>
+  <vl-inspire-sds>Technical Guidance for INSPIRE Spatial Data Services and services allowing spatial data services to be invoked</vl-inspire-sds>
+  <vl-inspire-1089>Verordening (EU) nr. 1089/2010 van de Commissie van 23 november 2010 ter uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad betreffende de interoperabiliteit van verzamelingen ruimtelijke gegevens en van diensten met betrekking tot ruimtelijke gegevens</vl-inspire-1089>
+  <vl-measureType>Measurement type</vl-measureType>
+  <vl-representationType-is-a-grid>grid</vl-representationType-is-a-grid>
+  <vl-representationType-is-a-vector>vector</vl-representationType-is-a-vector>
+  <vl-representationType-is-other>other</vl-representationType-is-other>
+  <vl-section-classification>Classification</vl-section-classification>
+  <vl-section-constraints>Content constraints</vl-section-constraints>
+  <vl-sourceDescription>Source description</vl-sourceDescription>
+  <vl-tab-applicationSchemaInfo>Schema info</vl-tab-applicationSchemaInfo>
+  <vl-tab-constraints>Constraints</vl-tab-constraints>
+  <vl-tab-content>Content</vl-tab-content>
+  <vl-tab-distribution>Distribution</vl-tab-distribution>
+  <vl-tab-domainConsistency>Domain consistency</vl-tab-domainConsistency>
+  <vl-tab-identification>Identification</vl-tab-identification>
+  <vl-tab-metaMetadata>Meta-metadata</vl-tab-metaMetadata>
+  <vl-tab-objectCatalogue>Feature catalogue</vl-tab-objectCatalogue>
+  <vl-tab-quality>Quality</vl-tab-quality>
+  <vl-tab-referenceSystem>Reference system</vl-tab-referenceSystem>
+  <vl-type-and-resolution>Spatial schema and resolution</vl-type-and-resolution>
+  <vl-useLimitation-add>Constraints of the dataset(series)</vl-useLimitation-add>
+  <vl>Standard</vl>
+  <vl-BeschrijvingenURL>Beschrijving en URL</vl-BeschrijvingenURL>
+  <vl-Beschrijving>Beschrijving</vl-Beschrijving>
+  <vl-Regelingvoornietvermeldtypevangebruik>Regeling voor niet vermeld type van gebruik</vl-Regelingvoornietvermeldtypevangebruik>
+  <vl-Bronvermeldingsvoorschrift>Bronvermeldingsvoorschrift</vl-Bronvermeldingsvoorschrift>
+  <vl-cc0>CC0 verklaring</vl-cc0>
+  <vl-Licentievoorhergebruikoptevragen>Licentie voor hergebruik op te vragen</vl-Licentievoorhergebruikoptevragen>
+  <vl-VlaamseModellicentievoorgratishergebruik>Vlaamse Modellicentie voor gratis hergebruik</vl-VlaamseModellicentievoorgratishergebruik>
+  <vl-VlaamseModellicentiehergebruiktegenvergoeding>Vlaamse Modellicentie voor hergebruik tegen vergoeding</vl-VlaamseModellicentiehergebruiktegenvergoeding>
+  <vl-Onvoorwaardelijkhergebruik>Onvoorwaardelijk hergebruik</vl-Onvoorwaardelijkhergebruik>
+  <vl-Geenbeperkingopdepublieketoegang>Geen beperking op de publieke toegang</vl-Geenbeperkingopdepublieketoegang>
+  <vl-GebruikdoorVlaamseinstanties>Gebruik door Vlaamse instanties</vl-GebruikdoorVlaamseinstanties>
+  <vl-Gebruikdoorniet-Vlaamseinstanties>Gebruik door niet-Vlaamse instanties</vl-Gebruikdoorniet-Vlaamseinstanties>
+  <vl-add-temporalElement>Temporal extent</vl-add-temporalElement>
 
+  <addConformity>Add conformity</addConformity>
+  <constraintInfo>Access constraint information</constraintInfo>
+  <contactInfo>Contact information</contactInfo>
+  <featureCatalogueCitationUuidref>Feature catalogue identifier</featureCatalogueCitationUuidref>
+  <mdContactInfo>Metadata contact</mdContactInfo>
+  <refDate>Reference date</refDate>
+  <relatedResources>Related services and linked data</relatedResources>
+  <techInfo>Technical information</techInfo>
+  <resourceConstraints>Constraints of the dataset (series)</resourceConstraints>
+  <temporalRef>Temporal information</temporalRef>
+  <understandResource>Information about the dataset</understandResource>
+  <xml_iso19139>Save this metadata as an ISO19139 XML file</xml_iso19139>
+  <xml_iso19139Tooai_dc>Save this metadata as an OAI Dublin Core XML file</xml_iso19139Tooai_dc>
+
+  <!-- New strings added for the AngularJS editor -->
+  <!-- View and tabs -->
   <advanced>Complète</advanced>
   <default>Simple</default>
   <simple>Simple</simple>
   <inspire>INSPIRE</inspire>
+  <inspire_sds>SDS</inspire_sds>
+
   <resource>Ressource</resource>
   <xml>XML</xml>
   <metadata>Métadonnées</metadata>
   <identificationInfo>Identification</identificationInfo>
   <distributionInfo>Distribution</distributionInfo>
   <dataQualityInfo>Qualité</dataQualityInfo>
-  <spatialRepresentationInfo>Information spatiale</spatialRepresentationInfo>
   <referenceSystemInfo>Système de réf.</referenceSystemInfo>
   <contentInfo>Contenu</contentInfo>
   <portrayalCatalogueInfo>Représentation</portrayalCatalogueInfo>
-  <metadataConstraints>Md. contraintes</metadataConstraints>
-  <metadataMaintenance>Md. maintenance</metadataMaintenance>
   <applicationSchemaInfo>Extension</applicationSchemaInfo>
   <noThesaurusName>Mots clés</noThesaurusName>
   <bboxesSection>Zone géographique</bboxesSection>
