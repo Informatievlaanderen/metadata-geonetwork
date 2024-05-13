@@ -162,7 +162,7 @@
 
   <resource>Bron</resource>
   <xml>XML</xml>
-  <metadata>Metadata</metadata>
+  <metadata>Meta-metadata</metadata>
   <identificationInfo>Identificatie</identificationInfo>
   <distributionInfo>Distributie</distributionInfo>
   <dataQualityInfo>Kwaliteit</dataQualityInfo>
@@ -178,19 +178,10 @@
   <shareOnSocialSite>Deel op social media</shareOnSocialSite>
   <viewMode>Views</viewMode>
   <keywordFrom>Trefwoord van</keywordFrom>
-  <resource>Bron</resource>
-  <xml>XML</xml>
-  <metadata>Metadata</metadata>
-  <identificationInfo>Identificatie</identificationInfo>
 
-  <distributionInfo>Distributie</distributionInfo>
-  <dataQualityInfo>Kwaliteit</dataQualityInfo>
   <spatialRepresentationInfo>Ruimtelijke representatie</spatialRepresentationInfo>
-  <contentInfo>Inhoud</contentInfo>
   <metadataConstraints>Metadata restricties</metadataConstraints>
   <metadataMaintenance>Metadata onderhoud</metadataMaintenance>
-  <applicationSchemaInfo>Schema info</applicationSchemaInfo>
-  <noThesaurusName>Trefwoorden</noThesaurusName>
 
   <linkToPortal>Toegang tot het portaal</linkToPortal>
   <linkToPortal-help>Lees hier de volle details en krijg toegang tot de data.</linkToPortal-help>

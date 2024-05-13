@@ -161,7 +161,7 @@
 
   <resource>Resource</resource>
   <xml>XML</xml>
-  <metadata>Metadata</metadata>
+  <metadata>Meta-metadata</metadata>
   <identificationInfo>Identification</identificationInfo>
   <distributionInfo>Distribution</distributionInfo>
   <dataQualityInfo>Quality</dataQualityInfo>
@@ -177,19 +177,10 @@
   <shareOnSocialSite>Share on social sites</shareOnSocialSite>
   <viewMode>Views</viewMode>
   <keywordFrom>Keyword from</keywordFrom>
-  <resource>Resource</resource>
-  <xml>XML</xml>
-  <metadata>Metadata</metadata>
-  <identificationInfo>Identification</identificationInfo>
 
-  <distributionInfo>Distribution</distributionInfo>
-  <dataQualityInfo>Quality</dataQualityInfo>
   <spatialRepresentationInfo>Spatial representation</spatialRepresentationInfo>
-  <contentInfo>Content</contentInfo>
   <metadataConstraints>Metadata constraints</metadataConstraints>
   <metadataMaintenance>Metadata maintenance</metadataMaintenance>
-  <applicationSchemaInfo>Schema info</applicationSchemaInfo>
-  <noThesaurusName>Trefwoorden</noThesaurusName>
 
   <linkToPortal>Access to the catalogue</linkToPortal>
   <linkToPortal-help>Read here the full details and access to the data.</linkToPortal-help>
