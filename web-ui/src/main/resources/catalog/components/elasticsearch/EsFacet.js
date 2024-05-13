@@ -50,6 +50,7 @@
           "resourceDate",
           "resourceEdition",
           "draft",
+          "draftId",
           "owner",
           "link",
           "status*",
