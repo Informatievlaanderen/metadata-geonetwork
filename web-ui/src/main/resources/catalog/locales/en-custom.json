@@ -30,6 +30,8 @@
   "facet-th_datatheme_tree": "Data.gov.be themes",
   "facet-th_inspire-theme": "INSPIRE themes",
   "facet-th_inspire-theme_tree": "INSPIRE themes",
+  "facet-nonOgcwxsSourceCatalog.keyword": "Catalogue",
+  "facet-groupOwnerName.keyword": "Group",
   "featureAttributeTable": "Entity",
   "featureCatalog": "Feature catalogue",
   "groupManagedByDataPublicatie": "Managed by DataPublicatie",

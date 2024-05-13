@@ -31,6 +31,8 @@
   "facet-th_inspire-theme": "INSPIRE thema",
   "facet-th_inspire-theme_tree": "INSPIRE thema",
   "facet-topLevelProtocol.keyword": "Protocol service",
+  "facet-nonOgcwxsSourceCatalog.keyword": "Catalogus",
+  "facet-groupOwnerName.keyword": "Groep",
   "featureAttributeTable": "Entiteit",
   "featureCatalog": "Objectencatalogus",
   "groupManagedByDataPublicatie": "Beheerd door DataPublicatie",
