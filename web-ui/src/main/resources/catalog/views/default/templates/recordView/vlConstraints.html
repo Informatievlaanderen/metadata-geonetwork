@@ -11,6 +11,13 @@
       data-gn-vl-constraint-by-type="MD_LegalConstraints"
       data-record="mdView.current.record"
     ></div>
+
+    <div
+      data-ng-if="hasConstraintType(mdView.current.record, 'MD_Constraints')
+                   && mdView.current.record.resourceType[0] === 'service'"
+      data-gn-vl-constraint-by-type="MD_Constraints"
+      data-record="mdView.current.record"
+    ></div>
   </div>
 
   <div data-ng-if="hasConstraintType(mdView.current.record, 'MD_SecurityConstraints')">
@@ -21,7 +28,10 @@
     ></div>
   </div>
 
-  <div data-ng-if="hasConstraintType(mdView.current.record, 'MD_Constraints')">
+  <div
+    data-ng-if="hasConstraintType(mdView.current.record, 'MD_Constraints')
+                   && mdView.current.record.resourceType[0] !== 'service'"
+  >
     <h2 data-translate="">resourceConstraints</h2>
     <div
       data-gn-vl-constraint-by-type="MD_Constraints"
