@@ -122,7 +122,7 @@
 
           $scope.initials = function (user) {
             var result = "";
-            if(user) {
+            if (user) {
               if (user.name && user.name.length > 0) {
                 result += user.name.charAt(0) + ".";
               }

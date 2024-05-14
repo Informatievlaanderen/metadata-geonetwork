@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### core
 - Added groupOwner check while testing for permissions in Elasticsearch - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35160) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7980)
+- Fixed broken link to draft copy editor in search results - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35546) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8031)
 
 
 ## [8.1.18] - 2024-04-30
