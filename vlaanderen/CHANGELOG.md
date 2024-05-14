@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### core
 - Added groupOwner check while testing for permissions in Elasticsearch - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35160) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7980)
+- Record view / Service metadata / Move resource constraints to the legal section - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35579)
 
 
 ## [8.1.18] - 2024-04-30
