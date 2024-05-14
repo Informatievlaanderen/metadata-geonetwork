@@ -104,7 +104,7 @@
     </div>
   </alert.M7.uomAndAxis>
   <alert.M8>
-    <div>Je moet minstens de naam van de contactpersson (individualName), de naam van de organisatie (organisationName)
+    <div>Je moet minstens de naam van de contactpersoon (individualName), de naam van de organisatie (organisationName)
       of de positie (positionName) beschrijven.
       <span class="validationReportSuggestion">Suggestie: Verifieer de contactgegevens voor de metadata auteur of de
         contactgevens onder de identificatiegegevens.
