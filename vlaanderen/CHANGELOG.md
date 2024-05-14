@@ -10,12 +10,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Record view / Service metadata / Move resource constraints to the legal section - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35579)
 - Fixed duplicated labels in full iso19139 view - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35542)
 - Translation improvements - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35547)
+- Facet label fix - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35549)
 
 ### core-geonetwork
-- Merged 4.4.5-SNAPSHOT, Elasticsearch 8 upgrade  - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33251)
 - Added groupOwner check while testing for permissions in Elasticsearch - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35160) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7980)
+- Merged 4.4.5-SNAPSHOT, Elasticsearch 8 upgrade  - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33251)
 - Fixed broken link to draft copy editor in search results - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35546) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8031)
-
 
 ## [8.1.18] - 2024-04-30
 
