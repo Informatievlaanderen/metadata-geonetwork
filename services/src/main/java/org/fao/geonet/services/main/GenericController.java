@@ -131,7 +131,7 @@ public class GenericController {
             sb.append("Stack :\n");
             sb.append(Util.getStackTrace(e));
             Log.error(Log.REQUEST, sb.toString());
-
+            return;
         } catch (Exception e) {
             StringBuffer sb = new StringBuffer();
 
@@ -144,6 +144,7 @@ public class GenericController {
             sb.append("Stack :\n");
             sb.append(Util.getStackTrace(e));
             Log.error(Log.REQUEST, sb.toString());
+            return;
         }
 
         // --- execute request
