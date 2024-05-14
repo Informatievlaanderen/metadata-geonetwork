@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### vlaanderen
 - Record view / Service metadata / Move resource constraints to the legal section - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35579)
 - Fixed duplicated labels in full iso19139 view - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35542)
+- Translation improvements - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35547)
 
 ### core-geonetwork
 - Merged 4.4.5-SNAPSHOT, Elasticsearch 8 upgrade  - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33251)
