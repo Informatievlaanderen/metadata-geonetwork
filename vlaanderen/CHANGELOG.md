@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Profile and standard facets visible for anonymous users - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35644)
 
 ### core-geonetwork
+- Log / Remove mail debug information - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35670) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8043)
 - Added groupOwner check while testing for permissions in Elasticsearch - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35160) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7980)
 - Merged 4.4.5-SNAPSHOT, Elasticsearch 8 upgrade  - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/33251)
 - Fixed broken link to draft copy editor in search results - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35546) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8031)
