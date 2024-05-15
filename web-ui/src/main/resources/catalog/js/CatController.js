@@ -401,9 +401,6 @@
                 terms: {
                   field: "documentStandard",
                   size: 10
-                },
-                meta: {
-                  userHasRole: "isReviewerOrMore"
                 }
               },
               // #4 CATALOGUS
@@ -740,8 +737,7 @@
                   field: "standardNameObject.default.keyword"
                 },
                 meta: {
-                  collapsed: true,
-                  userHasRole: "isReviewerOrMore"
+                  collapsed: true
                 }
               },
               // #25 JAAR (AANGEMAAKT)
