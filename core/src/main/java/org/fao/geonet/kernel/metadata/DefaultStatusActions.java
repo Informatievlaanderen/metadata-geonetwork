@@ -375,21 +375,6 @@ public class DefaultStatusActions implements StatusActions {
         String statusChangeReason = status.getChangeMessage().trim();
 
         String metadataTitle = XslUtil.getIndexField(null, metadata.getUuid(), "resourceTitleObject", this.language);
-        // TODO below is a temporary workaround for the "todo multilingual" in XslUtil.getIndexField
-        if(StringUtils.isBlank(metadataTitle)) {
-            try {
-                Map<String, Object> document = searchManager.getDocument(metadata.getUuid());
-                Object resourceTitleObject = document.get("resourceTitleObject");
-                if(resourceTitleObject instanceof Map && ((Map) resourceTitleObject).containsKey("default")) {
-                    metadataTitle = String.valueOf(((Map<?, ?>)resourceTitleObject).get("default"));
-                }
-            } catch (Exception e) {
-                String msg = String.format(
-                    "Could not fetch the metadata title for uuid %s. Error is: %s",
-                    metadata.getUuid(), e.getMessage());
-                Log.error(Geonet.DATA_MANAGER, msg);
-            }
-        }
 
         // gather parameters for the email
         // top-level, the mail is composed of 'sections', these need to be replaced first
