@@ -1270,7 +1270,7 @@
     "wfs-indexing": "Feature harvesters",
     "wfsIndexingTitle": "WFS indexatie dashboard",
     "wfsIndexingSubtitle": "Hier worden de lopende en voltooide taken weergegeven voor indexeringsfuncties van externe WFS-services. Eenmaal geïndexeerd, kunnen objecten vervolgens worden gefilterd op basis van hun attributen en de filter die op de originele kaartlaag wordt toegepast.",
-    "wfsIndexingFeatureType": "Featuretype",
+    "wfsIndexingFeatureType": "Objecttype",
     "wfsIndexingMetadata": "Geassocieerde metadata",
     "wfsIndexingMetadataNotFound": "Metadata zijn niet gevonden",
     "wfsIndexingMetadataUuid": "Metadata UUID",
