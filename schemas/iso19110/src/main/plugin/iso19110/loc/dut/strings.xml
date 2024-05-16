@@ -29,4 +29,6 @@
   <advanced>Volledig</advanced>
   <default>Standaard</default>
   <xml>XML</xml>
+  <selectFeaturetype>Selecteer een objecttype</selectFeaturetype>
+  <missingFeatureTypeName>Nieuw objecttype</missingFeatureTypeName>
 </strings>

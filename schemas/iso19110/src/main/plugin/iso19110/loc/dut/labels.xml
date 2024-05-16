@@ -60,20 +60,20 @@
     <description>Verantwoordelijke catalogus</description>
   </element>
   <element name="gfc:featureType">
-    <label>Beschrijving eigenschap</label>
-    <description>Beschrijving eigenschap</description>
+    <label>Objecttype</label>
+    <description>Objecttype</description>
   </element>
   <element name="gfc:isAbstract">
     <label>Abstract</label>
     <description>Is dit element een abstract element ?</description>
   </element>
   <element name="gfc:FC_FeatureType">
-    <label>Beschrijving attributentabel</label>
-    <description>Beschrijving attributentabel</description>
+    <label>Objecttype tabel</label>
+    <description>Tabel van objecttypes</description>
   </element>
   <element name="gfc:typeName">
-    <label>Naam eigenschap</label>
-    <description></description>
+    <label>Naam</label>
+    <description>Naam van objecttype</description>
   </element>
   <element name="gfc:carrierOfCharacteristics">
     <label>Elementen</label>
@@ -81,7 +81,7 @@
   </element>
   <element name="gfc:definition">
     <label>Definitie</label>
-    <description>Definitie eigenschap</description>
+    <description>Definitie van objecttype</description>
   </element>
   <element name="gfc:fieldOfApplication">
     <label>Toepassingsgebied</label>

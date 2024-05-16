@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Facet label fix - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35549)
 - Profile and standard facets visible for anonymous users - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35644)
 - Catching frontend errors - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35706)
+- Editor optimisation, not displaying large amount of tables - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35571)
 
 ### core-geonetwork
 - Log / Remove mail debug information - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35670) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8043)
@@ -22,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fixed broken link to draft copy editor in search results - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35546) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8031)
 - Record view / Focus on organisation fix - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35646) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8040)
 - Multilingual support for `getIndexField` - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35661) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8042)
+- Added groupOwner check while testing for permissions in Elasticsearch - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35160) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/7980)
 
 
 ## [8.1.18] - 2024-04-30
