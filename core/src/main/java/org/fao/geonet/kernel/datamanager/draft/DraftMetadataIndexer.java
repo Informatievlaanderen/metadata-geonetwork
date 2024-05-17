@@ -97,6 +97,7 @@ public class DraftMetadataIndexer extends BaseMetadataIndexer implements IMetada
                 }
 
                 extraFields.put(Geonet.IndexFieldNames.STATUS_WORKFLOW, status + "-" + statusDraft);
+                extraFields.put(Geonet.IndexFieldNames.STATUS_WORKFLOW_PUBLISHED, status);
 
             } else {
                 Log.trace(Geonet.DATA_MANAGER,
@@ -111,6 +112,7 @@ public class DraftMetadataIndexer extends BaseMetadataIndexer implements IMetada
                     MetadataStatus stat = statuses.get(0);
                     String status = String.valueOf(stat.getStatusValue().getName());
                     extraFields.put(Geonet.IndexFieldNames.STATUS_WORKFLOW, status);
+                    extraFields.put(Geonet.IndexFieldNames.STATUS_WORKFLOW_PUBLISHED, status);
                 }
             }
         }

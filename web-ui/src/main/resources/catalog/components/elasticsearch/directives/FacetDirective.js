@@ -232,7 +232,7 @@
         var translationId =
             (facetKeyToTranslationGroupMap.get(facetKey) || facetKey) + "-" + input,
           translation = undefined;
-        if (facetKey === "statusWorkflow") {
+        if (facetKey === "statusWorkflow" || facetKey === "statusWorkflowPublished") {
           translation = $filter("getStatusLabel")(input);
         } else {
           translation = $translate.instant(translationId);

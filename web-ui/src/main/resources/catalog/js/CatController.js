@@ -830,13 +830,14 @@
                   displayFilter: true
                 }
               },
+              // #29 workflow status
               mdStatus: {
                 terms: {
-                  field: "statusWorkflow",
+                  field: "statusWorkflowPublished",
                   size: 20
                 },
                 meta: {
-                  field: "statusWorkflow",
+                  field: "statusWorkflowPublished",
                   collapsed: true,
                   userHasRole: "isEditorOrMore",
                   orderByVLStatus: true,
@@ -1324,11 +1325,11 @@
               },
               mdStatus: {
                 terms: {
-                  field: "statusWorkflow",
+                  field: "statusWorkflowPublished",
                   size: 20
                 },
                 meta: {
-                  field: "statusWorkflow",
+                  field: "statusWorkflowPublished",
                   orderByVLStatus: true
                 }
               },
