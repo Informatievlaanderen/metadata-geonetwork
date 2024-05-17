@@ -43,6 +43,7 @@ import co.elastic.clients.transport.rest_client.RestClientTransport;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.Lists;
 import jakarta.json.spi.JsonProvider;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
@@ -365,15 +366,15 @@ public class EsRestClient implements InitializingBean {
         }
 
         DeleteByQueryRequest request = DeleteByQueryRequest.of(
-            b -> b.index(new ArrayList<>(Arrays.asList(index)))
+            b -> b.index(Lists.newArrayList(index))
                 .q(query)
-                .refresh(true));
+                .refresh(true)
+                .conflicts(Conflicts.Proceed));
 
         final DeleteByQueryResponse deleteByQueryResponse =
             client.deleteByQuery(request);
 
-
-        if (deleteByQueryResponse.deleted() >= 0) {
+        if (deleteByQueryResponse.deleted() != null && deleteByQueryResponse.deleted() >= 0) {
             return String.format("Record removed. %s.", deleteByQueryResponse.deleted());
         } else {
             StringBuilder stringBuilder = new StringBuilder();
@@ -388,6 +389,7 @@ public class EsRestClient implements InitializingBean {
 
     /**
      * Get the complete document from the index.
+     *
      * @param id For record index, use UUID.
      * @return the source as Map
      */
