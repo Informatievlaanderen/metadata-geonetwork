@@ -119,17 +119,17 @@ stages:
               latest
               $(GIT_COMMIT_SHA)
               $(VL_GEONETWORK_VERSION)
-#        - task: Docker@2
-#          displayName: Build web image and push to prod container registry (prdmdacr)
-#          inputs:
-#            containerRegistry: 'prdmdacr'
-#            repository: 'metadata/geonetwork'
-#            command: 'buildAndPush'
-#            Dockerfile: 'web/Dockerfile'
-#            tags: |
-#              latest
-#              $(GIT_COMMIT_SHA)
-#              $(VL_GEONETWORK_VERSION)
+        - task: Docker@2
+          displayName: Build web image and push to prod container registry (prdmdacr)
+          inputs:
+            containerRegistry: 'prdmdacr'
+            repository: 'metadata/geonetwork'
+            command: 'buildAndPush'
+            Dockerfile: 'web/Dockerfile'
+            tags: |
+              latest
+              $(GIT_COMMIT_SHA)
+              $(VL_GEONETWORK_VERSION)
 
 - template: azure-pipelines-deploy.yml
   parameters:
