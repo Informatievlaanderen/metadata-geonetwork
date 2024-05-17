@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Profile and standard facets visible for anonymous users - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35644)
 - Catching frontend errors - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35706)
 - Editor optimisation, not displaying large amount of tables - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35571)
+- Not displaying draft copy status in search and facets - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35774)
 
 ### core-geonetwork
 - Log / Remove mail debug information - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35670) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8043)
