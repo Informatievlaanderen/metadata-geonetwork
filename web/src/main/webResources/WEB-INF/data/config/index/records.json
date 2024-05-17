@@ -2045,6 +2045,9 @@
       "statusWorkflow": {
         "type": "keyword"
       },
+      "statusWorkflowPublished": {
+        "type": "keyword"
+      },
       "userSavedCount": {
         "type": "long"
       },
