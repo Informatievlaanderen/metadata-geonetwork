@@ -5,7 +5,7 @@
   </Properties>
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%date{ISO8601} %-5level [%logger] - %message%n"/>
+      <JsonTemplateLayout eventTemplateUri="classpath:log4j2.template.json"/>
     </Console>
     <RollingFile name="File">
       <filename>${sys:log_dir:-log_dir}/geonetwork.log</filename>
@@ -36,7 +36,7 @@
       <AppenderRef ref="File"/>
     </Logger>
     <Logger name="geonetwork.accessmanager" level="error"/>
-    <Logger name="geonetwork.atom" level="info"/>
+    <Logger name="geonetwork.atom" level="error"/>
     <Logger name="geonetwork.backup" level="error"/>
     <Logger name="geonetwork.camel-harvester" level="error"/>
     <Logger name="geonetwork.cors" level="error"/>
@@ -46,18 +46,18 @@
     <Logger name="geonetwork.csw.harvest" level="error"/>
     <Logger name="geonetwork.data.directory" level="error"/>
     <Logger name="geonetwork.database" level="error"/>
-    <Logger name="geonetwork.databasemigration" level="info"/>
+    <Logger name="geonetwork.databasemigration" level="error"/>
     <Logger name="geonetwork.datamanager" level="error"/>
     <Logger name="geonetwork.domain" level="error"/>
     <Logger name="geonetwork.editor" level="error"/>
     <Logger name="geonetwork.editorexpandelement" level="error"/>
     <Logger name="geonetwork.editorfillelement" level="error"/>
-    <Logger name="geonetwork.encryptor" level="info"/>
+    <Logger name="geonetwork.encryptor" level="error"/>
     <Logger name="geonetwork.formatter" level="error"/>
     <Logger name="geonetwork.geoserver.publisher" level="error"/>
     <Logger name="geonetwork.geoserver.rest" level="error"/>
     <Logger name="geonetwork.harvest.wfs.features" level="error"/>
-    <Logger name="geonetwork.harvester" level="info">
+    <Logger name="geonetwork.harvester" level="error">
       <AppenderRef ref="Harvester"/>
     </Logger>
     <Logger name="geonetwork.harvest-man" level="error"/>
@@ -141,7 +141,7 @@
 
     <!-- Turn off logging except when explicitly declared above -->
     <Root level="off">
-        <AppenderRef ref="File"/>
+      <AppenderRef ref="File"/>
     </Root>
   </Loggers>
 </Configuration>
