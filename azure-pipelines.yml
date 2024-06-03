@@ -110,6 +110,7 @@ stages:
             publishLocation: 'Container'
         - task: Docker@2
           displayName: Build web image and push to preprod container registry (premdacr)
+          buildContext: '$(Build.Repository.LocalPath)'
           inputs:
             containerRegistry: 'premdacr'
             repository: 'metadata/geonetwork'
@@ -121,6 +122,7 @@ stages:
               $(VL_GEONETWORK_VERSION)
         - task: Docker@2
           displayName: Build web image and push to prod container registry (prdmdacr)
+          buildContext: '$(Build.Repository.LocalPath)'
           inputs:
             containerRegistry: 'prdmdacr'
             repository: 'metadata/geonetwork'
