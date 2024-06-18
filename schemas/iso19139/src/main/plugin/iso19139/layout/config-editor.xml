@@ -562,8 +562,7 @@
       <!--<directive data-gn-file-uploader=""
                  data-type="onlines"/>-->
 
-      <directive data-gn-onlinesrc-list=""
-                 data-types="onlinesrc|parent|dataset|service|source|sibling|associated|fcats"/>
+      <directive data-gn-associated-resources-panel="gnCurrentEdit.metadata" />
 
       <directive data-gn-validation-report=""/>
 
