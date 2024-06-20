@@ -6,7 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [8.2.1-SNAPSHOT]
 
+### vlaanderen
 - Hotfix: broken full view editor due to duplicate rdf file - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35995)
+
+### core-geonetwork
+- Additional fixes for double translation bug - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/36762) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8209)
 
 ## [8.2.0] - 2024-05-27
 
