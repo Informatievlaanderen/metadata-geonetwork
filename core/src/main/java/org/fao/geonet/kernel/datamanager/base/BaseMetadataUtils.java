@@ -354,7 +354,7 @@ public class BaseMetadataUtils implements IMetadataUtils {
 
 
         String sitemapLinkUrl = settingManager.getValue(METADATA_URL_SITEMAPLINKURL);
-        String defaultLink = settingManager.getNodeURL() + "api/records/" + uuid + "?language=all";
+        String defaultLink = settingManager.getNodeURL() + "api/records/" + uuid + "?language=dut";
         String permalink = buildUrl(uuid, language, sitemapLinkUrl);
         return StringUtils.isNotEmpty(permalink) ? permalink : defaultLink;
     }
