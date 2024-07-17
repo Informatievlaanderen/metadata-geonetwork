@@ -87,7 +87,7 @@ public class SearchApi {
         if(true) {
             String message = "Not implemented in Elasticsearch (getFieldInfo).";
             Log.error(API.LOG_MODULE_NAME, message);
-            response.sendError(org.apache.commons.httpclient.HttpStatus.SC_NOT_IMPLEMENTED, message);
+            // response.sendError(org.apache.commons.httpclient.HttpStatus.SC_NOT_IMPLEMENTED, message);
             return;
         }
 
