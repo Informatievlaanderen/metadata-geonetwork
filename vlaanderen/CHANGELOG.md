@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. These chang
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [8.2.1-SNAPSHOT]
+## [8.2.1] - 2024-07-17
 
 ### vlaanderen
 - Cleanup of DCAT2 plugin to make it available for general use - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/36672)
