@@ -97,3 +97,4 @@ web/src/main/webapp/WEB-INF/data/data/resources/schemapublication
 # Metadata Vlaanderen additions
 docker-compose.dev.yml
 web/src/main/webapp/WEB-INF/data/config/schema_plugins/dcat2
+web/harvester*.log
