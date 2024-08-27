@@ -22,10 +22,10 @@ variables:
     value: $(Pipeline.Workspace)/.m2/repository
   - name: mavenCacheOpts
     value: '-Dmaven.repo.local=$(mavenCacheFolder)'
-  - name: serviceConnection
-    value: md-azuredevops-sc
   - name: devopsKeyvault
     value: prd-md-devops-kv
+  - name: serviceConnection
+    value: md-azuredevops-workloadidentity-sc
 
 ########
 # STAGES
