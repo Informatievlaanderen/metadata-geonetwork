@@ -1,11 +1,12 @@
 parameters:
-  - name: subscription
-  - name: clusterRg
+  - name: acrName
+  - name: acrServiceConnection
   - name: clusterName
-  - name: namespace
-  - name: acr
-  - name: serviceConnection
+  - name: clusterRg
   - name: devopsKeyVault
+  - name: namespace
+  - name: serviceConnection
+  - name: subscription
 
 stages:
   - stage: ${{ parameters.namespace }}
@@ -32,7 +33,7 @@ stages:
               name: configureKeyVault
               displayName: Set up connection to keyvault to fetch pipeline variables
               inputs:
-                azureSubscription: ${{ parameters.serviceConnection }}
+                azureSubscription: prd-md-subscription-sc
                 KeyVaultName: ${{ parameters.devopsKeyVault }}
                 SecretsFilter: '*'
                 RunAsPreJob: false
@@ -70,7 +71,7 @@ stages:
                     exit 1
                   fi
             - task: AzureCLI@2
-              displayName: Configure access to aks cluster
+              displayName: Prepare access to AKS cluster
               inputs:
                 azureSubscription: ${{ parameters.serviceConnection }}
                 addSpnToEnvironment: true
@@ -79,23 +80,18 @@ stages:
                 inlineScript: |
                   # download kubectl and kubelogin
                   sudo az aks install-cli --subscription ${{ parameters.subscription }} --client-version latest --kubelogin-version latest --only-show-errors
-
-                  # set the right subscription
-                  az account set --subscription ${{ parameters.subscription }}
-
-                  # download ~/.kube/config file
-                  az aks get-credentials --subscription ${{ parameters.subscription }} --resource-group ${{ parameters.clusterRg }} --name ${{ parameters.clusterName }} --only-show-errors
-
-                  # convert ~/.kube/config to a format compatible with kubelogin
-                  kubelogin convert-kubeconfig --login spn
-
-                  # create secure azure devops variables for later steps
-                  echo "##vso[task.setvariable variable=spnId;isSecret=true]$servicePrincipalId"
-                  echo "##vso[task.setvariable variable=spnSecret;isSecret=true]$servicePrincipalKey"
+            - task: Kubernetes@1
+              displayName: 'Kubernetes Login'
+              inputs:
+                connectionType: Azure Resource Manager
+                azureSubscriptionEndpoint: ${{ parameters.serviceConnection }}
+                azureResourceGroup: ${{ parameters.clusterRg }}
+                kubernetesCluster: ${{ parameters.clusterName }}
+                command: 'login'
             - task: Docker@2
               displayName: Login to ACR
               inputs:
-                containerRegistry: ${{ parameters.acr }}
+                containerRegistry: ${{ parameters.acrServiceConnection }}
                 repository: 'metadata/geonetwork'
                 command: 'login'
             - task: Bash@3
@@ -117,7 +113,7 @@ stages:
               env:
                 NAMESPACE: ${{ parameters.namespace }}
                 GIT_COMMIT_SHA: $(GIT_COMMIT_SHA)
-                ACR: ${{ parameters.acr }}
+                ACR: ${{ parameters.acrName }}
             - task: Bash@3
               displayName: Execute liquibase
               env:

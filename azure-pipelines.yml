@@ -12,20 +12,10 @@ pool: dv-prd-ubuntu2204
 # VARIABLES
 ###########
 variables:
-  - name: subscription
-    value: METADATA-dev
-  - name: clusterRg
-    value: pre-md-cluster-rg
-  - name: clusterName
-    value: pre-md-cluster-aks
   - name: mavenCacheFolder
     value: $(Pipeline.Workspace)/.m2/repository
   - name: mavenCacheOpts
     value: '-Dmaven.repo.local=$(mavenCacheFolder)'
-  - name: serviceConnection
-    value: md-azuredevops-sc
-  - name: devopsKeyvault
-    value: prd-md-devops-kv
 
 ########
 # STAGES
@@ -111,7 +101,7 @@ stages:
         - task: Docker@2
           displayName: Build web image and push to preprod container registry (premdacr)
           inputs:
-            containerRegistry: 'premdacr'
+            containerRegistry: 'pre-md-acr-sc'
             repository: 'metadata/geonetwork'
             command: 'buildAndPush'
             Dockerfile: 'web/Dockerfile'
@@ -122,7 +112,7 @@ stages:
         - task: Docker@2
           displayName: Build web image and push to prod container registry (prdmdacr)
           inputs:
-            containerRegistry: 'prdmdacr'
+            containerRegistry: 'prd-md-acr-sc'
             repository: 'metadata/geonetwork'
             command: 'buildAndPush'
             Dockerfile: 'web/Dockerfile'
@@ -133,30 +123,33 @@ stages:
 
 - template: azure-pipelines-deploy.yml
   parameters:
-    subscription: METADATA-dev
-    clusterRg: pre-md-cluster-rg
+    acrName: premdacr
+    acrServiceConnection: pre-md-acr-sc
     clusterName: pre-md-cluster-aks
+    clusterRg: pre-md-cluster-rg
+    devopsKeyVault: prd-md-devops-kv
     namespace: dev
-    acr: premdacr
-    serviceConnection: ${{ variables.serviceConnection }}
-    devopsKeyVault: prd-md-devops-kv
-
-- template: azure-pipelines-deploy.yml
-  parameters:
+    serviceConnection: pre-md-subscription-sc
     subscription: METADATA-dev
-    clusterRg: pre-md-cluster-rg
-    clusterName: pre-md-cluster-aks
-    namespace: bet
-    acr: premdacr
-    serviceConnection: ${{ variables.serviceConnection }}
-    devopsKeyVault: prd-md-devops-kv
 
 - template: azure-pipelines-deploy.yml
   parameters:
-    subscription: METADATA-productie
-    clusterRg: prd-md-cluster-rg
-    clusterName: prd-md-cluster-aks
-    namespace: prd
-    acr: prdmdacr
-    serviceConnection: ${{ variables.serviceConnection }}
+    acrName: premdacr
+    acrServiceConnection: pre-md-acr-sc
+    clusterName: pre-md-cluster-aks
+    clusterRg: pre-md-cluster-rg
     devopsKeyVault: prd-md-devops-kv
+    namespace: bet
+    serviceConnection: pre-md-subscription-sc
+    subscription: METADATA-dev
+
+- template: azure-pipelines-deploy.yml
+  parameters:
+    acrName: prdmdacr
+    acrServiceConnection: prd-md-acr-sc
+    clusterName: prd-md-cluster-aks
+    clusterRg: prd-md-cluster-rg
+    devopsKeyVault: prd-md-devops-kv
+    namespace: prd
+    serviceConnection: prd-md-subscription-sc
+    subscription: METADATA-productie

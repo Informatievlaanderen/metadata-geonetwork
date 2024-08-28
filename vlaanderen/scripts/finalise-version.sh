@@ -64,6 +64,8 @@ if [[ $current_version == *-SNAPSHOT ]]; then
   regex_from="s/## \[$escaped_version\].*/## [$new_version] - $today/"
   echo "Regex source: $regex_from"
   sed -E "$regex_from" -i $changelogfile
+  git_tag="vl-$new_version"
+  echo "Git tag: $git_tag"
 
   # switch to the 'finalise' branch and commit the pom with the new version set
   branch="feature/finalise-$new_version"
@@ -72,7 +74,9 @@ if [[ $current_version == *-SNAPSHOT ]]; then
   git add $pomfile
   git add $changelogfile
   git commit -m "Finalising $new_version"
+  git tag "$git_tag"
   git push --set-upstream $remote "$branch"
+  git push $remote "$git_tag"
 
   # prepare for cleanup
   branch1="$branch"
