@@ -1,0 +1,49 @@
+variables:
+  - name: subscription
+    value: METADATA-dev
+  - name: clusterRg
+    value: pre-md-cluster-rg
+  - name: clusterName
+    value: pre-md-cluster-aks
+  - name: namespace
+    value: dev
+  - name: acr
+    value: premdacr
+  - name: serviceConnection
+    value: pre-md-subscription-sc
+  - name: devopsKeyVault
+    value: prd-md-devops-kv
+
+stages:
+  - stage: ${{ variables.namespace }}
+    jobs:
+    - deployment: deploy
+      environment: ${{ variables.namespace }}
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - checkout: self
+              displayName: Set up repository
+              submodules: recursive
+            - task: AzureCLI@2
+              displayName: Prepare access to AKS cluster
+              inputs:
+                azureSubscription: ${{ variables.serviceConnection }}
+                addSpnToEnvironment: true
+                scriptType: bash
+                scriptLocation: inlineScript
+                inlineScript: |
+                  # download kubectl and kubelogin
+                  sudo az aks install-cli --subscription ${{ variables.subscription }} --client-version latest --kubelogin-version latest --only-show-errors
+            - task: Kubernetes@1
+              displayName: 'Kubernetes Login'
+              inputs:
+                connectionType: Azure Resource Manager
+                azureSubscriptionEndpoint: ${{ variables.serviceConnection }}
+                azureResourceGroup: ${{ variables.clusterRg }}
+                kubernetesCluster: ${{ variables.clusterName }}
+                command: 'login'
+            - script: |
+                kubectl get namespaces
+              displayName: Execute kubectl
