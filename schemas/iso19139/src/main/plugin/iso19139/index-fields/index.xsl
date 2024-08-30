@@ -539,6 +539,8 @@
           </xsl:call-template>
         </xsl:variable>
 
+        <xsl:variable name="dataGovBeThemeKeywordCount" select="count(*/gmd:MD_Keywords/gmd:keyword[not(@gco:nilReason) and ../gmd:thesaurusName/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href='http://vocab.belgif.be/auth/datatheme'])"/>
+
         <xsl:variable name="allKeywords">
           <xsl:variable name="thesaurus">
             <xsl:for-each-group select="*/gmd:MD_Keywords"
@@ -645,14 +647,19 @@
                     </keyword>
                   </xsl:for-each>
 
-                  <xsl:if test="$thesaurusId = 'geonetwork.thesaurus.external.theme.datatheme'">
-                    <xsl:for-each select="$mappedTopic/keyword">
-                      <xsl:variable name="themeURI" select="string(@uri)"/>
-                      <xsl:if test="count($keywords/gmx:Anchor[@xlink:href = $themeURI]) = 0">
+                  <xsl:if test="$dataGovBeThemeKeywordCount = 0 and $thesaurusId = 'geonetwork.thesaurus.external.theme.datatheme'">
+                    <xsl:variable name="mappedKeywords">
+                      <xsl:for-each select="$mappedTopic/keyword">
+                        <xsl:sort select="gmd:Anchor/@xlink:href"/>
                         <xsl:copy-of select="."/>
-                      </xsl:if>
-                    </xsl:for-each>
-                    <xsl:copy-of select="$mappedTopic"/>
+                      </xsl:for-each>
+                    </xsl:variable>
+                    <xsl:variable name="uniqueMappedKeywords">
+                      <xsl:for-each select="$mappedKeywords/keyword[not(@uri = (preceding-sibling::*/@uri))]">
+                        <xsl:copy-of select="."/>
+                      </xsl:for-each>
+                    </xsl:variable>
+                    <xsl:copy-of select="$uniqueMappedKeywords"/>
                   </xsl:if>
                 </keywords>
               </thesaurus>
