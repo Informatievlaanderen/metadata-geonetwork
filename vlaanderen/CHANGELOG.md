@@ -4,15 +4,21 @@ All notable changes to this project will be documented in this file. These chang
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.2.2-SNAPSHOT]
+
+### vlaanderen
+- Data.gov.be keyword fixes: uniqueness and prevent erroneous ISO category override - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/38386)
+
+
 ## [8.2.1] - 2024-07-17
 
 ### vlaanderen
 - Cleanup of DCAT2 plugin to make it available for general use - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/36672)
 - Hotfix: broken full view editor due to duplicate rdf file - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35995)
-- Data.gov.be keyword fixes: uniqueness and prevent erroneous ISO category override - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/38386)
 
 ### core-geonetwork
 - Additional fixes for double translation bug - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/36762) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8209)
+
 
 ## [8.2.0] - 2024-05-27
 
@@ -27,7 +33,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Editor optimisation, not displaying large amount of tables - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35571)
 - Fix for ghost copies in the editor board - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35753)
 - Not displaying draft copy status in search and facets - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35774)
-
 
 ### core-geonetwork
 - Log / Remove mail debug information - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/35670) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8043)
