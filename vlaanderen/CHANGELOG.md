@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [8.2.2-SNAPSHOT]
 
 ### vlaanderen
-- Data.gov.be keyword fixes: uniqueness and prevent erroneous ISO category override - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/38386)
+- Data.gov.be keyword fixes: uniqueness and prevent erroneous ISO category override - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/38386) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/38390)
 
 
 ## [8.2.1] - 2024-07-17

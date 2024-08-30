@@ -535,7 +535,7 @@
     "mdStatusTitle-draft-to-submitted-reviewer": "Soumettre pour révision",
     "mdStatusTitle-retired-to-draft-editor": "Restaurer la fiche en tant que brouillon",
     "mdStatusTitle-retired-to-draft-reviewer": "Restaurer la fiche en tant que brouillon",
-    "mdStatusTitle-submitted-to-draft-editor": "Cancel approval submission",
+    "mdStatusTitle-submitted-to-draft-editor": "Annuler la soumission d'approbation",
     "mdStatusTitle-submitted-to-draft-reviewer": "Rejeter la demande d'approbation",
     "mdStatusTitle-submitted-to-approved-editor": "Approuver la fiche",
     "mdStatusTitle-submitted-to-approved-reviewer": "Approuver la fiche",

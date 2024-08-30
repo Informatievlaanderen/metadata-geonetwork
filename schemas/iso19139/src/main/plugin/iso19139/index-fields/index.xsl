@@ -654,12 +654,9 @@
                         <xsl:copy-of select="."/>
                       </xsl:for-each>
                     </xsl:variable>
-                    <xsl:variable name="uniqueMappedKeywords">
-                      <xsl:for-each select="$mappedKeywords/keyword[not(@uri = (preceding-sibling::*/@uri))]">
-                        <xsl:copy-of select="."/>
-                      </xsl:for-each>
-                    </xsl:variable>
-                    <xsl:copy-of select="$uniqueMappedKeywords"/>
+                    <xsl:for-each select="$mappedKeywords/keyword[not(@uri = (preceding-sibling::*/@uri))]">
+                      <xsl:copy-of select="."/>
+                    </xsl:for-each>
                   </xsl:if>
                 </keywords>
               </thesaurus>
@@ -674,7 +671,9 @@
                     uri=""
                     title="Data.gov.be themes"/>
               <keywords>
-                <xsl:copy-of select="$mappedTopic"/>
+                <xsl:for-each select="$mappedTopic/keyword[not(@uri = (preceding-sibling::*/@uri))]">
+                  <xsl:copy-of select="."/>
+                </xsl:for-each>
               </keywords>
             </thesaurus>
           </xsl:if>
