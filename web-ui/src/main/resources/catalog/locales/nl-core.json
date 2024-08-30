@@ -373,7 +373,7 @@
     "_schema": "Standaard",
     "checkCapabilityUrl": "URL {{url}} gaf een status '{{status}}'. Controleer de URL en dat de service actief is.",
     "checkCapabilityUrlUnauthorized": "URL {{url}} gaf status '{{status}}' terug. Dit betekent dat authenticatie nodig is. Probeer eerst verbinding te maken.",
-    "failedToParseCapabilities": "Het was niet mogelijke het antwoord op de GetCapabilities operatie te lezen. Probeer het later opnieuw of neem contact op met de service provider.",
+    "failedToParseCapabilities": "Het was niet mogelijk het antwoord van de GetCapabilities operatie te lezen. Probeer het later opnieuw of neem contact op met de service provider.",
     "checkProjectionUrlUnauthorized": "URL {{url}} gaf status '{{status}}' terug. Dit betekent dat authenticatie nodig is. Probeer eerst verbinding te maken.",
     "checkProjectionUrl": "URL {{url}} heeft status '{{status}}' teruggegeven. Controleer de URL en verifieer dat de service online is.",
     "failedToParseProjDefinition": "Kon het projectie definitie antwoord niet lezen. Probeer later opnieuw, contacteer de service provider, of meld dit probleem.",
