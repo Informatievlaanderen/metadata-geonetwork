@@ -435,7 +435,7 @@
   "overviewUrl": "Overzicht URL",
   "restApiUrl": "REST API URL",
   "filterHelp": "Klik op de onderstaande knoppen om de filter te activeren",
-  "selectDOIResource": "Kies een DOI bron",
+  "selectDOIResource": "Zoek een DOI",
   "httpStatus--200": "Ongeldige status",
   "httpStatus-200": "200: Geldige status",
   "httpStatus-404": "404: Niet gevonden",

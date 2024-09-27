@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [8.2.3-SNAPSHOT]
 
+### vlaanderen
+- Keeping track of `doelgroep` values returned by ACM/IDM. Groups such as EA now allowed - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39330)
+
+
 ## [8.2.2] - 2024-09-27
 
 ### vlaanderen
