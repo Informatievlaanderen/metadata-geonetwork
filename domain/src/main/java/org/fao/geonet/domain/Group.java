@@ -83,6 +83,9 @@ public class Group extends Localized implements Serializable {
     private List<MetadataCategory> allowedCategories;
     private Boolean enableAllowedCategories;
     private String orgCode;
+    private String orgNaam;
+    private String doelgroepCode;
+    private String doelgroepNaam;
     private String vlType;
 
     /**
@@ -349,6 +352,7 @@ public class Group extends Localized implements Serializable {
         return this;
     }
 
+    // VL: the organisations's orgcode (vo_orgcode)
     @Column(name = "orgcode", nullable = true)
     public String getOrgCode() {
         return orgCode;
@@ -358,6 +362,37 @@ public class Group extends Localized implements Serializable {
         this.orgCode = orgCode;
     }
 
+    // VL: the organisation name of the logged in user (vo_orgnaam)
+    @Column(name = "orgnaam", nullable = true)
+    public String getOrgNaam() {
+        return orgNaam;
+    }
+
+    public void setOrgNaam(String orgNaam) {
+        this.orgNaam = orgNaam;
+    }
+
+    // VL: the organisation's doelgroepcode (vo_doelgroepcode)
+    @Column(name = "doelgroepcode", nullable = true)
+    public String getDoelgroepCode() {
+        return doelgroepCode;
+    }
+
+    public void setDoelgroepCode(String doelgroepCode) {
+        this.doelgroepCode = doelgroepCode;
+    }
+
+    // VL: the organisation's doelgroepnaam (vo_doelgroepnaam)
+    @Column(name = "doelgroepnaam", nullable = true)
+    public String getDoelgroepNaam() {
+        return doelgroepNaam;
+    }
+
+    public void setDoelgroepNaam(String doelgroepNaam) {
+        this.doelgroepNaam = doelgroepNaam;
+    }
+
+    // VL: metadata's classification of dp / no-dp
     @Column(name = "vltype", nullable = true)
     public String getVlType() {
         return vlType;

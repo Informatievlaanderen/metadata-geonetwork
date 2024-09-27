@@ -155,6 +155,8 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
         // ACM/IDM specific claims
         String userOrgCode = idToken.getClaimAsString("vo_orgcode");
         String userOrgName = idToken.getClaimAsString("vo_orgnaam");
+        String doelgroepCode = idToken.getClaimAsString("vo_doelgroepcode");
+        String doelgroepNaam = idToken.getClaimAsString("vo_doelgroepnaam");
 
         // Now we add the groups
         for (Profile p : profileGroups.keySet()) {
@@ -194,6 +196,10 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
                 }
 
                 group.setVlType(vlType);
+                // the following attributes are for information purposes only, can be updated
+                group.setOrgNaam(userOrgName);
+                group.setDoelgroepCode(doelgroepCode);
+                group.setDoelgroepNaam(doelgroepNaam);
                 groupRepository.save(group);
 
                 UserGroup usergroup = new UserGroup();
