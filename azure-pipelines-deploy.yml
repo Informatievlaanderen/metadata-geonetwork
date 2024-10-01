@@ -29,7 +29,7 @@ stages:
                   GIT_COMMIT_SHA=$(git rev-parse HEAD)
                   echo "GIT_COMMIT_SHA: ${GIT_COMMIT_SHA}"
                   echo "##vso[task.setvariable variable=GIT_COMMIT_SHA]${GIT_COMMIT_SHA}"
-            - task: AzureKeyVault@1
+            - task: AzureKeyVault@2
               name: configureKeyVault
               displayName: Set up connection to keyvault to fetch pipeline variables
               inputs:
