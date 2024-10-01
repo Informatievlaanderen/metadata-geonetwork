@@ -2288,7 +2288,7 @@
                 name="vl-add-transferOptions"
                 process="onlinesrc"/>
 
-        <!--<field xpath="/gmd:MD_Metadata/gmd:distributionInfo/*/gmd:transferOptions"/>
+        <field xpath="/gmd:MD_Metadata/gmd:distributionInfo/*/gmd:transferOptions"/>
 
         <action type="add"
                 name="transferOptions"
