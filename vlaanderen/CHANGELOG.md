@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### vlaanderen
 - Data.gov.be keyword fixes: uniqueness and prevent erroneous ISO category override - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/38386) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/38390)
+- Enabled `gmd:onLine` elements in iso19139 editor - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39400)
 
 
 ## [8.2.1] - 2024-07-17
