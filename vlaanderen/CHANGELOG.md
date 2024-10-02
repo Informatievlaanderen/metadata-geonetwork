@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Keeping track of `doelgroep` values returned by ACM/IDM. Groups such as EA now allowed - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39330)
 
 ### core
-- Fixing whitespace issue for specific css class - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39432)
+- Fixing whitespace issue for specific css class - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39432) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8398)
 
 
 ## [8.2.2] - 2024-09-27
