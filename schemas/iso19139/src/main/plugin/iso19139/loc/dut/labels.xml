@@ -1807,11 +1807,15 @@
   </element>
   <element name="gmd:pointOfContact" context="srv:SV_ServiceIdentification">
     <label>Contactgegevens service</label>
+    <description>Gegevens van de voor de dataservice verantwoordelijke organisatie.</description>
+  </element>
+  <element name="gmd:pointOfContact" context="gmd:MD_DataIdentification">
+    <label>Contactgegevens dataset</label>
     <description>Gegevens van de voor de dataset verantwoordelijke organisatie.</description>
   </element>
   <element name="gmd:pointOfContact">
-    <label>Contactgegevens service</label>
-    <description>Gegevens van de voor de dataset verantwoordelijke organisatie.</description>
+    <label>Contactgegevens</label>
+    <description>Gegevens van de verantwoordelijke organisatie.</description>
   </element>
   <element name="gmd:polygon">
     <label>polygoon</label>
