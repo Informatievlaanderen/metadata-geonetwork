@@ -403,11 +403,11 @@
   </element>
 
   <element name="gmd:code" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code">
-    <label>Identificator geografische begrenzing</label>
+    <label>Identificator ruimtelijke begrenzing</label>
     <description>Beschrijving van het geografisch gebied</description>
   </element>
   <element name="gmd:code" context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code">
-    <label>Identificator geografische begrenzing</label>
+    <label>Identificator ruimtelijke begrenzing</label>
     <description>Beschrijving van het geografisch gebied</description>
   </element>
   <element name="gmd:code" id="208.0" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code">
@@ -1807,11 +1807,15 @@
   </element>
   <element name="gmd:pointOfContact" context="srv:SV_ServiceIdentification">
     <label>Contactgegevens service</label>
+    <description>Gegevens van de voor de dataservice verantwoordelijke organisatie.</description>
+  </element>
+  <element name="gmd:pointOfContact" context="gmd:MD_DataIdentification">
+    <label>Contactgegevens dataset</label>
     <description>Gegevens van de voor de dataset verantwoordelijke organisatie.</description>
   </element>
   <element name="gmd:pointOfContact">
-    <label>Contactgegevens service</label>
-    <description>Gegevens van de voor de dataset verantwoordelijke organisatie.</description>
+    <label>Contactgegevens</label>
+    <description>Gegevens van de verantwoordelijke organisatie.</description>
   </element>
   <element name="gmd:polygon">
     <label>polygoon</label>
@@ -3247,12 +3251,12 @@
     </description>
   </element>
   <element name="gmd:description" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:description">
-    <label>Omschrijving geografische begrenzing</label>
+    <label>Omschrijving ruimtelijke begrenzing</label>
     <description>Beschrijving</description>
     <condition>mandatory</condition>
   </element>
   <element name="gmd:description" context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:description">
-    <label>Omschrijving geografische begrenzing</label>
+    <label>Omschrijving ruimtelijke begrenzing</label>
     <description>Beschrijving</description>
     <condition>mandatory</condition>
   </element>
