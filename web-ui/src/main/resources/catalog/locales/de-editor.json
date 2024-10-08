@@ -454,5 +454,7 @@
     "associated-fcats": "Objektartenkatalaog",
     "associated-siblings": "Verlinkte Ressourcen",
     "associated-hasfeaturecats": "Diesen Feature Katalog gebrauchen",
-    "associatedResourcesPanel": "Verlinkte Ressourcen"
+    "associatedResourcesPanel": "Verlinkte Ressourcen",
+    "validationSuccessLabel": "success",
+    "validationErrorLabel": "errors"
 }
