@@ -491,7 +491,8 @@
             var defaultThesaurus = attrs["default"];
             if (defaultThesaurus) {
               for (var t in scope.regionTypes) {
-                if (scope.regionTypes[t].name === defaultThesaurus) {
+                // VL: fallback for the default in the case of 'label' was added for vlaanderen
+                if (scope.regionTypes[t].name === defaultThesaurus || scope.regionTypes[t].label === defaultThesaurus) {
                   scope.regionType = scope.regionTypes[t];
                   return;
                 }
