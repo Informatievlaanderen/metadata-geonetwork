@@ -26,6 +26,20 @@
                 select="util:getRecordValidationStatus(
                           $metadataUuid, 'inspire', $mdId) = '1'"
                 as="xs:boolean"/>
+  <xsl:variable name="isXsdValid"
+                select="util:getRecordValidationStatus(
+                          $metadataUuid, 'xsd', $mdId) = '1'"
+                as="xs:boolean"/>
+  <xsl:variable name="isIsoValid"
+                select="util:getRecordValidationStatus(
+                          $metadataUuid, 'schematron-rules-iso', $mdId) = '1'"
+                as="xs:boolean"/>
+  <xsl:variable name="isGeonetworkValid"
+                select="util:getRecordValidationStatus(
+                          $metadataUuid, 'schematron-rules-geonetwork', $mdId) = '1'"
+                as="xs:boolean"/>
+
+
 
   <xsl:template match="/root">
     <xsl:apply-templates select="gmd:MD_Metadata"/>
@@ -76,7 +90,7 @@
                 </gmd:keyword>
               </xsl:if>
 
-              <xsl:if test="$isVlValid">
+              <xsl:if test="$isVlValid and $isGeonetworkValid and $isIsoValid and $isXsdValid">
                 <gmd:keyword>
                   <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/MDGDICONFORM">
                     Metadata GDI-Vl-conform
