@@ -136,6 +136,7 @@
   <vl-GebruikdoorVlaamseinstanties>Gebruik door Vlaamse instanties</vl-GebruikdoorVlaamseinstanties>
   <vl-Gebruikdoorniet-Vlaamseinstanties>Gebruik door niet-Vlaamse instanties</vl-Gebruikdoorniet-Vlaamseinstanties>
   <vl-add-temporalElement>Temporele begrenzing</vl-add-temporalElement>
+  <vl-add-geographicElement>Ruimtelijke begrenzing</vl-add-geographicElement>
 
 
   <addConformity>Conformiteit toevoegen</addConformity>

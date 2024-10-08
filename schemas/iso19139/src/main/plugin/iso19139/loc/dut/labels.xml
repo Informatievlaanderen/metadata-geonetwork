@@ -403,11 +403,11 @@
   </element>
 
   <element name="gmd:code" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code">
-    <label>Identificator geografische begrenzing</label>
+    <label>Identificator ruimtelijke begrenzing</label>
     <description>Beschrijving van het geografisch gebied</description>
   </element>
   <element name="gmd:code" context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code">
-    <label>Identificator geografische begrenzing</label>
+    <label>Identificator ruimtelijke begrenzing</label>
     <description>Beschrijving van het geografisch gebied</description>
   </element>
   <element name="gmd:code" id="208.0" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code">
@@ -3251,12 +3251,12 @@
     </description>
   </element>
   <element name="gmd:description" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:description">
-    <label>Omschrijving geografische begrenzing</label>
+    <label>Omschrijving ruimtelijke begrenzing</label>
     <description>Beschrijving</description>
     <condition>mandatory</condition>
   </element>
   <element name="gmd:description" context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:description">
-    <label>Omschrijving geografische begrenzing</label>
+    <label>Omschrijving ruimtelijke begrenzing</label>
     <description>Beschrijving</description>
     <condition>mandatory</condition>
   </element>

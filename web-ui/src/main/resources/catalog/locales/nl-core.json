@@ -561,7 +561,7 @@
     "wmtsLayerNoUsableMatrixSet": "WMTS laag kan niet toegevoegd worden. Mogelijk biedt de service geen data aan in een projectie die door de applicatie ondersteund wordt.",
     "chooseRegion": "Kies een regio",
     "clickToDrawABox": "Klik eenmaal om in te schakelen en selecteer een gebied . Klik nogmaals om te stoppen met tekenen.",
-    "drawRectangle": "Teken geografische begrenzing",
+    "drawRectangle": "Teken ruimtelijke begrenzing",
     "clickToClearMapBox": "Klik om de kaartweergave to legen.",
     "clearRectangle": "Kaartweergave leeg maken",
     "unselectChoiceNotAllowedTitle": "Selectie ongedaan maken",
