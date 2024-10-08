@@ -279,6 +279,8 @@ public class DefaultStatusActions implements StatusActions {
                 if(!draft.getSourceInfo().getGroupOwner().equals(approved.getSourceInfo().getGroupOwner())) {
                     useDraftGroupOwner(draft, approved);
                 }
+                // set the approved version to 'published', as this will happen at the end of the status change
+                setAllOperations(String.valueOf(approved.getId()));
             }
             // publish
             setAllOperations(String.valueOf(status.getMetadataId()));
