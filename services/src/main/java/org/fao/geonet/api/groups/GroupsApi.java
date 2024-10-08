@@ -23,6 +23,7 @@
 
 package org.fao.geonet.api.groups;
 
+import be.vlaanderen.geonet.kernel.security.openidconnect.ACMIDMUser2GeonetworkUser;
 import com.google.common.base.Functions;
 import com.google.common.collect.Lists;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,9 +32,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.API;
 import org.fao.geonet.api.ApiParams;
@@ -52,6 +59,7 @@ import org.fao.geonet.repository.specification.MetadataSpecs;
 import org.fao.geonet.repository.specification.OperationAllowedSpecs;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.resources.Resources;
+import org.fao.geonet.utils.GeonetHttpRequestFactory;
 import org.fao.geonet.utils.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -62,6 +70,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -72,6 +81,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
@@ -93,6 +103,8 @@ public class GroupsApi {
     public static final String LOGGER = Geonet.GEONETWORK + ".api.groups";
     public static final String API_PARAM_GROUP_DETAILS = "Group details";
     public static final String API_PARAM_GROUP_IDENTIFIER = "Group identifier";
+    public static final String API_PARAM_ORGCODE = "Org code";
+    public static final String API_PARAM_ORGCODE_TYPE = "Org code type (KBO / OVO)";
     public static final String MSG_GROUP_WITH_IDENTIFIER_NOT_FOUND = "Group with identifier '%d' not found";
     /**
      * API logo note.
@@ -413,6 +425,91 @@ public class GroupsApi {
         }
         return userRepository.findAllUsersInUserGroups(
             UserGroupSpecs.hasGroupId(groupIdentifier));
+    }
+
+    @io.swagger.v3.oas.annotations.Operation(
+        summary = "Preallocate a group from the Organisatieregister if it doesn't exist yet, based on the orgCode (KBO / OVO)."
+    )
+    @RequestMapping(
+        value = "/preallocate",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        method = RequestMethod.PUT
+    )
+    @ResponseStatus(value = HttpStatus.OK)
+    @PreAuthorize("hasAuthority('Reviewer')")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Group present."),
+        @ApiResponse(responseCode = "201", description = "Group created."),
+        @ApiResponse(responseCode = "403", description = ApiParams.API_RESPONSE_NOT_ALLOWED_ONLY_EDITOR)
+    })
+    @ResponseBody
+    public void preallocateGroup(
+        @Parameter(
+            description = API_PARAM_ORGCODE
+        )
+        @RequestParam
+        String orgCode,
+        @Parameter(
+            description = API_PARAM_ORGCODE_TYPE
+        )
+        @RequestParam
+        String orgCodeType
+    ) throws Exception {
+        // check parameters
+        orgCodeType = orgCodeType.toLowerCase();
+        if(!List.of("ovo", "kbo").contains(orgCodeType)) {
+            throw new IllegalArgumentException("Org code type should be one of the following: kbo, ovo.");
+        }
+        if(StringUtils.isBlank(orgCode)) {
+            throw new IllegalArgumentException("Org code should be a non-blank value.");
+        }
+        // if the group already exists (check any type of orgcode), do nothing
+        Group existingGroup = groupRepository.findByOrgCodeAndVlType(orgCode, "metadatavlaanderen");
+        // if it doesn't exist, retrieve the information from organisatieregister
+        if(existingGroup == null) {
+            final GeonetHttpRequestFactory requestFactory =
+                ApplicationContextHolder.get().getBean(GeonetHttpRequestFactory.class);
+            HttpUriRequest httpGet = RequestBuilder.get()
+                .setUri("http://api.wegwijs.vlaanderen.be/v1/search/organisations")
+                .addParameter("q", String.format("%sNumber:%s", orgCodeType, orgCode))
+                .build();
+            try (ClientHttpResponse execute = requestFactory.execute(httpGet)) {
+                String responseText = IOUtils.toString(execute.getBody(), StandardCharsets.UTF_8);
+                JSONArray orgResults = (JSONArray) JSONSerializer.toJSON(responseText);
+                // expecting exactly one result
+                if(orgResults.size()!=1) {
+                    throw new IllegalStateException("Could not retrieve the desired group from the organisatieregister.");
+                }
+                else {
+                    JSONObject org = orgResults.getJSONObject(0);
+                    String retrievedName = org.getString("name");
+                    if(!org.getString(orgCodeType+"Number").equals(orgCode)) {
+                        throw new IllegalStateException("Asked for a specific orgcode but got another one back.");
+                    }
+                    if(StringUtils.isBlank(orgCode) || StringUtils.isBlank(retrievedName)) {
+                        throw new IllegalStateException("Orgcode and name of the retrieved organisatieregister entry should be non-blank.");
+                    }
+                    createGroup(retrievedName, retrievedName, orgCode, "metadatavlaanderen");
+                    createGroup(ACMIDMUser2GeonetworkUser.dpPrefix + retrievedName, retrievedName, orgCode, "datapublicatie");
+                }
+            }
+        }
+    }
+
+    /**
+     * VL - Create a new group as the result of a retrieved organisatieregister entry.
+     * @param retrievedName
+     * @param retrievedName1
+     * @param retrievedOrgCode
+     * @param datapublicatie
+     */
+    private void createGroup(String retrievedName, String retrievedName1, String retrievedOrgCode, String datapublicatie) {
+        Group g = new Group();
+        g.setName(retrievedName);
+        g.setOrgNaam(retrievedName1);
+        g.setOrgCode(retrievedOrgCode);
+        g.setVlType(datapublicatie);
+        groupRepository.save(g);
     }
 
     @io.swagger.v3.oas.annotations.Operation(
