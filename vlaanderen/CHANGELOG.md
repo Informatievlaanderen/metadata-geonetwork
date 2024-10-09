@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - GDI-VL-Conform keyword now added based on correct prerequisites - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39553)
 - Dataset editor improvements - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39437)
 - Fix harvest of single `rdf:RDF` documents - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39663)
+- Workflow fix for publishing draft copies - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39626)
 
 ### core
 - Fixing whitespace issue for specific css class - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39432) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39608) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8398)
