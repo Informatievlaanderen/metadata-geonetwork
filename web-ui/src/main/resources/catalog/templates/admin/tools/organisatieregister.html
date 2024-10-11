@@ -1,0 +1,49 @@
+<!--VL-specific: tools that are related to the "Organisatieregister"-->
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <span data-translate="">groupPreallocate</span>
+      </div>
+      <div class="panel-body">
+        <div class="panel-body alert-info">
+          <span class="fa fa-lightbulb-o"></span>
+          <span data-translate="">groupPreallocate-helpText</span>
+        </div>
+        <br />
+        <label data-translate="">groupPreallocate-searchlabel </label>
+        <input
+          class="form-control"
+          type="text"
+          data-ng-minlength="3"
+          data-ng-model="nameQuery"
+          data-ng-model-options="{debounce:1000}"
+          data-ng-change="getOrganisationsFromOrganisatieRegister(nameQuery)"
+        />
+        <table class="table" data-ng-show="orgRegisterOrganisations.length > 0">
+          <tr>
+            <th data-translate="">name</th>
+            <th>OVO</th>
+            <th>KBO</th>
+            <th />
+          </tr>
+          <tr data-ng-repeat="organisation in orgRegisterOrganisations">
+            <td>{{organisation.name}}</td>
+            <td>{{organisation.ovoNumber}}</td>
+            <td>{{organisation.kboNumber}}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-primary btn-block"
+                onclick="this.disabled=true"
+                data-gn-click-and-spin="preallocateGroup(organisation)"
+              >
+                <i class="fa fa-fw fa-download"></i>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
