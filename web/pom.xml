@@ -30,7 +30,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>4.4.5-SNAPSHOT</version>
+    <version>4.4.5-0</version>
   </parent>
 
 
@@ -412,6 +412,12 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-listeners</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>gn-translationproviders</artifactId>
       <version>${project.version}</version>
     </dependency>
 

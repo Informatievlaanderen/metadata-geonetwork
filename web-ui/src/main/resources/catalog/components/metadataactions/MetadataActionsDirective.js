@@ -642,7 +642,7 @@
               },
               function (error) {
                 $rootScope.$broadcast("StatusUpdated", {
-                  title: $translate.instant("changeCategoryError"),
+                  title: $translate.instant("error"),
                   error: error,
                   timeout: 0,
                   type: "danger"

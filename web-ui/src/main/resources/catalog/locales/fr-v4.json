@@ -435,7 +435,7 @@
   "overviewUrl": "URL",
   "restApiUrl": "URL de l'API REST",
   "filterHelp": "Veuillez cliquer sur l'un des boutons ci-dessous pour activer le filtre",
-  "selectDOIResource": "Search for a DOI",
+  "selectDOIResource": "Choisissez un DOI",
   "httpStatus--200": "Statut invalide",
   "httpStatus-200": "200 : Statut valide",
   "httpStatus-404": "404 : Introuvable",

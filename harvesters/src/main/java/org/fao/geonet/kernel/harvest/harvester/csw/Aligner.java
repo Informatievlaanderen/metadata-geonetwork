@@ -330,6 +330,11 @@ public class Aligner extends BaseAligner<CswParams> {
 
         }
 
+        // Translate metadata
+        if (params.isTranslateContent()) {
+            md = translateMetadataContent(context, md, schema);
+        }
+
         //
         // insert metadata
         //

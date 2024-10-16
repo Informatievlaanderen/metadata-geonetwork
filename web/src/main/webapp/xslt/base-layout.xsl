@@ -130,6 +130,8 @@
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
+
+        <xsl:call-template name="webAnalytics"/>
       </body>
     </html>
   </xsl:template>

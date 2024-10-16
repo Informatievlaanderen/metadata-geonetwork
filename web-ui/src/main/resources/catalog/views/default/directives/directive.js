@@ -282,6 +282,7 @@
           scope.displayPublicationOption = function (md, user, pubOption) {
             return false; // VL specific. Publication is managed by workflow
             return (
+              md &&
               md.canReview &&
               md.draft != "y" &&
               md.mdStatus != 3 &&
