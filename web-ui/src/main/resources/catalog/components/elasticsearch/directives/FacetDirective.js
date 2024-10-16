@@ -209,6 +209,23 @@
     }
   ]);
 
+  module.filter("facetTooltip", [
+    "$translate",
+    "$filter",
+    function ($translate, $filter) {
+      return function (item) {
+        if (item.definition) {
+          var key = item.definition + "-tooltip",
+            tooltip = $translate.instant(key);
+          if (tooltip !== key) {
+            return tooltip;
+          }
+        }
+        return $filter("facetTranslator")(item.value);
+      };
+    }
+  ]);
+
   module.filter("facetTranslator", [
     "$translate",
     "$filter",
@@ -306,8 +323,10 @@
    * @param $scope
    * @constructor
    */
-  var FacetController = function ($scope) {
+  var FacetController = function ($scope, $translate, $filter) {
     this.$scope = $scope;
+    this.$translate = $translate;
+    this.$filter = $filter;
   };
 
   FacetController.prototype.$onInit = function () {
@@ -353,7 +372,7 @@
     this.filter(this.facet, item);
   };
 
-  FacetController.$inject = ["$scope"];
+  FacetController.$inject = ["$scope", "$translate", "$filter"];
 
   module.directive("esFacet", [
     "gnLangs",
@@ -439,7 +458,9 @@
   ]);
 
   module.filter("facetSearchUrlBuilder", [
-    function () {
+    "gnGlobalSettings",
+    "$filter",
+    function (gnGlobalSettings, $filter) {
       return function (facetValue, key, response, config, missingValue) {
         var field = (response.meta && response.meta.field) || key,
           filter = config.filters
@@ -448,7 +469,8 @@
           value = response.meta && response.meta.wildcard ? facetValue + "*" : facetValue;
 
         return (
-          '#/search?query_string={"' +
+          $filter("setUrlPlaceholder")(gnGlobalSettings.gnCfg.mods.search.appUrl) +
+          '?query_string={"' +
           field +
           '": {"' +
           (value === missingValue ? "%23MISSING%23" : value) +

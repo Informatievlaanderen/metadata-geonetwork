@@ -8,7 +8,12 @@
   data-ng-click="service.doAction(mainType, link, record)"
   title="{{(link.origin === 'remote' ? ('remoteRecord') : (icon === 'fa-download' ? 'download' : 'link')) | translate }}"
 >
-  <i class="fa" data-ng-if="iconMode !== 'none'" data-ng-class="icon" />
+  <i
+    class="fa"
+    title="{{link.origin === 'remote' ? ('remoteRecord' | translate) : ''}}"
+    data-ng-if="iconMode !== 'none'"
+    data-ng-class="icon"
+  ></i>
   <span class="visible-lg-*" data-ng-if="iconMode !== 'only'">
     {{::isDropDown ? link.desc || link.name || link.url : (service.getLabel(mainType,
     type) | translate)}}
@@ -29,9 +34,9 @@
   class="{{btnClass}}"
   data-ng-href="{{link.url}}"
 >
-  <i class="fa" data-ng-if="iconMode !== 'none'" data-ng-class="icon" />
-  <span data-ng-if="link.title" class="visible-lg-*"
-    >{{(::link.title | gnLocalized: lang}}</span
-  >
-  <span data-ng-if="!link.title" class="visible-lg-*">{{'openPage' | translate}}</span>
+  <i class="fa" data-ng-if="iconMode !== 'none'" data-ng-class="icon"></i>
+  <span class="visible-lg-*">
+    {{::(link.title ? (link.title | gnLocalized: lang) : (service.getLabel(null, type) |
+    translate))}}
+  </span>
 </a>

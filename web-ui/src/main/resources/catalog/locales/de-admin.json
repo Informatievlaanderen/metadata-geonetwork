@@ -868,7 +868,7 @@
     "metadata/workflow/forceValidationOnMdSave-help": "Wenn die Metadaten gespeichert werden, wird die Validierung erzwungen",
     "metadata/import": "Metadaten-Import",
     "metadata/import/restrict": "Beschränken des Imports auf Schemata",
-    "metadata/import/restrict-help": "Liste aller zulässigen Schemata für zu importierende Metadaten. Wenn das Metadatenschema nicht zulässig ist, wird der Import nicht durchgeführt. Kein Wert bedeutet, dass alle Schemata zulässig sind.",
+    "metadata/import/restrict-help": "Comma separated list of all allowed schemas for metadata to be imported. If the metadata schema is not allowed, then the import is not done. No value means all schemas allowed.",
     "metadata/import/userprofile": "Mindestbenutzerprofil, das zum Importieren von Metadaten zulässig ist",
     "metadata/import/userprofile-help": "Mindestbenutzerprofil zum Importieren von Metadaten (Editor, Reviewer oder Benutzeradministrator). Der Standardwert ist Editor.",
     "metadata/delete": "Metadaten löschen",
