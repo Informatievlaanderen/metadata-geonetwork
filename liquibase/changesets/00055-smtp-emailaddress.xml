@@ -1,0 +1,12 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+  <!-- only applicable to environments that actually send through sendgrid (loc/dev use mailpit) -->
+  <changeSet author="joachim" id="00055-smtp-emailaddress" contextFilter="bet,prd">
+    <update tableName="settings">
+      <column name="value" value="no_reply@digitaal.vlaanderen.be"/>
+      <where>name='system/feedback/email'</where>
+    </update>
+  </changeSet>
+</databaseChangeLog>
