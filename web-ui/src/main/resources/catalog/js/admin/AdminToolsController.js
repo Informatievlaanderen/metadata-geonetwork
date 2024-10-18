@@ -387,7 +387,7 @@
           .then(
             function (response) {
               $rootScope.$broadcast("StatusUpdated", {
-                msg: "Group preallocated! " + response.data.message,
+                msg: "Group preallocated!",
                 timeout: 2,
                 type: "success"
               });
