@@ -404,12 +404,33 @@
 
       $scope.orgRegisterOrganisations = [];
       $scope.orgRegisterStatus = [];
-      $scope.getOrganisationsFromOrganisatieRegister = function (nameQuery) {
+      $scope.getOrganisationsFromOrganisatieRegisterByName = function (nameQuery) {
         $http
           .get(
-            "http://api.wegwijs.vlaanderen.be/v1/search/organisations?limit=100&q=name:*" +
-              encodeURI(nameQuery) +
-              "*"
+            "../../proxy?url=" +
+              encodeURIComponent(
+                "http://api.wegwijs.vlaanderen.be/v1/search/organisations?limit=100&q=name:*" +
+                  encodeURIComponent(nameQuery) +
+                  "*"
+              )
+          )
+          .then(
+            function (response) {
+              $scope.orgRegisterOrganisations = response.data;
+            },
+            function (response) {
+              console.log("Error from org register.");
+            }
+          );
+      };
+      $scope.getOrganisationsFromOrganisatieRegisterByOvo = function (ovoQuery) {
+        $http
+          .get(
+            "../../proxy?url=" +
+              encodeURIComponent(
+                "http://api.wegwijs.vlaanderen.be/v1/search/organisations?limit=100&q=ovoNumber:" +
+                  encodeURIComponent(ovoQuery)
+              )
           )
           .then(
             function (response) {

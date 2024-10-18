@@ -11,14 +11,23 @@
           <span data-translate="">groupPreallocate-helpText</span>
         </div>
         <br />
-        <label data-translate="">groupPreallocate-searchlabel </label>
+        <label data-translate="">groupPreallocate-searchByNameLabel </label>
         <input
           class="form-control"
           type="text"
           data-ng-minlength="3"
           data-ng-model="nameQuery"
           data-ng-model-options="{debounce:1000}"
-          data-ng-change="getOrganisationsFromOrganisatieRegister(nameQuery)"
+          data-ng-change="getOrganisationsFromOrganisatieRegisterByName(nameQuery)"
+        />
+        <label data-translate="">groupPreallocate-searchByOvoLabel </label>
+        <input
+          class="form-control"
+          type="text"
+          data-ng-minlength="3"
+          data-ng-model="ovoQuery"
+          data-ng-model-options="{debounce:1000}"
+          data-ng-change="getOrganisationsFromOrganisatieRegisterByOvo(ovoQuery)"
         />
         <table class="table" data-ng-show="orgRegisterOrganisations.length > 0">
           <tr>
