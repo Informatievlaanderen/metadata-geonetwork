@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 
 public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
 
-    private String dpPrefix = "DataPublicatie ";
-    private static String applicationNameAttribute = "vo_applicatienaam";
-    private static String clientIdAttribute = "client_id";
+    public static final String dpPrefix = "DataPublicatie ";
+    private static final String applicationNameAttribute = "vo_applicatienaam";
+    private static final String clientIdAttribute = "client_id";
 
     @Override
     @Transactional

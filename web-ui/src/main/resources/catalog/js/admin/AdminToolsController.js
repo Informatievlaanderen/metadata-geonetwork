@@ -116,6 +116,12 @@
             label: "transfertPrivs",
             icon: "fa-user",
             href: "#/tools/transferownership"
+          },
+          {
+            type: "organisatieregister",
+            label: "organisatieRegister",
+            icon: "fa-group",
+            href: "#/tools/organisatieregister"
           }
         ]
       };
@@ -354,6 +360,86 @@
             type: "success"
           });
         });
+      };
+
+      $scope.orgCodeTypes = ["ovo", "kbo"];
+      $scope.preallocateGroup = function (organisation) {
+        var orgCode = null;
+        var orgCodeType = null;
+        if (organisation.ovoNumber) {
+          orgCode = organisation.ovoNumber;
+          orgCodeType = "ovo";
+        } else if (organisation.kboNumber) {
+          orgCode = organisation.kboNumber;
+          orgCodeType = "kbo";
+        } else {
+          $rootScope.$broadcast("StatusUpdated", {
+            msg: "Organisation information insufficient for preallocation!",
+            timeout: 2,
+            type: "danger"
+          });
+          return;
+        }
+        return $http
+          .put(
+            "../api/groups/preallocate?orgCode=" + orgCode + "&orgCodeType=" + orgCodeType
+          )
+          .then(
+            function (response) {
+              $rootScope.$broadcast("StatusUpdated", {
+                msg: "Group preallocated!",
+                timeout: 2,
+                type: "success"
+              });
+            },
+            function (response) {
+              $rootScope.$broadcast("StatusUpdated", {
+                msg: "Group preallocation failed! " + response.data.message,
+                timeout: 2,
+                type: "danger"
+              });
+            }
+          );
+      };
+
+      $scope.orgRegisterOrganisations = [];
+      $scope.orgRegisterStatus = [];
+      $scope.getOrganisationsFromOrganisatieRegisterByName = function (nameQuery) {
+        $http
+          .get(
+            "../../proxy?url=" +
+              encodeURIComponent(
+                "http://api.wegwijs.vlaanderen.be/v1/search/organisations?limit=100&q=name:*" +
+                  encodeURIComponent(nameQuery) +
+                  "*"
+              )
+          )
+          .then(
+            function (response) {
+              $scope.orgRegisterOrganisations = response.data;
+            },
+            function (response) {
+              console.log("Error from org register.");
+            }
+          );
+      };
+      $scope.getOrganisationsFromOrganisatieRegisterByOvo = function (ovoQuery) {
+        $http
+          .get(
+            "../../proxy?url=" +
+              encodeURIComponent(
+                "http://api.wegwijs.vlaanderen.be/v1/search/organisations?limit=100&q=ovoNumber:" +
+                  encodeURIComponent(ovoQuery)
+              )
+          )
+          .then(
+            function (response) {
+              $scope.orgRegisterOrganisations = response.data;
+            },
+            function (response) {
+              console.log("Error from org register.");
+            }
+          );
       };
     }
   ]);
