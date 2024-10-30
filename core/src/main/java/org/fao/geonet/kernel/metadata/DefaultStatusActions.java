@@ -373,7 +373,7 @@ public class DefaultStatusActions implements StatusActions {
         boolean isDraft = metadata instanceof MetadataDraft;
         String userFullName = String.join(" ", context.getUserSession().getName(), context.getUserSession().getSurname());
         Optional<Group> groupOwner = groupRepository.findById(metadata.getSourceInfo().getGroupOwner());
-        String dpPrefix = groupOwner.filter(g -> StringUtils.equals(g.getVlType(), "datapublicatie")).isPresent() ? "Datapublicatie " : "";
+        String dpPrefix = groupOwner.filter(g -> StringUtils.equals(g.getVlType(), "datapublicatie")).isPresent() ? "DataPublicatie " : "";
         String statusChangeReason = status.getChangeMessage().trim();
 
         String metadataTitle = XslUtil.getIndexField(null, metadata.getUuid(), "resourceTitleObject", this.language);
