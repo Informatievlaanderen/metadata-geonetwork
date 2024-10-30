@@ -1082,6 +1082,7 @@
     "ui-mod-header": "Barre d'outils",
     "ui-mod-footer": "Pied de page",
     "ui-mod-cookieWarning": "Avertissement de cookie",
+    "ui-mod-directory": "Annuaire",
     "ui-createPageTpl": "Mise en page de l'écran de création de fiches",
     "ui-createPageTpl-horizontal": "Horizontal",
     "ui-createPageTpl-vertical": "Axe - Z",

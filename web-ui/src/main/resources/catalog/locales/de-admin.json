@@ -1082,6 +1082,7 @@
     "ui-mod-header": "Obere Symbolleiste",
     "ui-mod-footer": "Fußzeile",
     "ui-mod-cookieWarning": "Cookie-Warnung",
+    "ui-mod-directory": "Verzeichnis",
     "ui-createPageTpl": "Neues Seitenlayout für Metadaten",
     "ui-createPageTpl-horizontal": "horizontal",
     "ui-createPageTpl-vertical": "Vertikale",
