@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Changed SMTP `from` address to `no_reply@digitaal.vlaanderen.be` - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39786)
 - Added `/groups/preallocate` endpoint and admin tool that integrates with the Organisatieregister - [pr](https://agiv.visualstudio.com/Metadata/_git/0a154993-bcec-4021-98e4-034a6161db36/pullrequest/39624)
 - Displaying distributions for extra protocols on default view - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40144) 
+- Fixed potential nullPointer when sending mails after harvest - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40194)
 
 ### core
 - Fixing whitespace issue for specific css class - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39432) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39608) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8398)
