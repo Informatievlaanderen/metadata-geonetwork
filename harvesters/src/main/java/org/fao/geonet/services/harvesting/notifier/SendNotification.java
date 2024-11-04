@@ -154,9 +154,9 @@ public class SendNotification {
                 }
             }
 
-            String logFile = StringEscapeUtils.escapeHtml(result.getChildText("logfile").trim());
+            String logFile = result.getChildText("logfile");
             if(StringUtils.isNotBlank(logFile)) {
-                String logURL = settings.getSiteURL("eng") + "admin.harvester.log?file=" + logFile;
+                String logURL = settings.getSiteURL("eng") + "admin.harvester.log?file=" + StringEscapeUtils.escapeHtml(logFile.trim());
                 htmlMessage = htmlMessage.replace("$$logURL$$", logURL);
             }
         }
