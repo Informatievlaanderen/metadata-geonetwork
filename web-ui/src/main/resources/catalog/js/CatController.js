@@ -1169,7 +1169,7 @@
                 },
                 {
                   filter:
-                    "protocol:OGC:WFS|OGC:WCS|.*DOWNLOAD.*|DB:.*|FILE:.*|OGC API Features|OGC API Coverages",
+                    "protocol:OGC:WFS|OGC:WCS|.*DOWNLOAD.*|DB:.*|FILE:.*|OGC API Features|OGC API Coverages|OGC:OGC-API-Features*",
                   title: "download"
                 },
                 { filter: "function:legend", title: "mapLegend" },
