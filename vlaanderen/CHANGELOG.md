@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. These chang
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [8.2.3-SNAPSHOT]
+## [8.2.3] - 2024-11-05
 
 ### vlaanderen
 - Keeping track of `doelgroep` values returned by ACM/IDM. Groups such as EA now allowed - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39330)
@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added `/groups/preallocate` endpoint and admin tool that integrates with the Organisatieregister - [pr](https://agiv.visualstudio.com/Metadata/_git/0a154993-bcec-4021-98e4-034a6161db36/pullrequest/39624)
 - Displaying distributions for extra protocols on default view - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40144) 
 - Fixed potential nullPointer when sending mails after harvest - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40194)
+- Fix for multiple ISO `gmd:deliveryPoint` elements - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetworkMicroservices/pullrequest/40145)
 
 ### core
 - Fixing whitespace issue for specific css class - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39432) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39608) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8398)
