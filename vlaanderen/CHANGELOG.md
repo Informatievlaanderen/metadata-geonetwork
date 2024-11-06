@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [8.2.4-SNAPSHOT]
 
+### vlaanderen
+- Fix for duplicate processSteps information on default view - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40266) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39793)
+ 
+
 ## [8.2.3] - 2024-11-05
 
 ### vlaanderen
