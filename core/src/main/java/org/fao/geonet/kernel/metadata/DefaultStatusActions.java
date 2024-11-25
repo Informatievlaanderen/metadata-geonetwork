@@ -349,6 +349,7 @@ public class DefaultStatusActions implements StatusActions {
         }
 
         // prerequisites
+        var locale = new Locale(this.language);
         ApplicationContext applicationContext = ApplicationContextHolder.get();
         GroupRepository groupRepository = context.getBean(GroupRepository.class);
         SettingManager sm = applicationContext.getBean(SettingManager.class);
@@ -356,12 +357,12 @@ public class DefaultStatusActions implements StatusActions {
         UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
         UserRepository userRepository = context.getBean(UserRepository.class);
         IMetadataUtils metadataRepository = ApplicationContextHolder.get().getBean(IMetadataUtils.class);
-        ResourceBundle messages = ResourceBundle.getBundle("org.fao.geonet.api.Messages", new Locale(this.language));
+        ResourceBundle messages = ResourceBundle.getBundle("org.fao.geonet.api.Messages", locale);
         AbstractMetadata metadata = metadataRepository.findOne(status.getMetadataId());
 
         // gather required data
-        String statusName = getTranslatedStatusName(status.getStatusValue().getId());
-        String currentStatusName = getTranslatedStatusName(currentStatus.getStatusValue().getId());
+        String statusName = getTranslatedStatusName(status.getStatusValue().getId(), locale); // TODO: Update to loop over all feedback locales
+        String currentStatusName = getTranslatedStatusName(currentStatus.getStatusValue().getId(), locale); // TODO: Update to loop over all feedback locales
         String subjectTemplate = messages.getString("vl_status_change_email_subject");
         String textTemplate = messages.getString("vl_status_change_email_text");
         String recordTypeDraft = messages.getString("vl_record_type_draft");
