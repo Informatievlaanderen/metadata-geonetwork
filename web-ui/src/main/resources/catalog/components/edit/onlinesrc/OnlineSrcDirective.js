@@ -262,8 +262,7 @@
             }
 
             function guessContentType() {
-              // We may support JSON at some point ?
-              return "application/xml";
+              return "application/xml,application/json,text/html";
             }
 
             function getProperties(doc, url) {
@@ -271,6 +270,7 @@
 
               if (angular.isObject(doc)) {
                 // JSON doc
+                // We may support JSON at some point ?
               } else if (doc.startsWith("<?xml")) {
                 // XML - Support of ISO19139, ISO19110 and ISO19115-3
                 try {

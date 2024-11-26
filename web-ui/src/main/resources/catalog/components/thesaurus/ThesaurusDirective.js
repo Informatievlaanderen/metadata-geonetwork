@@ -259,7 +259,8 @@
           // Max number of tags searched in thesaurus
           maxSearched: "@",
           thesaurusTitle: "@",
-          browsable: "@"
+          browsable: "@",
+          required: "@"
         },
         templateUrl:
           "../../catalog/components/thesaurus/" + "partials/keywordselector.html",
