@@ -719,7 +719,7 @@
                           "((+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " OR (+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (-resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     },
                     "Toegang zonder voorwaarden": {
@@ -728,7 +728,7 @@
                           "((+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " OR (+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (+resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     },
                     "Niet publiek": {
@@ -737,7 +737,7 @@
                           "((-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " AND (-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (-resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     },
                     "Toegang met voorwaarden": {
@@ -746,7 +746,7 @@
                           "((-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " AND (-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (+resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     }
                   }
@@ -973,7 +973,7 @@
                   label: "defaultView",
                   views: [
                     {
-                      if: { documentStandard: "dcat2" },
+                      if: { documentStandard: "dcat-ap" },
                       url: "/formatters/xsl-view?root=div&view=advanced"
                     }
                   ],
@@ -1318,7 +1318,7 @@
                           "((+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " OR (+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (-resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     },
                     "Toegang zonder voorwaarden": {
@@ -1327,7 +1327,7 @@
                           "((+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " OR (+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (+resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     },
                     "Niet publiek": {
@@ -1336,7 +1336,7 @@
                           "((-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " AND (-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (-resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     },
                     "Toegang met voorwaarden": {
@@ -1345,7 +1345,7 @@
                           "((-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " AND (-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (+resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     }
                   }
@@ -1353,7 +1353,7 @@
               },
               "MD_LegalConstraintsUseLimitationObject.default.keyword": {
                 // TODO MDC: Needs custom index field probably
-                // See https://agiv.visualstudio.com/Metadata/_git/Metadata?path=/schemas/iso19139/src/main/plugin/iso19139/index-fields/default.xsl&version=GBclients/aiv/dcat2&line=566&lineEnd=572&lineStartColumn=19&lineEndColumn=25&lineStyle=plain&_a=contents
+                // See https://agiv.visualstudio.com/Metadata/_git/Metadata?path=/schemas/iso19139/src/main/plugin/iso19139/index-fields/default.xsl&version=GBclients/aiv/dcat-ap&line=566&lineEnd=572&lineStartColumn=19&lineEndColumn=25&lineStyle=plain&_a=contents
                 terms: {
                   field: "MD_LegalConstraintsUseLimitationObject.default.keyword"
                 }

@@ -7,7 +7,6 @@
 [submodule "web-ui/src/main/resources/catalog/lib/bootstrap-table"]
 	path = web-ui/src/main/resources/catalog/lib/bootstrap-table
 	url = https://github.com/wenzhixin/bootstrap-table.git
-[submodule "schemas/dcat2"]
-	path = schemas/dcat2
-	url = https://agiv.visualstudio.com/DefaultCollection/Metadata/_git/MetadataDcatAp
-
+[submodule "schemas/dcat-ap"]
+	path = schemas/dcat-ap
+	url = git@github.com:metadata101/dcat-ap.git

@@ -1461,7 +1461,7 @@ public final class XslUtil {
 
         return thesaurus == null ? "" : "geonetwork.thesaurus." + thesaurus.getKey();
     }
-    
+
     /**
      * Retrieve the thesaurus title using the thesaurus key.
      *
@@ -1475,11 +1475,12 @@ public final class XslUtil {
         return thesaurus == null ? "" : thesaurus.getTitle();
     }
 
-    public static String getThesaurusTitleByName(String id) {
+
+    public static String getThesaurusUriByKey(String id) {
         ApplicationContext applicationContext = ApplicationContextHolder.get();
         ThesaurusManager thesaurusManager = applicationContext.getBean(ThesaurusManager.class);
         Thesaurus thesaurus = thesaurusManager.getThesaurusByName(id);
-        return thesaurus == null ? "" : thesaurus.getTitle();
+        return thesaurus == null ? "" : thesaurus.getDefaultNamespace();
     }
 
     /**
