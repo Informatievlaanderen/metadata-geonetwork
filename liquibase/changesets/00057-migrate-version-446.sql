@@ -2,50 +2,53 @@
 --changeset mathieu:00057-migrate-version-446
 
 -- bump the version
-UPDATE Settings
-SET value='4.4.6'
-WHERE name = 'system/platform/version';
-UPDATE Settings
-SET value='0'
-WHERE name = 'system/platform/subVersion';
+update settings
+set value='4.4.6'
+where name = 'system/platform/version';
+update settings
+set value='0'
+where name = 'system/platform/subVersion';
 
 -- forgot these in v445/migrate-default.sql, included here instead
-INSERT INTO Settings (name, value, datatype, position, internal)
-SELECT distinct 'system/feedback/languages', '', 0, 646, 'n'
+insert into settings (name, value, datatype, position, internal)
+select distinct 'system/feedback/languages', '', 0, 646, 'n'
 from settings
-WHERE NOT EXISTS (SELECT name FROM Settings WHERE name = 'system/feedback/languages');
-INSERT INTO Settings (name, value, datatype, position, internal)
-SELECT distinct 'system/feedback/translationFollowsText', '', 0, 647, 'n'
+where not exists (select name from settings where name = 'system/feedback/languages');
+insert into settings (name, value, datatype, position, internal)
+select distinct 'system/feedback/translationFollowsText', '', 0, 647, 'n'
 from settings
-WHERE NOT EXISTS (SELECT name FROM Settings WHERE name = 'system/feedback/translationFollowsText');
+where not exists (select name from settings where name = 'system/feedback/translationFollowsText');
 
 -- from v446/migrate-default.sql
-INSERT INTO Settings (name, value, datatype, position, internal)
-VALUES ('system/userSelfRegistration/domainsAllowed', '', 0, 1911, 'y');
+insert into settings (name, value, datatype, position, internal)
+values ('system/userSelfRegistration/domainsAllowed', '', 0, 1911, 'y');
 
 -- doi servers were introduced in v445 (see DoiServerDatabaseMigration) but tables were not created
 -- DDL below makes sure we are mirrorring Hibernate's assumptions
-CREATE TABLE doiservers
+create table doiservers
 (
-  id                  int4         NOT NULL,
-  description         varchar(255) NULL,
-  landingpagetemplate varchar(255) NOT NULL,
-  "name"              varchar(32)  NOT NULL,
-  "password"          varchar(128) NULL,
-  pattern             varchar(255) NOT NULL,
-  prefix              varchar(15)  NOT NULL,
-  publicurl           varchar(255) NOT NULL,
-  url                 varchar(255) NOT NULL,
-  username            varchar(128) NULL,
-  CONSTRAINT doiservers_pkey PRIMARY KEY (id)
+  id                  int4         not null,
+  description         varchar(255) null,
+  landingpagetemplate varchar(255) not null,
+  "name"              varchar(32)  not null,
+  "password"          varchar(128) null,
+  pattern             varchar(255) not null,
+  prefix              varchar(15)  not null,
+  publicurl           varchar(255) not null,
+  url                 varchar(255) not null,
+  username            varchar(128) null,
+  constraint doiservers_pkey primary key (id)
 );
-CREATE TABLE doiservers_group
+create table doiservers_group
 (
   doiserver_id int4 NOT NULL,
   group_id     int4 NOT NULL,
-  CONSTRAINT doiservers_group_pkey PRIMARY KEY (doiserver_id, group_id),
-  CONSTRAINT fk_doiservers_group_doiservers FOREIGN KEY (doiserver_id) REFERENCES doiservers (id),
-  CONSTRAINT fk_doiservers_group_groups FOREIGN KEY (group_id) REFERENCES groups (id)
+  constraint doiservers_group_pkey primary key (doiserver_id, group_id),
+  constraint fk_doiservers_group_doiservers foreign key (doiserver_id) references doiservers (id),
+  constraint fk_doiservers_group_groups foreign key (group_id) references groups (id)
 );
+create sequence doiserver_id_seq start with 1 increment by 1;
+alter table doiservers alter column id set default nextval('doiserver_id_seq'::regclass);
+
 -- no doi servers are configured at this point so migrating them makes no sense - just delete the related settings
-DELETE FROM Settings WHERE name LIKE 'system/publication/doi%' and name != 'system/publication/doi/doienabled';
+delete from settings where name like 'system/publication/doi%' and name != 'system/publication/doi/doienabled';
