@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * Copyright (C) 2001-2024 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -369,6 +369,8 @@
               size: 20
             },
             moreLikeThisSameType: true,
+            moreLikeThisFilter:
+              "-cl_status.key:(obsolete OR historicalArchive OR superseded)",
             moreLikeThisConfig: {
               more_like_this: {
                 fields: [
@@ -717,7 +719,7 @@
                           "((+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " OR (+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (-resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     },
                     "Toegang zonder voorwaarden": {
@@ -726,7 +728,7 @@
                           "((+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " OR (+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (+resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     },
                     "Niet publiek": {
@@ -735,7 +737,7 @@
                           "((-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " AND (-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (-resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     },
                     "Toegang met voorwaarden": {
@@ -744,7 +746,7 @@
                           "((-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " AND (-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (+resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     }
                   }
@@ -971,7 +973,7 @@
                   label: "defaultView",
                   views: [
                     {
-                      if: { documentStandard: "dcat2" },
+                      if: { documentStandard: "dcat-ap" },
                       url: "/formatters/xsl-view?root=div&view=advanced"
                     }
                   ],
@@ -1062,7 +1064,7 @@
             is3DModeAllowed: false,
             singleTileWMS: true,
             isSaveMapInCatalogAllowed: true,
-            isExportMapAsImageEnabled: false,
+            isExportMapAsImageEnabled: true,
             isAccessible: false,
             storage: "sessionStorage",
             bingKey: "",
@@ -1172,6 +1174,7 @@
                     "protocol:OGC:WFS|OGC:WCS|.*DOWNLOAD.*|DB:.*|FILE:.*|OGC API Features|OGC API Coverages|OGC:OGC-API-Features*",
                   title: "download"
                 },
+                { filter: "protocol:OGC:OWS-C", title: "map" },
                 { filter: "function:legend", title: "mapLegend" },
                 {
                   filter: "function:featureCatalogue",
@@ -1315,7 +1318,7 @@
                           "((+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " OR (+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (-resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     },
                     "Toegang zonder voorwaarden": {
@@ -1324,7 +1327,7 @@
                           "((+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " OR (+MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (+resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     },
                     "Niet publiek": {
@@ -1333,7 +1336,7 @@
                           "((-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " AND (-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (-resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     },
                     "Toegang met voorwaarden": {
@@ -1342,7 +1345,7 @@
                           "((-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/inspire.ec.europa.eu\\/metadata-codelist\\/LimitationsOnPublicAccess\\/noLimitations/)" +
                           " AND (-MD_LegalConstraintsOtherConstraintsObject.link:/.*:\\/\\/publications.europa.eu\\/resource\\/authority\\/access-right\\/PUBLIC/))" +
                           " AND (+resourceType:service)" +
-                          " AND (+documentStandard:/(iso19139|dcat2)/)"
+                          " AND (+documentStandard:/(iso19139|dcat-ap)/)"
                       }
                     }
                   }
@@ -1350,7 +1353,7 @@
               },
               "MD_LegalConstraintsUseLimitationObject.default.keyword": {
                 // TODO MDC: Needs custom index field probably
-                // See https://agiv.visualstudio.com/Metadata/_git/Metadata?path=/schemas/iso19139/src/main/plugin/iso19139/index-fields/default.xsl&version=GBclients/aiv/dcat2&line=566&lineEnd=572&lineStartColumn=19&lineEndColumn=25&lineStyle=plain&_a=contents
+                // See https://agiv.visualstudio.com/Metadata/_git/Metadata?path=/schemas/iso19139/src/main/plugin/iso19139/index-fields/default.xsl&version=GBclients/aiv/dcat-ap&line=566&lineEnd=572&lineStartColumn=19&lineEndColumn=25&lineStyle=plain&_a=contents
                 terms: {
                   field: "MD_LegalConstraintsUseLimitationObject.default.keyword"
                 }
@@ -1698,6 +1701,7 @@
           "geocoder",
           "disabledTools",
           "filters",
+          "info",
           "scoreConfig",
           "autocompleteConfig",
           "moreLikeThisConfig",
@@ -2030,6 +2034,10 @@
 
       $scope.getApplicationInfoVisible = function () {
         return gnGlobalSettings.gnCfg.mods.footer.showApplicationInfoAndLinksInFooter;
+      };
+
+      $scope.getContactusVisible = function () {
+        return gnConfig[gnConfig.key.isFeedbackEnabled];
       };
 
       function detectNode(detector) {

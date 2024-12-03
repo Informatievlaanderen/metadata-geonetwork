@@ -35,6 +35,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.jxpath.ri.parser.Token;
@@ -277,20 +279,18 @@ public class EditLib {
                 targetElement.addContent(childToAdd);
             }
 
-            Optional<Element> child =  filterOnQname(existingAllType, "geonet:child")
+            filterOnQname(existingAllType, "geonet:child")
                 .stream()
                 .filter(gnChild -> (gnChild.getAttributeValue("prefix") + ":" + gnChild.getAttributeValue("name")).equals(singleType))
-                .findFirst();
-            child.ifPresent(targetElement::addContent);
+                .findFirst()
+                .ifPresent(targetElement::addContent);
         }
 
-        for (Element gnElement: filterOnQname(existingAllType, "geonet:element")) {
-            targetElement.addContent(gnElement);
-        }
+        Stream.concat(
+            filterOnQname(existingAllType, "geonet:element").stream(),
+            filterOnQname(existingAllType, "geonet:attribute").stream()
+        ).forEach(targetElement::addContent);
 
-        for (Element gnElement: filterOnQname(existingAllType, "geonet:attribute")) {
-            targetElement.addContent(gnElement);
-        }
     }
 
     public void addXMLFragments(String schema, Element md, Map<String, String> xmlInputs) throws Exception {

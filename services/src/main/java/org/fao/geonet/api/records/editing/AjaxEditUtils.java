@@ -411,7 +411,7 @@ public class AjaxEditUtils extends EditUtils {
         if (childName == null || !childName.equals("geonet:attribute")) {
             int iRef = editLib.findMaximumRef(md);
             editLib.enumerateTreeStartingAt(child, iRef + 1, Integer.parseInt(ref));
-            editLib.expandTree(schema, child);
+            editLib.expandTree(mds, child);
         }
         if (info != null) {
             //--- remove and re-attach the info element to the child

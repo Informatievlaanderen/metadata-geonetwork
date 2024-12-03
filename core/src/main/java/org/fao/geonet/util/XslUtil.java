@@ -850,7 +850,7 @@ public final class XslUtil {
             final Map<String, String> values = searchManager.getFieldsValues(id, fields, language);
             return values.get(fieldname);
         } catch (Exception e) {
-            Log.error(Geonet.GEONETWORK, "Failed to get index field '" + fieldname + "' value on '" + id + "', caused by " + e.getMessage());
+            Log.warning(Geonet.GEONETWORK, "Failed to get index field '" + fieldname + "' value on '" + id + "', caused by " + e.getMessage());
         }
         return "";
     }
@@ -1462,11 +1462,25 @@ public final class XslUtil {
         return thesaurus == null ? "" : "geonetwork.thesaurus." + thesaurus.getKey();
     }
 
-    public static String getThesaurusTitleByName(String id) {
+    /**
+     * Retrieve the thesaurus title using the thesaurus key.
+     *
+     * @param id   the thesaurus key
+     * @return the thesaurus title or empty string if the thesaurus doesn't exist.
+     */
+    public static String getThesaurusTitleByKey(String id) {
         ApplicationContext applicationContext = ApplicationContextHolder.get();
         ThesaurusManager thesaurusManager = applicationContext.getBean(ThesaurusManager.class);
         Thesaurus thesaurus = thesaurusManager.getThesaurusByName(id);
         return thesaurus == null ? "" : thesaurus.getTitle();
+    }
+
+
+    public static String getThesaurusUriByKey(String id) {
+        ApplicationContext applicationContext = ApplicationContextHolder.get();
+        ThesaurusManager thesaurusManager = applicationContext.getBean(ThesaurusManager.class);
+        Thesaurus thesaurus = thesaurusManager.getThesaurusByName(id);
+        return thesaurus == null ? "" : thesaurus.getDefaultNamespace();
     }
 
     /**
