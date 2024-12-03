@@ -459,5 +459,8 @@
     "associated-hasfeaturecats": "Met behulp van deze objectencatalogus",
     "associatedResourcesPanel": "Gerelateerde bronnen",
     "validationSuccessLabel": "succes",
-    "validationErrorLabel": "fouten"
+    "validationErrorLabel": "fouten",
+    "metadataDuplicatedField-title": "De titel wordt reeds gebruikt in een ander metadata record",
+    "metadataDuplicatedField-altTitle": "De alternatieve titel wordt reeds gebruikt in een ander metadata record.",
+    "metadataDuplicatedField-identifier": "De bron identificator wordt reeds gebruikt in een ander metadata record."
 }
