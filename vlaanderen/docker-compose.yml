@@ -141,7 +141,7 @@ services:
       SERVER_FORWARDHEADERSSTRATEGY: FRAMEWORK
 
   elasticsearch:
-    image: elasticsearch:8.11.3
+    image: elasticsearch:8.14.3
     ulimits:
       memlock:
         soft: -1
