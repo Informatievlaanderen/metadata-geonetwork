@@ -50,7 +50,17 @@ public class ACMIDMRoleProcessor extends OIDCRoleProcessor {
                 .collect(Collectors.toList());
     }
 
+    /**
+     *
+     * @param group example: OVO016979
+     * @param profile example: Reviewer
+     * @return
+     */
     private List<String> getProfiles(String group, String profile) {
+        // if the group is not identified with an OVO code, do not allow further processing
+        if(!group.startsWith("OVO")) {
+            return Lists.newArrayList();
+        }
         String roleGroupSeparator = oidcConfiguration.groupPermissionSeparator;
         String dpPrefix = "dp-" + group + roleGroupSeparator;
         String mdvPrefix = "mdv-" + group + roleGroupSeparator;
