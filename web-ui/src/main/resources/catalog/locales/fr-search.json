@@ -366,7 +366,7 @@
     "shareByEmail": "Partager via email",
     "zoomto": "Zoom vers",
     "recordNotFound": "La fiche avec l'identifiant <strong>{{uuid}}</strong> n'a pas été trouvée ou n'est pas accessible pour vous.",
-    "trySignIn": "Try to <a href=\"catalog.signin?redirect={{url}}\">sign in</a> if you've an account.",
+    "trySignIn": "Essayez <a href=\"{{signInFormAction}}?_csrf={{csrf}}&redirectUrl={{redirectUrlAfterSign}}\">de vous connecter</a> si vous avez un compte.",
     "intersectWith": "Intersection avec",
     "fullyOutsideOf": "Entièrement à l'extérieur de",
     "encloses": "Comprends au moins",
