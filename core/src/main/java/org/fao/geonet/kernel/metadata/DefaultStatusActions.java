@@ -384,7 +384,12 @@ public class DefaultStatusActions implements StatusActions {
         String dpPrefix = groupOwner.filter(g -> StringUtils.equals(g.getVlType(), "datapublicatie")).isPresent() ? "DataPublicatie " : "";
         String statusChangeReason = status.getChangeMessage().trim();
 
-        String metadataTitle = XslUtil.getIndexField(null, metadata.getUuid(), "resourceTitleObject", this.language);
+        String metadataTitle;
+        if (metadata instanceof MetadataDraft) {
+            metadataTitle = XslUtil.getIndexField(null, metadata.getUuid()+"-draft", "resourceTitleObject", this.language);
+        } else {
+            metadataTitle = XslUtil.getIndexField(null, metadata.getUuid(), "resourceTitleObject", this.language);
+        }
 
         // gather parameters for the email
         // top-level, the mail is composed of 'sections', these need to be replaced first
