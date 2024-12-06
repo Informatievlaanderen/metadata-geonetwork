@@ -366,7 +366,7 @@
     "shareByEmail": "Per E-Mail teilen",
     "zoomto": "Zoom auf",
     "recordNotFound": "Der Datensatz mit der Kennung <strong>{{uuid}}</strong> wurde nicht gefunden oder wird nicht mit Ihnen geteilt.",
-    "trySignIn": "Try to <a href=\"catalog.signin?redirect={{url}}\">sign in</a> if you've an account.",
+    "trySignIn": "Versuchen Sie <a href=\"{{signInFormAction}}?_csrf={{csrf}}&redirectUrl={{redirectUrlAfterSign}}\">sich anzumelden</a> wenn Sie ein Konto haben.",
     "intersectWith": "überschneidet mit",
     "fullyOutsideOf": "komplett außerhalb",
     "encloses": "umfasst mindestens",
