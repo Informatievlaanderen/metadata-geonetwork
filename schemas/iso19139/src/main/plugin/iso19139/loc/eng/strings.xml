@@ -121,7 +121,6 @@
   <vl-tab-quality>Quality</vl-tab-quality>
   <vl-tab-referenceSystem>Reference system</vl-tab-referenceSystem>
   <vl-type-and-resolution>Spatial schema and resolution</vl-type-and-resolution>
-  <vl-add-hvd-legislation>Add HVD legislation keyword</vl-add-hvd-legislation>
   <vl-useLimitation-add>Constraints of the dataset(series)</vl-useLimitation-add>
   <vl>Standard</vl>
   <vl-BeschrijvingenURL>Beschrijving en URL</vl-BeschrijvingenURL>

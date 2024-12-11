@@ -755,24 +755,6 @@
         <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords"
                  or="descriptiveKeywords" in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
 
-        <action type="add"
-                btnLabel="vl-add-hvd-legislation"
-                in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
-                or="descriptiveKeywords"
-                if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords/*/gmd:keyword/gmx:Anchor[@xlink:href='http://data.europa.eu/eli/reg_impl/2023/138/oj']) = 0">
-          <template>
-            <snippet>
-              <gmd:descriptiveKeywords>
-                <gmd:MD_Keywords>
-                  <gmd:keyword>
-                    <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg_impl/2023/138/oj">High-value dataset</gmx:Anchor>
-                  </gmd:keyword>
-                </gmd:MD_Keywords>
-              </gmd:descriptiveKeywords>
-            </snippet>
-          </template>
-        </action>
-
         <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceSpecificUsage"/>
 
         <section name="vl-type-and-resolution"
