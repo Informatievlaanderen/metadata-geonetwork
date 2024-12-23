@@ -1,0 +1,56 @@
+######
+# INFO
+######
+# - optional stages should be an upcoming feature, instead of having to rely on approval timeouts (https://developercommunity.visualstudio.com/t/manually-triggered-stages-in-yaml-multi-stage-pipe/697467)
+#   - currently not yet sufficiently implemented: can't do conditional manual stages
+
+######
+# POOL
+######
+pool: dv-prd-ubuntu2204
+
+###########
+# VARIABLES
+###########
+variables:
+  - name: mavenCacheFolder
+    value: $(Pipeline.Workspace)/.m2/repository
+  - name: mavenCacheOpts
+    value: '-Dmaven.repo.local=$(mavenCacheFolder)'
+
+########
+# STAGES
+########
+stages:
+  # check whether we need to skip this pipeline altogether, based on commit message
+  - template: azure-pipelines-skipcheck.yml
+
+  # build and publish the necessary artefacts
+  - template: azure-pipelines-build.yml
+    parameters:
+      mavenCacheFolder: $(mavenCacheFolder)
+      mavenCacheOpts: $(mavenCacheOpts)
+
+  # deploy to dev, automatically
+  - template: azure-pipelines-deploy.yml
+    parameters:
+      acrName: premdacr
+      acrServiceConnection: pre-md-acr-sc
+      clusterName: pre-md-cluster-aks
+      clusterRg: pre-md-cluster-rg
+      devopsKeyVault: prd-md-devops-kv
+      namespace: dev
+      serviceConnection: pre-md-subscription-sc
+      subscription: METADATA-dev
+
+  # optionally deploy to bet, this required manual approval for the environment
+  - template: azure-pipelines-deploy.yml
+    parameters:
+      acrName: premdacr
+      acrServiceConnection: pre-md-acr-sc
+      clusterName: pre-md-cluster-aks
+      clusterRg: pre-md-cluster-rg
+      devopsKeyVault: prd-md-devops-kv
+      namespace: bet
+      serviceConnection: pre-md-subscription-sc
+      subscription: METADATA-dev
