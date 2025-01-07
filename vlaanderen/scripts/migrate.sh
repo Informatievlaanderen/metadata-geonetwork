@@ -5,11 +5,10 @@
 
 # params
 # dev/bet/prd
-ENV=bet
+SOURCE=prd
+TARGET=bet
 
-# transfer data  one environment to another
-
-# test case: bet to loc
+# transfer data from one environment to another
 
 outputfile=/tmp/dump.postgres
 
@@ -17,20 +16,19 @@ outputfile=/tmp/dump.postgres
 sourcehost=localhost
 # same ports are used as in port-forward-db.sh
 sourceport="unset"
-if [[ $ENV == "prd" ]]
+if [[ $SOURCE == "prd" ]]
 then
   sourceport=5435
-elif [[ $ENV == "bet" ]]
+elif [[ $SOURCE == "bet" ]]
 then
   sourceport=5434
-elif [[ $ENV == "dev" ]]
+elif [[ $SOURCE == "dev" ]]
 then
   sourceport=5433
 else
   echo "Unknown env set, can't determine source database."
   exit 1
 fi
-
 sourceuser=geonetwork
 sourcepassword=geonetwork
 sourcedatabase=geonetwork
@@ -38,8 +36,24 @@ echo "source database: $sourceuser@$sourcehost:$sourceport/$sourcedatabase"
 
 # the database we copy to (will be nuked)
 targethost=localhost
-targetport=5432
-
+# same ports are used as in port-forward-db.sh
+targetport="unset"
+if [[ $TARGET == "prd" ]]
+then
+  targetport=5435
+elif [[ $TARGET == "bet" ]]
+then
+  targetport=5434
+elif [[ $TARGET == "dev" ]]
+then
+  targetport=5433
+elif [[ $TARGET == "loc" ]]
+then
+  targetport=5432
+else
+  echo "Unknown env set, can't determine target database."
+  exit 1
+fi
 targetuser=geonetwork
 targetpassword=geonetwork
 targetdatabase=geonetwork
