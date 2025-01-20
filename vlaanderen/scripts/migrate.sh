@@ -5,8 +5,8 @@
 
 # params
 # dev/bet/prd
-SOURCE=prd
-TARGET=bet
+SOURCE=bet
+TARGET=loc
 
 # transfer data from one environment to another
 
