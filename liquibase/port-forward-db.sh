@@ -27,14 +27,18 @@ done
 shift $((OPTIND - 1))
 # Variables
 DBDEPLOYMENT=deployment/postgres-geonetwork
+MONITORDBMONITORDEPLOYMENT=deployment/postgres-monitor
 DBPORT=5432
+
 
 # Push commands in the background, when the script exits, the commands will exit too
 kubectl --cluster pre-md-cluster-aks --namespace dev port-forward $DBDEPLOYMENT 5433:$DBPORT & \
 kubectl --cluster pre-md-cluster-aks --namespace bet port-forward $DBDEPLOYMENT 5434:$DBPORT & \
+kubectl --cluster pre-md-cluster-aks --namespace monitoring port-forward $MONITORDBMONITORDEPLOYMENT 5533:$DBPORT & \
 if [[ $prd == true ]]; then
   echo "WARNING: production is accessible!"
   kubectl --cluster prd-md-cluster-aks --namespace prd port-forward $DBDEPLOYMENT 5435:$DBPORT & \
+  kubectl --cluster prd-md-cluster-aks --namespace monitoring port-forward $MONITORDBMONITORDEPLOYMENT 5535:$DBPORT & \
 fi
 
 # Wait till we're done
