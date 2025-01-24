@@ -12,6 +12,7 @@
     <skos:Concept rdf:about="http://data.europa.eu/eli/reg_impl/2023/138/oj">
         <skos:prefLabel xml:lang="en">2023/138</skos:prefLabel>
         <skos:prefLabel xml:lang="fr">2023/138</skos:prefLabel>
+        <skos:prefLabel xml:lang="nl">2023/138 (Hoogwaardige Datasets)</skos:prefLabel>
         <skos:scopeNote xml:lang="en">Commission Implementing Regulation (EU) 2023/138 of 21 December 2022 laying down a
             list of specific high-value datasets and the arrangements for their publication and re-use
         </skos:scopeNote>
