@@ -1,0 +1,42 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <property name="changeset-name" value="00059-schematron-schema"/>
+
+    <!-- fix foreign key / cascades -->
+    <changeSet author="joachim" id="${changeset-name}-foreign-key">
+        <dropForeignKeyConstraint baseTableName="schematrondes"
+                                  constraintName="fk134nfqy1njol3whafs4452o7p"/>
+        <dropForeignKeyConstraint baseTableName="schematroncriteriagroup"
+                                  constraintName="fkt8avbrgs5j8xvoros154qim3k"/>
+        <dropForeignKeyConstraint baseTableName="schematroncriteria"
+                                  constraintName="fk3tno1j5h8lla4ad6con5x7xrs"/>
+        <addForeignKeyConstraint baseTableName="schematrondes"
+                                 baseColumnNames="iddes"
+                                 constraintName="fk_schematrondes_schematron"
+                                 referencedTableName="schematron"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="schematroncriteriagroup"
+                                 baseColumnNames="schematronid"
+                                 constraintName="fk_schematroncriteriagroup_schematron"
+                                 referencedTableName="schematron"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="schematroncriteria"
+                                 baseColumnNames="group_name, group_schematronid"
+                                 constraintName="fk_schematroncriteria_schematroncriteriagroup"
+                                 referencedTableName="schematroncriteriagroup"
+                                 referencedColumnNames="name, schematronid"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet author="joachim" id="${changeset-name}-sequence">
+        <addDefaultValue tableName="schematron" columnName="id"
+                         defaultValueSequenceNext="schematron_id_seq"/>
+        <addDefaultValue tableName="schematroncriteria" columnName="id"
+                         defaultValueSequenceNext="schematron_criteria_id_seq"/>
+    </changeSet>
+</databaseChangeLog>
