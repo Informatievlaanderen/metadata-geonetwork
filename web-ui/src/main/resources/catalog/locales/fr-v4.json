@@ -457,5 +457,10 @@
   "linkStatus": "Statut du lien",
   "requestStatus": "Statut de la requête",
   "linkUrl": "URL du lien",
-  "associatedUuid": "Associé aux UUID"
+  "associatedUuid": "Associé aux UUID",
+  "mdEmail": "Email",
+  "mdWebsite": "Website",
+  "mdOrganization": "Organization",
+  "mdAddress": "Address",
+  "mdPhone": "Phone"
 }
