@@ -1,4 +1,4 @@
-describe('template spec', () => {
+describe('login', () => {
   beforeEach('passes', () => {
     cy.visit(`/`)
     cy.acceptCookies()
