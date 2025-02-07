@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset joachim:000060-schematron-criteria
+--changeset joachim:00060-schematron-criteria
 
 -- create temporary table to loop over - plpgsql is a paid feature in liquibase so couldn't use that here :(
 create schema "00060_temp";
