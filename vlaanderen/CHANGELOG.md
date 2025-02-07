@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Migrated `dcat2` schema plugin (VL) to `dcat-ap` community driven generic plugin - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40822) / [pr-core](https://github.com/metadata101/dcat-ap/pull/24) / [pr-core](https://github.com/metadata101/dcat-ap/pull/35)
 - Fix for login url in the alert shown for unavailable records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41009) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8534)
 - Merged upstream change regarding correctly handling thesaurus keywords that lack translations - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41135) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8268)
+- Fix for adding keywords containing special characters - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42369) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/2113)
  
 
 ## [8.2.3] - 2024-11-05
