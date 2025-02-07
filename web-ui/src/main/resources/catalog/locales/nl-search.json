@@ -366,7 +366,7 @@
     "shareByEmail": "Deel per mail",
     "zoomto": "Zoom naar",
     "recordNotFound": "Het record met identificator <strong>{{uuid}}</strong> werd niet gevonden of is niet met je gedeeld.",
-    "trySignIn": "Probeer <a href=\"{{signInFormAction}}?_csrf={{csrf}}&redirectUrl={{redirectUrlAfterSign}}\">in te loggen</a> als je een account hebt.",
+    "trySignIn": "Probeer <a href=\"{{signInFormAction}}?_csrf={{csrf}}&redirectUrl={{redirectUrlAfterSign}}\">in te loggen</a> indien je een account hebt.",
     "intersectWith": "Snijdt met",
     "fullyOutsideOf": "Volledig buiten",
     "encloses": "Omvat",

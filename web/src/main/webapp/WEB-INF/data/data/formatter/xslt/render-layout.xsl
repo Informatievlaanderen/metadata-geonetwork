@@ -346,7 +346,10 @@
 
   <!-- Render a tab. Tab id is defined in strings
   and set the title of the section -->
-  <xsl:template mode="render-view" match="tab">
+  <xsl:template mode="render-view" match="tab[gn-fn-metadata:check-elementandsession-visibility(
+                                        $schema, $metadata, $serviceInfo,
+                                        @displayIfRecord,
+                                        @displayIfServiceInfo)]">
     <xsl:variable name="content">
       <xsl:apply-templates mode="render-view" select="*|@*"/>
     </xsl:variable>
