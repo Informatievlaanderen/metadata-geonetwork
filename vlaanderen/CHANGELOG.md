@@ -9,11 +9,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### vlaanderen
 - Fix for duplicate processSteps information on default view - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40266) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39793)
 - Status update mails now mention title of draft copies correctly - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41002)
+- Introduced HVD support in ISO and DCAT - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41131)
 
 ### core
 - Merged 4.4.6-0 - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40822) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8462)
   - Includes Elasticsearch upgrade to 8.14.3
-- Migrated `dcat2` schema plugin (VL) to `dcat-ap` community driven generic plugin - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40822) / [pr-core](https://github.com/metadata101/dcat-ap/pull/24)
+- Migrated `dcat2` schema plugin (VL) to `dcat-ap` community driven generic plugin - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40822) / [pr-core](https://github.com/metadata101/dcat-ap/pull/24) / [pr-core](https://github.com/metadata101/dcat-ap/pull/35)
 - Fix for login url in the alert shown for unavailable records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41009) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8534)
 - Merged upstream change regarding correctly handling thesaurus keywords that lack translations - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41135) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8268)
  
