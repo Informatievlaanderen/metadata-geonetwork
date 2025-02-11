@@ -46,7 +46,7 @@
     <Logger name="geonetwork.database" level="error"/>
     <Logger name="geonetwork.databasemigration" level="error"/>
     <Logger name="geonetwork.datamanager" level="error"/>
-    <Logger name="geonetwork.domain" level="warning"/>
+    <Logger name="geonetwork.domain" level="error"/>
     <Logger name="geonetwork.editor" level="error"/>
     <Logger name="geonetwork.editorexpandelement" level="error"/>
     <Logger name="geonetwork.editorfillelement" level="error"/>
