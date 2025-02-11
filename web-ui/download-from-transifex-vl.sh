@@ -35,11 +35,6 @@ cat <<EOF > .tx/config
   file_filter = translations/core-geonetwork.search/<lang>.json
   source_file = translations/core-geonetwork.search/en.json
   type = KEYVALUEJSON
-
-  [o:geonetwork:p:core-geonetwork:r:gnui]
-  file_filter = translations/core-geonetwork.gnui/<lang>.json
-  source_file = translations/core-geonetwork.gnui/en.json
-  type = KEYVALUEJSON
 EOF
 
 
@@ -61,7 +56,7 @@ for index in "${l[@]}" ; do
     KEY="${index%%::*}"
     VALUE="${index##*::}"
   echo "Language $VALUE"
-  for mod in admin core editor search v4 gnui
+  for mod in admin core editor search v4
   do
     cp $TRANSLATION_DIR$mod/$VALUE.json $SRC_DIR/$KEY-$mod.json
   done;
