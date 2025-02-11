@@ -68,7 +68,6 @@
     <Logger name="geonetwork.resources" level="error"/>
     <Logger name="geonetwork.schemamanager" level="error"/>
     <Logger name="geonetwork.search" level="error"/>
-    <Logger name="geonetwork.security" level="error"/>
     <Logger name="geonetwork.spatineo" level="error"/>
     <Logger name="geonetwork.sru" level="error"/>
     <Logger name="geonetwork.sru.search" level="error"/>
@@ -82,7 +81,7 @@
     <Logger name="geonetwork.engine" level="error"/>
     <Logger name="geonetwork.monitor" level="error"/>
     <Logger name="geonetwork.resources" level="error"/>
-    <Logger name="geonetwork.security" level="error"/>
+    <Logger name="geonetwork.security" level="debug"/>
     <Logger name="geonetwork.transformerFactory" level="error"/>
     <Logger name="geonetwork.xlinkprocessor" level="error"/>
     <Logger name="geonetwork.xmlresolver" level="error"/>
