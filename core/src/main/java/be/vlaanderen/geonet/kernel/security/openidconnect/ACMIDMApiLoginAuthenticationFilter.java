@@ -81,6 +81,7 @@ public class ACMIDMApiLoginAuthenticationFilter extends AbstractAuthenticationPr
         }
 
         // validate the token at ACM/IDM
+        Log.debug(Geonet.SECURITY, "Introspecting bearer token ("+bearerToken+")");
         IntrospectedToken validationToken = introspectToken(bearerToken);
         if (validationToken.isActive) {
             OAuth2AccessToken oAuth2AccessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER, validationToken.jwt, validationToken.issuedAt, validationToken.expiresAt, new HashSet<>(validationToken.scopes));

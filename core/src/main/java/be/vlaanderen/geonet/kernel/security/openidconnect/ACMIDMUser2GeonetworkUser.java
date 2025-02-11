@@ -26,6 +26,7 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
     @Override
     @Transactional
     public UserDetails getUserDetails(OidcIdToken idToken, Map attributes, boolean withDbUpdate) throws Exception {
+        Log.debug(Geonet.SECURITY, "Getting user details for token tokenValue("+idToken.getTokenValue()+") claims("+idToken.getClaims().toString()+")");
         SimpleOidcUser simpleUser = simpleOidcUserFactory.create(idToken, attributes);
         if (!StringUtils.hasText(simpleUser.getUsername()))
             return null;
@@ -157,6 +158,9 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
         String userOrgName = idToken.getClaimAsString("vo_orgnaam");
         String doelgroepCode = idToken.getClaimAsString("vo_doelgroepcode");
         String doelgroepNaam = idToken.getClaimAsString("vo_doelgroepnaam");
+
+        Log.debug(Geonet.SECURITY, String.format("Updating groups for user (%s / %s) orgcode (%s) orgnaam (%s) doelgroepcode (%s) doelgroepnaam (%s)",
+            user.getName(), user.getEmail(), userOrgCode, userOrgName, doelgroepCode, doelgroepNaam));
 
         // Now we add the groups
         for (Profile p : profileGroups.keySet()) {
