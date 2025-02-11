@@ -262,4 +262,17 @@ public class SimpleOidcUser {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    @Override
+    public String toString() {
+        return "SimpleOidcUser{" +
+            "username='" + username + '\'' +
+            ", firstname='" + firstname + '\'' +
+            ", surname='" + surname + '\'' +
+            ", organisation='" + organisation + '\'' +
+            ", profile='" + profile + '\'' +
+            ", email='" + email + '\'' +
+            ", address=" + address +
+            '}';
+    }
 }
