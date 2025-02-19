@@ -1314,6 +1314,10 @@
                 <xsl:if test="$type != ''">
                   <xsl:attribute name="type" select="if ($isDirective) then 'text' else $type"/>
                 </xsl:if>
+                <xsl:if test="count($valueToEdit) > 1">
+                  <xsl:message select="concat('Multiple values cannot be edited for ', name(), '. Found ', count($valueToEdit), ' values.')"/>
+                  <xsl:message select="$value"/>
+                </xsl:if>
                 <xsl:attribute name="value"
                                select="normalize-space($valueToEdit)"/>
               </xsl:otherwise>
