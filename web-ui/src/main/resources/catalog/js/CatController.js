@@ -974,7 +974,7 @@
                   views: [
                     {
                       if: { documentStandard: "dcat-ap" },
-                      url: "/formatters/xsl-view?root=div&view=advanced"
+                      url: "/formatters/xsl-view?root=div&view=default"
                     }
                   ],
                   url: "" // Else
