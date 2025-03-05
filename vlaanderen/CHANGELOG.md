@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fixing whitespace issue for specific css class - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39432) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39608) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8398)
 - Merged 4.4.5-0 - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39793) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8184)
 - **Hotfix** for `json-smart` dependency build issue - [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8654)
+- **Hotfix** for the HVD facet - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42867)
 
 
 ## [8.2.2] - 2024-09-27
