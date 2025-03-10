@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fix for login url in the alert shown for unavailable records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41009) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8534)
 - Merged upstream change regarding correctly handling thesaurus keywords that lack translations - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41135) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8268)
 - Fix for adding keywords containing special characters - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42369) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/2113)
+- Improved translations for schematron validation messages - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42684) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8665)
  
 
 ## [8.2.3] - 2024-11-05
