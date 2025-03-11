@@ -151,10 +151,14 @@
           };
           if (outputLang) {
             parameters["pLang"] = outputLang;
-          }
-          if (lang !== "eng") {
-            // Fallback in english if thesaurus has no translation in current record language
-            parameters["pLang"] = ["eng", lang];
+            if (outputLang.indexOf("eng") === -1) {
+              parameters["pLang"] += ",eng";
+            }
+          } else {
+            if (lang !== "eng") {
+              // Fallback in english if thesaurus has no translation in current record language
+              parameters["pLang"] = ["eng", lang];
+            }
           }
 
           return gnUrlUtils.append(
@@ -202,10 +206,10 @@
             }
           });
 
-          listOfKeywords.sort(function(k1,k2) {
+          listOfKeywords.sort(function (k1, k2) {
             var s1;
             var s2;
-            if(orderById) {
+            if (orderById) {
               s1 = k1.props.uri;
               s2 = k2.props.uri;
             } else {
@@ -316,7 +320,11 @@
                   config.outputLang
                 ),
                 filter: function (data) {
-                  return parseKeywordsResponse(data, config.dataToExclude, config.orderById);
+                  return parseKeywordsResponse(
+                    data,
+                    config.dataToExclude,
+                    config.orderById
+                  );
                 }
               }
             });
