@@ -296,7 +296,7 @@ public class KeywordsApi {
      * Gets the keyword by id.
      *
      * @param uri              the uri
-     * @param sThesaurusName   the s thesaurus name
+     * @param sThesaurusName   the thesaurus name
      * @param langs            the langs
      * @param keywordOnly      the keyword only
      * @param transformation   the transformation
@@ -335,7 +335,7 @@ public class KeywordsApi {
             description = "Thesaurus to look info for the keyword(s).",
             required = true)
         @RequestParam(name = "thesaurus")
-            String sThesaurusName,
+            String[] sThesaurusName,
         @Parameter(
             description = "Languages.")
         @RequestParam(name = "lang", required = false)
@@ -365,7 +365,7 @@ public class KeywordsApi {
      * Gets the keyword by id.
      *
      * @param uri              the uri
-     * @param sThesaurusName   the s thesaurus name
+     * @param sThesaurusName   the thesaurus name
      * @param langs            the langs
      * @param keywordOnly      the keyword only
      * @param transformation   the transformation
@@ -405,7 +405,7 @@ public class KeywordsApi {
             description = "Thesaurus to look info for the keyword(s).",
             required = true)
         @RequestParam(name = "thesaurus")
-            String sThesaurusName,
+            String[] sThesaurusName,
         @Parameter(
             description = "Languages.")
         @RequestParam(name = "lang", required = false)
@@ -435,7 +435,7 @@ public class KeywordsApi {
      * Gets the keyword by id.
      *
      * @param uri              the uri
-     * @param sThesaurusName   the s thesaurus name
+     * @param sThesaurusNames   the s thesaurus name
      * @param langs            the langs
      * @param keywordOnly      the keyword only
      * @param transformation   the transformation
@@ -446,7 +446,7 @@ public class KeywordsApi {
      */
     private Object getKeyword(
         String uri,
-        String sThesaurusName,
+        String[] sThesaurusNames,
         String[] langs,
         boolean keywordOnly,
         String transformation,
@@ -459,82 +459,83 @@ public class KeywordsApi {
         String acceptHeader = StringUtils.isBlank(request.getHeader(HttpHeaders.ACCEPT)) ? MediaType.APPLICATION_XML_VALUE : request.getHeader(HttpHeaders.ACCEPT);
         boolean isJson = MediaType.APPLICATION_JSON_VALUE.equals(acceptHeader);
 
-        // Search thesaurus by name (as facet key only contains the name of the thesaurus)
-        Thesaurus thesaurus = thesaurusManager.getThesaurusByName(sThesaurusName);
-        if (thesaurus == null) {
-            String finalSThesaurusName = sThesaurusName;
-            Optional<Thesaurus> thesaurusEntry = thesaurusManager.getThesauriMap().values().stream().filter(t -> t.getKey().endsWith(finalSThesaurusName)).findFirst();
-            if (thesaurusEntry.isEmpty()) {
-                throw new IllegalArgumentException(String.format(
-                    "Thesaurus '%s' not found.", sThesaurusName));
-            } else {
-                sThesaurusName = thesaurusEntry.get().getKey();
-            }
-        }
-
-
-        if (langs == null) {
-            langs = context.getLanguage().split(",");
-        }
-        List<String> langList = new ArrayList<>(List.of(langs));
-        if (!langList.contains("eng")) {
-            langList.add("eng");
-        }
-
-        String[] iso3langCodes = langList.toArray(String[]::new);
-        for (int i = 0; i < langs.length; i++) {
-            if (StringUtils.isNotEmpty(langs[i])) {
-                langs[i] = mapper.iso639_2_to_iso639_1(langs[i], langs[i].substring(0,2));  //default: fra -> fr
-            }
-        }
-
-        Element descKeys;
+        Element descKeys = new Element("descKeys");
         Map<String, Map<String, String>> jsonResponse = new HashMap<>();
 
-        if (uri == null) {
-            descKeys = new Element("descKeys");
-        } else {
-            KeywordsSearcher searcher = new KeywordsSearcher(context, thesaurusManager);
+        for (String sThesaurusName: sThesaurusNames) {
 
-            KeywordBean kb;
-            String[] url;
-            if (!uri.contains(SEPARATOR)) {
-                url = new String[]{uri};
-            }
-            else {
-                url = uri.split(SEPARATOR);
-            }
-            List<KeywordBean> kbList = new ArrayList<>();
-            for (String currentUri : url) {
-                kb = searcher.searchById(currentUri, sThesaurusName, iso3langCodes);
-                if (kb == null) {
-                    kb = searcher.searchById(currentUri, sThesaurusName, langs);
-                }
-                if (kb == null) {
-                    kb = searcher.searchById(ApiUtils.fixURIFragment(currentUri), sThesaurusName, iso3langCodes);
-                }
-                if (kb == null) {
-                    kb = searcher.searchById(ApiUtils.fixURIFragment(currentUri), sThesaurusName, langs);
-                }
-                if (kb != null) {
-                    kbList.add(kb);
-                }
-            }
-            descKeys = new Element("descKeys");
-            for (KeywordBean keywordBean : kbList) {
-                if (isJson) {
-
-                    Map<String, String> keywordInfo = new HashMap<>();
-                    keywordInfo.put("label", keywordBean.getDefaultValue());
-                    keywordInfo.put("definition", StringUtils.isNotEmpty(keywordBean.getDefaultDefinition()) ?
-                        keywordBean.getDefaultDefinition() : keywordBean.getDefaultValue());
-                    jsonResponse.put(
-                        keywordBean.getUriCode(),
-                        // Requested lang or the first non empty value
-                        keywordInfo
-                    );
+            // Search thesaurus by name (as facet key only contains the name of the thesaurus)
+            Thesaurus thesaurus = thesaurusManager.getThesaurusByName(sThesaurusName);
+            if (thesaurus == null) {
+                String finalSThesaurusName = sThesaurusName;
+                Optional<Thesaurus> thesaurusEntry = thesaurusManager.getThesauriMap().values().stream().filter(t -> t.getKey().endsWith(finalSThesaurusName)).findFirst();
+                if (thesaurusEntry.isEmpty()) {
+                    throw new IllegalArgumentException(String.format(
+                        "Thesaurus '%s' not found.", sThesaurusName));
                 } else {
-                    KeywordsSearcher.toRawElement(descKeys, keywordBean);
+                    sThesaurusName = thesaurusEntry.get().getKey();
+                }
+            }
+
+
+            if (langs == null) {
+                langs = context.getLanguage().split(",");
+            }
+            List<String> langList = new ArrayList<>(List.of(langs));
+            if (!langList.contains("eng")) {
+                langList.add("eng");
+            }
+
+            String[] iso3langCodes = langList.toArray(String[]::new);
+            for (int i = 0; i < langs.length; i++) {
+                if (StringUtils.isNotEmpty(langs[i])) {
+                    langs[i] = mapper.iso639_2_to_iso639_1(langs[i], langs[i].substring(0,2));  //default: fra -> fr
+                }
+            }
+
+
+            if (uri != null) {
+                KeywordsSearcher searcher = new KeywordsSearcher(context, thesaurusManager);
+
+                KeywordBean kb;
+                String[] url;
+                if (!uri.contains(SEPARATOR)) {
+                    url = new String[]{uri};
+                }
+                else {
+                    url = uri.split(SEPARATOR);
+                }
+                List<KeywordBean> kbList = new ArrayList<>();
+                for (String currentUri : url) {
+                    kb = searcher.searchById(currentUri, sThesaurusName, iso3langCodes);
+                    if (kb == null) {
+                        kb = searcher.searchById(currentUri, sThesaurusName, langs);
+                    }
+                    if (kb == null) {
+                        kb = searcher.searchById(ApiUtils.fixURIFragment(currentUri), sThesaurusName, iso3langCodes);
+                    }
+                    if (kb == null) {
+                        kb = searcher.searchById(ApiUtils.fixURIFragment(currentUri), sThesaurusName, langs);
+                    }
+                    if (kb != null) {
+                        kbList.add(kb);
+                    }
+                }
+                for (KeywordBean keywordBean : kbList) {
+                    if (isJson) {
+
+                        Map<String, String> keywordInfo = new HashMap<>();
+                        keywordInfo.put("label", keywordBean.getDefaultValue());
+                        keywordInfo.put("definition", StringUtils.isNotEmpty(keywordBean.getDefaultDefinition()) ?
+                            keywordBean.getDefaultDefinition() : keywordBean.getDefaultValue());
+                        jsonResponse.put(
+                            keywordBean.getUriCode(),
+                            // Requested lang or the first non empty value
+                            keywordInfo
+                        );
+                    } else {
+                        KeywordsSearcher.toRawElement(descKeys, keywordBean);
+                    }
                 }
             }
         }
