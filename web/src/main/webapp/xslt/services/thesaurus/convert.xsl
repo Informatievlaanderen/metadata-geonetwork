@@ -24,6 +24,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:saxon="http://saxon.sf.net/"
+                xmlns:java="java:org.fao.geonet.util.XslUtil"
                 version="2.0"
                 extension-element-prefixes="saxon"
                 exclude-result-prefixes="#all">
@@ -46,17 +47,27 @@
     <xsl:variable name="keywords"
                   select="/root/*[name() != 'gui' and name() != 'request']/keyword"/>
 
+    <xsl:variable name="isAllThesaurusEnabled"
+                  select="java:getSettingValue('system/metadata/allThesaurus') = 'true'"/>
+
     <xsl:choose>
       <xsl:when test="$keywords">
-        <xsl:for-each-group select="$keywords"
-                            group-by="thesaurus/key">
-          <saxon:call-template name="{$tpl}"/>
-        </xsl:for-each-group>
+        <xsl:choose>
+          <xsl:when test="$isAllThesaurusEnabled">
+            <xsl:for-each-group select="$keywords" group-by="thesaurus/key">
+              <saxon:call-template name="{$tpl}"/>
+            </xsl:for-each-group>
+          </xsl:when>
+          <xsl:otherwise>
+            <saxon:call-template name="{$tpl}"/>
+          </xsl:otherwise>
+        </xsl:choose>
+
+
       </xsl:when>
       <xsl:otherwise>
         <saxon:call-template name="{$tpl}"/>
       </xsl:otherwise>
     </xsl:choose>
-
   </xsl:template>
 </xsl:stylesheet>
