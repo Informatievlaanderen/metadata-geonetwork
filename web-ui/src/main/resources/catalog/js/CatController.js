@@ -409,7 +409,8 @@
                   filters: {
                     hvd: {
                       query_string: {
-                        query: "(+th_high-value-dataset-category.default:/.+/) OR (+tag.link:\"http://data.europa.eu/eli/reg_impl/2023/138/oj\")"
+                        query:
+                          '(+th_high-value-dataset-category.default:/.+/) OR (+tag.link:"http://data.europa.eu/eli/reg_impl/2023/138/oj")'
                       }
                     }
                   }
