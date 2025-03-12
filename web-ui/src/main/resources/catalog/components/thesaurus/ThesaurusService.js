@@ -209,7 +209,7 @@
           listOfKeywords.sort(function (k1, k2) {
             var s1;
             var s2;
-            if (orderById) {
+            if (orderById == "true") {
               s1 = k1.props.uri;
               s2 = k2.props.uri;
             } else {
