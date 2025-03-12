@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Status update mails now mention title of draft copies correctly - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41002)
 - Introduced HVD support in ISO and DCAT - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41131)
 - Now basing the DCAT view on the standard editor instead of the advanced editor - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42629)
+- Statuslabel shown for DCAT records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42969)
 
 ### core
 - Merged 4.4.6-0 - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40822) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8462)
