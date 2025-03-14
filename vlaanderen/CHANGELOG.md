@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Merged 4.4.6-0 - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40822) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8462)
   - Includes Elasticsearch upgrade to 8.14.3
 - Migrated `dcat2` schema plugin (VL) to `dcat-ap` community driven generic plugin - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40822) / [pr-core](https://github.com/metadata101/dcat-ap/pull/24) / [pr-core](https://github.com/metadata101/dcat-ap/pull/35)
-  - Updated to [this commit](https://github.com/metadata101/dcat-ap/commit/041fcf76b4075d616b063c58604f2d730861c737), includes joint effort work
+  - Updated to [this commit](https://github.com/metadata101/dcat-ap/commit/a0eb3da01df902a9eab865779588e33a08583800), includes joint effort work
 - Fix for login url in the alert shown for unavailable records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41009) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8534)
 - Merged upstream change regarding correctly handling thesaurus keywords that lack translations - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41135) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8268)
 - Fix for adding keywords containing special characters - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42369) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/2113)
