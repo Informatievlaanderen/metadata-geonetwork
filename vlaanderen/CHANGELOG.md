@@ -11,7 +11,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Status update mails now mention title of draft copies correctly - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41002)
 - Introduced HVD support in ISO and DCAT - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/41131)
 - Now basing the DCAT view on the standard editor instead of the advanced editor - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42629)
-- Statuslabel shown for DCAT records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42969)
 
 ### core
 - Merged 4.4.6-0 - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40822) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8462)
@@ -24,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Improved translations for schematron validation messages - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42684) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8665)
 - Thesaurus dropdowns are now sorted by label - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42600) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8666)
 - Sort snippet labels and add sort override for specific values - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42935) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8685)
+- Statuslabel shown for DCAT records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42969) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8691)
  
 
 ## [8.2.3] - 2024-11-05
