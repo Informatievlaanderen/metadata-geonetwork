@@ -91,9 +91,16 @@
                     });
                   });
 
-                  if (scope.ruleTypes[0].id === "xsd") {
-                    scope.ruleTypes.push(scope.ruleTypes.splice(0, 1)[0]);
-                  }
+                  // ensure sorting is as desired (xsd on bottom, displayPriority respected)
+                  scope.ruleTypes.sort(function (a, b) {
+                    if (a.id === "xsd") {
+                      return 1;
+                    } else if (b.id === "xsd") {
+                      return -1;
+                    }
+                    return a.displayPriority - b.displayPriority;
+                  });
+
                   scope.ruleTypes = scope.ruleTypes.concat(optional);
                   scope.hasSuccess = scope.ruleTypes.length > 0;
                   scope.loading = false;
