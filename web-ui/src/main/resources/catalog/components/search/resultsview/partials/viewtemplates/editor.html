@@ -115,7 +115,7 @@
             <a
               class="btn btn-default"
               href=""
-              data-ng-show="false"
+              data-ng-show="user.isAdmin()"
               data-ng-show-disabled-in-vl="(!md.isPublished() || (md.isPublished() && user.canDeletePublishedMetadata())) && user.canEditRecord(md) && md.isTemplate != 's'
                              && (user.isReviewerOrMore() || md.mdStatus != 4 || !isMdWorkflowEnable)
                              && md.draft != 'e'"
