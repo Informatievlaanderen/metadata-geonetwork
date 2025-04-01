@@ -57,10 +57,22 @@
     <constructor-arg index="1" ref="defaultLanguage"/>
   </bean>
 
-  <bean id="RegionsDAO" class="org.fao.geonet.api.regions.ThesaurusBasedRegionsDAO">
+  <bean id="Vl1983RegionsDAO" class="org.fao.geonet.api.regions.ThesaurusBasedRegionsDAO">
     <constructor-arg ref="languages"/>
     <property name="cacheAllRegionsInMemory" value="true"/>
-    <property name="thesaurusName" value="external.place.regions"/>
+    <property name="thesaurusName" value="external.place.GDI-Vlaanderenregions-1983"/>
+  </bean>
+
+  <bean id="Vl2019RegionsDAO" class="org.fao.geonet.api.regions.ThesaurusBasedRegionsDAO">
+    <constructor-arg ref="languages"/>
+    <property name="cacheAllRegionsInMemory" value="true"/>
+    <property name="thesaurusName" value="external.place.GDI-Vlaanderenregions-2019"/>
+  </bean>
+
+  <bean id="Vl2025RegionsDAO" class="org.fao.geonet.api.regions.ThesaurusBasedRegionsDAO">
+    <constructor-arg ref="languages"/>
+    <property name="cacheAllRegionsInMemory" value="true"/>
+    <property name="thesaurusName" value="external.place.GDI-Vlaanderenregions-2025"/>
   </bean>
 
   <bean id="MetadataRegionsDAO" class="org.fao.geonet.api.regions.MetadataRegionDAO">

@@ -509,6 +509,18 @@
            */
           gnRegionService.loadList().then(function (data) {
             scope.regionTypes = angular.copy(data);
+
+            // vl specific: when dealing with VL regions, that include a 'fusion year', include the fusion year in the label of the top concept
+            scope.regionTypes.forEach(function (type) {
+              var regex =
+                /https:\/\/metadata\.vlaanderen\.be\/id\/GDI-Vlaanderen-Vlaamse-Administratieve-Eenheden\/([0-9]+)\/gewest\/vlaanderen/;
+              var match = type.id.match(regex);
+              if (match) {
+                var jaarFusie = match[1];
+                type.label = type.label + " (fusie " + jaarFusie + ")";
+              }
+            });
+
             if (addGeonames) {
               scope.regionTypes.unshift({
                 name: "Geonames",
@@ -2472,6 +2484,7 @@
               scope.customLabel = undefined;
             }
           }
+
           scope.icon = "fa-puzzle-piece";
           scope.$watch("type.associationType", updateCustomLabel);
           scope.$watch("type.initiativeType", updateCustomLabel);
@@ -2533,6 +2546,7 @@
         function into(input) {
           return ioFn(input, "parse");
         }
+
         function out(input) {
           // If model value is a string
           // No need to stringify it.
@@ -2542,6 +2556,7 @@
             return input;
           }
         }
+
         function ioFn(input, method) {
           var json;
           try {
@@ -2552,6 +2567,7 @@
           }
           return json;
         }
+
         ngModel.$parsers.push(into);
         ngModel.$formatters.push(out);
       }

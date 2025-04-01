@@ -10,7 +10,7 @@ ROOT="$SCRIPTS_FOLDER/../.."
 # general folders
 SOURCE="$ROOT/web/src/main/webapp/WEB-INF/data/config/codelist/external/thesauri"
 TARGET_ISO19139="$ROOT/schemas/iso19139/src/main/plugin/iso19139/thesauri"
-TARGET_DCAT="$ROOT/schemas/dcat2/src/main/plugin/dcat2/thesauri"
+TARGET_DCAT="$ROOT/schemas/dcat-ap/src/main/plugin/dcat-ap/thesauri"
 
 # cleanup
 rm -rfv "$TARGET_ISO19139"

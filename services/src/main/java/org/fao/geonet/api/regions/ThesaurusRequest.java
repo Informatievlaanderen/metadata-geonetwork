@@ -87,10 +87,15 @@ public class ThesaurusRequest extends Request {
         if (categoryIdParam.equals(NO_CATEGORY)) {
             categoryIdParam = "";
         }
-        searchBuilder.relationship(categoryIdParam, KeywordRelation.BROADER, KeywordSearchType.MATCH, false);
+
+        // VL-specific: our region thesauri go deeper than just one level. Multiple hops need to be supported (gemeente > arrondissement > provincie > gewest)
+        if(categoryIdParam.startsWith("https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Vlaamse-Administratieve-Eenheden/")) {
+            searchBuilder.relationshipBroader(categoryIdParam, KeywordSearchType.MATCH, false, 3);
+        } else {
+            searchBuilder.relationship(categoryIdParam, KeywordRelation.BROADER, KeywordSearchType.MATCH, false);
+        }
         return this;
     }
-
 
     /**
      * Return the first broader term found.
