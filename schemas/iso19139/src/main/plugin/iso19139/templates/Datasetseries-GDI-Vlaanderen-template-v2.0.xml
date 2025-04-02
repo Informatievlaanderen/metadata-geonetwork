@@ -405,7 +405,7 @@
           <gmd:thesaurusName>
             <gmd:CI_Citation>
               <gmd:title>
-                <gmx:Anchor xlink:href="http://vocab.belgif.be/auth/datatheme">Data.gov.be themes</gmx:Anchor>
+                <gmx:Anchor xlink:href="http://vocab.belgif.be/auth/datatheme">Data.gov.be themas</gmx:Anchor>
               </gmd:title>
               <gmd:date>
                 <gmd:CI_Date>
