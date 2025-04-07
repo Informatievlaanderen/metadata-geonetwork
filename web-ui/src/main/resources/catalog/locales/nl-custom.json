@@ -43,7 +43,7 @@
   "groupPreallocate-searchByNameLabel": "Type (een stuk van) een organisatienaam om te zoeken in het organisatieregister. Het aantal resultaten wordt gelimiteerd tot 100.",
   "groupPreallocate-searchByOvoLabel": "Geef een OVO code op om te zoeken in het organisatieregister.",
   "host.name": "Hostnaam",
-  "hvd": "Hoogwaardige datasets",
+  "hvd": "Hoogwaardige Datasets (HVD)",
   "isSourceOfDatasets": "Is brondataset van",
   "link": "Link",
   "linkToFeatureCatalog": "Link naar een objectencatalogus",

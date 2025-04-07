@@ -167,7 +167,7 @@
     "linkToServiceTitle": "Link een service aan de huidige resource",
     "linkToSibling": "Link naar records",
     "linkToSiblingTitle": "Link een bron met de huidige metadata",
-    "linkToSource": "Link naar een dataset (kind in datasetserie; of dataset is service)",
+    "linkToSource": "Link naar een brondataset",
     "linkToSourceTitle": "Link een brondataset met de huidige metadata",
     "linkUrl": "URL om te verwijderen",
     "fileStore": "Beschikbare bestanden",

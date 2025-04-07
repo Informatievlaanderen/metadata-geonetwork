@@ -906,7 +906,8 @@ public class Thesaurus {
                     "|skos:ConceptScheme/dcterms:title[@xml:lang]" +
                     "|skos:ConceptScheme/rdfs:label[@xml:lang]" +
                     "|skos:ConceptScheme/skos:prefLabel[@xml:lang]" +
-                    "|rdf:Description[rdf:type/@rdf:resource = 'http://www.w3.org/2004/02/skos/core#ConceptScheme']/dc:title[@xml:lang]";
+                    "|rdf:Description[rdf:type/@rdf:resource = 'http://www.w3.org/2004/02/skos/core#ConceptScheme']/dc:title[@xml:lang]" +
+                    "|rdf:Description[rdf:type/@rdf:resource = 'http://www.w3.org/2004/02/skos/core#ConceptScheme']/dcterms:title[@xml:lang]";
             multilingualTitles.clear();
             multilingualTitles.putAll(retrieveMultilingualField(thesaurusEl, xpathTitles));
         } catch (Exception e) {
