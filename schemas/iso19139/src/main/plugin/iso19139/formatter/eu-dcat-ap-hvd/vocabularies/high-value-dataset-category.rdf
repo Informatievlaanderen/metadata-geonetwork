@@ -213,8 +213,7 @@
 	<identifier xmlns="http://purl.org/dc/terms/">http://data.europa.eu/bna/asd487ae75</identifier>
 	<issued xmlns="http://purl.org/dc/terms/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2024-10-02</issued>
 	<title xmlns="http://purl.org/dc/terms/" xml:lang="en">High-value dataset (HVD) categories</title>
-  <title xmlns="http://purl.org/dc/terms/" xml:lang="nl">Hoogwaardige Dataset (HVD) categorieën</title>
-	<hasTopConcept xmlns="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://data.europa.eu/bna/c_dd313021"/>
+	<title xmlns="http://purl.org/dc/terms/" xml:lang="nl">Hoogwaardige Dataset (HVD) categorieën</title>
 	<hasTopConcept xmlns="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://data.europa.eu/bna/c_b79e35eb"/>
 	<hasTopConcept xmlns="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://data.europa.eu/bna/c_e1da4e07"/>
 	<hasTopConcept xmlns="http://www.w3.org/2004/02/skos/core#" rdf:resource="http://data.europa.eu/bna/c_ac64a52d"/>

@@ -2,12 +2,21 @@
 <rdf:RDF
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 
-<rdf:Description rdf:about="http://data.europa.eu/bna/6c21b09f433a79be6e1438b633f8ef2e">
-	<rdf:type rdf:resource="http://www.w3.org/2008/05/skos-xl#Label"/>
-	<type xmlns="http://purl.org/dc/terms/" rdf:resource="http://publications.europa.eu/resource/authority/label-type/STANDARDLABEL"/>
-	<literalForm xmlns="http://www.w3.org/2008/05/skos-xl#" xml:lang="en">Addresses</literalForm>
-	<status xmlns="http://publications.europa.eu/ontology/euvoc#" rdf:resource="http://publications.europa.eu/resource/authority/concept-status/CURRENT"/>
-</rdf:Description>
+  <rdf:Description rdf:about="http://data.europa.eu/bna/asd487ae75">
+    <startDate xmlns="http://publications.europa.eu/ontology/euvoc#"
+               rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2019-07-06
+    </startDate>
+    <created xmlns="http://purl.org/dc/terms/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-05</created>
+    <issued xmlns="http://purl.org/dc/terms/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-27</issued>
+    <modified xmlns="http://purl.org/dc/terms/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2023-09-07
+    </modified>
+    <title xmlns="http://purl.org/dc/terms/" xml:lang="en">High-value dataset categories</title>
+    <title xmlns="http://purl.org/dc/terms/" xml:lang="nl">Hoogwaardige Dataset (HVD) categorieën</title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <prefLabel xmlns="http://www.w3.org/2004/02/skos/core#" xml:lang="en">High-value dataset categories</prefLabel>
+	<prefLabel xmlns="http://www.w3.org/2004/02/skos/core#" xml:lang="nl">Hoogwaardige Dataset (HVD) categorieën</prefLabel>
+    <versionInfo xmlns="http://www.w3.org/2002/07/owl#">1.0</versionInfo>
+  </rdf:Description>
 
 <rdf:Description rdf:about="http://data.europa.eu/bna/869d3116d66b2466ef683ce945b9c88b">
 	<rdf:type rdf:resource="http://www.w3.org/2008/05/skos-xl#Label"/>
