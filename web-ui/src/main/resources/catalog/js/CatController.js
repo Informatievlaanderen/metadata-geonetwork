@@ -410,7 +410,7 @@
                     hvd: {
                       query_string: {
                         query:
-                          '(+applicableLegislation:"http://data.europa.eu/eli/reg_impl/2023/138/oj") OR (+tag.link:"http://data.europa.eu/eli/reg_impl/2023/138/oj")'
+                          '(+th_eu-applicable-legislation.link:"http://data.europa.eu/eli/reg_impl/2023/138/oj") OR (+tag.link:"http://data.europa.eu/eli/reg_impl/2023/138/oj")'
                       }
                     }
                   }
