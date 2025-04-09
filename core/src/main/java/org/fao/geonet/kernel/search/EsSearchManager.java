@@ -618,6 +618,7 @@ public class EsSearchManager implements ISearchManager {
             .add("resourceTemporalExtentDateRange")
             .add("resourceTemporalExtentDetails")
             .add("licenseObject")
+            .add("applicableLegislation")
             .build();
         booleanFields = ImmutableSet.<String>builder()
             .add("hasxlinks")
