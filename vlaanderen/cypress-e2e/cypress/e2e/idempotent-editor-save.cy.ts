@@ -64,7 +64,7 @@ describe('Idempotent editor save', () => {
       cy.get('.gn-md-edit-btn').click()
       cy.wait(1000)
       cy.get('#gn-editor-btn-close').click()
-      cy.get("h1").contains("[test-record] open non-geo (nl)").should('exist')
+      cy.get("h1").contains("[test-record] open non-geo").should('exist')
 
       cy.fixture('dataset-open-nongeo.xml').then(xml => {
         const expected = xml.toString().replace('7c2bab5c-7af1-42da-af4c-921c8615a2cd', uuid).trim()
