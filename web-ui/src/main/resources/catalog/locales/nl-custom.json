@@ -69,7 +69,7 @@
   "pinAction": "Aan lijst pinnen",
   "priceInformation": "Prijsinformatie",
   "purpose": "Doel van vervaardiging",
-  "resourceType-featureCatalog": "Objectencatalogus",
+  "resourceType-featureCatalog": "objectencatalogus",
   "resourceUriPattern": "Bron URI patroon",
   "resourceUriPatternHelp": "Patroon gebruikt om URI van de bronnen te genereren tijdens de RDF export, e.g., https://metadata.vlaanderen.be/srv/resources/{resourceType}/{resourceUuid}",
   "saveDraft": "Bewaar",
