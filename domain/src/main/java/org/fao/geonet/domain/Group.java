@@ -39,6 +39,8 @@ import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -87,6 +89,7 @@ public class Group extends Localized implements Serializable {
     private String doelgroepCode;
     private String doelgroepNaam;
     private String vlType;
+    private Profile minimumProfileForPrivileges;
 
     /**
      * Get the id of the group.
@@ -349,6 +352,26 @@ public class Group extends Localized implements Serializable {
      */
     public Group setEnableAllowedCategories(Boolean enableAllowedCategories) {
         this.enableAllowedCategories = enableAllowedCategories;
+        return this;
+    }
+
+    /**
+     * Get the minimum profile required to update privileges for this group.
+     *
+     * @return {@link Profile} the minimum profile required to update privileges for this group.
+     */
+    @Enumerated(EnumType.STRING)
+    public Profile getMinimumProfileForPrivileges() {
+        return minimumProfileForPrivileges;
+    }
+
+    /**
+     * Set the minimum profile required to update privileges for this group.
+     * @param minimumProfileForPrivileges the minimum {@link Profile} required to update privileges for this group.
+     * @return this group entity object.
+     */
+    public Group setMinimumProfileForPrivileges(Profile minimumProfileForPrivileges) {
+        this.minimumProfileForPrivileges = minimumProfileForPrivileges;
         return this;
     }
 

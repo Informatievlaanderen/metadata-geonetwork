@@ -94,6 +94,9 @@ public class DatabaseProcessApi {
     DataManager dataMan;
 
     @Autowired
+    IMetadataUtils metadataUtils;
+
+    @Autowired
     SchemaManager schemaMan;
 
     @Autowired
@@ -193,7 +196,7 @@ public class DatabaseProcessApi {
 
             final String siteURL = request.getRequestURL().toString() + "?" + request.getQueryString();
             for (String uuid : records) {
-                String id = dataMan.getMetadataId(uuid);
+                String id = String.valueOf(metadataUtils.findOneByUuid(uuid).getId());
                 Log.info("org.fao.geonet.services.metadata",
                     "Processing metadata for preview with id:" + id);
 
@@ -204,7 +207,6 @@ public class DatabaseProcessApi {
                     false, processingReport);
                 if (record != null) {
                     if (diffType != null) {
-                        IMetadataUtils metadataUtils = serviceContext.getBean(IMetadataUtils.class);
                         AbstractMetadata metadata = metadataUtils.findOne(id);
                         preview.addContent(
                             Diff.diff(metadata.getData(), Xml.getString(record), diffType));
@@ -394,7 +396,7 @@ public class DatabaseProcessApi {
             DataManager dataMan = context.getBean(DataManager.class);
             ApplicationContext appContext = ApplicationContextHolder.get();
             for (String uuid : this.records) {
-                String id = getDataManager().getMetadataId(uuid);
+                String id = String.valueOf(context.getBean(IMetadataUtils.class).findOneByUuid(uuid).getId());
                 Log.info("org.fao.geonet.services.metadata",
                     "Processing metadata with id:" + id);
 

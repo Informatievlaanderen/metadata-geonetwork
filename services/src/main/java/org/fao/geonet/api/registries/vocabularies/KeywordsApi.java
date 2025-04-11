@@ -494,7 +494,11 @@ public class KeywordsApi {
             }
 
 
-            if (uri != null) {
+        uri = URLDecoder.decode(uri, StandardCharsets.UTF_8);
+
+        if (uri == null) {
+            descKeys = new Element("descKeys");
+        } else {
                 KeywordsSearcher searcher = new KeywordsSearcher(context, thesaurusManager);
 
                 KeywordBean kb;

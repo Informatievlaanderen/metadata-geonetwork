@@ -64,8 +64,7 @@ public class SimpleUrlHarvester extends AbstractHarvester<HarvestResult, SimpleU
     }
 
     public void doHarvest(Logger log) throws Exception {
-        Harvester h = new Harvester(cancelMonitor, log, context, params);
-        Log.debug(Geonet.HARVEST_MAN, String.format("thread(%s) before harvest", Thread.currentThread().getName()));
+        Harvester h = new Harvester(cancelMonitor, log, context, params, errors);
         result = h.harvest(log);
         Log.debug(Geonet.HARVEST_MAN, String.format("thread(%s) after harvest", Thread.currentThread().getName()));
     }

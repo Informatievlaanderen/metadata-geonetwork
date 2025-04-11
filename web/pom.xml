@@ -30,7 +30,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>4.4.6-0</version>
+    <version>4.4.7-0</version>
   </parent>
 
 
@@ -421,6 +421,12 @@
       <version>${project.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>gn-auditable</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
     <!-- Handled locally by a temporarly repository -->
     <dependency>
       <groupId>dlib</groupId>
@@ -638,6 +644,7 @@
       <artifactId>gn-schema-dcat-ap</artifactId>
       <version>${project.version}</version>
     </dependency>
+
   </dependencies>
 
   <build>
@@ -1054,6 +1061,16 @@
   </build>
 
   <profiles>
+    <profile>
+      <id>datahub-integration</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.geonetwork-opensource.plugins</groupId>
+          <artifactId>gn-datahub-integration</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
     <profile>
       <id>wro4j-prebuild-cache</id>
       <activation>
