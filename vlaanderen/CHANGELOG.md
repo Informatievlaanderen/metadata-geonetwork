@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. These chang
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [8.3.0-SNAPSHOT]
+## [8.3.0] - 2025/04/11
 
 ### vlaanderen
 - Fix for duplicate processSteps information on default view - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/40266) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/39793)
@@ -25,9 +25,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Thesaurus dropdowns are now sorted by label - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42600) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8666)
 - Sort snippet labels and add sort override for specific values - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42935) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8685)
 - Statuslabel shown for DCAT records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/42969) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8691)
-- Merged 4.4.7-0 - [pr]() / [pr]()
-  - Upgraded OGC API records microservice - [pr]()
-  - Upgraded `dcat-ap` schema plugin - [pr]()
+- Merged 4.4.7-0 - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/43533)
+  - Upgraded OGC API records microservice - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetworkMicroservices/pullrequest/43532)
+  - Upgraded `dcat-ap` schema plugin - [pr](https://github.com/metadata101/dcat-ap/pull/73)
  
 
 ## [8.2.3] - 2024-11-05
