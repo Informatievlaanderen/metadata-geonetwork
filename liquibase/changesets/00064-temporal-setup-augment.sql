@@ -31,7 +31,6 @@ $$;
 
 -- function that serves to map public.metadata to public_augment
 create or replace function public_augment.augment_metadata() returns trigger
-  security definer
   language plpgsql as
 $$
 declare
