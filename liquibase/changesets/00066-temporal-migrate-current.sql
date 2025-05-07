@@ -84,6 +84,7 @@ $$
       loop
         _source_schema_name := _source_table[1];
         _source_table_name := _source_table[2];
+        raise notice 'doing table %', _source_table_name;
         execute format('update %s.%s set sys_period = sys_period', _source_schema_name, _source_table_name);
         execute format('delete from public_history.%s where upper(sys_period) is not null', _source_table_name);
       end loop;

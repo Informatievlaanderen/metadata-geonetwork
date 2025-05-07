@@ -105,7 +105,8 @@ $$
                 quote_literal(_sys_period_column_name) || ', ' ||
                 quote_literal(_target_schema_name || '.' || _source_table_name) || ', ' ||
                 _enforce_timestamps::varchar ||
-                ', ' || _ignore_unchanged::varchar || ', ' || _include_current_version::varchar || ', ' || _migration_enabled::varchar ||  ')';
+                ', ' || _ignore_unchanged::varchar || ', ' || _include_current_version::varchar || ', ' ||
+                _migration_enabled::varchar || ')';
         -- create the history table
         execute
           'create table if not exists ' || quote_ident(_target_schema_name) || '.' || quote_ident(_source_table_name) ||
@@ -113,6 +114,48 @@ $$
       end loop;
 
     -- customize history tables
-    alter table public_history.metadata drop column popularity;
+    alter table public_history.metadata
+      drop column if exists popularity;
   END
 $$;
+
+-- replicate any index found in the original tables to the public_history copies
+DO
+$$
+  DECLARE
+    r RECORD;
+    q varchar;
+    history_schema varchar := 'public_history';
+  BEGIN
+    -- list
+    for r in
+      (SELECT n.nspname   schemaname,
+              tab.relname tablename,
+              cls.relname indexname,
+              a.attname   attributename,
+              am.amname   indextype
+       FROM pg_index idx
+              JOIN pg_class cls ON cls.oid = idx.indexrelid
+              join pg_attribute a on a.attrelid = cls.oid
+              JOIN pg_class tab ON tab.oid = idx.indrelid
+              join pg_namespace n on tab.relnamespace = n.oid
+              JOIN pg_am am ON am.oid = cls.relam
+       where n.nspname in ('public', 'public_augment')
+       order by schemaname, tablename, indexname, attributename)
+      loop
+        if exists(select *
+                  from information_schema.columns
+                  where table_schema = history_schema
+                    and table_name = r.tablename
+                    and column_name = r.attributename) then
+          q := format('create index if not exists %I on %I.%I using %I (%I)',
+                      format('%s_%s_idx', r.tablename, r.attributename), history_schema, r.tablename, r.indextype,
+                      r.attributename);
+          execute q;
+          raise notice '%', q;
+        else
+          raise notice 'did not find %.%.%, could not replicate index', history_schema, r.tablename, r.attributename;
+        end if;
+      end loop;
+  end;
+$$

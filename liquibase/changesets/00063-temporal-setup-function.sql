@@ -2,14 +2,15 @@
 --changeset joachim:00063-temporal-setup-function endDelimiter://
 
 -- set up schema to hold generic temporal functions, triggers, ...
-CREATE SCHEMA temporal;
+CREATE SCHEMA if not exists temporal;
 
 -- below is the original script, apart from specifying the `temporal` schema
 -- version 1.1.0
 -- source: https://raw.githubusercontent.com/nearform/temporal_tables/refs/heads/master/versioning_function.sql
 -- project: https://github.com/nearform/temporal_tables
 CREATE OR REPLACE FUNCTION temporal.versioning()
-  RETURNS TRIGGER AS $$
+  RETURNS TRIGGER AS
+$$
 DECLARE
   sys_period                         text;
   history_table                      text;
@@ -29,6 +30,7 @@ DECLARE
   oldVersion                         record;
   user_defined_system_time           text;
   record_exists                      bool;
+  commonColumnsEqualityTest          varchar;
 BEGIN
   -- set custom system time if exists
   BEGIN
@@ -218,15 +220,16 @@ BEGIN
                       ON history.attname = main.attname
                         AND history.attname != sys_period;
 
+    WITH unnested AS (select unnest(commonColumns) p)
+    select array_to_string(array_agg(format('(%s=$1.%1$s or (%1$s is null and $1.%1$s is null))', p)), ' and ')
+    into commonColumnsEqualityTest
+    from unnested;
+
     -- Check if record exists in history table for migration mode
     IF enable_migration_mode = 'true' AND include_current_version_in_history = 'true' AND
        (TG_OP = 'UPDATE' OR TG_OP = 'DELETE') THEN
       EXECUTE 'SELECT EXISTS (
-          SELECT 1 FROM ' || history_table || ' WHERE ROW(' ||
-              array_to_string(commonColumns, ',') ||
-              ') IS NOT DISTINCT FROM ROW($1.' ||
-              array_to_string(commonColumns, ',$1.') ||
-              '))'
+          SELECT 1 FROM ' || history_table || ' WHERE ' || commonColumnsEqualityTest || ')'
         USING OLD INTO record_exists;
 
       IF NOT record_exists THEN
@@ -266,11 +269,7 @@ BEGIN
           ' SET ' ||
           quote_ident(sys_period) ||
           ' = tstzrange($2, $3, ''[)'')' ||
-          ' WHERE (' ||
-          array_to_string(commonColumns, ',') ||
-          ') IS NOT DISTINCT FROM ($1.' ||
-          array_to_string(commonColumns, ',$1.') ||
-          ') AND ' ||
+          ' WHERE ' || commonColumnsEqualityTest || ' AND ' ||
           quote_ident(sys_period) ||
           ' = $1.' ||
           quote_ident(sys_period)
