@@ -116,6 +116,8 @@ $$
     -- customize history tables
     alter table public_history.metadata
       drop column if exists popularity;
+    alter table public_history.validation
+      drop column if exists reportcontent;
   END
 $$;
 
