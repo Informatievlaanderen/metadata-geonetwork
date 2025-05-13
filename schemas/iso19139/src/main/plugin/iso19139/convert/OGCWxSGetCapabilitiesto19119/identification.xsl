@@ -38,6 +38,7 @@
                 xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:theme="http://inspire.ec.europa.eu/theme_register"
                 xmlns:grg="http://www.isotc211.org/2005/grg" version="2.0"
+                xmlns:geonet="http://www.fao.org/geonetwork"
                 extension-element-prefixes="math exslt wcs ows ows11 ows2 wps wps1 wps2 wfs gml inspire_common inspire_vs"
                 exclude-result-prefixes="#all">
   <!--variabelen gebruikt in template Keywords-->
@@ -76,6 +77,21 @@
   <xsl:variable name="inspire-theme-thesaurus" select="'GEMET - INSPIRE themes, version 1.0'"/>
   <xsl:variable name="inspire-theme-thesaurus-anchor-href" select="'http://inspire.ec.europa.eu/theme'"/>
   <xsl:variable name="inspire-theme-thesaurus-anchor-value" select="'GEMET - INSPIRE themes, version 1.0'"/>
+
+  <xsl:function name="geonet:extract-uuid-from-href">
+    <xsl:param name="href"/>
+    <xsl:analyze-string select="$href" regex="https://metadata\.vlaanderen.be/srv/.+/catalog\.search/metadata/(.+)">
+      <xsl:matching-substring>
+        <xsl:value-of select="normalize-space(regex-group(1))"/>
+      </xsl:matching-substring>
+    </xsl:analyze-string>
+    <xsl:analyze-string select="$href" regex="https://metadata.vlaanderen.be/srv/dut/csw\?.*&amp;id=([^&amp;\s]+)">
+      <xsl:matching-substring>
+        <xsl:value-of select="normalize-space(regex-group(1))"/>
+      </xsl:matching-substring>
+    </xsl:analyze-string>
+  </xsl:function>
+
   <!-- ============================================================================= -->
   <xsl:template match="*" mode="SrvDataIdentification">
     <xsl:param name="topic"/>
@@ -782,7 +798,7 @@
       select="//wms:Layer/wms:MetadataURL/wms:OnlineResource/@xlink:href[not(.=preceding::wms:OnlineResource/@xlink:href)]">
       <xsl:choose>
         <xsl:when test="contains(.,'srv/dut/csw')">
-          <srv:operatesOn xlink:href="{.}" uuidref="{../../../wms:Identifier}"/>
+          <srv:operatesOn xlink:href="{.}" uuidref="{geonet:extract-uuid-from-href(.)}"/>
         </xsl:when>
       </xsl:choose>
     </xsl:for-each>
@@ -790,8 +806,7 @@
     <xsl:for-each select="//wfs:FeatureTypeList/wfs:FeatureType/wfs:MetadataURL[not(.=preceding::wfs:MetadataURL)]">
       <xsl:choose>
         <xsl:when test="contains(.,'srv/dut/csw')">
-          <srv:operatesOn xlink:href="{.}"
-                          uuidref="{//inspire_dls:SpatialDataSetIdentifier/inspire_common:Code}"/>
+          <srv:operatesOn xlink:href="{.}" uuidref="{geonet:extract-uuid-from-href(.)}"/>
         </xsl:when>
       </xsl:choose>
     </xsl:for-each>
@@ -800,8 +815,7 @@
       select="//wcs:Contents/wcs:CoverageSummary/ows2:Metadata/@xlink:href[not(.=preceding::ows2:Metadata/@xlink:href)]">
       <xsl:choose>
         <xsl:when test="contains(.,'srv/dut/csw')">
-          <srv:operatesOn xlink:href="{.}"
-                          uuidref="{//inspire_dls:SpatialDataSetIdentifier/inspire_common:Code}"/>
+          <srv:operatesOn xlink:href="{.}" uuidref="{geonet:extract-uuid-from-href(.)}"/>
         </xsl:when>
       </xsl:choose>
     </xsl:for-each>
@@ -810,12 +824,13 @@
       select="//wmts:Contents/wmts:Layer/ows11:Metadata/@xlink:href[not(.=preceding::ows11:Metadata/@xlink:href)]">
       <xsl:choose>
         <xsl:when test="contains(.,'srv/dut/csw')">
-          <srv:operatesOn xlink:href="{.}"
-                          uuidref="{../../ows11:DatasetDescriptionSummary/ows11:Identifier}"/>
+          <srv:operatesOn xlink:href="{.}" uuidref="{geonet:extract-uuid-from-href(.)}"/>
         </xsl:when>
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
+
+
   <!-- ============================================================================= -->
   <!-- === template Keywords OK=== -->
   <!-- ============================================================================= -->
