@@ -9,7 +9,8 @@ Afterwards, it bumps the version and produces a 'starting' branch for the new SN
 where:
     -h  show this help text
     -s  start a snapshot
-    -b  bump pom with specific type"
+    -b  bump pom with specific type
+    -x  test"
 
 # where the pomfile lives
 pomfile=../pom.xml
@@ -22,20 +23,20 @@ today=$(date +%F)
 
 function start_snapshot() {
   echo "starting snapshot"
-  finalise_changelog "$current_version"
+  finalise_changelog
   bump_pom_snapshot
 }
 
 # pass X in 'X-SNAPSHOT' to be finalised
 function finalise_changelog() {
-  to_finalise=$1
-  # replace the snapshot reference in changelog.md so we can't forget
-  escaped_version=$(echo "$to_finalise" | sed -E 's/([][\.])/\\\1/g')
-  echo "Escaped version: $escaped_version"
-  echo "New version: $new_version"
-  regex_from="s/## \[$escaped_version\].*/## [$new_version] - $today/"
-  echo "Regex source: $regex_from"
-  sed -E "$regex_from" -i $changelogfile
+  # replace "## [a.b.c-SNAPSHOT]" by "## [a.b.c] - xx/yy/zzzz"
+  sed -E "s/## \[([0-9]+\.[0-9]+\.[0-9])-SNAPSHOT.*/## [\1] - $(date +%F)/g" -i $changelogfile
+}
+
+# add in the given version to the changelog, undated
+function start_changelog_version() {
+  _new_version=$1
+  sed -E "s/(^The format is based on.*$)/\1\n\n\n## [${_new_version}]/" -i $changelogfile
 }
 
 function bump_pom() {
@@ -47,24 +48,26 @@ function bump_pom_snapshot() {
   mvn -f $pomfile validate -D "add-snapshot" -q
 }
 
-while getopts ':hsb:' option; do
+while getopts ':hsb:x' option; do
   case "$option" in
     h) echo "$usage"
        exit
-       ;;
+      ;;
     s) start_snapshot
-       ;;
+      ;;
     b) bump=$OPTARG
        bump_pom "$bump"
-       ;;
+      ;;
+    x) start_changelog_version "10.0.0-SNAPSHOT"
+      ;;
     :) printf "missing argument for -%s\n" "$OPTARG" >&2
        echo "$usage" >&2
        exit 1
-       ;;
+      ;;
    \?) printf "illegal option: -%s\n" "$OPTARG" >&2
        echo "$usage" >&2
        exit 1
-       ;;
+      ;;
   esac
 done
 shift $((OPTIND - 1))
