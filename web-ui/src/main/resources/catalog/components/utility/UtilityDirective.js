@@ -512,6 +512,8 @@
             scope.regionTypes = angular.copy(data);
 
             // vl specific: when dealing with VL regions, that include a 'fusion year', include the fusion year in the label of the top concept
+            scope.regionTypes.reverse(); // we want 2025 at the top
+            scope.regionTypes = scope.regionTypes.filter(function (item) { return item.label !== undefined }); // we want at least a label
             scope.regionTypes.forEach(function (type) {
               var regex =
                 /https:\/\/metadata\.vlaanderen\.be\/id\/GDI-Vlaanderen-Vlaamse-Administratieve-Eenheden\/([0-9]+)\/gewest\/vlaanderen/;
