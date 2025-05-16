@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### vlaanderen
 - Fixed `uuidref` values for harvested web services, now containing file identifiers - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/43965)
 
+### core
+- Set default `UTF-8` encoding for sent mails - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44033) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8801)
+
 ## [8.3.0] - 2025-04-22
 
 ### vlaanderen
