@@ -30,13 +30,13 @@ import java.util.Set;
 
 public class CustomRelationshipClause implements SearchClause {
 
-    private String relation;
+    private String targetId;
     private String id;
     private KeywordSearchType searchType;
     private boolean ignoreCase;
 
-    public CustomRelationshipClause(String relation, String relatedId, KeywordSearchType searchType, boolean ignoreCase) {
-        this.relation = relation;
+    public CustomRelationshipClause(String targetId, String relatedId, KeywordSearchType searchType, boolean ignoreCase) {
+        this.targetId = targetId;
         this.id = relatedId;
         this.searchType = searchType;
         this.ignoreCase = ignoreCase;
@@ -44,7 +44,7 @@ public class CustomRelationshipClause implements SearchClause {
 
     @Override
     public Where toWhere(Set<String> langs) {
-        return searchType.toWhere(relation, id, ignoreCase);
+        return searchType.toWhere(targetId, id, ignoreCase);
     }
 
     @Override
