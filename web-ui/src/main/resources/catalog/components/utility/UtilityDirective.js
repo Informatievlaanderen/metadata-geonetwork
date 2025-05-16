@@ -473,7 +473,8 @@
 
   module.directive("gnRegionPicker", [
     "gnRegionService",
-    function (gnRegionService) {
+    "$translate",
+    function (gnRegionService, $translate) {
       return {
         restrict: "A",
         replace: true,
@@ -517,7 +518,13 @@
               var match = type.id.match(regex);
               if (match) {
                 var jaarFusie = match[1];
-                type.label = type.label + " (fusie " + jaarFusie + ")";
+                type.label =
+                  type.label +
+                  " (" +
+                  $translate.instant("fusion") +
+                  " " +
+                  jaarFusie +
+                  ")";
               }
             });
 
