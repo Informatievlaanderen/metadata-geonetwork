@@ -307,6 +307,22 @@
         <p class="help-block" data-translate="">applyXSLToRecordHelp</p>
       </div>
 
+      <div id="gn-harvest-settings-gn-advanced-resource-uri-pattern-row">
+        <label
+          id="gn-harvest-settings-gn-advanced-resource-uri-pattern-label"
+          class="control-label"
+          data-translate=""
+        >resourceUriPattern</label>
+        <input
+          id="gn-harvest-settings-gn-advanced-resource-uri-pattern-input"
+          type="text"
+          class="form-control gn-csw-criteria"
+          data-ng-model="harvesterSelected.site.resourceUriPattern"
+        />
+
+        <p class="help-block" data-translate="">resourceUriPatternHelp</p>
+      </div>
+
       <div id="gn-harvest-settings-csw-advanced-batchEdits-row">
         <label
           id="gn-harvest-settings-csw-advanced-batchEdits-label"
@@ -337,23 +353,6 @@
       data-lang="{{lang}}"
       data-label="csw-category"
     />
-
-    <div>
-      <label
-        id="gn-harvest-settings-gn-advanced-resource-uri-pattern-label"
-        class="control-label"
-        data-translate=""
-        >resourceUriPattern</label
-      >
-      <input
-        id="gn-harvest-settings-gn-advanced-resource-uri-pattern-input"
-        type="text"
-        class="form-control gn-csw-criteria"
-        data-ng-model="harvesterSelected.site.resourceUriPattern"
-      />
-
-      <p class="help-block" data-translate="">resourceUriPatternHelp</p>
-    </div>
   </fieldset>
 
   <div
