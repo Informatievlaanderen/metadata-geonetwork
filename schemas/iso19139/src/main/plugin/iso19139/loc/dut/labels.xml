@@ -1403,6 +1403,10 @@
   <element name="gml:rangeMeaning">
     <label>Range meaning</label>
   </element>
+  <element name="gml:remoteSchema">
+    <label>Externe referentie</label>
+    <description>Referentie naar een XML Schema fragment dat het inhoudsmodel van de eigenschap beschrijft.</description>
+  </element>
   <element name="gml:verticalCS">
     <label>Vertical CS</label>
   </element>
@@ -2391,6 +2395,10 @@
     <label>Reden lege waarde</label>
     <description>Geef de reden op waarom u dit veld leeg laat</description>
   </element>
+  <element name="nilReason">
+    <label>Reden lege waarde</label>
+    <description>Geef de reden op waarom u dit veld leeg laat</description>
+  </element>
   <element name="gco:Date">
     <label>Datum</label>
     <description>Als in 2007-09-12 (YYYY-MM-DD)</description>
@@ -3283,5 +3291,9 @@
   <element name="gml:UnitDefinition">
     <label>Eenheid</label>
     <description/>
+  </element>
+  <element name="xml:lang">
+    <label>Taal</label>
+    <description>Taal gebruikt in de inhoud van dit element.</description>
   </element>
 </labels>

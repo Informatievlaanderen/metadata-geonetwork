@@ -6361,6 +6361,11 @@ http://www.sandre.eaufrance.fr/?urn=urn:sandre:ensembledonnees:BDCarthage:FXX:::
     <description/>
     <help/>
     <condition/>
+  <element name="nilReason">
+    <label>Raison de l'absence</label>
+    <description/>
+    <help/>
+    <condition/>
 
   </element>
   <element name="gmd:verticalCRS">
@@ -6487,6 +6492,10 @@ http://www.sandre.eaufrance.fr/?urn=urn:sandre:ensembledonnees:BDCarthage:FXX:::
   <element name="gml:rangeMeaning">
     <label>Signification de l'interval</label>
   </element>
+  <element name="gml:remoteSchema">
+    <label>Référence externe</label>
+    <description>Referentie naar een XML Schema fragment dat het inhoudsmodel van de eigenschap beschrijft.</description>
+  </element>
   <element name="gml:verticalDatum">
     <label>Vertical datum</label>
   </element>
@@ -6562,5 +6571,9 @@ http://www.sandre.eaufrance.fr/?urn=urn:sandre:ensembledonnees:BDCarthage:FXX:::
   <element name="xlink:type">
     <label>Link</label>
     <description>Link type</description>
+  </element>
+  <element name="xml:lang">
+    <label>Langue</label>
+    <description>Langue utilisée dans le contenu de cet élément.</description>
   </element>
 </labels>
