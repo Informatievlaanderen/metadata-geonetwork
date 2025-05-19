@@ -95,6 +95,14 @@
     <label>Verantwoordelijke</label>
     <description>Verantwoordelijke</description>
   </element>
+  <element name="gmd:voice">
+    <label>Stem</label>
+    <description>Stem</description>
+  </element>
+  <element name="gmd:facsimile">
+    <label>Fax</label>
+    <description>Fax</description>
+  </element>
   <element name="gco:lower">
     <label>Minimale cardinaliteit</label>
     <description>Minimale cardinaliteit</description>
@@ -150,6 +158,18 @@
   <element name="gfc:FC_InheritanceRelation">
     <label>Erfrelatie</label>
     <description></description>
+  </element>
+  <element name="gfc:FC_Binding">
+    <label>Binding</label>
+    <description>Beschrijft hoe een attribuut type gebonden is aan een bepaald object type</description>
+  </element>
+  <element name="gfc:FC_BoundFeatureAttribute">
+    <label>Gebonden object attribuut</label>
+    <description>Beschrijft hoe een globaal attribuut type gebonden is aan een bepaald object type</description>
+  </element>
+  <element name="gfc:FC_BoundAssociationRole">
+    <label>Gebonden associatierol</label>
+    <description>Beschrijft hoe een globale associatierol gebonden is aan een bepaald object type</description>
   </element>
   <element name="gfc:functionalLanguage">
     <label>Functionele taal</label>

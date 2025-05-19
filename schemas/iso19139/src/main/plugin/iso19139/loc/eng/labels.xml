@@ -3383,6 +3383,10 @@
     <label>Nil reason</label>
     <description/>
   </element>
+  <element name="nilReason">
+    <label>Nil reason</label>
+    <description/>
+  </element>
   <element name="srv:DCPList">
     <label>Distributed Computing Platforms list</label>
   </element>
@@ -3499,6 +3503,10 @@
   <element name="gml:rangeMeaning">
     <label>Range meaning</label>
   </element>
+  <element name="gml:remoteSchema">
+    <label>External reference</label>
+    <description>Référence à un fragment de schéma XML qui spécifie le modèle de contenu de la valeur de la propriété.</description>
+  </element>
   <element name="gml:verticalDatum">
     <label>Vertical datum</label>
   </element>
@@ -3565,5 +3573,9 @@
   <element name="xlink:type">
     <label>Link</label>
     <description>Link type</description>
+  </element>
+  <element name="xml:lang">
+    <label>Language</label>
+    <description>Language used in the content of this element.</description>
   </element>
 </labels>
