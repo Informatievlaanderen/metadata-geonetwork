@@ -124,6 +124,8 @@ ALTER TABLE spg_page_group
 ALTER TABLE spg_page_group
   ADD CONSTRAINT fk_spg_page_group_groups FOREIGN KEY (groupid) REFERENCES "groups" (id);
 
+ALTER TABLE spg_page ADD CONSTRAINT link_unique UNIQUE (link);
+
 CREATE SEQUENCE hibernate_sequence
   INCREMENT BY 1
   MINVALUE 1
