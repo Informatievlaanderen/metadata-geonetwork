@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### vlaanderen
 - Fixed `uuidref` values for harvested web services, now containing file identifiers - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/43965)
+- Fixed missing RDF URI pattern option in CSW harvester - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44053)
 
 ### core
 - Set default `UTF-8` encoding for sent mails - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44033) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8801)
