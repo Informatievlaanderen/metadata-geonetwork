@@ -15,3 +15,7 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system
 
 ALTER TABLE Sources ADD COLUMN datahubEnabled BOOLEAN DEFAULT FALSE;
 ALTER TABLE Sources ADD COLUMN datahubConfiguration TEXT DEFAULT '';
+
+-- added column in Group.java
+ALTER TABLE "groups" ADD minimumprofileforprivileges varchar(255) NULL;
+ALTER TABLE "groups" ALTER COLUMN minimumprofileforprivileges SET STORAGE EXTENDED;
