@@ -149,6 +149,7 @@ nav:
     - overview/authors.md
     - 'Changelog':
       - overview/change-log/index.md
+      - overview/change-log/version-4.4.7.md
       - overview/change-log/version-4.4.6.md
       - overview/change-log/version-4.2.11.md
       - 'Release History':
@@ -323,6 +324,7 @@ nav:
         - administrator-guide/managing-users-and-groups/creating-group.md
         - administrator-guide/managing-users-and-groups/creating-user.md
         - administrator-guide/managing-users-and-groups/user-self-registration.md
+        - administrator-guide/managing-users-and-groups/user-reset-password.md
       - 'Classification Systems':
         - administrator-guide/managing-classification-systems/index.md
         - administrator-guide/managing-classification-systems/managing-categories.md
@@ -344,6 +346,7 @@ nav:
             - install-guide/installing-from-war-file.md
             - install-guide/installing-with-docker.md
             - install-guide/installing-from-source-code.md
+            - install-guide/plugins.md
           - 'Configuration':
             - install-guide/configuring-database.md
             - install-guide/customizing-data-directory.md

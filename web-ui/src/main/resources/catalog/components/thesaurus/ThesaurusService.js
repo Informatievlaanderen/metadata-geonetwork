@@ -151,14 +151,10 @@
           };
           if (outputLang) {
             parameters["pLang"] = outputLang;
-            if (outputLang.indexOf("eng") === -1) {
-              parameters["pLang"] += ",eng";
-            }
-          } else {
-            if (lang !== "eng") {
-              // Fallback in english if thesaurus has no translation in current record language
-              parameters["pLang"] = ["eng", lang];
-            }
+          }
+          if (lang !== "eng") {
+            // Fallback in english if thesaurus has no translation in current record language
+            parameters["pLang"] = ["eng", lang];
           }
 
           return gnUrlUtils.append(

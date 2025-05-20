@@ -81,7 +81,7 @@
         featureCatalog: "gn-icon-featureCatalog",
         service: "gn-icon-service",
         map: "gn-icon-maps",
-        staticMap: "gn-icon-staticMap",
+        "map-static": "gn-icon-map-static",
         dataset: "gn-icon-dataset",
         series: "gn-icon-series"
       };
@@ -119,7 +119,7 @@
             resourceType: {
               terms: {
                 field: "resourceType",
-                exclude: ["map/static", "theme", "place"],
+                exclude: ["map-static", "theme", "place"],
                 missing: "other"
               }
             }
