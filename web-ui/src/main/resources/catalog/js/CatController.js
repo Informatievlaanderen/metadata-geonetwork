@@ -136,7 +136,8 @@
               "th_datatheme_tree.key": {
                 terms: {
                   field: "th_datatheme_tree.key",
-                  size: 20
+                  size: 20,
+                  include: "http://vocab.belgif.be.*"
                 }
               },
               "th_inspire-theme_tree.key": {
