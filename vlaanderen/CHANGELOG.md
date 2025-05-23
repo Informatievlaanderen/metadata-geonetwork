@@ -14,6 +14,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### core
 - Set default `UTF-8` encoding for sent mails - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44033) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8801)
 - Merged 4.4.7-0 - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/43533) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetworkMicroservices/pullrequest/43532)
+- DCAT Records can now be processed by `csw-publication` endpoints for e.g. deletions - [pr](https://github.com/metadata101/dcat-ap/pull/79)
+- Flemish Region thesauri, per fusion year, were added - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/43355) / [pr-core](https://github.com/metadata101/dcat-ap/pull/78)
 
 
 ## [8.3.0] - 2025-04-22

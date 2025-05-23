@@ -33,6 +33,7 @@ import org.fao.geonet.kernel.rdf.Where;
 import org.fao.geonet.kernel.rdf.Wheres;
 import org.fao.geonet.languages.IsoLanguagesMapper;
 import org.jdom.Element;
+import org.jdom.Namespace;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -348,7 +349,32 @@ public class KeywordSearchParamsBuilder {
     public void relationship(String relatedId, KeywordRelation relation, KeywordSearchType searchType, boolean ignoreCase) {
         this.selectClauses.add(Selectors.BROADER);
         this.searchClauses.add(new RelationShipClause(relation, relatedId, searchType, ignoreCase));
+    }
 
+    /**
+     * Define a 'broader' relationship in the query, of a certain depth.
+     *
+     * The end goal is to set up the following (example shows {@code depth=3} case):
+     * - id > broader0
+     * - broader0 > broader1
+     * - broader1 > broader2
+     *
+     * A clause is added to the where clause that indicates the 'broader' concept has id {@code relatedId}.
+     * A triple is added to indicate the {@code skos:broader} relationship between a concept and its parent.
+     *
+     * The above is repeated {@code depth} times.
+     */
+    public void relationshipBroader(String relatedId, KeywordSearchType searchType, boolean ignoreCase, int depth) {
+        Namespace[] ns = Selectors.BROADER.getNamespaces().toArray(new Namespace[0]);
+        for (int i = 0; i < depth; i++) {
+            String targetId = Selectors.BROADER.id+i;
+            String newPath = Selectors.BROADER.getPath().replace("{"+Selectors.BROADER.id+"}", "{"+targetId+"}");
+            if(i>0) {
+                newPath = newPath.replace("id", Selectors.BROADER.id+(i-1));
+            }
+            this.selectClauses.add(new Selector(targetId, newPath, ns));
+            this.searchClauses.add(new CustomRelationshipClause(targetId, relatedId, searchType, ignoreCase));
+        }
     }
 
     public KeywordSearchParamsBuilder requireBoundedBy(boolean require) {

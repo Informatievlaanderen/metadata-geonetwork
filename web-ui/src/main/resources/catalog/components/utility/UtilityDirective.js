@@ -473,7 +473,8 @@
 
   module.directive("gnRegionPicker", [
     "gnRegionService",
-    function (gnRegionService) {
+    "$translate",
+    function (gnRegionService, $translate) {
       return {
         restrict: "A",
         replace: true,
@@ -512,6 +513,28 @@
               return o.id !== "metadata";
             });
             scope.regionTypes = angular.copy(dataFiltered);
+
+            // vl specific: when dealing with VL regions, that include a 'fusion year', include the fusion year in the label of the top concept
+            scope.regionTypes.reverse(); // we want 2025 at the top
+            scope.regionTypes = scope.regionTypes.filter(function (item) {
+              return item.label !== undefined;
+            }); // we want at least a label
+            scope.regionTypes.forEach(function (type) {
+              var regex =
+                /https:\/\/metadata\.vlaanderen\.be\/id\/GDI-Vlaanderen-Vlaamse-Administratieve-Eenheden\/([0-9]+)\/gewest\/vlaanderen/;
+              var match = type.id.match(regex);
+              if (match) {
+                var jaarFusie = match[1];
+                type.label =
+                  type.label +
+                  " (" +
+                  $translate.instant("fusion") +
+                  " " +
+                  jaarFusie +
+                  ")";
+              }
+            });
+
             if (addGeonames) {
               scope.regionTypes.unshift({
                 name: "Geonames",
@@ -2553,6 +2576,7 @@
               scope.customLabel = undefined;
             }
           }
+
           scope.icon = "fa-puzzle-piece";
           scope.$watch("type.associationType", updateCustomLabel);
           scope.$watch("type.initiativeType", updateCustomLabel);
@@ -2614,6 +2638,7 @@
         function into(input) {
           return ioFn(input, "parse");
         }
+
         function out(input) {
           // If model value is a string
           // No need to stringify it.
@@ -2623,6 +2648,7 @@
             return input;
           }
         }
+
         function ioFn(input, method) {
           var json;
           try {
@@ -2633,6 +2659,7 @@
           }
           return json;
         }
+
         ngModel.$parsers.push(into);
         ngModel.$formatters.push(out);
       }
