@@ -58,10 +58,18 @@ import javax.persistence.UniqueConstraint;
 @Access(AccessType.PROPERTY)
 @SequenceGenerator(name = Schematron.ID_SEQ_NAME, initialValue = 100, allocationSize = 1)
 public class Schematron extends Localized {
+
+    private final static String SUFFIX_RECOMMENDED = "-rec";
+    private final static String SUFFIX_CARDINALITIES = "-cardinalities";
+
     public static final Comparator<? super Schematron> DISPLAY_PRIORITY_COMPARATOR = new Comparator<Schematron>() {
         @Override
         public int compare(Schematron o1, Schematron o2) {
-            return Integer.compare(o1.getDisplayPriority(), o2.getDisplayPriority());
+            // VL: using -rec and -cardinalities to split up schematrons, this sorting makes sure profile-related schematrons are kept together
+            int c1 = o1.getNormalisedRuleName().compareTo(o2.getNormalisedRuleName());
+            if (c1 != 0)
+                return c1;
+            return o1.getRuleName().compareTo(o2.getRuleName());
         }
     };
     static final String ID_SEQ_NAME = "schematron_id_seq";
@@ -178,6 +186,19 @@ public class Schematron extends Localized {
             }
         }
         return rule;
+    }
+
+    /**
+     * Normalise the rulename:
+     * - profile becomes profile
+     * - profile-rec becomes profile
+     * - profile-cardinalities becomes profile
+     */
+    @Transient
+    public String getNormalisedRuleName() {
+        return getRuleName()
+            .replaceFirst(SUFFIX_RECOMMENDED + "$", "")
+            .replaceFirst(SUFFIX_CARDINALITIES + "$", "");
     }
 
     @Transient
