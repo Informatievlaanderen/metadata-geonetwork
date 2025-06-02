@@ -80,6 +80,7 @@
       var icons = {
         featureCatalog: "gn-icon-featureCatalog",
         service: "gn-icon-service",
+        catalog: "gn-icon-catalog",
         map: "gn-icon-maps",
         "map-static": "gn-icon-map-static",
         dataset: "gn-icon-dataset",
