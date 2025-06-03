@@ -91,5 +91,8 @@
   "approvedRecord": "Goedgekeurd record",
   "measureDate": "Datum",
   "cl_couplingType": "Type koppeling",
+  "success": "succes",
+  "successes": "successen",
+  "catalog": "catalogus",
   "---end-of-file---": ""
 }
