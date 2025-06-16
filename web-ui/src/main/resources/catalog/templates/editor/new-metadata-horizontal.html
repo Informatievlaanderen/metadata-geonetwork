@@ -28,7 +28,9 @@
       <div class="panel panel-default dynamic-list">
         <div class="panel-heading">
           <span data-translate="">createA</span>
-          <strong data-ng-if="'notfor'==='vl'">{{(activeType || '...') | translate | lowercase}}</strong>
+          <strong data-ng-if="'notfor'==='vl'"
+            >{{(activeType || '...') | translate | lowercase}}</strong
+          >
         </div>
         <div class="panel-body">
           <div class="list-group gn-record-type">
@@ -54,7 +56,10 @@
       <div class="panel-default panel">
         <div class="panel-heading">
           <span data-translate="">fromTemplate</span>
-          <strong data-ng-if="'notfor'==='vl'" ng-bind-html="activeTpl.title || '...'"></strong>
+          <strong
+            data-ng-if="'notfor'==='vl'"
+            ng-bind-html="activeTpl.title || '...'"
+          ></strong>
         </div>
         <div class="panel-body">
           <input
@@ -84,7 +89,9 @@
       <div class="panel-default panel">
         <div class="panel-heading">
           <span data-translate="">inGroup</span>
-          <strong data-ng-if="'notfor'==='vl'">{{(ownerGroup.label[lang] || '...') | translate}}</strong>
+          <strong data-ng-if="'notfor'==='vl'"
+            >{{(ownerGroup.label[lang] || '...') | translate}}</strong
+          >
         </div>
         <div class="panel-body">
           <div
