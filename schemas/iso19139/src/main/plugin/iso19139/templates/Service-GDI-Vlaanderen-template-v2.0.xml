@@ -97,7 +97,7 @@
       <gmd:citation>
         <gmd:CI_Citation>
           <gmd:title>
-            <gco:CharacterString>Metadata van Geografische (open) services, conform GDI-Vlaanderen Best Practices v2.0</gco:CharacterString>
+            <gco:CharacterString>Geografische (open) services, conform GDI-Vlaanderen Best Practices v2.0</gco:CharacterString>
           </gmd:title>
           <gmd:alternateTitle>
             <gco:CharacterString/>
