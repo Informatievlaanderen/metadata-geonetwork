@@ -2199,6 +2199,10 @@
                   };
 
                   $(scope.popupid).modal("show");
+
+                  $("#linktomd-search input").val("");
+                  scope.searchObj.any = "";
+
                   var searchParams =
                     scope.config.sources && scope.config.sources.metadataStore
                       ? scope.config.sources.metadataStore.params || {}
@@ -2303,13 +2307,14 @@
 
                   $(scope.popupid).modal("show");
 
-                  scope.$broadcast("resetSearch");
+                  scope.clearSearch();
                   scope.selection = [];
                 });
 
                 // Clear the search params and input
                 scope.clearSearch = function () {
                   $("#siblingdd input").val("");
+                  scope.searchObj.any = "";
                   scope.$broadcast("resetSearch");
                 };
 
