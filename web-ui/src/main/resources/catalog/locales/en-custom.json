@@ -94,5 +94,11 @@
   "success": "success",
   "successes": "successes",
   "catalog": "Catalogue",
+  "badge-domain-open": "Open data",
+  "badge-domain-closed": "Closed data",
+  "badge-domain-geo": "Geographical data",
+  "badge-tip-nongeo": "Non-Geo",
+  "badge-tip-geo": "Geo",
+  "badge-tip-nonopen": "Non-Open",
   "---end-of-file---": ""
 }

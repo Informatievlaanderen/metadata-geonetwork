@@ -223,6 +223,62 @@
       }
 
       /**
+       * For all templates, generate badges. Return in an object that is keyed on the template._id values.
+       *
+       * @param templates the templates for which we want the badges
+       */
+      $scope.generateBadges = function (templates) {
+        var result = {};
+
+        // badge definitions (translatable) based on dutch record titles
+        var badgeDefinitions = {
+          "Generieke Open API's, conform DCAT-AP VL v2.0": [
+            { type: "domain", key: "open" },
+            { type: "tip", key: "nongeo" }
+          ],
+          "Generieke Gesloten services, conform metadata-DCAT v2.0": [
+            { type: "domain", key: "closed" },
+            { type: "tip", key: "nongeo" },
+            { type: "tip", key: "nonopen" }
+          ],
+          "Generieke DCAT-AP service": [{ type: "domain", key: "open" }],
+          "Generieke DCAT-AP dataset": [{ type: "domain", key: "open" }],
+          "Geografische (open) datasets, conform GDI-Vlaanderen Best Practices v2.0":
+            [{ type: "domain", key: "geo" }],
+          "Geografische (open) services, conform GDI-Vlaanderen Best Practices v2.0":
+            [{ type: "domain", key: "geo" }],
+          "Geografische (open) datasetseries, conform GDI-Vlaanderen Best Practices v2.0":
+            [{ type: "domain", key: "geo" }],
+          "Generieke Gesloten data, conform metadata-DCAT v2.0": [
+            { type: "domain", key: "closed" },
+            { type: "tip", key: "nongeo" },
+            { type: "tip", key: "nonopen" }
+          ],
+          "Generieke Open data, conform DCAT-AP VL v2.0": [
+            { type: "domain", key: "open" },
+            { type: "tip", key: "nongeo" }
+          ],
+          "Objectencatalogus, conform GDI-Vlaanderen Best Practices v2.0": [
+            { type: "domain", key: "geo" }
+          ],
+          "Virtuele catalogus": [
+            { type: "domain", key: "open" },
+            { type: "tip", key: "geo" },
+            { type: "tip", key: "nongeo" }
+          ]
+        };
+
+        for(var ti = 0; ti<templates.length; ti++) {
+          var template = templates[ti];
+          result[template._id] =
+            badgeDefinitions[template.resourceTitleObject.langdut] ||
+            badgeDefinitions[template.resourceTitleObject.lang] ||
+            badgeDefinitions[template.resourceTitleObject.default];
+        }
+        return result;
+      }
+
+      /**
        * Get all the templates for a given type.
        * Will put this list into $scope.tpls variable.
        */
@@ -244,18 +300,43 @@
           tpls = $scope.mdList;
         }
 
+        // store the title (in current UI language) for use in the frontend
+        var targetAttribute = "lang";
+        if ($scope.lang.length === 3 && $scope.lang !== "eng") {
+          targetAttribute += $scope.lang;
+        }
+        for (var ti = 0; ti < tpls.length; ti++) {
+          var rto = tpls[ti].resourceTitleObject;
+          if (rto[targetAttribute]) {
+            tpls[ti].resourceTitleTranslated = rto[targetAttribute];
+          } else if (rto.lang) {
+            tpls[ti].resourceTitleTranslated = rto.lang;
+          } else {
+            tpls[ti].resourceTitleTranslated = rto.default;
+          }
+        }
+
+        console.log("templates...");
+        console.log(tpls);
+        console.log($scope.lang);
+        console.log($scope);
+
         // Sort template list
         function compare(a, b) {
           if (a.resourceTitle < b.resourceTitle) return -1;
           if (a.resourceTitle > b.resourceTitle) return 1;
           return 0;
         }
+
         tpls.sort(compare);
 
         $scope.tplFilter = {
           resourceTitle: ""
         };
         $scope.tpls = tpls;
+
+        // calculate template badges
+        $scope.tplBadges = $scope.generateBadges($scope.tpls);
 
         var selectedTpl = $scope.tpls[0];
         if (templateToSelect) {
