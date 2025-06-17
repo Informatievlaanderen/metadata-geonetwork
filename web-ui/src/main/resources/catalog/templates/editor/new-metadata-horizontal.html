@@ -27,7 +27,7 @@
     <div class="col-sm-2" data-ng-if="filterField">
       <div class="panel panel-default dynamic-list">
         <div class="panel-heading">
-          <span data-translate="">createA</span>
+          <span data-translate="">of-type</span> ...
           <strong data-ng-if="'notfor'==='vl'"
             >{{(activeType || '...') | translate | lowercase}}</strong
           >
@@ -55,7 +55,7 @@
     <div class="col-sm-4">
       <div class="panel-default panel">
         <div class="panel-heading">
-          <span data-translate="">fromTemplate</span>
+          <span data-translate="">fromTemplate</span> ...
           <strong
             data-ng-if="'notfor'==='vl'"
             ng-bind-html="activeTpl.title || '...'"
@@ -97,7 +97,7 @@
     <div class="col-sm-3" data-ng-show="groups && groups.length > 1">
       <div class="panel-default panel">
         <div class="panel-heading">
-          <span data-translate="">inGroup</span>
+          <span data-translate="">inGroup</span> ...
           <strong data-ng-if="'notfor'==='vl'"
             >{{(ownerGroup.label[lang] || '...') | translate}}</strong
           >

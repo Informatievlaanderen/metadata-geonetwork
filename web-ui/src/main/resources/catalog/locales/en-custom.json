@@ -100,5 +100,9 @@
   "badge-tip-nongeo": "Non-Geo",
   "badge-tip-geo": "Geo",
   "badge-tip-nonopen": "Non-Open",
+  "of-type": "Of type",
+  "createA": "Make a record",
+  "fromTemplate": "Based on template",
+  "inGroup": "For group",
   "---end-of-file---": ""
 }
