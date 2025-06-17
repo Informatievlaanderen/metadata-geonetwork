@@ -22,7 +22,7 @@ public class VirtualCatalogService {
     }
 
     public void configurePortal(String uuid, String title, List<String> uuids) {
-       Source source = sourceRepository.findById(uuid)
+        Source source = sourceRepository.findById(uuid)
             .orElseGet(() -> {
                 Source newSource = new Source();
                 newSource.setUuid(uuid);
@@ -60,5 +60,12 @@ public class VirtualCatalogService {
             .replaceAll("_+", "_")
             .replace("..", "_")
             .trim();
+    }
+
+    public void removePortal(String uuid) {
+        Source source = sourceRepository.findById(uuid).orElse(null);
+        if (source != null) {
+            sourceRepository.delete(source);
+        }
     }
 }
