@@ -27,6 +27,7 @@ public class VirtualCatalogService {
                 Source newSource = new Source();
                 newSource.setUuid(uuid);
                 newSource.setType(SourceType.subportal);
+                newSource.setListableInHeaderSelector(false);
                 return newSource;
             });
 
