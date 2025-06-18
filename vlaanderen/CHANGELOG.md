@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - DCAT-AP plugin update - [pr](https://github.com/metadata101/dcat-ap/pull/84)
   - Introducing Catalog resource - [pr](https://github.com/metadata101/dcat-ap/pull/76) / [pr](https://github.com/metadata101/dcat-ap/pull/85)
   - DCAT Records can now be processed by `csw-publication` endpoints for e.g. deletions - [pr](https://github.com/metadata101/dcat-ap/pull/79)
+- Reset search in search dialog - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44486) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8868)
 
 
 ## [8.3.0] - 2025-04-22
