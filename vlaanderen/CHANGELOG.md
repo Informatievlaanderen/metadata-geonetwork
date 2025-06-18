@@ -22,6 +22,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - Introducing Catalog resource - [pr](https://github.com/metadata101/dcat-ap/pull/76) / [pr](https://github.com/metadata101/dcat-ap/pull/85)
   - DCAT Records can now be processed by `csw-publication` endpoints for e.g. deletions - [pr](https://github.com/metadata101/dcat-ap/pull/79)
   - Prevent double `CatalogRecord` entries and self-inclusion for `Catalog` - [pr](https://github.com/metadata101/dcat-ap/pull/89)
+  - Added heading for `title` in the `Catalog` editor - [pr](https://github.com/metadata101/dcat-ap/pull/89)
+  - Improve prefilled values in `Catalog` editor - [pr](https://github.com/metadata101/dcat-ap/pull/89)
 - Reset search in search dialog - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44486) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8868)
 
 
