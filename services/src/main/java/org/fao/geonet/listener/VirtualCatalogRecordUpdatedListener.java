@@ -65,6 +65,8 @@ public class VirtualCatalogRecordUpdatedListener implements ApplicationListener<
                                     .filter(uuid -> !uuid.equals(metadata.getUuid()))
                                     .collect(Collectors.toList());
 
+            uuids.add(metadata.getUuid());
+
             virtualCatalogService.configurePortal(metadata.getUuid(), catalogTitle, uuids);
         } catch (Exception ex) {
             Log.error(Geonet.DATA_MANAGER, "Metadata update: Virtual catalog update error " + event.getSource(), ex);
