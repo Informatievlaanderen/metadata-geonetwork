@@ -51,7 +51,10 @@ public class VirtualCatalogRecordDeletedListener implements ApplicationListener<
                 return;
             }
 
-            virtualCatalogService.removePortal(event.getUuid());
+            // remove only if the record is not a draft - portals are configured for published records
+            if(!metadataUtils.isMetadataDraft(event.getMdId().intValue())) {
+                virtualCatalogService.removePortal(event.getUuid());
+            }
         } catch (Exception ex) {
             Log.error(Geonet.DATA_MANAGER, "Metadata update: Virtual catalog update error " + event.getSource(), ex);
         }
