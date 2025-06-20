@@ -316,11 +316,6 @@
           }
         }
 
-        console.log("templates...");
-        console.log(tpls);
-        console.log($scope.lang);
-        console.log($scope);
-
         // Sort template list
         function compare(a, b) {
           if (a.resourceTitle < b.resourceTitle) return -1;
