@@ -94,5 +94,13 @@
   "success": "succès",
   "successes": "succès",
   "catalog": "Catalogue",
+  "badge-domain-open": "Données Ouvertes",
+  "badge-domain-closed": "Données Fermées",
+  "badge-domain-geo": "Données Géographiques",
+  "badge-tip-nongeo": "Pas-Geo",
+  "badge-tip-geo": "Geo",
+  "badge-tip-nonopen": "Pas-Ouvert",
+  "of-type": "De type",
+  "createA": "Fait un record",
   "---end-of-file---": ""
 }

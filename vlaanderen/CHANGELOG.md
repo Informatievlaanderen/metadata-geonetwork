@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Improved ordering of schematrons in the validation pane - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44254)
 - Fixed dutch label for `inlandWaters`: `binnenwateren` - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44399)
 - Added portal support for virtual catalogs - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44483)
+- Removed HTML from template titles and displaying badges instead - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44471)
 
 ### core
 - Set default `UTF-8` encoding for sent mails - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44033) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8801)

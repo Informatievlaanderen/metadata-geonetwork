@@ -94,5 +94,15 @@
   "success": "success",
   "successes": "successes",
   "catalog": "Catalogue",
+  "badge-domain-open": "Open data",
+  "badge-domain-closed": "Closed data",
+  "badge-domain-geo": "Geographical data",
+  "badge-tip-nongeo": "Non-Geo",
+  "badge-tip-geo": "Geo",
+  "badge-tip-nonopen": "Non-Open",
+  "of-type": "Of type",
+  "createA": "Make a record",
+  "fromTemplate": "Based on template",
+  "inGroup": "For group",
   "---end-of-file---": ""
 }

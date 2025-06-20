@@ -94,5 +94,13 @@
   "success": "succes",
   "successes": "successen",
   "catalog": "catalogus",
+  "badge-domain-open": "Open data",
+  "badge-domain-closed": "Gesloten data",
+  "badge-domain-geo": "Geografische data",
+  "badge-tip-nongeo": "Niet-Geo",
+  "badge-tip-geo": "Geo",
+  "badge-tip-nonopen": "Niet-Open",
+  "of-type": "Van type",
+  "createA": "Maak een record",
   "---end-of-file---": ""
 }
