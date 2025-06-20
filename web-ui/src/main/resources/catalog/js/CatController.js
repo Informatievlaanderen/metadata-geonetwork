@@ -987,6 +987,10 @@
                   label: "defaultView",
                   views: [
                     {
+                      if: { resourceType: "catalog" },
+                      url: ""
+                    },
+                    {
                       if: { documentStandard: "dcat-ap" },
                       url: "/formatters/xsl-view?root=div&view=default"
                     }

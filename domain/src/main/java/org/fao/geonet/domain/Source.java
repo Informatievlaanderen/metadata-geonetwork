@@ -205,6 +205,8 @@ public class Source extends Localized {
      *
      * @return
      */
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     public String getFilter() {
         return filter;
     }
