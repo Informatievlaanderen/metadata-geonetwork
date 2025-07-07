@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset joachim:00063-temporal-setup-function endDelimiter://
+--changeset joachim:00066-temporal-setup-function endDelimiter://
 
 -- set up schema to hold generic temporal functions, triggers, ...
 CREATE SCHEMA if not exists temporal;

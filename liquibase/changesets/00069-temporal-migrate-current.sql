@@ -1,11 +1,11 @@
 --liquibase formatted sql
---changeset joachim:00067-temporal-config-history-disable-migration endDelimiter://
+--changeset joachim:00069-temporal-migrate-current endDelimiter://
 
--- this script repeats part of 00065, but disables the migration functionality of the versioning script, as 00066 should have migrated everything already
+-- single startup migration: include the current version in history for all rows in all tables
 DO
 $$
   DECLARE
-    _source_tables           varchar[][] := array [
+    _source_tables      varchar[][] := array [
       array ['public', 'address'],
       array ['public', 'categories'],
       array ['public', 'categoriesdes'],
@@ -76,31 +76,17 @@ $$
       array ['public_augment', 'metadata'],
       array ['public_augment', 'metadata_data']
       ];
-    _source_table            varchar[];
-    _source_schema_name      varchar;
-    _target_schema_name      varchar     := 'public_history';
-    _source_table_name       varchar;
-    _sys_period_column_name  varchar     := 'sys_period';
-    -- settings for the history function
-    _enforce_timestamps      bool        := true;
-    _ignore_unchanged        bool        := true; -- disable when migrating existing data
-    _include_current_version bool        := true;
-    _migration_enabled       bool        := false; -- enable when migrating existing data
+    _source_table       varchar[];
+    _source_schema_name varchar;
+    _source_table_name  varchar;
   BEGIN
-    -- loop over source tables, set them up
     foreach _source_table slice 1 in array _source_tables
       loop
         _source_schema_name := _source_table[1];
         _source_table_name := _source_table[2];
-        -- replace the trigger - disable migration
-        execute 'create or replace trigger history before insert or update or delete ' ||
-                ' on ' || quote_ident(_source_schema_name) || '.' || quote_ident(_source_table_name) ||
-                ' for each row execute procedure temporal.versioning(' ||
-                quote_literal(_sys_period_column_name) || ', ' ||
-                quote_literal(_target_schema_name || '.' || _source_table_name) || ', ' ||
-                _enforce_timestamps::varchar ||
-                ', ' || _ignore_unchanged::varchar || ', ' || _include_current_version::varchar || ', ' ||
-                _migration_enabled::varchar || ')';
+        raise notice 'doing table %', _source_table_name;
+        execute format('update %s.%s set sys_period = sys_period', _source_schema_name, _source_table_name);
+        execute format('delete from public_history.%s where upper(sys_period) is not null', _source_table_name);
       end loop;
   END
 $$;

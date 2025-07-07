@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset joachim:00064-temporal-setup-augment endDelimiter://
+--changeset joachim:00067-temporal-setup-augment endDelimiter://
 
 DO
 $$

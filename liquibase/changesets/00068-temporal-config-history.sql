@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset joachim:00065-temporal-config-history endDelimiter://
+--changeset joachim:00068-temporal-config-history endDelimiter://
 
 DO
 $$
@@ -113,7 +113,7 @@ $$
           ' (like ' || quote_ident(_source_schema_name) || '.' || quote_ident(_source_table_name) || ')';
       end loop;
 
-    -- customize history tables
+    -- customise history tables
     alter table public_history.metadata
       drop column if exists popularity;
     alter table public_history.validation
