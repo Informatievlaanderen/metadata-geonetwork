@@ -75,7 +75,7 @@
   "resourceUriPatternHelp": "Pattern used to generate URI of the resources during the RDF export. Example of value: https://metadata.vlaanderen.be/srv/resources/{resourceType}/{resourceUuid}",
   "saveDraft": "Save",
   "saveMetadata": "Save",
-  "serviceType-discovery": "Discovery service",
+  "serviceType-discovery": "Search Service",
   "serviceType-download": "Downloadable",
   "serviceType-view": "Viewable",
   "sortBy-changeDateDesc": "last updated",

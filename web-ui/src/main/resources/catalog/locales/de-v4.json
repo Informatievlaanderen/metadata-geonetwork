@@ -417,6 +417,7 @@
   "dataPreview":  "Daten entdecken",
   "tableOfContents": "Inhaltsangabe",
   "staticPageFormat-LINK": "Weblink",
+  "staticPageFormat-EMAILLINK": "Email address link",
   "staticPageFormat-HTML": "HTML-Inhalt wird in die App eingebettet angezeigt",
   "staticPageFormat-HTMLPAGE": "HTML-Inhalt wird in einem neuen Browser-Tab angezeigt",
   "staticPageFormat-TEXT": "Nur-Text-Inhalt",

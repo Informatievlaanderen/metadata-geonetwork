@@ -217,7 +217,7 @@
                 type: "featuredUserSearches"
               },
               {
-                type: "Comments"
+                type: "comments"
               }
             ],
             fluidLayout: true
