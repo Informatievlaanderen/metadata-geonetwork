@@ -417,6 +417,7 @@
   "dataPreview":  "Ontdek data",
   "tableOfContents": "Inhoudstafel",
   "staticPageFormat-LINK": "Web link",
+  "staticPageFormat-EMAILLINK": "Email address link",
   "staticPageFormat-HTML": "HTML inhoud wordt ingebed in de applicatie getoond",
   "staticPageFormat-HTMLPAGE": "HTML inhoud wordt in een nieuwe browser tab getoond",
   "staticPageFormat-TEXT": "Platte tekst inhoud",

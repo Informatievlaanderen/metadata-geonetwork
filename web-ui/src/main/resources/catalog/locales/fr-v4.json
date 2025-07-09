@@ -417,6 +417,7 @@
   "dataPreview":  "Découvrir les données",
   "tableOfContents": "Table des matières",
   "staticPageFormat-LINK": "Lien",
+  "staticPageFormat-EMAILLINK": "Email address link",
   "staticPageFormat-HTML": "Contenu HTML affiché dans l'application",
   "staticPageFormat-HTMLPAGE": "Contenu HTML affiché seul dans un autre onglet",
   "staticPageFormat-TEXT": "Contenu au format texte",
