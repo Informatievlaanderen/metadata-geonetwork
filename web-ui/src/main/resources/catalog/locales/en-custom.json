@@ -78,6 +78,7 @@
   "serviceType-discovery": "Search Service",
   "serviceType-download": "Downloadable",
   "serviceType-view": "Viewable",
+  "serviceType-other": "Other",
   "sortBy-changeDateDesc": "last updated",
   "sortBy-referenceDateDesc": "Reference date",
   "sourceDatasets": "Source datasets",

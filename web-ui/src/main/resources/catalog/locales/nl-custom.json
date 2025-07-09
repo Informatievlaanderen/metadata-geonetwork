@@ -78,6 +78,7 @@
   "serviceType-discovery": "Zoekdienst",
   "serviceType-download": "Downloadbaar",
   "serviceType-view": "Raadpleegbaar",
+  "serviceType-other": "Andere",
   "sortBy-changeDateDesc": "laatst aangepast",
   "sortBy-referenceDateDesc": "Referentiedatum",
   "sourceDatasets": "Brondatasets",

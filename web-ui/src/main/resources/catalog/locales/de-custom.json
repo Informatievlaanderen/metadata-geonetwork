@@ -78,6 +78,7 @@
   "serviceType-discovery": "Suchdienst",
   "serviceType-download": "Herunterladbar",
   "serviceType-view": "Sichtbar",
+  "serviceType-other": "Andere",
   "sortBy-changeDateDesc": "letzte Aktualisierung",
   "sortBy-referenceDateDesc": "Referenzdatum",
   "sources": "Quellen",
