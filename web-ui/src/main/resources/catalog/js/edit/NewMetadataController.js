@@ -243,10 +243,12 @@
           ],
           "Generieke DCAT-AP service": [{ type: "domain", key: "open" }],
           "Generieke DCAT-AP dataset": [{ type: "domain", key: "open" }],
-          "Geografische (open) datasets, conform GDI-Vlaanderen Best Practices v2.0":
-            [{ type: "domain", key: "geo" }],
-          "Geografische (open) services, conform GDI-Vlaanderen Best Practices v2.0":
-            [{ type: "domain", key: "geo" }],
+          "Geografische (open) datasets, conform GDI-Vlaanderen Best Practices v2.0": [
+            { type: "domain", key: "geo" }
+          ],
+          "Geografische (open) services, conform GDI-Vlaanderen Best Practices v2.0": [
+            { type: "domain", key: "geo" }
+          ],
           "Geografische (open) datasetseries, conform GDI-Vlaanderen Best Practices v2.0":
             [{ type: "domain", key: "geo" }],
           "Generieke Gesloten data, conform metadata-DCAT v2.0": [
@@ -268,7 +270,7 @@
           ]
         };
 
-        for(var ti = 0; ti<templates.length; ti++) {
+        for (var ti = 0; ti < templates.length; ti++) {
           var template = templates[ti];
           result[template._id] =
             badgeDefinitions[template.resourceTitleObject.langdut] ||
@@ -276,7 +278,7 @@
             badgeDefinitions[template.resourceTitleObject.default];
         }
         return result;
-      }
+      };
 
       /**
        * Get all the templates for a given type.
