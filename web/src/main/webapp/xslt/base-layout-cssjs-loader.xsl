@@ -64,8 +64,11 @@
     </xsl:if>
 
     <link href="{/root/gui/url}/static/ng-skos.css?v={$buildNumber}" rel="stylesheet" media="screen"></link>
+    <!--
+    VL / Remove custom style for the moment to avoid exceptions in the log when no custom style is defined
     <link href="{/root/gui/url}/static/{/root/gui/nodeId}_custom_style.css?v={$buildNumber}&amp;{$minimizedParam}"
           rel="stylesheet" media="all"/>
+    -->
   </xsl:template>
 
   <xsl:template name="css-load-nojs">
