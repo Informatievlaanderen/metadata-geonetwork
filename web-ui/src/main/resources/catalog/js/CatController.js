@@ -1174,9 +1174,8 @@
             locationThesaurus: ["th_regions", "th_SpatialScope"],
             internalThesaurus: [],
             collectionTableConfig: {
-              labels: "title,cl_status,format,download,WMS,WFS,Atom,Links",
-              columns:
-                "resourceTitle,cl_status[0].key,format,link/protocol:WWW:DOWNLOAD.*,link/protocol:OGC:WMS,link/protocol:OGC:WFS,link/protocol:atom:feed,link/protocol:WWW:LINK.*"
+              labels: "facet-resourceType,title,mdStatus,cl_status,format",
+              columns: "resourceType,resourceTitle,mdStatus,cl_status[0].key,format"
             },
             distributionConfig: {
               // 'layout': 'tabset',
