@@ -73,6 +73,7 @@ public class VirtualCatalogService {
             .orElseGet(() -> {
                 Source newSource = new Source();
                 newSource.setUuid(uuid);
+                newSource.setServiceRecord(uuid);
                 newSource.setType(SourceType.subportal);
                 newSource.setListableInHeaderSelector(false);
                 return newSource;
