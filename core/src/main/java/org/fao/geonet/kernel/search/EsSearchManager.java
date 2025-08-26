@@ -132,6 +132,7 @@ public class EsSearchManager implements ISearchManager {
             .add("format")
             .add("resourceType")
             .add("cl_status.key")
+            .add("mdStatus*")
             .add(Geonet.IndexFieldNames.OP_PREFIX + "*")
             .add(Geonet.IndexFieldNames.GROUP_OWNER)
             .add(Geonet.IndexFieldNames.RESOURCEABSTRACT)
