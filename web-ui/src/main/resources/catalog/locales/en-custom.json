@@ -90,6 +90,7 @@
 
   "---below-to-be-transifexed---": "all labels are pending to be either incorporated into the core or to be deleted at some point",
   "browseDataSpace": "Browse data space",
+  "dataSpaceRecordDetails": "Data space details",
   "recordsAssociatedToVirtualCatalog": "Record(s) associated.",
   "approvedRecord": "Approved record",
   "measureDate": "Date",

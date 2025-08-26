@@ -1269,7 +1269,7 @@
 
           function sort() {
             scope.displayedRecords.sort(function (a, b) {
-              var sortBy = 'resourceTitle';
+              var sortBy = "resourceTitle";
               return a[sortBy] && a[sortBy].localeCompare(b[sortBy]);
             });
           }

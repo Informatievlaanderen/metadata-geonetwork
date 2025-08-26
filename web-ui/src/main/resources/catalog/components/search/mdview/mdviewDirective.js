@@ -272,6 +272,39 @@
     }
   ]);
 
+  module.directive("gnVirtualCatalogRecordDetails", [
+    "$timeout",
+    function ($timeout) {
+      return {
+        scope: {
+          uuid: "=gnVirtualCatalogRecordDetails"
+        },
+        templateUrl: function (elem, attrs) {
+          return (
+            attrs.template ||
+            "../../catalog/components/search/mdview/partials/virtualcatalogrecorddetails.html"
+          );
+        },
+        link: function (scope, element, attrs, controller) {
+          scope.hasDetails = false;
+          $timeout(function () {
+            if (scope.$parent.getCatScope().serviceMetadataForPortal === undefined) {
+              return;
+            }
+
+            scope.details = scope.$parent
+              .getCatScope()
+              .serviceMetadataForPortal.virtualCatalogRecords.filter(function (record) {
+                return record.uuid === scope.uuid;
+              })
+              .pop();
+            scope.hasDetails = Object.keys(scope.details).length > 1;
+          }, 100);
+        }
+      };
+    }
+  ]);
+
   module.directive("gnDataPreview", [
     "gnMapsManager",
     "gnMap",

@@ -1,0 +1,31 @@
+<div data-ng-if="hasDetails">
+  <h1 data-translate="">dataSpaceRecordDetails</h1>
+
+  <table>
+    <tbody>
+      <tr data-ng-if="details.resourceTitle">
+        <th>
+          <label data-translate="">title</label>
+        </th>
+        <td>{{details.resourceTitle}}</td>
+      </tr>
+      <tr data-ng-if="details.stars">
+        <th>
+          <label data-translate="">rating</label>
+        </th>
+        <td>
+          <span
+            data-ng-if="details.stars"
+            data-rating=""
+            data-ng-model="details.stars"
+            data-max="5"
+            data-readonly="true"
+            data-state-on="'fa fa-fw fa-star'"
+            data-state-off="'fa fa-fw fa-star-o'"
+            class="text-muted"
+          ></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
