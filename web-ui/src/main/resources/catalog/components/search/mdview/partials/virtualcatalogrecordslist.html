@@ -1,0 +1,26 @@
+<div class="row" data-ng-if="record.related.children.length > 0">
+  <div class="col-md-12">
+    <span>{{record.related.children.length}}</span>
+    <span data-translate="">recordsAssociatedToVirtualCatalog</span>
+
+    <div
+      data-gn-records-table="record.related.children.length > 0
+                                ? record.related.children
+                                : record.related.siblings"
+      data-agg="record.related.children.length > 0
+          ? record.related.aggregations_children
+          : record.related.aggregations_siblings"
+      labels="{{::viewConfig.collectionTableConfig.labels}}"
+      columns="{{::viewConfig.collectionTableConfig.columns}}"
+    ></div>
+
+    <a
+      class="btn btn-primary btn-block"
+      data-ng-if="portalExists"
+      href="../../{{record.uuid}}"
+    >
+      <i class="fa fa-fw fa-search"></i>
+      <span data-translate="">browseDataSpace</span>
+    </a>
+  </div>
+</div>

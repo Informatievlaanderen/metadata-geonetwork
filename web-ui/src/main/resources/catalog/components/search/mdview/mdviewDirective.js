@@ -234,6 +234,44 @@
     }
   ]);
 
+  module.directive("gnVirtualCatalogRecordsList", [
+    "$http",
+    "gnGlobalSettings",
+    function ($http, gnGlobalSettings) {
+      return {
+        scope: {
+          record: "=gnVirtualCatalogRecordsList"
+        },
+        templateUrl: function (elem, attrs) {
+          return (
+            attrs.template ||
+            "../../catalog/components/search/mdview/partials/virtualcatalogrecordslist.html"
+          );
+        },
+        link: function (scope, element, attrs, controller) {
+          scope.viewConfig = {
+            collectionTableConfig: {
+              labels: "facet-resourceType,title,mdStatus,cl_status,format",
+              columns: "resourceType,resourceTitle,mdStatus,cl_status[0].key,format"
+            }
+          };
+
+          function getPortals() {
+            var url = "../api/sources?type=subportal";
+            $http.get(url, { cache: true }).then(function (response) {
+              scope.portalExists =
+                response.data.filter(function (p) {
+                  return p.uuid === scope.record.uuid;
+                }).length === 1;
+            });
+          }
+
+          getPortals();
+        }
+      };
+    }
+  ]);
+
   module.directive("gnDataPreview", [
     "gnMapsManager",
     "gnMap",
