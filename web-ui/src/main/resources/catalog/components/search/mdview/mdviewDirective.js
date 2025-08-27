@@ -252,9 +252,10 @@
         link: function (scope, element, attrs, controller) {
           scope.viewConfig = {
             collectionTableConfig: {
-              labels: "facet-resourceType,title,mdStatus,cl_status,format,rating",
+              labels:
+                "facet-resourceType,title,mdStatus,cl_status,resourceEdition,rating",
               columns:
-                "resourceType,resourceTitle,mdStatus,cl_status[0].key,format,details.stars"
+                "resourceType,resourceTitle,mdStatus,cl_status[0].key,resourceEdition,details.stars"
             }
           };
           scope.recordsWithDetails = undefined;
