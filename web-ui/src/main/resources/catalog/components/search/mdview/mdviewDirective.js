@@ -260,9 +260,20 @@
           };
           scope.recordsWithDetails = undefined;
 
+          // If we are in a portal corresponding to the virtual catalog,
+          // then serviceMetadataForPortal is defined
+          // if on srv, then we might be looking at a virtual catalog
+          // in this case, related records details are in current record.
           function addDetailsToRecord() {
             var virtualCatalogRecords =
-              scope.$parent.getCatScope().serviceMetadataForPortal.virtualCatalogRecords;
+              (scope.$parent.getCatScope().serviceMetadataForPortal &&
+                scope.$parent.getCatScope().serviceMetadataForPortal
+                  .virtualCatalogRecords) ||
+              scope.record.virtualCatalogRecords;
+
+            if (!virtualCatalogRecords) {
+              return;
+            }
 
             scope.recordsWithDetails = angular.copy(scope.record.related.children, []);
 
