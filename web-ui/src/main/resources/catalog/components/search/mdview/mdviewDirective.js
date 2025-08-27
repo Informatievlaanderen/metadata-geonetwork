@@ -287,13 +287,15 @@
             }
           }
 
-          function getPortals() {
+           function getPortals() {
             var url = "../api/sources?type=subportal";
             $http.get(url, { cache: true }).then(function (response) {
-              scope.portalExists =
-                response.data.filter(function (p) {
-                  return p.uuid === scope.record.uuid;
-                }).length === 1;
+              scope.displayBrowseSpaceButton =
+                gnGlobalSettings.nodeId === scope.record.uuid
+                  ? false
+                  : response.data.filter(function (p) {
+                      return p.uuid === scope.record.uuid;
+                    }).length === 1;
 
               addDetailsToRecord();
             });
