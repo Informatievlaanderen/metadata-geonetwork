@@ -122,7 +122,6 @@
               <span data-translate="" class="hidden-sm hidden-xs">delete</span>
             </a>
 
-
             <a
               class="btn btn-default"
               href
@@ -138,86 +137,85 @@
                 data-translate=""
                 class="hidden-sm hidden-xs"
                 data-ng-if="mdView.current.record.draft == 'y'"
-              >cancelWorkingCopy</span
+                >cancelWorkingCopy</span
               >
             </a>
           </div>
 
-            <!-- manage -->
-            <div
-              class="gn-md-actions-btn pull-left"
-              data-gn-md-actions-menu="mdView.current.record"
-            ></div>
+          <!-- manage -->
+          <div
+            class="gn-md-actions-btn pull-left"
+            data-gn-md-actions-menu="mdView.current.record"
+          ></div>
 
-            <!-- display mode -->
-            <div class="btn-group gn-view-menu-button pull-left">
-              <button
-                type="button"
-                class="btn btn-default dropdown-toggle"
-                data-toggle="dropdown"
-                aria-label="{{'chooseAView' | translate}}"
-                aria-expanded="false"
+          <!-- display mode -->
+          <div class="btn-group gn-view-menu-button pull-left">
+            <button
+              type="button"
+              class="btn btn-default dropdown-toggle"
+              data-toggle="dropdown"
+              aria-label="{{'chooseAView' | translate}}"
+              aria-expanded="false"
+            >
+              <span class="fa fa-fw fa-eye"></span>
+              <span data-translate="" class="hidden-sm hidden-xs">chooseAView</span>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li
+                role="menuitem"
+                data-ng-repeat="f in recordFormatterList"
+                data-ng-class="currentFormatter === f.url ? 'disabled' : ''"
               >
-                <span class="fa fa-fw fa-eye"></span>
-                <span data-translate="" class="hidden-sm hidden-xs">chooseAView</span>
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li
-                  role="menuitem"
-                  data-ng-repeat="f in recordFormatterList"
-                  data-ng-class="currentFormatter === f.url ? 'disabled' : ''"
+                <a
+                  href=""
+                  gn-metadata-open="mdView.current.record"
+                  gn-records="mdView.records"
+                  gn-formatter="f && f.url"
                 >
-                  <a
-                    href=""
-                    gn-metadata-open="mdView.current.record"
-                    gn-records="mdView.records"
-                    gn-formatter="f && f.url"
-                  >
-                    {{f.label | translate}}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    data-ng-href="{{gnUrl}}api/records/{{md.getUuid()}}/formatters/xml"
-                    target="_blank"
-                  >
-                    <span data-translate="">xmlView</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
+                  {{f.label | translate}}
+                </a>
+              </li>
+              <li>
+                <a
+                  data-ng-href="{{gnUrl}}api/records/{{md.getUuid()}}/formatters/xml"
+                  target="_blank"
+                >
+                  <span data-translate="">xmlView</span>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        <div
-          data-ng-show="gnMdViewObj.usingFormatter"
-          id="gn-metadata-display"
-          class="gn-metadata-display"
-        ></div>
+      <div
+        data-ng-show="gnMdViewObj.usingFormatter"
+        id="gn-metadata-display"
+        class="gn-metadata-display"
+      ></div>
 
-        <div data-ng-show="!gnMdViewObj.usingFormatter" class="gn-metadata-display">
-          <div data-ng-switch on="mdView.current.record.resourceType[0]">
-            <div data-ng-switch-when="series">
-              <div
-                ng-include="'../../catalog/views/default/templates/recordView/type-series.html'"
-              ></div>
-            </div>
-            <div data-ng-switch-when="catalog">
-              <div
-                ng-include="'../../catalog/views/default/templates/recordView/type-series.html'"
-              ></div>
-            </div>
-            <div data-ng-switch-when="service">
-              <div
-                ng-include="'../../catalog/views/default/templates/recordView/type-service.html'"
-              ></div>
-            </div>
-            <div data-ng-switch-default>
-              <div
-                ng-include="'../../catalog/views/default/templates/recordView/type-dataset.html'"
-              ></div>
-            </div>
+      <div data-ng-show="!gnMdViewObj.usingFormatter" class="gn-metadata-display">
+        <div data-ng-switch on="mdView.current.record.resourceType[0]">
+          <div data-ng-switch-when="series">
+            <div
+              ng-include="'../../catalog/views/default/templates/recordView/type-series.html'"
+            ></div>
+          </div>
+          <div data-ng-switch-when="catalog">
+            <div
+              ng-include="'../../catalog/views/default/templates/recordView/type-series.html'"
+            ></div>
+          </div>
+          <div data-ng-switch-when="service">
+            <div
+              ng-include="'../../catalog/views/default/templates/recordView/type-service.html'"
+            ></div>
+          </div>
+          <div data-ng-switch-default>
+            <div
+              ng-include="'../../catalog/views/default/templates/recordView/type-dataset.html'"
+            ></div>
           </div>
         </div>
       </div>
