@@ -234,6 +234,7 @@
     }
   ]);
 
+  // VL Specific
   module.directive("gnVirtualCatalogRecordsList", [
     "$http",
     "gnGlobalSettings",
@@ -251,10 +252,28 @@
         link: function (scope, element, attrs, controller) {
           scope.viewConfig = {
             collectionTableConfig: {
-              labels: "facet-resourceType,title,mdStatus,cl_status,format",
-              columns: "resourceType,resourceTitle,mdStatus,cl_status[0].key,format"
+              labels: "facet-resourceType,title,mdStatus,cl_status,format,rating",
+              columns:
+                "resourceType,resourceTitle,mdStatus,cl_status[0].key,format,details.stars"
             }
           };
+          scope.recordsWithDetails = undefined;
+
+          function addDetailsToRecord() {
+            var virtualCatalogRecords =
+              scope.$parent.getCatScope().serviceMetadataForPortal.virtualCatalogRecords;
+
+            scope.recordsWithDetails = angular.copy(scope.record.related.children, []);
+
+            for (var i = 0; i < scope.recordsWithDetails.length; i++) {
+              var virtualCatalogInfo = virtualCatalogRecords.filter(function (r) {
+                return r.uuid === scope.recordsWithDetails[i].uuid;
+              })[0];
+              if (virtualCatalogInfo !== undefined) {
+                scope.recordsWithDetails[i].details = virtualCatalogInfo;
+              }
+            }
+          }
 
           function getPortals() {
             var url = "../api/sources?type=subportal";
@@ -263,6 +282,8 @@
                 response.data.filter(function (p) {
                   return p.uuid === scope.record.uuid;
                 }).length === 1;
+
+              addDetailsToRecord();
             });
           }
 
@@ -272,6 +293,7 @@
     }
   ]);
 
+  // VL Specific
   module.directive("gnVirtualCatalogRecordDetails", [
     "$timeout",
     function ($timeout) {

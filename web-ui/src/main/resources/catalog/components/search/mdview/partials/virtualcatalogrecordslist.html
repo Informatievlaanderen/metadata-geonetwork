@@ -1,15 +1,11 @@
-<div class="row" data-ng-if="record.related.children.length > 0">
+<div class="row" data-ng-if="recordsWithDetails && recordsWithDetails.length > 0">
   <div class="col-md-12">
-    <span>{{record.related.children.length}}</span>
+    <span>{{recordsWithDetails.length}}</span>
     <span data-translate="">recordsAssociatedToVirtualCatalog</span>
 
     <div
-      data-gn-records-table="record.related.children.length > 0
-                                ? record.related.children
-                                : record.related.siblings"
-      data-agg="record.related.children.length > 0
-          ? record.related.aggregations_children
-          : record.related.aggregations_siblings"
+      data-gn-records-table="recordsWithDetails"
+      data-agg="recordsWithDetails"
       labels="{{::viewConfig.collectionTableConfig.labels}}"
       columns="{{::viewConfig.collectionTableConfig.columns}}"
     ></div>

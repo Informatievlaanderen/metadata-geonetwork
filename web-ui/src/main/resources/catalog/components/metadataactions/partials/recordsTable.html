@@ -24,6 +24,15 @@
             >
               {{r[c]}}
             </a>
+            <!-- VL specific / Additional info retrieved from virtual catalog
+             are stored in a details property. -->
+            <br />
+            <span
+              data-ng-if="r.md.details && r.md.details.resourceTitle"
+              class="text-muted"
+            >
+              {{r.md.details.resourceTitle}}
+            </span>
           </span>
 
           <span data-ng-if="c !== 'resourceTitle' && !isArray(r[c])">
@@ -38,20 +47,26 @@
           </span>
 
           <span data-ng-if="isArray(r[c])">
-            <div
-              data-ng-if="c !=='resourceType'
-                              && !c.startsWith('link')
-                              && !c.startsWith('cl')
-                              && !c.startsWith('mdStatus')
-                              && !c.startsWith('format')"
-              data-ng-repeat="l in r[c]"
-            >
-              {l}}
+            <div data-ng-if="!isFieldWithRenderer(c)" data-ng-repeat="l in r[c]">
+              {{l}}
             </div>
 
             <div data-ng-if="c === 'resourceType'">
               <i class="fa gn-icon-{{r.resourceType[0]}}"></i>
             </div>
+
+            <!-- VL specific -->
+            <span data-ng-if="c === 'details.stars'">
+              <span
+                data-rating=""
+                data-ng-model="r[c][0]"
+                data-max="5"
+                data-readonly="true"
+                data-state-on="'fa fa-fw fa-star'"
+                data-state-off="'fa fa-fw fa-star-o'"
+                class="text-muted"
+              ></span>
+            </span>
 
             <div data-ng-if="c.startsWith('cl_status[0].key')" data-ng-repeat="l in r[c]">
               <span data-ng-if="l" class="gn-status gn-status-{{l}} gn-status-table"

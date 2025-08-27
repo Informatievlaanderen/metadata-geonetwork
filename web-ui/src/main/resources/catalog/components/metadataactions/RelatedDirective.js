@@ -1238,6 +1238,17 @@
             });
           }
 
+          scope.isFieldWithRenderer = function (field) {
+            return (
+              field === "resourceType" ||
+              field === "details.stars" ||
+              field.startsWith("link") ||
+              field.startsWith("cl") ||
+              field.startsWith("mdStatus") ||
+              field.startsWith("format")
+            );
+          };
+
           function loadData() {
             scope.data = [];
             scope.displayedRecords = [];
