@@ -385,7 +385,6 @@
             </xsl:for-each-group>
           </xsl:if>
 
-
           <xsl:for-each select="gmd:identifier/*[string(gmd:code/*)]">
             <resourceIdentifier type="object">{
               "code": "<xsl:value-of select="util:escapeForJson(gmd:code/(gco:CharacterString|gmx:Anchor))"/>",
@@ -1233,12 +1232,12 @@
               ,"processor": [
               <xsl:for-each select="$processors">
                 {
-                "organisationObject": <xsl:value-of
-                select="gn-fn-index:add-multilingual-field(
-                                            'description', gmd:organisationName, $allLanguages, true())"/>
-                <xsl:if test="gmd:individualName/gco:CharacterString/text()">
-                  ,"individual":"<xsl:value-of select="util:escapeForJson(gmd:individualName/gco:CharacterString/text())"/>"
-                </xsl:if>
+                  "organisationObject": <xsl:value-of
+                  select="gn-fn-index:add-multilingual-field(
+                                              'description', gmd:organisationName, $allLanguages, true())"/>
+                  <xsl:if test="gmd:individualName/gco:CharacterString/text()">
+                    ,"individual":"<xsl:value-of select="util:escapeForJson(gmd:individualName/gco:CharacterString/text())"/>"
+                  </xsl:if>
                 }
                 <xsl:if test="position() != last()">,</xsl:if>
               </xsl:for-each>
