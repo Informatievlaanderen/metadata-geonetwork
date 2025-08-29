@@ -801,3 +801,13 @@ td[data-ng-if="columnVisibility['date']"] {
 a.template-list-item .label {
   display: inline-block;
 }
+
+/**
+ * Fix for copy-to-clipboard button that is not aligned on the same row as the input-group it belongs to.
+ */
+h3 + div.input-group {
+  display: flex;
+  button {
+    width: 45px;
+  }
+}
