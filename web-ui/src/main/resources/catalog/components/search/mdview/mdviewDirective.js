@@ -260,9 +260,20 @@
           };
           scope.recordsWithDetails = undefined;
 
+          // If we are in a portal corresponding to the virtual catalog,
+          // then serviceMetadataForPortal is defined
+          // if on srv, then we might be looking at a virtual catalog
+          // in this case, related records details are in current record.
           function addDetailsToRecord() {
             var virtualCatalogRecords =
-              scope.$parent.getCatScope().serviceMetadataForPortal.virtualCatalogRecords;
+              (scope.$parent.getCatScope().serviceMetadataForPortal &&
+                scope.$parent.getCatScope().serviceMetadataForPortal
+                  .virtualCatalogRecords) ||
+              scope.record.virtualCatalogRecords;
+
+            if (!virtualCatalogRecords) {
+              return;
+            }
 
             scope.recordsWithDetails = angular.copy(scope.record.related.children, []);
 
@@ -276,13 +287,15 @@
             }
           }
 
-          function getPortals() {
+           function getPortals() {
             var url = "../api/sources?type=subportal";
             $http.get(url, { cache: true }).then(function (response) {
-              scope.portalExists =
-                response.data.filter(function (p) {
-                  return p.uuid === scope.record.uuid;
-                }).length === 1;
+              scope.displayBrowseSpaceButton =
+                gnGlobalSettings.nodeId === scope.record.uuid
+                  ? false
+                  : response.data.filter(function (p) {
+                      return p.uuid === scope.record.uuid;
+                    }).length === 1;
 
               addDetailsToRecord();
             });
