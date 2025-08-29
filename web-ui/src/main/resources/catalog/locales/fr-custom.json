@@ -90,6 +90,7 @@
 
   "---below-to-be-transifexed---": "all labels are pending to be either incorporated into the core or to be deleted at some point",
   "approvedRecord": "Record approuvé",
+  "dataSpaceRecordDetails": "Propriétés du record dans le catalogue",
   "measureDate": "date",
   "cl_couplingType": "Type d'accouplement",
   "success": "succès",
