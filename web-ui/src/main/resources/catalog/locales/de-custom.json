@@ -89,6 +89,7 @@
 
   "---below-to-be-transifexed---": "all labels are pending to be either incorporated into the core or to be deleted at some point",
   "approvedRecord": "Genehmigt record",
+  "dataSpaceRecordDetails": "Eigenschaften des Datensatzes im Katalog",
   "measureDate": "Datum",
   "cl_couplingType": "Kupplungstyp",
   "success": "Erfolg",

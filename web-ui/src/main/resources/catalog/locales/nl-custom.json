@@ -89,6 +89,9 @@
   "versionDetails": "versie <span class='gn-version'>{{vlversion}}</span>, met GeoNetwork <span class='gn-version'>{{platform}} {{version}}-{{subversion}}</span>",
 
   "---below-to-be-transifexed---": "all labels are pending to be either incorporated into the core or to be deleted at some point",
+  "browseDataSpace": "Browse data space",
+  "dataSpaceRecordDetails": "Eigenschappen van record in catalogus",
+  "recordsAssociatedToVirtualCatalog": "Record(s) associated.",
   "approvedRecord": "Goedgekeurd record",
   "measureDate": "Datum",
   "cl_couplingType": "Type koppeling",

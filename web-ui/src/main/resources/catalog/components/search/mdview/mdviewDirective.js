@@ -234,6 +234,113 @@
     }
   ]);
 
+  // VL Specific
+  module.directive("gnVirtualCatalogRecordsList", [
+    "$http",
+    "gnGlobalSettings",
+    function ($http, gnGlobalSettings) {
+      return {
+        scope: {
+          record: "=gnVirtualCatalogRecordsList"
+        },
+        templateUrl: function (elem, attrs) {
+          return (
+            attrs.template ||
+            "../../catalog/components/search/mdview/partials/virtualcatalogrecordslist.html"
+          );
+        },
+        link: function (scope, element, attrs, controller) {
+          scope.viewConfig = {
+            collectionTableConfig: {
+              labels:
+                "facet-resourceType,title,mdStatus,cl_status,resourceEdition,rating",
+              columns:
+                "resourceType,resourceTitle,mdStatus,cl_status[0].key,resourceEdition,details.stars"
+            }
+          };
+          scope.recordsWithDetails = undefined;
+
+          // If we are in a portal corresponding to the virtual catalog,
+          // then serviceMetadataForPortal is defined
+          // if on srv, then we might be looking at a virtual catalog
+          // in this case, related records details are in current record.
+          function addDetailsToRecord() {
+            var virtualCatalogRecords =
+              (scope.$parent.getCatScope().serviceMetadataForPortal &&
+                scope.$parent.getCatScope().serviceMetadataForPortal
+                  .virtualCatalogRecords) ||
+              scope.record.virtualCatalogRecords;
+
+            if (!virtualCatalogRecords) {
+              return;
+            }
+
+            scope.recordsWithDetails = angular.copy(scope.record.related.children, []);
+
+            for (var i = 0; i < scope.recordsWithDetails.length; i++) {
+              var virtualCatalogInfo = virtualCatalogRecords.filter(function (r) {
+                return r.uuid === scope.recordsWithDetails[i].uuid;
+              })[0];
+              if (virtualCatalogInfo !== undefined) {
+                scope.recordsWithDetails[i].details = virtualCatalogInfo;
+              }
+            }
+          }
+
+          function getPortals() {
+            var url = "../api/sources?type=subportal";
+            $http.get(url, { cache: true }).then(function (response) {
+              scope.displayBrowseSpaceButton =
+                gnGlobalSettings.nodeId === scope.record.uuid
+                  ? false
+                  : response.data.filter(function (p) {
+                      return p.uuid === scope.record.uuid;
+                    }).length === 1;
+
+              addDetailsToRecord();
+            });
+          }
+
+          getPortals();
+        }
+      };
+    }
+  ]);
+
+  // VL Specific
+  module.directive("gnVirtualCatalogRecordDetails", [
+    "$timeout",
+    function ($timeout) {
+      return {
+        scope: {
+          uuid: "=gnVirtualCatalogRecordDetails"
+        },
+        templateUrl: function (elem, attrs) {
+          return (
+            attrs.template ||
+            "../../catalog/components/search/mdview/partials/virtualcatalogrecorddetails.html"
+          );
+        },
+        link: function (scope, element, attrs, controller) {
+          scope.hasDetails = false;
+          $timeout(function () {
+            if (scope.$parent.getCatScope().serviceMetadataForPortal === undefined) {
+              return;
+            }
+
+            scope.details = scope.$parent
+              .getCatScope()
+              .serviceMetadataForPortal.virtualCatalogRecords.filter(function (record) {
+                return record.uuid === scope.uuid;
+              })
+              .pop();
+            scope.hasDetails = Object.keys(scope.details).length > 1;
+          }, 100);
+        }
+      };
+    }
+  ]);
+
   module.directive("gnDataPreview", [
     "gnMapsManager",
     "gnMap",

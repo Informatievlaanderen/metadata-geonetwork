@@ -8,7 +8,7 @@
     <tbody>
       <tr data-ng-repeat="r in displayedRecords track by $index">
         <td data-ng-repeat="c in columnsConfig track by $index">
-          <span data-ng-if="$index === 0">
+          <span data-ng-if="c === 'resourceTitle'">
             <a
               data-ng-hide="r.md.remoteUrl"
               gn-metadata-open="r.md"
@@ -24,19 +24,49 @@
             >
               {{r[c]}}
             </a>
+            <!-- VL specific / Additional info retrieved from virtual catalog
+             are stored in a details property. -->
+            <br />
+            <span
+              data-ng-if="r.md.details && r.md.details.resourceTitle"
+              class="text-muted"
+            >
+              {{r.md.details.resourceTitle}}
+            </span>
           </span>
 
-          <span data-ng-if="$index > 0 && !isArray(r[c])">{{r[c]}}</span>
+          <span data-ng-if="c !== 'resourceTitle' && !isArray(r[c])">
+            <div
+              data-ng-if="c === 'mdStatus' && user.isEditorOrMore() && r.md.mdStatus < 50 && isMdWorkflowEnable"
+              class="text-muted badge"
+              data-ng-class="{'text-success': r.md.mdStatus == 2, 'text-warning': r.md.mdStatus == 4 }"
+            >
+              {{('status-' + r.md.mdStatus) | translate}}
+            </div>
+            <span data-ng-if="c !== 'mdStatus'"> {{r[c]}} </span>
+          </span>
 
           <span data-ng-if="isArray(r[c])">
-            <div
-              data-ng-if="!c.startsWith('link')
-                              && !c.startsWith('cl')
-                              && !c.startsWith('format')"
-              data-ng-repeat="l in r[c]"
-            >
-              {l}}
+            <div data-ng-if="!isFieldWithRenderer(c)" data-ng-repeat="l in r[c]">
+              {{l}}
             </div>
+
+            <div data-ng-if="c === 'resourceType'">
+              <i class="fa gn-icon-{{r.resourceType[0]}}"></i>
+            </div>
+
+            <!-- VL specific -->
+            <span data-ng-if="c === 'details.stars'">
+              <span
+                data-rating=""
+                data-ng-model="r[c][0]"
+                data-max="5"
+                data-readonly="true"
+                data-state-on="'fa fa-fw fa-star'"
+                data-state-off="'fa fa-fw fa-star-o'"
+                class="text-muted"
+              ></span>
+            </span>
 
             <div data-ng-if="c.startsWith('cl_status[0].key')" data-ng-repeat="l in r[c]">
               <span data-ng-if="l" class="gn-status gn-status-{{l}} gn-status-table"
