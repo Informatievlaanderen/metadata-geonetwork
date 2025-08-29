@@ -287,7 +287,7 @@
             }
           }
 
-           function getPortals() {
+          function getPortals() {
             var url = "../api/sources?type=subportal";
             $http.get(url, { cache: true }).then(function (response) {
               scope.displayBrowseSpaceButton =
