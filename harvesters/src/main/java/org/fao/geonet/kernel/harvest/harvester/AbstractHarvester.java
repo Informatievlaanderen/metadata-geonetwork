@@ -47,7 +47,9 @@ import org.fao.geonet.exceptions.UnknownHostEx;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.HarvestValidationEnum;
 import org.fao.geonet.kernel.MetadataIndexerProcessor;
+import org.fao.geonet.kernel.datamanager.IMetadataIndexer;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
+import org.fao.geonet.kernel.datamanager.IMetadataSchemaUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.harvest.Common.OperResult;
 import org.fao.geonet.kernel.harvest.Common.Status;
@@ -136,6 +138,8 @@ public abstract class AbstractHarvester<T extends HarvestResult, P extends Abstr
     protected DataManager dataMan;
     protected IMetadataManager metadataManager;
     protected IMetadataUtils metadataUtils;
+    protected IMetadataSchemaUtils metadataSchemaUtils;
+    protected IMetadataIndexer metadataIndexer;
 
     protected P params;
     protected T result;
@@ -176,6 +180,8 @@ public abstract class AbstractHarvester<T extends HarvestResult, P extends Abstr
         this.harvesterSettingsManager = context.getBean(HarvesterSettingsManager.class);
         this.settingManager = context.getBean(SettingManager.class);
         this.metadataManager = context.getBean(IMetadataManager.class);
+        this.metadataSchemaUtils = context.getBean(IMetadataSchemaUtils.class);
+        this.metadataIndexer = context.getBean(IMetadataIndexer.class);
     }
 
     public void add(Element node) throws BadInputEx, SQLException {
@@ -788,7 +794,7 @@ public abstract class AbstractHarvester<T extends HarvestResult, P extends Abstr
         params.create(node);
     }
 
-    private void doDestroy(final Resources resources) {
+    protected void doDestroy(final Resources resources) {
         removeIcon(resources, getParams().getUuid());
 
         context.getBean(SourceRepository.class).deleteById(getParams().getUuid());

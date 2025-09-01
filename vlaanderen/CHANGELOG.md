@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### core
 - Set default `UTF-8` encoding for sent mails - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44033) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8801)
 - Merged 4.4.7-0 - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/43533) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetworkMicroservices/pullrequest/43532)
+- Merged 4.4.9-SNAPSHOT - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/45449)
 - Flemish Region thesauri, per fusion year, were added - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/43355) / [pr-core](https://github.com/metadata101/dcat-ap/pull/78)
 - DCAT-AP plugin update - [pr](https://github.com/metadata101/dcat-ap/pull/84)
   - Introducing Catalog resource - [pr](https://github.com/metadata101/dcat-ap/pull/76) / [pr](https://github.com/metadata101/dcat-ap/pull/85) / [pr](https://github.com/metadata101/dcat-ap/pull/89)

@@ -123,7 +123,12 @@ public class PostHarvestingValidationTask extends ValidationTask {
 
             String schema = metadata.getDataInfo().getSchemaId();
             if (applyInternalValidation) {
-                metadataValidator.doValidate(metadata, Geonet.DEFAULT_LANGUAGE);
+                try {
+                    metadataValidator.doValidate(metadata, Geonet.DEFAULT_LANGUAGE);
+                } catch (Exception e) {
+                    log(LogLevel.DEBUG, "{} / Internal Validation error. %s",
+                        metadata.getUuid(), e.getMessage());
+                }
             }
 
             if (applyRemoteInspireValidation) {

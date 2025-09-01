@@ -41,7 +41,9 @@
         restrict: "A",
         templateUrl:
           "../../catalog/components/edit/onlinesrc/" + "partials/fileUploader.html",
-        scope: {},
+        scope: {
+          editableThumbnail: "@"
+        },
         link: function (scope, element, attrs) {
           scope.relations = {};
           scope.uuid = undefined;
@@ -2031,6 +2033,7 @@
                       scope.srcParams.remote = false;
                       if (links.length > 0) {
                         scope.onlineSrcLink = links[0].url;
+                        scope.srcParams.name = links[0].name || "";
                         scope.srcParams.protocol = links[0].protocol || "OGC:WMS";
                         scope.loadCurrentLink(scope.onlineSrcLink);
                         scope.srcParams.url = scope.onlineSrcLink;

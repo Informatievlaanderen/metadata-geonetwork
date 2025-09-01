@@ -339,7 +339,8 @@
     "validationReport": "Validatie rapport",
     "runValidation": "Start validatieproces",
     "validationServiceError": "Server fout",
-    "validationServiceErrorDetail": "Controleer a.u.b. de server log bestanden voor meer informatie.",
+    "validationServiceErrorHeader": "Schematron error kwam voor, regels konden niet worden geverifieerd.",
+    "validationServiceErrorDetail": "Meer informatie over dit issue kan gevonden worden in de server logs.",
     "fixedOnTop": "Altijd bovenaan",
     "whoCanAccess": "Wie heeft toegang",
     "wmsServiceUrl": "WMS service url",
@@ -466,5 +467,8 @@
     "validationErrorLabel": "fouten",
     "metadataDuplicatedField-title": "De titel wordt reeds gebruikt in een ander metadata record",
     "metadataDuplicatedField-altTitle": "De alternatieve titel wordt reeds gebruikt in een ander metadata record.",
-    "metadataDuplicatedField-identifier": "De bron identificator wordt reeds gebruikt in een ander metadata record."
+    "metadataDuplicatedField-identifier": "De bron identificator wordt reeds gebruikt in een ander metadata record.",
+    "indexingIssues": "Indexeringsproblemen",
+    "indexingErrors": "Fouten",
+    "indexingWarnings": "Waarschuwingen"
 }

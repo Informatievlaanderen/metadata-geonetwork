@@ -1,4 +1,4 @@
-<div data-ng-if="md">
+<div>
   <div class="btn-group md-actions" data-ng-if="user.isEditorOrMore()">
     <button
       type="button"
@@ -104,6 +104,7 @@
       <li role="menuitem" data-ng-show="isMdWorkflowEnable">
         <span data-translate="" class="dropdown-header">workflow</span>
       </li>
+      <!--      <li data-ng-if="displayEnableWorkflowOption(user)">-->
       <li
         data-ng-if="isMdWorkflowEnable
                     && user.canEditRecord(md)
@@ -231,7 +232,7 @@
           <span data-translate="">permalink</span>
         </a>
       </li>
-      <li role="menuitem" data-ng-repeat="f in formatterList">
+      <li role="menuitem" data-ng-repeat="f in formatterList" data-ng-if="md">
         <a
           data-ng-if="!!f.url && shouldDisplayFormatter(md, f)"
           data-ng-href="{{::buildFormatter(f.url, md.uuid, mdView.current.record.draft, true)}}"

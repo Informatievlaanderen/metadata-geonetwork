@@ -705,8 +705,14 @@ public class DefaultStatusActions implements StatusActions {
                 if (owner.isPresent()) {
                     users.add(owner.get());
                 }
-            } else if (notificationLevel == StatusValueNotificationLevel.recordProfileReviewer) {
-                List<Pair<Integer, User>> results = userRepository.findAllByGroupOwnerNameAndProfile(recordIds, Profile.Reviewer);
+            } else if (notificationLevel.name().startsWith("recordProfile")) {
+                String profileId = notificationLevel.name().replace("recordProfile", "");
+                Profile profile = Profile.findProfileIgnoreCase(profileId);
+                if (profile == null) {
+                    Log.error(Geonet.DATA_MANAGER, "Invalid notification level is configured '" + notificationLevel + "' The associated profile '" + profileId + "' does not exist.");
+                    return users;
+                }
+                List<Pair<Integer, User>> results = userRepository.findAllByGroupOwnerNameAndProfile(recordIds, profile);
                 Collections.sort(results, Comparator.comparing(s -> s.two().getName()));
                 for (Pair<Integer, User> p : results) {
                     users.add(p.two());
@@ -734,6 +740,10 @@ public class DefaultStatusActions implements StatusActions {
             } else if (notificationLevel.name().startsWith("catalogueProfile")) {
                 String profileId = notificationLevel.name().replace("catalogueProfile", "");
                 Profile profile = Profile.findProfileIgnoreCase(profileId);
+                if (profile == null) {
+                    Log.error(Geonet.DATA_MANAGER, "Invalid notification level is configured '" + notificationLevel + "' The associated profile '" + profileId + "' does not exist.");
+                    return users;
+                }
                 users = userRepository.findAllByProfile(profile);
             } else if (notificationLevel == StatusValueNotificationLevel.catalogueAdministrator) {
                 SettingManager settingManager = ApplicationContextHolder.get().getBean(SettingManager.class);
