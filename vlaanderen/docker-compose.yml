@@ -11,9 +11,9 @@ x-geonetwork-environment:
     -Xms512M -Xss512M -Xmx2G -XX:+UseConcMarkSweepGC
     -Dlog_dir=/geonetwork-data/logs
   DATA_DIR: /geonetwork-data
-  ES_HOST: elasticsearch
-  ES_PORT: 9200
-  ES_PROTOCOL: http
+  GEONETWORK_ES_HOST: elasticsearch
+  GEONETWORK_ES_PORT: 9200
+  GEONETWORK_ES_PROTOCOL: http
   GEONETWORK_CODELIST_DIR: /var/lib/jetty/webapps/root/WEB-INF/data/config/codelist
   GEONETWORK_DB_HOST: database
   GEONETWORK_DB_NAME: geonetwork
