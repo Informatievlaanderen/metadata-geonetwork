@@ -10,17 +10,17 @@ fi
 if [[ "$1" = jetty.sh ]] || [[ $(expr "$*" : 'java .*/start\.jar.*$') != 0 ]]; then
     # this is a command to run jetty
 
-    # Sanity check: ES_HOST variable is mandatory
-    if [ -z "${ES_HOST}" ]; then
+    # Sanity check: GEONETWORK_ES_HOST variable is mandatory
+    if [ -z "${GEONETWORK_ES_HOST}" ]; then
         cat >&2 <<- EOWARN
 			********************************************************************
-			WARNING: Environment variable ES_HOST is mandatory
+			WARNING: Environment variable GEONETWORK_ES_HOST is mandatory
 
 			GeoNetwork requires an Elasticsearch instance to store the index.
-			Please define the variable ES_HOST with the Elasticsearch
+			Please define the variable GEONETWORK_ES_HOST with the Elasticsearch
 			host name. For example
 
-			docker run -e ES_HOST=elasticsearch geonetwork:${GN_VERSION}
+			docker run -e GEONETWORK_ES_HOST=elasticsearch geonetwork:${GN_VERSION}
 
 			********************************************************************
 		EOWARN
@@ -31,29 +31,29 @@ if [[ "$1" = jetty.sh ]] || [[ $(expr "$*" : 'java .*/start\.jar.*$') != 0 ]]; t
     APP_NAME=root
 
     # Set Elasticsearch properties
-    if [ "${ES_HOST}" != "localhost" ]; then
-        sed -i "s#http://localhost:9200#${ES_PROTOCOL:="http"}://${ES_HOST}:${ES_PORT:="9200"}#g" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/web.xml" ;
-        sed -i "s#es.host=localhost#es.host=${ES_HOST}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
+    if [ "${GEONETWORK_ES_HOST}" != "localhost" ]; then
+        sed -i "s#http://localhost:9200#${GEONETWORK_ES_PROTOCOL:="http"}://${GEONETWORK_ES_HOST}:${GEONETWORK_ES_PORT:="9200"}#g" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/web.xml" ;
+        sed -i "s#es.host=localhost#es.host=${GEONETWORK_ES_HOST}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
     fi;
 
-    if [ -n "${ES_PROTOCOL}" ] && [ "${ES_PROTOCOL}" != "http" ] ; then
-        sed -i "s#es.protocol=http#es.protocol=${ES_PROTOCOL}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
+    if [ -n "${GEONETWORK_ES_PROTOCOL}" ] && [ "${GEONETWORK_ES_PROTOCOL}" != "http" ] ; then
+        sed -i "s#es.protocol=http#es.protocol=${GEONETWORK_ES_PROTOCOL}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
     fi
 
-    if [ -n "${ES_PORT}" ] && [ "$ES_PORT" != "9200" ] ; then
-        sed -i "s#es.port=9200#es.port=${ES_PORT}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
+    if [ -n "${GEONETWORK_ES_PORT}" ] && [ "$GEONETWORK_ES_PORT" != "9200" ] ; then
+        sed -i "s#es.port=9200#es.port=${GEONETWORK_ES_PORT}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
     fi
 
-    if [ -n "${ES_INDEX_RECORDS}" ] && [ "$ES_INDEX_RECORDS" != "gn-records" ] ; then
-        sed -i "s#es.index.records=gn-records#es.index.records=${ES_INDEX_RECORDS}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
+    if [ -n "${GEONETWORK_ES_INDEX_RECORDS}" ] && [ "$GEONETWORK_ES_INDEX_RECORDS" != "gn-records" ] ; then
+        sed -i "s#es.index.records=gn-records#es.index.records=${GEONETWORK_ES_INDEX_RECORDS}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
     fi
 
-    if [ "${ES_USERNAME}" != "" ] ; then
-        sed -i "s#es.username=#es.username=${ES_USERNAME}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
+    if [ "${GEONETWORK_ES_USERNAME}" != "" ] ; then
+        sed -i "s#es.username=#es.username=${GEONETWORK_ES_USERNAME}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
     fi
 
-    if [ "${ES_PASSWORD}" != "" ] ; then
-        sed -i "s#es.password=#es.password=${ES_PASSWORD}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
+    if [ "${GEONETWORK_ES_PASSWORD}" != "" ] ; then
+        sed -i "s#es.password=#es.password=${GEONETWORK_ES_PASSWORD}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
     fi
 
     if [ -n "${KB_URL}" ] && [ "$KB_URL" != "http://localhost:5601" ]; then
