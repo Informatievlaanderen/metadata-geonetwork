@@ -52,7 +52,7 @@ public class SessionExpirationFilter implements Filter {
     /**
      * Service to retrieve OAuth2 authorized clients inorder to get access token.
      */
-    @Autowired
+    @Autowired(required = false)
     private OAuth2AuthorizedClientManager authorizedClientManager;
 
     @Autowired
