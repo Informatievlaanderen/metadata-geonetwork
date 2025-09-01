@@ -27,7 +27,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - Added heading for `title` in the `Catalog` editor - [pr](https://github.com/metadata101/dcat-ap/pull/89)
   - Improve prefilled values in `Catalog` editor - [pr](https://github.com/metadata101/dcat-ap/pull/89)
   - Template improvements - [pr](https://github.com/metadata101/dcat-ap/pull/92)
-  - Bugfix for missing `primaryTopic` - [pr](), [pr-core](https://github.com/metadata101/dcat-ap/pull/94)
+  - Bugfix for missing `primaryTopic` - [pr-core](https://github.com/metadata101/dcat-ap/pull/94)
+  - Improving multilingual keywords in editor - [pr-core](https://github.com/metadata101/dcat-ap/pull/100)
+  - Fix for lost text elements after import - [pr-core](https://github.com/metadata101/dcat-ap/pull/98)
+  - Fix for undisplayed `resource identifier` - [pr-core](https://github.com/metadata101/dcat-ap/pull/97)
 - Reset search in search dialog - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44486) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8868)
 - CSS fix for scale numerator - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44776) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8913)
 
