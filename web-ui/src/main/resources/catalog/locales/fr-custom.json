@@ -45,6 +45,7 @@
   "groupPreallocate-searchByOvoLabel": "Saisissez un code OVO pour rechercher le registre des organisations (het Organisatieregister).",
   "host.name": "Hostname",
   "hvd": "High-value datasets (HVD)",
+  "isComposedOf": "Est composé de",
   "isSourceOfDatasets": "Est source de Données de",
   "link": "Lien",
   "linkToFeatureCatalog": "Lien vers un feature catalog",
