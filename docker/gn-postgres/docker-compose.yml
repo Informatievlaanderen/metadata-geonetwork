@@ -10,9 +10,9 @@ services:
       - 8080:8080
     environment:
       DATA_DIR: /var/lib/geonetwork_data
-      ES_HOST: elasticsearch
-      ES_PROTOCOL: http
-      ES_PORT: 9200
+      GEONETWORK_ES_HOST: elasticsearch
+      GEONETWORK_ES_PROTOCOL: http
+      GEONETWORK_ES_PORT: 9200
       KB_URL: http://kibana:5601
 
       # Note: defining the following variable will activate the postgresql
