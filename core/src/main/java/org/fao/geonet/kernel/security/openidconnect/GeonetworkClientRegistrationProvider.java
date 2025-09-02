@@ -63,7 +63,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 public class GeonetworkClientRegistrationProvider {
 
-    public static String CLIENTREGISTRATION_NAME = "geonetwork-oidc";
+     // VL: upstream the 'oicd' typo was corrected. However, this conflicts with our acm/idm configuration, which relies on the oicd notation.
+    public static String CLIENTREGISTRATION_NAME = "geonetwork-oicd";
 
     ClientRegistration clientRegistration;
 
