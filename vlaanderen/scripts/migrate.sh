@@ -5,7 +5,7 @@
 
 # params
 # dev/bet/prd
-SOURCE=bet
+SOURCE=dev
 TARGET=loc
 
 # transfer data from one environment to another
@@ -32,7 +32,7 @@ fi
 sourceuser=geonetwork
 sourcepassword=geonetwork
 sourcedatabase=geonetwork
-echo "source database: $sourceuser@$sourcehost:$sourceport/$sourcedatabase"
+echo "source database ($SOURCE): $sourceuser@$sourcehost:$sourceport/$sourcedatabase"
 
 # the database we copy to (will be nuked)
 targethost=localhost
@@ -40,6 +40,8 @@ targethost=localhost
 targetport="unset"
 if [[ $TARGET == "prd" ]]
 then
+  # do not allow prd to be the target for now
+  exit 1
   targetport=5435
 elif [[ $TARGET == "bet" ]]
 then
@@ -57,7 +59,7 @@ fi
 targetuser=geonetwork
 targetpassword=geonetwork
 targetdatabase=geonetwork
-echo "target database: $targetuser@$targethost:$targetport/$targetdatabase"
+echo "target database ($TARGET): $targetuser@$targethost:$targetport/$targetdatabase"
 
 read -p "Press enter to continue"
 
