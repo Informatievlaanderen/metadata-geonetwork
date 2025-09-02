@@ -30,32 +30,6 @@ if [[ "$1" = jetty.sh ]] || [[ $(expr "$*" : 'java .*/start\.jar.*$') != 0 ]]; t
     # Defines where you will deploy (subfolder). Default: 'geonetwork'.
     APP_NAME=root
 
-    # Set Elasticsearch properties
-    if [ "${GEONETWORK_ES_HOST}" != "localhost" ]; then
-        sed -i "s#http://localhost:9200#${GEONETWORK_ES_PROTOCOL:="http"}://${GEONETWORK_ES_HOST}:${GEONETWORK_ES_PORT:="9200"}#g" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/web.xml" ;
-        sed -i "s#es.host=localhost#es.host=${GEONETWORK_ES_HOST}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
-    fi;
-
-    if [ -n "${GEONETWORK_ES_PROTOCOL}" ] && [ "${GEONETWORK_ES_PROTOCOL}" != "http" ] ; then
-        sed -i "s#es.protocol=http#es.protocol=${GEONETWORK_ES_PROTOCOL}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
-    fi
-
-    if [ -n "${GEONETWORK_ES_PORT}" ] && [ "$GEONETWORK_ES_PORT" != "9200" ] ; then
-        sed -i "s#es.port=9200#es.port=${GEONETWORK_ES_PORT}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
-    fi
-
-    if [ -n "${GEONETWORK_ES_INDEX_RECORDS}" ] && [ "$GEONETWORK_ES_INDEX_RECORDS" != "gn-records" ] ; then
-        sed -i "s#es.index.records=gn-records#es.index.records=${GEONETWORK_ES_INDEX_RECORDS}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
-    fi
-
-    if [ "${GEONETWORK_ES_USERNAME}" != "" ] ; then
-        sed -i "s#es.username=#es.username=${GEONETWORK_ES_USERNAME}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
-    fi
-
-    if [ "${GEONETWORK_ES_PASSWORD}" != "" ] ; then
-        sed -i "s#es.password=#es.password=${GEONETWORK_ES_PASSWORD}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
-    fi
-
     if [ -n "${KB_URL}" ] && [ "$KB_URL" != "http://localhost:5601" ]; then
         sed -i "s#kb.url=http://localhost:5601#kb.url=${KB_URL}#" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/config.properties" ;
         sed -i "s#http://localhost:5601#${KB_URL}#g" "${JETTY_BASE}/webapps/${APP_NAME}/WEB-INF/web.xml" ;
