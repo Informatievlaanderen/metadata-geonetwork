@@ -30,6 +30,16 @@
       </properties>
     </profile>
     <profile>
+      <id>loc-idea</id>
+      <properties>
+        <!-- intended to run on localhost, outside of docker -->
+        <liquibase.url>jdbc:postgresql://localhost:5432/geonetwork</liquibase.url>
+        <liquibase.username>geonetwork</liquibase.username>
+        <liquibase.password>geonetwork</liquibase.password>
+        <liquibase.contexts>loc</liquibase.contexts>
+      </properties>
+    </profile>
+    <profile>
       <id>dev</id>
       <properties>
         <!-- intended to run using `port-forward-db.sh` to mirror those ports -->
