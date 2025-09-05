@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - Improving multilingual keywords in editor - [pr-core](https://github.com/metadata101/dcat-ap/pull/100)
   - Fix for lost text elements after import - [pr-core](https://github.com/metadata101/dcat-ap/pull/98)
   - Fix for undisplayed `resource identifier` - [pr-core](https://github.com/metadata101/dcat-ap/pull/97)
+  - Initial DCAT3 support - [pr-core](https://github.com/metadata101/dcat-ap/pull/81)
 - Reset search in search dialog - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44486) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8868)
 - CSS fix for scale numerator - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44776) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8913)
 
