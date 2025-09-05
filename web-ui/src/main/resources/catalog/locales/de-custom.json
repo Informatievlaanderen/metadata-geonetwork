@@ -45,6 +45,7 @@
   "groupPreallocate-searchByOvoLabel": "Geben Sie einen OVO-Code ein, um im Organisationsregister zu suchen.",
   "host.name": "Hostname",
   "hvd": "Hochwertige Datensätze",
+  "isComposedOf": "Besteht aus",
   "isSourceOfDatasets": "Ist Quelldatensatz von",
   "link": "Herunterladen",
   "linkToFeatureCatalog": "Link zu einem Feature-Katalog",
