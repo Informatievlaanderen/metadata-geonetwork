@@ -253,7 +253,7 @@
           scope.viewConfig = {
             collectionTableConfig: {
               labels:
-                "facet-resourceType,title,mdStatus,cl_status,resourceEdition,rating",
+                "facet-resourceType,title,mdStatus,cl_status,resourceEdition,rate",
               columns:
                 "resourceType,resourceTitle,mdStatus,cl_status[0].key,resourceEdition,details.stars"
             }
@@ -290,7 +290,7 @@
           function getPortals() {
             var url = "../api/sources?type=subportal";
             $http.get(url, { cache: true }).then(function (response) {
-              scope.displayBrowseSpaceButton =
+              scope.displayBrowseCatalogButton =
                 gnGlobalSettings.nodeId === scope.record.uuid
                   ? false
                   : response.data.filter(function (p) {
