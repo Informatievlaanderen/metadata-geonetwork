@@ -357,7 +357,7 @@
     "KMLfileURL": "URL van een KML bestand",
     "refineSearch": "Verfijn Zoeken",
     "backToList": "Terug naar de lijst",
-    "privilegesBatchAlert": "<span class='text-danger'>De privileges worden bijgewerkt voor alle bewerkbare records in de selectie. Het privilegeformulier is leeg en geeft niet de huidige privileges van de geselecteerde records weer! Privileges worden gereset en vervangen door de nieuwe.</span><br/><br/> Als u op <strong>Selectie samenvoegen</strong> klikt, worden geselecteerde privileges toegevoegd (aangevinkt met <strong>+</strong> ) of verwijderd (selectievakje met <strong>-</strong>)<br/><br/> Als u op <strong>Vervangen door geselecteerd</strong> klikt, worden recordcategorieën verwijderd en vervolgens geselecteerde privileges toegevoegd (aangevinkt met <strong>+</strong> ) of verwijderd (selectievakje met <strong>-</strong>)",
+    "privilegesBatchAlert": "<span class='text-danger'>De privileges zullen geüpdated worden voor alle editeerbare records in de selectie. Het privilege form is leeg en is geen reflectie van de huidige privileges van de geselecteerde records! Privileges worden gereset en vervangen door de nieuwe.</span><br/><br/>Klik op <strong>Merge selectie</strong> zal geselecteerde privileges toevoegen (aangevinkt met <strong>+</strong>) of verwijderen (checkbox met <strong>-</strong>).<br/><br/>Klikken op <strong>Update</strong>zal record privileges verwijderen en dan geselecteerde privileges toevoegen (aangevinkt met <strong>+</strong>) of verwijderen (checkbox met <strong>-</strong>).",
     "permalink": "Permalink",
     "permalinkTo": "Permalink naar {{title}}",
     "shareOnTwitter": "Deel op Twitter",
