@@ -215,7 +215,7 @@
   "addThoseOperations-help": "Geselecteerde privileges toevoegen (checkbox met +) of verwijderen (checkbox met -).",
   "privilegesNeededForPublicationRecordGroupOnly-true": "Om een record te publiceren moet je administrator of reviewer zijn van de recordgroep",
   "privilegesNeededForPublicationRecordGroupOnly-false": "Om een record te publiceren moet je administrator of reviewer zijn van de recordgroep, of een reviewer van een groep met editeerrechten.",
-  "replaceByThoseOperations-help": "Verwijder record privileges en voeg dan geselecteerde privileges toe (checkbox met +), of verwijder ze (checkbox met -).",
+  "replaceByThoseOperations-help": "Verwijder record privileges en voeg vervolgens de geselecteerde privileges toe (aangevinkt met +) or verwijder ze (checkbox met -).",
   "chooseASelection": "Kies een selectie",
   "e101": "Editor overview selectie [e101]",
   "s101": "Zoek app selectie [s101]",
