@@ -3075,6 +3075,7 @@
   <element name="gmd:alternateTitle" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle">
     <label>Alternatieve titel dataset(serie)</label>
     <description>Korte titel, afkorting of titel in een andere taal.</description>
+    <condition>optional</condition>
   </element>
   <element name="gmd:title" context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:title">
     <label>Titel service</label>
@@ -3086,6 +3087,7 @@
   <element name="gmd:alternateTitle" context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle">
     <label>Alternatieve titel service</label>
     <description>Korte titel, afkorting of titel in een andere taal.</description>
+    <condition>optional</condition>
   </element>
   <!--
 	<element name="gmd:dateType" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType">
@@ -3130,6 +3132,7 @@
   <element name="gmd:alternateTitle" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:alternateTitle">
     <label>Alternatieve titel verwante dataset(serie)</label>
     <description>Korte titel, afkorting of titel in een andere taal.</description>
+    <condition>optional</condition>
   </element>
   <element name="gmd:CI_Date" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:date/gmd:CI_Date">
     <label>Versiedatum verwante dataset(serie)</label>
