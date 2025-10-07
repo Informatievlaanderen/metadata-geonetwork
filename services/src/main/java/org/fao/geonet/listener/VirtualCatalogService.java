@@ -59,7 +59,6 @@ public class VirtualCatalogService {
                 .map(e -> ((Text) e).getTextTrim())
                 .filter(uuid -> !uuid.equals(metadata.getUuid()))
                 .collect(Collectors.toList());
-            uuids.add(metadata.getUuid());
 
             // Configure the portal based on the above
             configurePortal(metadata.getUuid(), catalogTitle, uuids);
