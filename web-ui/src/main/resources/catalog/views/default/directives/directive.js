@@ -437,7 +437,9 @@
           scope.getStatusEffects = function (user) {
             var isReviewer =
               user.isAdmin() || user.isReviewerForGroup(scope.md.groupOwner);
-            return scope.statusEffects[user.isAdmin() ? 'admin' : (isReviewer ? 'reviewer' : 'editor')];
+            return scope.statusEffects[
+              user.isAdmin() ? "admin" : isReviewer ? "reviewer" : "editor"
+            ];
           };
 
           /**

@@ -252,8 +252,7 @@
         link: function (scope, element, attrs, controller) {
           scope.viewConfig = {
             collectionTableConfig: {
-              labels:
-                "facet-resourceType,title,mdStatus,cl_status,resourceEdition,rate",
+              labels: "facet-resourceType,title,mdStatus,cl_status,resourceEdition,rate",
               columns:
                 "resourceType,resourceTitle,mdStatus,cl_status[0].key,resourceEdition,details.stars"
             }

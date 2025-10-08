@@ -2,12 +2,20 @@
   <table class="table table-condensed">
     <thead>
       <tr>
-        <td data-ng-repeat="c in headers track by $index">{{c | translate}}</td>
+        <td
+          data-ng-repeat="c in headers track by $index"
+          data-ng-hide="c === 'mdStatus' && !user.isConnected()"
+        >
+          {{c | translate}}
+        </td>
       </tr>
     </thead>
     <tbody>
       <tr data-ng-repeat="r in displayedRecords track by $index">
-        <td data-ng-repeat="c in columnsConfig track by $index">
+        <td
+          data-ng-repeat="c in columnsConfig track by $index"
+          data-ng-hide="c === 'mdStatus' && !user.isConnected()"
+        >
           <span data-ng-if="c === 'resourceTitle'">
             <a
               data-ng-hide="r.md.remoteUrl"
