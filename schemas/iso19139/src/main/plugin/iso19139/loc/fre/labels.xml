@@ -1537,7 +1537,7 @@ de métadonnées de données « BD Carthage métropole »
     <help>Nom abrégé ou orthographe du titre/nom différente de celle sous laquelle l'information
       correspondante est connue. Exemple : DCW pour "Digital Chart of the World"
     </help>
-    <condition/>
+    <condition>optional</condition>
 
   </element>
   <element name="gmd:amendmentNumber" id="287.0">

@@ -2207,7 +2207,7 @@
            id="361">
     <label>Alternativtitel</label>
     <help>z.B. 'TK 25' als Kurzform für 'Topographische Karte 1:25 000'</help>
-    <condition/>
+    <condition>optional</condition>
     <description>Kurzbezeichnung oder anderer Titel der Ressource</description>
   </element>
   <element name="gmd:date" context="gmd:CI_Date" id="394">
