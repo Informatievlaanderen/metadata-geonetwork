@@ -22,7 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Merged 4.4.7-0 - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/43533) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetworkMicroservices/pullrequest/43532)
 - Merged 4.4.9-SNAPSHOT - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/45449)
 - Flemish Region thesauri, per fusion year, were added - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/43355) / [pr-core](https://github.com/metadata101/dcat-ap/pull/78)
-- DCAT-AP plugin update - [pr](https://github.com/metadata101/dcat-ap/pull/84)
+- DCAT-AP plugin update - [pr](https://github.com/metadata101/dcat-ap/pull/84) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/46013)
   - Introducing Catalog resource - [pr](https://github.com/metadata101/dcat-ap/pull/76) / [pr](https://github.com/metadata101/dcat-ap/pull/85) / [pr](https://github.com/metadata101/dcat-ap/pull/89)
   - DCAT Records can now be processed by `csw-publication` endpoints for e.g. deletions - [pr](https://github.com/metadata101/dcat-ap/pull/79)
   - Prevent double `CatalogRecord` entries and self-inclusion for `Catalog` - [pr](https://github.com/metadata101/dcat-ap/pull/89)
