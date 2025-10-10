@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - Enabled thumbnails for series and catalogue record types - [pr-core](https://github.com/metadata101/dcat-ap/pull/107)
 - Reset search in search dialog - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44486) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8868)
 - CSS fix for scale numerator - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44776) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8913)
+- When adding associated records, only display relevant ones - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/46086) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/9065)
 
 
 ## [8.3.0] - 2025-04-22
