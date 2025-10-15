@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. These chang
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [8.3.1-SNAPSHOT]
+## [8.4.0-SNAPSHOT]
 
 ### vlaanderen
 - Fixed `uuidref` values for harvested web services, now containing file identifiers - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/43965)
@@ -23,7 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Merged 4.4.9-SNAPSHOT - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/45449)
 - Flemish Region thesauri, per fusion year, were added - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/43355) / [pr-core](https://github.com/metadata101/dcat-ap/pull/78)
 - DCAT-AP plugin update - [pr](https://github.com/metadata101/dcat-ap/pull/84) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/46013)
-  - Introducing Catalog resource - [pr](https://github.com/metadata101/dcat-ap/pull/76) / [pr](https://github.com/metadata101/dcat-ap/pull/85) / [pr](https://github.com/metadata101/dcat-ap/pull/89) / [pr-core](https://github.com/metadata101/dcat-ap/pull/112)
+  - Introducing Catalog resource - [pr](https://github.com/metadata101/dcat-ap/pull/76) / [pr](https://github.com/metadata101/dcat-ap/pull/85) / [pr](https://github.com/metadata101/dcat-ap/pull/89) / [pr-core](https://github.com/metadata101/dcat-ap/pull/112) / [pr-core](https://github.com/metadata101/dcat-ap/pull/113)
   - DCAT Records can now be processed by `csw-publication` endpoints for e.g. deletions - [pr](https://github.com/metadata101/dcat-ap/pull/79)
   - Prevent double `CatalogRecord` entries and self-inclusion for `Catalog` - [pr](https://github.com/metadata101/dcat-ap/pull/89)
   - Added heading for `title` in the `Catalog` editor - [pr](https://github.com/metadata101/dcat-ap/pull/89)
