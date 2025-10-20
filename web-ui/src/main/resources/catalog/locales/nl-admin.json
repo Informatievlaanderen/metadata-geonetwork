@@ -767,6 +767,8 @@
     "system/users": "Groepen en gebruikers",
     "system/users/identicon": "Gebruikerslogo",
     "system/users/identicon-help": "Stel in op '' voor geen icoon. Gebruik 'gravatar' om de standaard gravatar-modus te gebruiken. Icoontype kan worden gedefinieerd met: mp, identicon, monsterid, wavatar, retro, robohash en geforceerd met behulp van configuraties zoals 'gravatar:identicon' of 'gravatar:retro:y' om het gebruik van het standaardicoon te forceren. Zie <a href='https://en.gravatar.com/site/implement/images/'>Gravatar-documentatie</a> voor meer opties.",
+    "system/metadata/edit/supportedFileMimetypes": "Toegestane mime bestandstypes voor een metadata record attachment",
+    "system/metadata/edit/supportedFileMimetypes-help": "Een pipe-separated (|) lijst van mime types die aan een metadata record mogen toegevoegd worden als attachment. Bijvoorbeeld, om afbeeldingen (PNG, GIF en JPEG), text, xml en pdf bestanden toe te staan: image/png|image/gif|image/jpeg|text/plain|application/xml|application/pdf",
     "system/metadata/allThesaurus": "Virtuele 'all' woordenlijst",
     "system/metadata/thesaurusNamespace": "Lokaal thesaurus namespace patroon",
     "system/metadata/thesaurusNamespace-help": "Op basis van dit patroon zal een namespace worden gesuggereerd wanneer een nieuwe thesaurus wordt aangemaakt. Het patroon kan placeholders \\{\\{type\\}\\} en \\{\\{filename\\}\\} bevatten ter vervanging.",
