@@ -2308,6 +2308,17 @@
             "type": "keyword"
           }
         }
+      },
+      "resourceEdition": {
+        "type": "text"
+      },
+      "resourceEditionDate": {
+        "type": "date",
+        "format": "date_optional_time",
+        "ignore_malformed": true
+      },
+      "standardVersion": {
+        "type": "text"
       }
     }
   }

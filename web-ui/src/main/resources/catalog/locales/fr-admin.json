@@ -767,6 +767,8 @@
     "system/users": "Groupes & utilisateurs",
     "system/users/identicon": "Identicon utilisateurs",
     "system/users/identicon-help": "Utiliser '' pour aucune icône. Utilier 'gravatar' pour le mode Gravatar par défaut. Le type d'icône peut être personnalisé avec : mp, identicon, monsterid, wavatar, retro, robohash et forcé avec des configurations tel que 'gravatar:identicon' ou 'gravatar:retro:y'. Voir <a href='https://en.gravatar.com/site/implement/images/'>Gravatar documentation</a> pour plus d'options.",
+    "system/metadata/edit/supportedFileMimetypes": "Allowed file mime types to attach to a metadata record",
+    "system/metadata/edit/supportedFileMimetypes-help": "A pipe (|) separated list of file mime types allowed to be attached to a metadata record. For example, to support image files (PNG, GIF and JPEG), text, xml and pdf files: image/png|image/gif|image/jpeg|text/plain|application/xml|application/pdf",
     "system/metadata/allThesaurus": "Tous les thésaurus",
     "system/metadata/thesaurusNamespace": "Modèle d'espace de noms pour les thésaurus locaux",
     "system/metadata/thesaurusNamespace-help": "En fonction du modèle, lors de la création d'un nouveau thésaurus, un espace de nom sera proposé automatiquement. Le modèle peut contenir \\{\\{type\\}\\} et \\{\\{filename\\}\\} pour être substituté.",

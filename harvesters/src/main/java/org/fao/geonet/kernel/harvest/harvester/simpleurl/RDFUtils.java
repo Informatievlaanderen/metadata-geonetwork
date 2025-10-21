@@ -164,7 +164,7 @@ public class RDFUtils {
             newModel = createCatalogRecord(
                 newModel,
                 solution.get("resourceId").toString(),
-                solution.get("catalogId").toString()
+                solution.contains("catalogId") ? solution.get("catalogId").toString() : ""
             );
         }
         return newModel;
