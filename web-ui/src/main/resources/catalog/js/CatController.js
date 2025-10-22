@@ -395,7 +395,9 @@
               // #1 BRONTYPE
               resourceType: {
                 terms: {
-                  field: "resourceType"
+                  field: "resourceType",
+                  // hardcoded filter to make sure we don't show exotic harvested types, e.g., codelists
+                  include: "dataset|service|catalog|featureCatalog|series"
                 },
                 meta: {
                   decorator: {
