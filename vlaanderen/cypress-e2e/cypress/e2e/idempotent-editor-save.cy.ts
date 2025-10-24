@@ -1,6 +1,6 @@
 describe('Idempotent editor save', () => {
 
-  const uuid = 'b55d73cc-73b1-441e-a769-5d1b3df9f9a5'
+  const uuid = 'd3a696c7-1a0e-4d27-8774-b39bf98243dd'
 
   beforeEach(() => {
     // first login
@@ -64,7 +64,7 @@ describe('Idempotent editor save', () => {
       cy.get('.gn-md-edit-btn').click()
       cy.wait(1000)
       cy.get('#gn-editor-btn-close').click()
-      cy.get("h1").contains("[test-record] open non-geo").should('exist')
+      cy.get("h1").contains("[cypress] - DCAT-AP-VL Dataset - v2").should('exist')
 
       cy.fixture('dataset-open-nongeo.xml').then(xml => {
         const expected = xml.toString().replace('7c2bab5c-7af1-42da-af4c-921c8615a2cd', uuid).trim()
