@@ -3,8 +3,7 @@ describe('Validate test record', () => {
   it('open the editor and validates the record', () => {
     // first login
     cy.visit('/')
-    cy.acceptCookies()
-    cy.login()
+    cy.loginAdmin()
     // validate known test record(s)
     var uuid = 'b6934c23-bffa-40de-ac34-7f1f6e1dbdf1'
     console.log('getting cookies...');

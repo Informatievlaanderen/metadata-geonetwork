@@ -203,7 +203,7 @@
       </dcat:Dataset>
     </dcat:dataset>
     <dcat:record>
-      <dcat:CatalogRecord rdf:about="http://localhost:8080/srv/api/records/d3a696c7-1a0e-4d27-8774-b39bf98243dd">
+      <dcat:CatalogRecord rdf:about="http://localhost:8080/srv/api/records/cypress-test-0001">
         <foaf:primaryTopic rdf:resource="http://localhost:8080/srv/resources/datasets/a13cdc3b-0c40-4521-8b5a-9f7a85885bb7" />
         <dct:modified>2025-10-24</dct:modified>
         <dct:conformsTo>
@@ -236,7 +236,7 @@
             <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language" />
           </skos:Concept>
         </dct:language>
-        <dct:identifier>d3a696c7-1a0e-4d27-8774-b39bf98243dd</dct:identifier>
+        <dct:identifier>cypress-test-0001</dct:identifier>
       </dcat:CatalogRecord>
     </dcat:record>
     <dct:description xml:lang="nl">Deze catalogus bevat datasets ontsloten door agentschap Digitaal Vlaanderen</dct:description>

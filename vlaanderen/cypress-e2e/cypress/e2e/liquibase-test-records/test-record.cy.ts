@@ -1,5 +1,5 @@
-describe('test-record', () => {
-  it('loads a specific test record and displays the right content', () => {
+describe('Liquibase test record', () => {
+  it('displays the right content', () => {
     // load test record 1 view
     cy.visit('/srv/dut/catalog.search#/metadata/b6934c23-bffa-40de-ac34-7f1f6e1dbdf1')
     cy.acceptCookies()
@@ -9,7 +9,7 @@ describe('test-record', () => {
     cy.get('p[data-ng-bind-html="(mdView.current.record.resourceAbstract) | linky | newlines"]').invoke('text').should('contains', 'Het Voorlopig Referentiebestand Gemeentegrenzen bevat informatie over de afbakeningen van het grondgebied van de bestuurlijke eenheden')
   })
 
-  it('loads the XML view and displays the expected content', () => {
+  it('is exported correctly to XML', () => {
     cy.request('/srv/api/records/b6934c23-bffa-40de-ac34-7f1f6e1dbdf1/formatters/xml').its('body').should('include', '<gco:CharacterString>b6934c23-bffa-40de-ac34-7f1f6e1dbdf1</gco:CharacterString>')
   })
 })

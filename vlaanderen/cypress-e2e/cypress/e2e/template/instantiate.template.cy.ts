@@ -1,10 +1,7 @@
-describe('Add new record', () => {
+describe('Templates', () => {
 
-  it('creates a new record based on dataset / open / non-geo template', () => {
-    // first login
-    cy.visit('/')
-    cy.acceptCookies()
-    cy.login()
+  it('allow creating a DCAT-AP-VLv2 dataset', () => {
+    cy.loginAdmin()
     // load the create record view
     cy.visit('/srv/eng/catalog.edit#/create')
     // click the 'dataset' item
