@@ -1,4 +1,9 @@
 describe('Liquibase test record', () => {
+
+  beforeEach(() => {
+    cy.loginAdmin()
+  })
+
   it('displays the right content', () => {
     // load test record 1 view
     cy.visit('/srv/dut/catalog.search#/metadata/b6934c23-bffa-40de-ac34-7f1f6e1dbdf1')

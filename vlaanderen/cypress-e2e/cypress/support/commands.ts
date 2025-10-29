@@ -4,18 +4,38 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
+type User = {
+  username: string;
+  password: string;
+};
+
+let testUsers = {
+  admin: {
+    username: 'mdv',
+    password: 'admin'
+  },
+  editor: {
+    username: 'editor',
+    password: 'Editor$1'
+  },
+  reviewer: {
+    username: 'reviewer',
+    password: 'Reviewer$1'
+  }
+}
+
 /**
  * Perform a login through the UI.
  */
 Cypress.Commands.add('loginAdmin', () => {
-  cy.login('mdv', 'admin')
+  cy.login(testUsers.admin.username, testUsers.admin.password)
 });
 
 Cypress.Commands.add('loginEditor', () => {
-  cy.login('editor', 'Editor$1')
+  cy.login(testUsers.editor.username, testUsers.editor.password)
 });
 Cypress.Commands.add('loginReviewer', () => {
-  cy.login('reviewer', 'Reviewer$1')
+  cy.login(testUsers.reviewer.username, testUsers.reviewer.password)
 });
 
 Cypress.Commands.add('login', (username, password) => {
@@ -112,4 +132,103 @@ Cypress.Commands.add('deleteRecord', (uuid) => {
         cy.wrap(response.status).should('be.oneOf', [404, 204])
       })
     });
+})
+
+Cypress.Commands.add('reindexAll', () => {
+  cy.api("PUT", "/srv/api/site/index?reset=true", testUsers.admin, [200])
+})
+
+Cypress.Commands.add('reloadTemplates', (schema) => {
+  cy.api("PUT", "/srv/api/records/templates?schema=" + schema, testUsers.admin, [201])
+})
+
+Cypress.Commands.add('api', (method: string, url: string, user: User, acceptedStatusCodes: number[]) => {
+  cy.getCookie('XSRF-TOKEN')
+    .should('have.property', 'value')
+    .then((xsrfToken) => {
+      cy.request({
+        method: method,
+        url: url,
+        auth: {
+          username: user.username,
+          password: user.password
+        },
+        headers: {
+          "X-XSRF-TOKEN": xsrfToken,
+          'Accept': 'application/json'
+        },
+        failOnStatusCode: false
+      }).then((response) => {
+        console.log('api response (' + url + '): ' + response.status)
+        cy.wrap(response.status).should('be.oneOf', acceptedStatusCodes)
+      })
+    });
+})
+
+Cypress.Commands.add('deleteTemplates', () => {
+  cy.getCookie('XSRF-TOKEN')
+    .should('have.property', 'value')
+    .then((xsrfToken) => {
+      cy.request({
+        method: 'POST',
+        url: '/srv/api/search/records/_search',
+        // auth: {
+        //   username: testUsers.admin.username,
+        //   password: testUsers.admin.password
+        // },
+        headers: {
+          "X-XSRF-TOKEN": xsrfToken,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: {
+          "size": 10000,
+          "query": {
+            "match": {
+              "isTemplate": "y"
+            }
+          },
+          "_source": [
+            "uuid"
+          ]
+        },
+        failOnStatusCode: true
+      }).then((response) => {
+        cy.log('templateUuids response: ' + response.status)
+        cy.log(response.body.hits)
+        cy.wrap(response.body.hits.hits).each((hit) => {
+          let uuid = hit["_source"].uuid;
+          cy.log(uuid)
+          cy.deleteRecord(uuid)
+        })
+      })
+    });
+})
+
+/**
+ * This command allows to wait until the indexing process has completed.
+ */
+Cypress.Commands.add('waitUntilNotIndexing', (maxAttempts, delayMs) => {
+  let action = () => cy.request({
+    method: 'GET',
+    url: '/srv/api/site/indexing',
+    headers: {
+      'Accept': 'application/json',
+    },
+    failOnStatusCode: true
+  }).then((response) => {
+    let indexing = response.body as boolean
+    cy.wrap(!indexing)
+  })
+
+  let chain = action()
+  for (let i = 0; i < maxAttempts; i++) {
+    chain = chain.then((foundMatch) => {
+      if (!foundMatch) {
+        cy.wait(delayMs);
+        return action();
+      }
+    });
+  }
+  chain.then((foundMatch) => assert.isTrue(foundMatch));
 })

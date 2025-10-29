@@ -3,15 +3,21 @@ export {};
 declare global {
   namespace Cypress {
     interface Chainable {
+      acceptCookies(): Chainable<void>;
+      api(method: string, url: string, user: Object, acceptedStatusCodes: number[]): Chainable<void>;
+      deleteRecord(uuid): Chainable<void>;
+      importXml(fixtureFile): Chainable<void>;
+      login(username, password): Chainable<void>;
       loginAdmin(): Chainable<void>;
       loginEditor(): Chainable<void>;
       loginReviewer(): Chainable<void>;
-      login(username, password): Chainable<void>;
       logout(): Chainable<void>;
-      acceptCookies(): Chainable<void>;
-      importXml(fixtureFile): Chainable<void>;
-      deleteRecord(uuid): Chainable<void>;
+      deleteTemplates(): Chainable<void>;
+      isIndexing(): Chainable<void>;
+      reindexAll(): Chainable<void>;
+      reloadTemplates(schema): Chainable<void>;
       validateRecord(uuid): Chainable<void>;
+      waitUntilNotIndexing(maxAttempts, delayMs): Chainable<void>;
     }
   }
 }

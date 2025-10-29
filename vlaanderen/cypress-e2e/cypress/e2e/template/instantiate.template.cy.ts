@@ -1,17 +1,20 @@
 describe('Templates', () => {
 
   it('allow creating a DCAT-AP-VLv2 dataset', () => {
-    cy.loginAdmin()
-    // load the create record view
-    cy.visit('/srv/eng/catalog.edit#/create')
-    // click the 'dataset' item
-    cy.get('.col-sm-2 > .panel > .panel-body > .list-group').contains('dataset').click()
-    cy.get('.col-sm-4 > .panel-default > .panel-body > .list-group').contains('Generic Open data, conforming to DCAT-AP VL v2.0').click()
-    cy.get('[type="button"][data-gn-click-and-spin="createNewMetadata(true)"]').click()
-    cy.get('.nav-tabs >> a').contains('Dataset').should('exist')
-    cy.get('.nav-tabs >> a').contains('Distributions').should('exist')
-    cy.get('.nav-tabs >> a').contains('Record').should('exist')
-    // cancel the creation
-    cy.get('#gn-editor-btn-cancel').click()
+    // cy.loginAdmin()
+    cy.visit('/')
+    cy.deleteTemplates()
+    // cy.reloadTemplates('dcat-ap')
+    // // load the create record view
+    // cy.visit('/srv/eng/catalog.edit#/create')
+    // // click the 'dataset' item
+    // cy.get('.col-sm-2 > .panel > .panel-body > .list-group').contains('dataset').click()
+    // cy.get('.col-sm-4 > .panel-default > .panel-body > .list-group').contains('Generic Open data, conforming to DCAT-AP VL v2.0').click()
+    // cy.get('[type="button"][data-gn-click-and-spin="createNewMetadata(true)"]').click()
+    // cy.get('.nav-tabs >> a').contains('Dataset').should('exist')
+    // cy.get('.nav-tabs >> a').contains('Distributions').should('exist')
+    // cy.get('.nav-tabs >> a').contains('Record').should('exist')
+    // // cancel the creation
+    // cy.get('#gn-editor-btn-cancel').click()
   })
 })

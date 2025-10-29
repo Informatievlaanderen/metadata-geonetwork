@@ -8,6 +8,14 @@ before(() => {
   // cy.visit('/')
   // // accept the cookie popup; not doing anything test related with this so might as well get it out of the way
   // cy.acceptCookies()
+
+  cy.log('BEFORE ALL')
+  cy.visit('/')
+  cy.reindexAll()
+  cy.waitUntilNotIndexing(10, 500)
+  // cy.reloadTemplates('dcat-ap')
+  // cy.reloadTemplates('iso19139')
+  // cy.reloadTemplates('iso19110')
 })
 
 beforeEach(() => {
