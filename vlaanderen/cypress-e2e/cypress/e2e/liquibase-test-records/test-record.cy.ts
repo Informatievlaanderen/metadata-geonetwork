@@ -1,7 +1,9 @@
 describe('Liquibase test record', () => {
 
   beforeEach(() => {
+    cy.visit('/')
     cy.loginAdmin()
+    cy.ensureReindex()
   })
 
   it('displays the right content', () => {

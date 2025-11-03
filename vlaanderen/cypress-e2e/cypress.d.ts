@@ -13,6 +13,8 @@ declare global {
       loginReviewer(): Chainable<void>;
       logout(): Chainable<void>;
       deleteTemplates(): Chainable<void>;
+      ensureReindex(): Chainable<void>;
+      ensureTemplates(): Chainable<void>;
       isIndexing(): Chainable<void>;
       reindexAll(): Chainable<void>;
       reloadTemplates(schema): Chainable<void>;

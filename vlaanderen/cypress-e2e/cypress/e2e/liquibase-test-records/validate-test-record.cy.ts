@@ -1,5 +1,10 @@
 describe('Validation of test record', () => {
 
+  before(() => {
+    cy.visit('/')
+    cy.ensureReindex()
+  })
+
   it('can be done through the API', () => {
     // first login
     cy.visit('/')

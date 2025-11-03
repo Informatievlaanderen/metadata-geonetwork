@@ -25,6 +25,33 @@ let testUsers = {
 }
 
 /**
+ * Can be called multiple times, ensures only one reindex occurs. Handy when not needing a reindex at all.
+ */
+let reindexWasEnsured = false
+Cypress.Commands.add('ensureReindex', () => {
+  if(!reindexWasEnsured) {
+    reindexWasEnsured = true
+    cy.visit('/')
+    cy.loginAdmin()
+    cy.reindexAll()
+    cy.waitUntilNotIndexing(10, 1000)
+  }
+});
+
+let templatesWereEnsured = false
+Cypress.Commands.add('ensureTemplates', () => {
+  if(!templatesWereEnsured) {
+    templatesWereEnsured = true
+    cy.visit('/')
+    cy.loginAdmin()
+    cy.deleteTemplates()
+    cy.reloadTemplates('dcat-ap')
+    cy.reloadTemplates('iso19139')
+    cy.reloadTemplates('iso19110')
+  }
+});
+
+/**
  * Perform a login through the UI.
  */
 Cypress.Commands.add('loginAdmin', () => {
@@ -231,4 +258,5 @@ Cypress.Commands.add('waitUntilNotIndexing', (maxAttempts, delayMs) => {
     });
   }
   chain.then((foundMatch) => assert.isTrue(foundMatch));
+  cy.wait(1000)
 })
