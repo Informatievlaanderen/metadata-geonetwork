@@ -140,20 +140,7 @@
         link: function linkFn(scope, element, attrs) {
           scope.mdService = gnMetadataActions;
           scope.md = scope.$eval(attrs.gnMdActionsMenu);
-          // scope.formatterList = [];
-          scope.formatterList = gnGlobalSettings.gnCfg.mods.search.downloadFormatter;
-
-          // VL / Disabled
-          // gnMdFormatter
-          //   .getAvailableFormattersForRecord(scope.md)
-          //   .then(function (availableFormatters) {
-          //     var formatterList = gnGlobalSettings.gnCfg.mods.search.downloadFormatter;
-          //
-          //     scope.formatterList = gnMdFormatter.calculateValidFormattersForRecord(
-          //       formatterList,
-          //       availableFormatters
-          //     );
-          //   });
+          scope.formatterList = [];
 
           scope.tasks = [];
           scope.hasVisibletasks = false;
@@ -299,9 +286,11 @@
                   "removed",
                   "rejected_for_removed"
                 ];
+
                 function sortFunction(a, b) {
                   return visualOrder.indexOf(a.to) < visualOrder.indexOf(b.to) ? -1 : 1;
                 }
+
                 adminSteps = adminSteps.sort(sortFunction);
                 editorSteps = editorSteps.sort(sortFunction);
                 reviewerSteps = reviewerSteps.sort(sortFunction);
@@ -485,6 +474,18 @@
                   scope.ownerGroupName = name;
                 });
               }
+
+              gnMdFormatter
+                .getAvailableFormattersForRecord(scope.md)
+                .then(function (availableFormatters) {
+                  var formatterList =
+                    gnGlobalSettings.gnCfg.mods.search.downloadFormatter;
+
+                  scope.formatterList = gnMdFormatter.calculateValidFormattersForRecord(
+                    formatterList,
+                    availableFormatters
+                  );
+                });
             }
           });
 
