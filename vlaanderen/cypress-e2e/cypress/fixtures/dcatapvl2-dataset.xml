@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:spdx="http://spdx.org/rdf/terms#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:adms="http://www.w3.org/ns/adms#" xmlns:locn="http://www.w3.org/ns/locn#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2006/vcard/ns#" xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:schema="http://schema.org/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcatap="http://data.europa.eu/r5r/" xmlns:mdcat="https://data.vlaanderen.be/ns/metadata-dcat#" xmlns:mobilitydcatap="https://w3id.org/mobilitydcat-ap" xsi:schemaLocation="http://www.w3.org/1999/02/22-rdf-syntax-ns# http://www.openarchives.org/OAI/2.0/rdf.xsd">
+  <dcat:Catalog rdf:about="https://localhost:8080/geonetwork/srv/resources/catalogs/c678d0fb-894d-403f-b146-4b96706a1a16">
+    <dcat:contactPoint>
+      <vcard:Organization>
+        <vcard:organization-name>agentschap Digitaal Vlaanderen</vcard:organization-name>
+        <vcard:hasEmail rdf:resource="mailto:digitaal.vlaanderen@vlaanderen.be" />
+        <vcard:hasURL rdf:resource="https://www.vlaanderen.be/digitaal-vlaanderen" />
+      </vcard:Organization>
+    </dcat:contactPoint>
+    <dcat:dataset>
+      <dcat:Dataset rdf:about="http://localhost:8080/srv/resources/datasets/a13cdc3b-0c40-4521-8b5a-9f7a85885bb7">
+        <dcat:contactPoint>
+          <vcard:Organization rdf:about="https://metadata.vlaanderen.be/">
+            <vcard:fn>Team Metadata Vlaanderen</vcard:fn>
+            <vcard:organization-name xml:lang="nl">Digitaal Vlaanderen</vcard:organization-name>
+            <vcard:organization-name xml:lang="en">Digital Flanders</vcard:organization-name>
+            <vcard:hasAddress>
+              <vcard:Address rdf:about="https://addressen.be/hoofdstraat/1">
+                <vcard:street-address xml:lang="nl">Hoofdstraat 1</vcard:street-address>
+                <vcard:street-address xml:lang="en">Mainstreet 1</vcard:street-address>
+                <vcard:locality xml:lang="nl">Hoofdgemeente</vcard:locality>
+                <vcard:locality xml:lang="en">Main</vcard:locality>
+                <vcard:postal-code>0001</vcard:postal-code>
+                <vcard:country-name xml:lang="nl">België</vcard:country-name>
+                <vcard:country-name xml:lang="en">Belgium</vcard:country-name>
+              </vcard:Address>
+            </vcard:hasAddress>
+            <vcard:hasEmail rdf:resource="mailto:cypress-tests@vlaanderen.be" />
+            <vcard:hasURL rdf:resource="https://www.vlaanderen.be/digitaal-vlaanderen/onze-diensten-en-platformen/metadata-informatiecatalogus" />
+            <vcard:hasTelephone>012345678</vcard:hasTelephone>
+          </vcard:Organization>
+        </dcat:contactPoint>
+        <dcat:distribution>
+          <dcat:Distribution rdf:about="http://localhost:8080/srv/resources/distributions/5502228b-b7c1-4240-bfd0-b1fe0336a3cd">
+            <dcat:accessURL rdf:resource="https://data.sets/1/distribution/1" />
+            <dcat:mediaType>
+              <skos:Concept rdf:about="https://www.iana.org/assignments/media-types/application/zip">
+                <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType" />
+                <skos:prefLabel xml:lang="nl">application/zip</skos:prefLabel>
+                <skos:prefLabel xml:lang="en">application/zip</skos:prefLabel>
+                <skos:inScheme rdf:resource="https://www.iana.org/assignments/media-types" />
+              </skos:Concept>
+            </dcat:mediaType>
+            <dct:conformsTo>
+              <dct:Standard rdf:about="https://data.vlaanderen.be/id/concept/dataserviceprotocol/WWW:DOWNLOAD-1.0-ftp--download">
+                <dct:identifier>https://data.vlaanderen.be/id/concept/dataserviceprotocol/WWW:DOWNLOAD-1.0-ftp--download</dct:identifier>
+                <dct:title xml:lang="nl">DOWNLOAD-1.0-ftp--download</dct:title>
+                <dct:title xml:lang="en">DOWNLOAD-1.0-ftp--download</dct:title>
+                <dct:description xml:lang="nl">Het Download FTP protocol levert een bestand ter directe download over FTP.</dct:description>
+                <dct:description xml:lang="en">The Download FTP protocol provides a file for direct download over FTP.</dct:description>
+              </dct:Standard>
+            </dct:conformsTo>
+            <dct:description xml:lang="nl">De eerste distributie</dct:description>
+            <dct:description xml:lang="en">The first distribution</dct:description>
+            <dct:format>
+              <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/file-type/7Z">
+                <rdf:type rdf:resource="http://purl.org/dc/terms/MediaTypeOrExtent" />
+                <skos:prefLabel xml:lang="nl">7z</skos:prefLabel>
+                <skos:prefLabel xml:lang="en">7z</skos:prefLabel>
+                <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/file-type" />
+              </skos:Concept>
+            </dct:format>
+            <dct:language>
+              <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NLD">
+                <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem" />
+                <skos:prefLabel xml:lang="nl">Nederlands</skos:prefLabel>
+                <skos:prefLabel xml:lang="en">Dutch</skos:prefLabel>
+                <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language" />
+              </skos:Concept>
+            </dct:language>
+            <dct:license>
+              <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0">
+                <dct:type>
+                  <skos:Concept rdf:about="http://purl.org/adms/licencetype/PublicDomain">
+                    <skos:prefLabel xml:lang="nl">Werk in het publiek domein</skos:prefLabel>
+                    <skos:prefLabel xml:lang="en">Public domain</skos:prefLabel>
+                    <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0" />
+                  </skos:Concept>
+                </dct:type>
+                <dct:title xml:lang="nl">Creative Commons Zero verklaring</dct:title>
+                <dct:title xml:lang="en">Creative Commons Zero declaration</dct:title>
+                <dct:description xml:lang="nl">De instantie doet afstand van haar intellectuele eigendomsrechten voor zover dit wettelijk mogelijk is. Hierdoor kan de gebruiker de data hergebruiken voor eender welk doel, zonder een verplichting op naamsvermelding. Deze is de welbekende CC0 licentie.</dct:description>
+                <dct:description xml:lang="en">The organization waives its intellectual property rights to the extent legally permissible. This allows users to reuse the data for any purpose, without the obligation to attribute it. This is the well-known CC0 license.</dct:description>
+                <dct:identifier>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</dct:identifier>
+              </dct:LicenseDocument>
+            </dct:license>
+            <dct:title xml:lang="nl">Distributie één</dct:title>
+            <dct:title xml:lang="en">Distribution one</dct:title>
+            <dct:identifier>5502228b-b7c1-4240-bfd0-b1fe0336a3cd</dct:identifier>
+          </dcat:Distribution>
+        </dcat:distribution>
+        <dcat:keyword xml:lang="nl">cypressNL</dcat:keyword>
+        <dcat:keyword xml:lang="en">cypressEN</dcat:keyword>
+        <dcat:theme>
+          <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/GOVE">
+            <skos:prefLabel xml:lang="nl">Overheid en publieke sector</skos:prefLabel>
+            <skos:prefLabel xml:lang="en">Government and public sector</skos:prefLabel>
+            <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme" />
+          </skos:Concept>
+        </dcat:theme>
+        <dct:accessRights>
+          <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC">
+            <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement" />
+            <skos:prefLabel xml:lang="nl">publiek</skos:prefLabel>
+            <skos:prefLabel xml:lang="en">public</skos:prefLabel>
+            <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right" />
+          </skos:Concept>
+        </dct:accessRights>
+        <dct:conformsTo>
+          <dct:Standard rdf:about="https://dataset.standards/thefirst">
+            <dct:identifier>thefirst</dct:identifier>
+            <dct:title xml:lang="nl">De eerste dataset standaard</dct:title>
+            <dct:title xml:lang="en">The first dataset standard</dct:title>
+            <dct:description xml:lang="nl">Beschrijving van de eerste dataset standaard</dct:description>
+            <dct:description xml:lang="en">Description of the first dataset standard</dct:description>
+            <owl:versionInfo>1.0</owl:versionInfo>
+            <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-10-24</dct:issued>
+          </dct:Standard>
+        </dct:conformsTo>
+        <dct:description xml:lang="nl">Test record aangemaakt door Cypress voor end-to-end testing mogelijk te maken.</dct:description>
+        <dct:description xml:lang="en">Test record created by Cypress to enable end-to-end testing.</dct:description>
+        <dct:identifier>a13cdc3b-0c40-4521-8b5a-9f7a85885bb7</dct:identifier>
+        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-10-26</dct:issued>
+        <dct:language>
+          <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/ENG">
+            <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem" />
+            <skos:prefLabel xml:lang="nl">Engels</skos:prefLabel>
+            <skos:prefLabel xml:lang="en">English</skos:prefLabel>
+            <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language" />
+          </skos:Concept>
+        </dct:language>
+        <dct:language>
+          <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NLD">
+            <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem" />
+            <skos:prefLabel xml:lang="nl">Nederlands</skos:prefLabel>
+            <skos:prefLabel xml:lang="en">Dutch</skos:prefLabel>
+            <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language" />
+          </skos:Concept>
+        </dct:language>
+        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-10-25</dct:modified>
+        <dct:publisher>
+          <foaf:Agent rdf:about="https://www.vlaanderen.be/digitaal-vlaanderen">
+            <foaf:name xml:lang="nl">Digitaal Vlaanderen</foaf:name>
+            <foaf:name xml:lang="en">Digital Flanders</foaf:name>
+            <dct:type>
+              <skos:Concept rdf:about="http://purl.org/adms/publishertype/RegionalAuthority">
+                <skos:prefLabel xml:lang="nl">Regionaal bestuur</skos:prefLabel>
+                <skos:prefLabel xml:lang="en">Regional authority</skos:prefLabel>
+                <skos:inScheme rdf:resource="http://purl.org/adms/publishertype/1.0" />
+              </skos:Concept>
+            </dct:type>
+          </foaf:Agent>
+        </dct:publisher>
+        <dct:rights>
+          <dct:RightsStatement rdf:about="https://rechten.be/recht1">
+            <dct:title xml:lang="nl">Het eerste recht</dct:title>
+            <dct:title xml:lang="en">The first right</dct:title>
+            <dct:description xml:lang="nl">Beschrijving van het eerste recht</dct:description>
+            <dct:description xml:lang="en">Description of the first right</dct:description>
+          </dct:RightsStatement>
+        </dct:rights>
+        <dct:spatial>
+          <dct:Location rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Vlaamse-Administratieve-Eenheden/2025/gewest/vlaanderen">
+            <locn:geometry rdf:datatype="http://www.opengis.net/ont/geosparql#wktLiteral">POLYGON ((2.54564 50.687429,2.54564 51.505081,5.911104 51.505081,5.911104 50.687429,2.54564 50.687429))</locn:geometry>
+            <locn:geometry rdf:datatype="http://www.opengis.net/ont/geosparql#gmlLiteral">&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;50.687429 2.54564 51.505081 2.54564 51.505081 5.911104 50.687429 5.911104 50.687429 2.54564&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</locn:geometry>
+            <skos:prefLabel xml:lang="nl">Vlaams Gewest</skos:prefLabel>
+          </dct:Location>
+        </dct:spatial>
+        <dct:temporal>
+          <dct:PeriodOfTime rdf:about="https://five.years">
+            <schema:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-10-01</schema:startDate>
+            <schema:endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2030-10-01</schema:endDate>
+          </dct:PeriodOfTime>
+        </dct:temporal>
+        <dct:title xml:lang="nl">[cypress] - DCAT-AP-VL Dataset - v2 - NL</dct:title>
+        <dct:title xml:lang="en">[cypress] - DCAT-AP-VL Dataset - v2 - EN</dct:title>
+        <dct:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-10-24</dct:created>
+        <mdcat:MAGDA-categorie>
+          <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/MAGDA-categorie/Algemeen">
+            <skos:prefLabel xml:lang="nl">Algemeen</skos:prefLabel>
+            <skos:prefLabel xml:lang="en">General</skos:prefLabel>
+            <skos:inScheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie" />
+          </skos:Concept>
+        </mdcat:MAGDA-categorie>
+        <mdcat:statuut>
+          <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA">
+            <skos:prefLabel xml:lang="nl">Vlaamse Open data</skos:prefLabel>
+            <skos:prefLabel xml:lang="en">Vlaamse Open data</skos:prefLabel>
+            <skos:prefLabel xml:lang="fr">Vlaamse Open data</skos:prefLabel>
+            <skos:prefLabel xml:lang="de">Vlaamse Open data</skos:prefLabel>
+            <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden" />
+          </skos:Concept>
+        </mdcat:statuut>
+        <mdcat:statuut>
+          <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/KOSTELOOS">
+            <skos:prefLabel xml:lang="nl">Kosteloos</skos:prefLabel>
+            <skos:prefLabel xml:lang="en">Kosteloos</skos:prefLabel>
+            <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden" />
+          </skos:Concept>
+        </mdcat:statuut>
+        <owl:versionInfo>0.1</owl:versionInfo>
+      </dcat:Dataset>
+    </dcat:dataset>
+    <dcat:record>
+      <dcat:CatalogRecord rdf:about="http://localhost:8080/srv/api/records/cypress-test-0001">
+        <foaf:primaryTopic rdf:resource="http://localhost:8080/srv/resources/datasets/a13cdc3b-0c40-4521-8b5a-9f7a85885bb7" />
+        <dct:modified>2025-10-24</dct:modified>
+        <dct:conformsTo>
+          <dct:Standard rdf:about="https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2019-10-03">
+            <dct:identifier>https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2019-10-03</dct:identifier>
+            <dct:title xml:lang="nl">DCAT-AP Vlaanderen</dct:title>
+            <dct:title xml:lang="fr">DCAT-AP Flandre</dct:title>
+            <dct:title xml:lang="de">DCAT-AP Flandern</dct:title>
+            <dct:title xml:lang="en">DCAT-AP Flanders</dct:title>
+            <dct:description xml:lang="nl">Dit applicatieprofiel beschrijft Open Data Catalogi in Vlaanderen. DCAT-AP Vlaanderen (DCAT-AP VL) is een verdere specialisatie van DCAT-AP. De applicatie waarop dit profiel betrekking heeft is een Open Data Portaal in Vlaanderen. Open Data portalen zijn catalogussen van Open Data datasets. Ze hebben als belangrijkste doelstelling het vindbaar maken van data en hierdoor het hergebruik ervan te stimuleren. Open Data portalen vervullen een centrale rol in de overheidsopdracht om de toegankelijkheid tot overheidsinformatie te realiseren. Met dit applicatieprofiel bevorderen we de uniformiteit van de beschikbare informatie over datasets. Tevens vereenvoudigen we het aggregatie proces van meerdere Open Data Catalogi. Dit document bevat de verplichte elementen en bijkomende elementen waarover DCAT-AP Vlaanderen een uitspraak doet. Aanbevolen en optionele informatie waarvoor geen bijkomende afspraken in de context van DCAT-AP Vlaanderen zijn, zijn niet opgenomen in dit document. Hiervoor verwijzen we naar de DCAT-AP specificatie zelf.</dct:description>
+            <dct:description xml:lang="fr">Ce profil d'application décrit les catalogues de données ouvertes en Flandre. DCAT-AP Flandre (DCAT-AP VL) est une spécialisation supplémentaire de DCAT-AP. L'application concernée par ce profil est un portail de données ouvertes en Flandre. Les portails de données ouvertes sont des catalogues de jeux de données ouvertes. Leur objectif principal est de faciliter la découverte des données et ainsi de stimuler leur réutilisation. Ils jouent un rôle central dans la mission du gouvernement visant à garantir l'accessibilité des informations gouvernementales. Avec ce profil d'application, nous favorisons l'uniformité des informations disponibles entre les jeux de données. Nous simplifions également le processus d'agrégation de plusieurs catalogues de données ouvertes. Ce document contient les éléments obligatoires et les éléments supplémentaires sur lesquels DCAT-AP Flandre émet une déclaration. Les informations recommandées et facultatives pour lesquelles aucun accord supplémentaire n'existe dans le cadre de DCAT-AP Flandre ne sont pas incluses dans ce document. Pour cela, nous nous référons à la spécification DCAT-AP elle-même.</dct:description>
+            <dct:description xml:lang="de">Dieses Anwendungsprofil beschreibt Open Data-Kataloge in Flandern. DCAT-AP Flandern (DCAT-AP VL) ist eine lokale Ableitung von DCAT-AP. Die Anwendung, auf die sich dieses Profil bezieht, ist ein Open Data-Portal in Flandern. Open Data-Portale sind Kataloge mit Open Data-Datensätzen. Ihr Hauptzweck besteht darin, Daten auffindbar zu machen und so ihre Wiederverwendung zu fördern. Open Data-Portale spielen eine zentrale Rolle beim Auftrag der Regierung, Zugang zu Regierungsinformationen erreichbar zu machen. Mit diesem Anwendungsprofil fördern wir die Einheitlichkeit der verfügbaren Informationen über alle Datensätze hinweg. Wir vereinfachen außerdem den Aggregationsprozess mehrerer Open Data-Kataloge. Dieses Dokument enthält die obligatorischen Elemente und zusätzliche Elemente, die spezifisch für DCAT-AP Flandern beschrieben werden. Empfohlene und optionale Informationen, für die im Rahmen von DCAT-AP Flandern keine zusätzlichen Vereinbarungen bestehen, sind in diesem Dokument nicht enthalten. Hierzu verweisen wir auf die DCAT-AP-Spezifikation selbst.</dct:description>
+            <dct:description xml:lang="en">This application profile describes Open Data Catalogues in Flanders. DCAT-AP Flanders (DCAT-AP VL) is a further specialization of DCAT-AP. The application to which this profile relates is an Open Data Portal in Flanders. Open Data Portals are catalogs of Open Data datasets. Their main purpose is to make data discoverable and thus stimulate its reuse. Open Data Portals play a central role in the government's mission to achieve accessibility to government information. With this application profile, we promote the uniformity of available information across datasets. We also simplify the aggregation process of multiple Open Data Catalogs. This document contains the mandatory elements and additional elements on which DCAT-AP Flanders provides a statement. Recommended and optional information for which no additional agreements exist within the context of DCAT-AP Flanders are not included in this document. For this, we refer to the DCAT-AP specification itself.</dct:description>
+            <owl:versionInfo>2.0</owl:versionInfo>
+          </dct:Standard>
+        </dct:conformsTo>
+        <dct:language>
+          <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NLD">
+            <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem" />
+            <skos:prefLabel xml:lang="nl">Nederlands</skos:prefLabel>
+            <skos:prefLabel xml:lang="en">Dutch</skos:prefLabel>
+            <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language" />
+          </skos:Concept>
+        </dct:language>
+        <dct:language>
+          <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/ENG">
+            <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem" />
+            <skos:prefLabel xml:lang="nl">Engels</skos:prefLabel>
+            <skos:prefLabel xml:lang="en">English</skos:prefLabel>
+            <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language" />
+          </skos:Concept>
+        </dct:language>
+        <dct:identifier>cypress-test-0001</dct:identifier>
+      </dcat:CatalogRecord>
+    </dcat:record>
+    <dct:description xml:lang="nl">Deze catalogus bevat datasets ontsloten door agentschap Digitaal Vlaanderen</dct:description>
+    <dct:identifier>c678d0fb-894d-403f-b146-4b96706a1a16</dct:identifier>
+    <dct:issued>2019-09-01</dct:issued>
+    <dct:language>
+      <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NLD">
+        <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem" />
+        <skos:prefLabel xml:lang="nl">Nederlands</skos:prefLabel>
+        <skos:prefLabel xml:lang="en">Nederlands</skos:prefLabel>
+        <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language" />
+      </skos:Concept>
+    </dct:language>
+    <dct:license>
+      <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0">
+        <dct:type>
+          <skos:Concept rdf:about="http://purl.org/adms/licencetype/PublicDomain">
+            <skos:prefLabel xml:lang="nl">Werk in het publiek domein</skos:prefLabel>
+            <skos:prefLabel xml:lang="en">Werk in het publiek domein</skos:prefLabel>
+            <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0" />
+          </skos:Concept>
+        </dct:type>
+        <dct:title xml:lang="nl">Creative Commons Zero verklaring</dct:title>
+        <dct:description xml:lang="nl">De instantie doet afstand van haar intellectuele eigendomsrechten voor zover dit wettelijk mogelijk is. Hierdoor kan de gebruiker de data hergebruiken voor eender welk doel, zonder een verplichting op naamsvermelding. Deze is de welbekende CC0 licentie.</dct:description>
+        <dct:identifier>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</dct:identifier>
+      </dct:LicenseDocument>
+    </dct:license>
+    <dct:modified>2019-09-01</dct:modified>
+    <dct:publisher>
+      <foaf:Agent rdf:about="https://localhost:8080/geonetwork/srv/resources/organizations/agentschap%20Digitaal%20Vlaanderen">
+        <foaf:name xml:lang="nl">agentschap Digitaal Vlaanderen</foaf:name>
+        <dct:type>
+          <skos:Concept rdf:about="http://purl.org/adms/publishertype/LocalAuthority">
+            <skos:prefLabel xml:lang="nl">Lokaal bestuur</skos:prefLabel>
+            <skos:prefLabel xml:lang="en">Lokaal bestuur</skos:prefLabel>
+            <skos:inScheme rdf:resource="http://purl.org/adms/publishertype/1.0" />
+          </skos:Concept>
+        </dct:type>
+      </foaf:Agent>
+    </dct:publisher>
+    <dct:title xml:lang="nl">Open Data Catalogus van agentschap Digitaal Vlaanderen</dct:title>
+    <foaf:homepage>
+      <foaf:Document rdf:about="http://localhost:8080/srv/eng/">
+        <foaf:name xml:lang="nl">Metadata Vlaanderen</foaf:name>
+      </foaf:Document>
+    </foaf:homepage>
+  </dcat:Catalog>
+</rdf:RDF>

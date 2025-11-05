@@ -420,9 +420,11 @@
               return true;
             }
             var statusEffects = scope.getStatusEffects(user);
-            for (var i = 0; i < statusEffects.length; i++) {
-              if (scope.displayWorkflowStepOption(statusEffects[i], user)) {
-                return true;
+            if (statusEffects) {
+              for (var i = 0; i < statusEffects.length; i++) {
+                if (scope.displayWorkflowStepOption(statusEffects[i], user)) {
+                  return true;
+                }
               }
             }
             return false;

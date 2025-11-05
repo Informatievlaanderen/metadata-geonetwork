@@ -1,10 +1,14 @@
-describe('Validate test record', () => {
+describe('Validation of test record', () => {
 
-  it('open the editor and validates the record', () => {
+  before(() => {
+    cy.visit('/')
+    cy.ensureReindex()
+  })
+
+  it('can be done through the API', () => {
     // first login
     cy.visit('/')
-    cy.acceptCookies()
-    cy.login()
+    cy.loginAdmin()
     // validate known test record(s)
     var uuid = 'b6934c23-bffa-40de-ac34-7f1f6e1dbdf1'
     console.log('getting cookies...');
@@ -13,17 +17,17 @@ describe('Validate test record', () => {
       .then((xsrfToken) => {
         cy.request({
           method: 'PUT',
-          url: `/srv/api/records/validate?uuids=${uuid}&approved=true`,
+          url: `/srv/api/records/validate?uuids=${uuid}&approved=false`,
           headers: {
             'X-XSRF-TOKEN': xsrfToken,
             'Accept': 'application/json'
           }
         })
           .then((response) => {
-            expect(response.body).to.have.property('metadata');
-            expect(response.body.metadata).to.have.lengthOf(1);
             expect(response.body).to.have.property('numberOfRecords', 1);
             expect(response.body).to.have.property('numberOfRecordsWithErrors', 0);
+            expect(response.body).to.have.property('metadataErrors');
+            expect(response.body.metadataErrors).to.be.empty;
           })
       });
   })
