@@ -6,10 +6,13 @@ describe('Liquibase test record', () => {
     cy.ensureReindex()
   })
 
-  it('displays the right content', () => {
-    // load test record 1 view
-    cy.visit('/srv/dut/catalog.search#/metadata/b6934c23-bffa-40de-ac34-7f1f6e1dbdf1')
+  let uuid = 'b6934c23-bffa-40de-ac34-7f1f6e1dbdf1'
+
+  it.only('displays the right content', () => {
+    cy.visit('/')
     cy.acceptCookies()
+    // load test record 1 view
+    cy.visit(`/srv/dut/catalog.search#/metadata/${uuid}`)
     // check title
     cy.get('.gn-record h1').invoke('text').should('contains', 'Voorlopig referentiebestand gemeentegrenzen')
     // check abstract content
@@ -17,6 +20,6 @@ describe('Liquibase test record', () => {
   })
 
   it('is exported correctly to XML', () => {
-    cy.request('/srv/api/records/b6934c23-bffa-40de-ac34-7f1f6e1dbdf1/formatters/xml').its('body').should('include', '<gco:CharacterString>b6934c23-bffa-40de-ac34-7f1f6e1dbdf1</gco:CharacterString>')
+    cy.request(`/srv/api/records/${uuid}/formatters/xml`).its('body').should('include', `<gco:CharacterString>${uuid}</gco:CharacterString>`)
   })
 })

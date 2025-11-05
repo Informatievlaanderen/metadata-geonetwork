@@ -11,6 +11,7 @@ declare global {
       loginAdmin(): Chainable<void>;
       loginEditor(): Chainable<void>;
       loginReviewer(): Chainable<void>;
+      recordCount(draft: boolean, template: boolean): Chainable<number>;
       logout(): Chainable<void>;
       deleteTemplates(): Chainable<void>;
       ensureReindex(): Chainable<void>;

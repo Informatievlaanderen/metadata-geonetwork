@@ -29,18 +29,23 @@ let testUsers = {
  */
 let reindexWasEnsured = false
 Cypress.Commands.add('ensureReindex', () => {
-  if(!reindexWasEnsured) {
+  if (!reindexWasEnsured) {
+    cy.log('Reindexing...')
     reindexWasEnsured = true
     cy.visit('/')
     cy.loginAdmin()
     cy.reindexAll()
     cy.waitUntilNotIndexing(10, 1000)
+    cy.wait(1000)
+  } else {
+    cy.log('Reindex already occurred once.')
   }
 });
 
 let templatesWereEnsured = false
 Cypress.Commands.add('ensureTemplates', () => {
-  if(!templatesWereEnsured) {
+  if (!templatesWereEnsured) {
+    cy.log('Reloading templates...')
     templatesWereEnsured = true
     cy.visit('/')
     cy.loginAdmin()
@@ -48,6 +53,8 @@ Cypress.Commands.add('ensureTemplates', () => {
     cy.reloadTemplates('dcat-ap')
     cy.reloadTemplates('iso19139')
     cy.reloadTemplates('iso19110')
+  } else {
+    cy.log('Templates were already reloaded once.')
   }
 });
 
@@ -61,6 +68,7 @@ Cypress.Commands.add('loginAdmin', () => {
 Cypress.Commands.add('loginEditor', () => {
   cy.login(testUsers.editor.username, testUsers.editor.password)
 });
+
 Cypress.Commands.add('loginReviewer', () => {
   cy.login(testUsers.reviewer.username, testUsers.reviewer.password)
 });
@@ -68,6 +76,7 @@ Cypress.Commands.add('loginReviewer', () => {
 Cypress.Commands.add('login', (username, password) => {
   cy.log('logging IN! ' + username + ' ' + password)
   cy.log('login (user,pass)')
+  Cypress.session.clearAllSavedSessions()
   cy.session([username, password], () => {
     cy.visit('/')
     cy.acceptCookies()
@@ -77,6 +86,7 @@ Cypress.Commands.add('login', (username, password) => {
     cy.get(".signin-dropdown > .dropdown-menu [type='submit']").click();
   }, {
     validate() {
+      // cy.getCookie('auth_key').should('exist')
       cy.request({
         method: 'GET',
         headers: {'accept': 'application/json'},
@@ -87,6 +97,47 @@ Cypress.Commands.add('login', (username, password) => {
     }
   })
 });
+
+Cypress.Commands.add('recordCount', (draft: boolean, template: boolean) => {
+  let filters = []
+  if(typeof draft !== 'undefined') {
+    filters.push({
+      "match": {
+        "draft": (draft?'y':'n')
+      }
+    })
+  }
+  if(typeof template !== 'undefined') {
+    filters.push({
+      "match": {
+        "isTemplate": (template?'y':'n')
+      }
+    })
+  }
+  cy.request({
+    method: 'POST',
+    url: '/srv/api/search/records/_count',
+    auth: {
+      username: testUsers.admin.username,
+      password: testUsers.admin.password
+    },
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: {
+      "query": {
+        "bool": {
+          "must": filters
+        }
+      }
+    },
+    failOnStatusCode: true
+  }).then((response) => {
+    expect(response.status).to.equal(200)
+    cy.wrap(response.body.count)
+  })
+})
 
 Cypress.Commands.add('logout', () => {
   cy.visit('/')
@@ -193,43 +244,37 @@ Cypress.Commands.add('api', (method: string, url: string, user: User, acceptedSt
 })
 
 Cypress.Commands.add('deleteTemplates', () => {
-  cy.getCookie('XSRF-TOKEN')
-    .should('have.property', 'value')
-    .then((xsrfToken) => {
-      cy.request({
-        method: 'POST',
-        url: '/srv/api/search/records/_search',
-        // auth: {
-        //   username: testUsers.admin.username,
-        //   password: testUsers.admin.password
-        // },
-        headers: {
-          "X-XSRF-TOKEN": xsrfToken,
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: {
-          "size": 10000,
-          "query": {
-            "match": {
-              "isTemplate": "y"
-            }
-          },
-          "_source": [
-            "uuid"
-          ]
-        },
-        failOnStatusCode: true
-      }).then((response) => {
-        cy.log('templateUuids response: ' + response.status)
-        cy.log(response.body.hits)
-        cy.wrap(response.body.hits.hits).each((hit) => {
-          let uuid = hit["_source"].uuid;
-          cy.log(uuid)
-          cy.deleteRecord(uuid)
-        })
-      })
-    });
+  cy.log('Deleting templates...')
+  cy.request({
+    method: 'POST',
+    url: '/srv/api/search/records/_search',
+    auth: {
+      username: testUsers.admin.username,
+      password: testUsers.admin.password
+    },
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: {
+      "size": 10000,
+      "query": {
+        "match": {
+          "isTemplate": "y"
+        }
+      },
+      "_source": [
+        "uuid"
+      ]
+    },
+    failOnStatusCode: true
+  }).then((response) => {
+    cy.log('templateUuids response: ' + response.status)
+    cy.wrap(response.body.hits.hits).each((hit) => {
+      let uuid = hit["_source"].uuid;
+      cy.deleteRecord(uuid)
+    })
+  })
 })
 
 /**
