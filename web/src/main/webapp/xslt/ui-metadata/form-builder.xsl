@@ -1773,7 +1773,7 @@
     <div class="row form-group gn-field gn-extra-field">
       <div class="col-xs-10 col-xs-offset-2">
         <a class="btn gn-associated-resource-btn"
-           data-ng-click="gnOnlinesrc.onOpenPopup('{$type}'{if ($options != '') then concat(', ''', $options, '''') else ''})">
+           data-ng-click="gnOnlinesrc.onOpenPopup('{$type}'{if ($options != '') then concat(', ''', $options, '''') else ''}, gnCurrentEdit.getRelations('{$type}'), gnCurrentEdit.uuid)">
           <i class="fa {if ($btnClass != '') then $btnClass else concat('gn-icon-', $type)}"></i>&#160;
           <span data-translate="">
             <xsl:choose>
