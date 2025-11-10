@@ -52,7 +52,7 @@
   "chooseACatalogRecord": "Kies een cataloog record",
   "siblingListToAdd": "Lijst van toe te voegen record links",
   "orUseRemoteRecordUrl": "Link naar een remote record",
-  "remoteRecordUrl-help": "Een remote record kan gelinked worden aan een record in deze cataloog door te wijzen naar een URL van het remote record. Als het record record zich in een GeoNetwork cataloog bevindt wordt de landingspagina van het record aangeraden, e.g., https://catalog/geonetwork/srv/api/records/{uuid}. Voor GeoNode kan de HTML pagina dienen. Voor anderen kan het XML document gebruikt worden, e.g., API call of CSW GetRecordById request.",
+  "remoteRecordUrl-help": "Een remote record kan gelinked worden aan een record in deze cataloog door te wijzen naar een URL van het remote record. Als het remote record zich in een GeoNetwork cataloog bevindt wordt de landingspagina van het record aangeraden, e.g., https://catalog/geonetwork/srv/api/records/{uuid}. Voor GeoNode kan de HTML pagina dienen. Voor anderen kan het XML document gebruikt worden, e.g., API call of CSW GetRecordById request.",
   "remoteRecordPropertiesError": "Titel en UUID extractie uit remote record gefaald. Check het doeldocument.",
   "remoteRecordUrlReturnedError": "URL niet beschikbaar:",
   "ui-hotkeys": "Sleutelwoord snelkoppelingen",
