@@ -1385,6 +1385,9 @@
           scope.gnCurrentEdit = gnCurrentEdit;
           scope.relations = [];
           scope.relatedConfigUI = [];
+          // this should be improved: sidepanel siblings popup has to have equivalent behaviour to the editor siblings popup
+          // however, related configuration is only available in the directive; to check how to centralise this information
+          gnCurrentEdit.relatedConfigUI = scope.relatedConfigUI
           scope.relatedResourcesConfig = gnRelatedResources;
           if ($injector.has("gnOnlinesrc")) {
             scope.onlinesrcService = $injector.get("gnOnlinesrc");
