@@ -47,7 +47,7 @@ describe('Templates', () => {
 
     // when
     // create a new dcat-ap-vl2 dataset record that correctly validates
-    cy.get('a').contains('Generieke Open data, conform DCAT-AP VL v2.0').click()
+    cy.get('a').contains('DCAT-AP VL v2.0').click()
     cy.get('select[data-ng-model="selectedGroup"]').select('Digitaal Vlaanderen')
     cy.get('button').contains('Aanmaken').click()
     cy.get('fieldset.gn-basicInformation div.gn-title input').type(title)

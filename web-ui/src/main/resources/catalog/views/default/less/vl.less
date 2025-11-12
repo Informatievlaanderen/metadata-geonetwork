@@ -819,3 +819,29 @@ span[data-ng-if="c === 'details.stars'"] {
   display: inline-block;
   min-width: 90px;
 }
+
+/**
+ * Badge colors
+ */
+.vl-template-badge {
+  margin-right: 2px;
+
+  &.badge-region-eu {
+    background-color: lighten(#000, 20%);
+  }
+  &.badge-region-vl {
+    background-color: lighten(#000, 50%);
+  }
+  &.badge-profile-iso {
+    // "vlaams geel"
+    background-color: #FFED00;
+    color: #333332;
+  }
+  &.badge-profile-dcat {
+    background-color: green;
+  }
+}
+.vl-template-help {
+  display: inline-block;
+}
+

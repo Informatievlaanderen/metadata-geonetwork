@@ -207,6 +207,7 @@
       var unregisterMdListFn = $scope.$watchCollection("mdList", function (n, o) {
         moveToEditorCheckFn(n);
       });
+
       function moveToEditorCheckFn(n) {
         if (n !== null && $scope.mdList != null) {
           if (
@@ -223,60 +224,147 @@
       }
 
       /**
-       * For all templates, generate badges. Return in an object that is keyed on the template._id values.
+       * For all templates, generate badges. Returns an object that is keyed on the template._id values.
        *
        * @param templates the templates for which we want the badges
        */
       $scope.generateBadges = function (templates) {
         var result = {};
 
-        // badge definitions (translatable) based on dutch record titles
+        // badge definitions (translatable) based on template filenames stored in 'extra'
         var badgeDefinitions = {
-          "Generieke Open API's, conform DCAT-AP VL v2.0": [
-            { type: "domain", key: "open" },
-            { type: "tip", key: "nongeo" }
+          // catalog
+          "dcat-ap-vl-virtualcatalogue.xml": [
+            { type: "region", key: "EU" },
+            { type: "profile", key: "DCAT-AP v2.0" }
           ],
-          "Generieke Gesloten services, conform metadata-DCAT v2.0": [
-            { type: "domain", key: "closed" },
-            { type: "tip", key: "nongeo" },
-            { type: "tip", key: "nonopen" }
+          // dataset
+          "dcat-ap-dataset.xml": [
+            { type: "region", key: "EU" },
+            { type: "profile", key: "DCAT-AP v2.0" }
           ],
-          "Generieke DCAT-AP service": [{ type: "domain", key: "open" }],
-          "Generieke DCAT-AP dataset": [{ type: "domain", key: "open" }],
-          "Geografische (open) datasets, conform GDI-Vlaanderen Best Practices v2.0": [
-            { type: "domain", key: "geo" }
+          "dcat-ap3-dataset.xml": [
+            { type: "region", key: "EU" },
+            { type: "profile", key: "DCAT-AP v3.0" }
           ],
-          "Geografische (open) services, conform GDI-Vlaanderen Best Practices v2.0": [
-            { type: "domain", key: "geo" }
+          "metadata-dcat-dataset.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "metadata-DCAT v2.0" }
           ],
-          "Geografische (open) datasetseries, conform GDI-Vlaanderen Best Practices v2.0":
-            [{ type: "domain", key: "geo" }],
-          "Generieke Gesloten data, conform metadata-DCAT v2.0": [
-            { type: "domain", key: "closed" },
-            { type: "tip", key: "nongeo" },
-            { type: "tip", key: "nonopen" }
+          "metadata-dcat3-dataset.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "metadata-DCAT v3.0" }
           ],
-          "Generieke Open data, conform DCAT-AP VL v2.0": [
-            { type: "domain", key: "open" },
-            { type: "tip", key: "nongeo" }
+          "dcat-ap-vl-dataset.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "DCAT-AP VL v2.0" }
           ],
-          "Objectencatalogus, conform GDI-Vlaanderen Best Practices v2.0": [
-            { type: "domain", key: "geo" }
+          "dcat-ap-vl3-dataset.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "DCAT-AP VL v3.0" }
           ],
-          "Virtuele catalogus": [
-            { type: "domain", key: "open" },
-            { type: "tip", key: "geo" },
-            { type: "tip", key: "nongeo" }
+          "Dataset-GDI-Vlaanderen-template-v2.0.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "ISO 19139/GDI" }
+          ],
+          "Health dataset": [
+            { type: "region", key: "EU" },
+            { type: "profile", key: "HealthDCAT-AP v2.0" }
+          ],
+          "Health dataset vl": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "metadata-DCAT v2.0" },
+            { type: "profile", key: "HealthDCAT-AP v2.0" }
+          ],
+          "Mobility dataset": [
+            { type: "region", key: "EU" },
+            { type: "profile", key: "mobilityDCAT-AP v2.0" }
+          ],
+          "Mobility dataset vl": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "mobilityDCAT-AP v2.0" },
+            { type: "profile", key: "metadata-DCAT v2.0" }
+          ],
+          "Stat dataset": [
+            { type: "region", key: "EU" },
+            { type: "profile", key: "StatDCAT-AP v2.0" }
+          ],
+          "Stat dataset VL": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "StatDCAT-AP v2.0" },
+            { type: "profile", key: "metadata-DCAT v2.0" }
+          ],
+          // feature catalogue
+          "ObjectenCatalogus-GDI-Vlaanderen-template-v2.0.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "ISO 19110/GDI" }
+          ],
+          // series
+          "dcat-ap3-series.xml": [
+            { type: "region", key: "EU" },
+            { type: "profile", key: "DCAT-AP v3.0" }
+          ],
+          "metadata-dcat3-series.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "metadata-DCAT v3.0" }
+          ],
+          "Datasetseries-GDI-Vlaanderen-template-v2.0.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "ISO 19139/GDI" }
+          ],
+          // service
+          "dcat-ap-service.xml": [
+            { type: "region", key: "EU" },
+            { type: "profile", key: "DCAT-AP v2.0" }
+          ],
+          "dcat-ap3-service.xml": [
+            { type: "region", key: "EU" },
+            { type: "profile", key: "DCAT-AP v3.0" }
+          ],
+          "metadata-dcat-service.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "metadata-DCAT v2.0" }
+          ],
+          "metadata-dcat3-service.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "metadata-DCAT v3.0" }
+          ],
+          "dcat-ap-vl-service.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "DCAT-AP VL v2.0" }
+          ],
+          "dcat-ap-vl3-service.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "DCAT-AP VL v3.0" }
+          ],
+          "Service-GDI-Vlaanderen-template-v2.0.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: "ISO 19139/GDI" }
           ]
         };
 
+        // add classnames for styling
+        for (var fileName in badgeDefinitions) {
+          badgeDefinitions[fileName].forEach(function (b) {
+            if (b.type === "region") {
+              b.classname = b.key.toLowerCase();
+            } else if (b.type === "profile") {
+              if (b.key.toLowerCase().indexOf("dcat") !== -1) {
+                b.classname = "dcat";
+              } else {
+                b.classname = "iso";
+              }
+            }
+          });
+        }
+
+        // index the badges according to the template id's
         for (var ti = 0; ti < templates.length; ti++) {
           var template = templates[ti];
-          result[template._id] =
-            badgeDefinitions[template.resourceTitleObject.langdut] ||
-            badgeDefinitions[template.resourceTitleObject.lang] ||
-            badgeDefinitions[template.resourceTitleObject.default];
+          result[template._id] = badgeDefinitions[template.extra];
         }
+
+        // ready for use, return the badges
         return result;
       };
 
@@ -302,6 +390,9 @@
           tpls = $scope.mdList;
         }
 
+        // build the badge list as we want to use them for sorting
+        var badges = $scope.generateBadges(tpls);
+
         // store the title (in current UI language) for use in the frontend
         var targetAttribute = "lang";
         if ($scope.lang.length === 3 && $scope.lang !== "eng") {
@@ -318,11 +409,40 @@
           }
         }
 
+        // helper function for the sorting process: get badge keys for a specific type, sort and join to a string
+        function joinType(arr, key) {
+          return arr
+            .filter(function (b) {
+              return b.type === key;
+            })
+            .map(function (b) {
+              return b.key;
+            })
+            .sort()
+            .join();
+        }
+
         // Sort template list
         function compare(a, b) {
-          if (a.resourceTitle < b.resourceTitle) return -1;
-          if (a.resourceTitle > b.resourceTitle) return 1;
-          return 0;
+          // we can already figure out the title sort
+          var titleSort = a.resourceTitle.localeCompare(b.resourceTitle);
+          // merge the badge information into one sortable set of information
+          var aBadges = badges[a._id];
+          var bBadges = badges[b._id];
+          // check we have the right information
+          if (!(aBadges && bBadges)) {
+            // we don't, just sort on title then
+            return titleSort;
+          }
+          // proceed with getting region and profile badges so we can sort on those
+          var aRegions = joinType(aBadges, "region");
+          var bRegions = joinType(bBadges, "region");
+          var aProfiles = joinType(aBadges, "profile");
+          var bProfiles = joinType(bBadges, "profile");
+          // calculate the sort
+          var regionSort = aRegions.localeCompare(bRegions);
+          var profileSort = aProfiles.localeCompare(bProfiles);
+          return -regionSort || titleSort || profileSort;
         }
 
         tpls.sort(compare);

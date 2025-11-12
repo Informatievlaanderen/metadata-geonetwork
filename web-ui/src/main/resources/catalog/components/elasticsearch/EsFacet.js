@@ -138,6 +138,7 @@
               "group*",
               "resource*",
               "draft*",
+              "extra",
               "owner*",
               "recordOwner",
               "status*",

@@ -31,6 +31,7 @@ describe('Workflow', () => {
     cy.get('div.gn-title input').as('titleInput')
     // need to add the timeout here, otherwise the title is sometimes empty after clicking save
     cy.get('@titleInput').type('cypress workflow test record', {timeout: 1000})
+    cy.get('div.gn-alternateTitle').click({multiple: true, timeout: 100})
     cy.url().then((url: string) => {
       let regex = new RegExp('.*catalog.edit#/metadata/([0-9]+)\\?.*$', "g");
       let matches = regex.exec(url);

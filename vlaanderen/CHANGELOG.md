@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Whitelisting resource type facet - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/46456)
 - Fixed siblings popup in Catalog editor - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/46952)
 - Fixed broken links in download dropdown - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/46689)
+- Rework of template creation screen - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/46977)
 
 ### core
 - Set default `UTF-8` encoding for sent mails - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/44033) / [pr-core](https://github.com/geonetwork/core-geonetwork/pull/8801)

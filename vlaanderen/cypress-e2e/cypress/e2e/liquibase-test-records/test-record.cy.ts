@@ -4,6 +4,7 @@ describe('Liquibase test record', () => {
     cy.visit('/')
     cy.loginAdmin()
     cy.ensureReindex()
+    cy.wait(1000)
   })
 
   let uuid = 'b6934c23-bffa-40de-ac34-7f1f6e1dbdf1'
