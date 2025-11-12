@@ -281,7 +281,8 @@ public class MetadataSampleApi {
                             metadata.getDataInfo().
                                 setSchemaId(schemaName).
                                 setRoot(xml.getQualifiedName()).
-                                setType(MetadataType.lookup(isTemplate));
+                                setType(MetadataType.lookup(isTemplate)).
+                                setExtra(templateName);
                             metadata.getSourceInfo().
                                 setSourceId(siteId).
                                 setOwner(owner).

@@ -84,11 +84,13 @@
               <br />
               <span
                 data-ng-repeat="b in tplBadges[tpl._id]"
-                data-ng-class="{'label label-success': (b.type == 'domain'),
-                'label label-warning': (b.type == 'tip') }"
+                class="label label-default vl-template-badge {{ 'badge-'+b.type+'-'+b.classname }}"
               >
-                {{('badge-'+b.type+'-'+b.key) | translate}}
+                {{ b.key }}
               </span>
+              <span class="gn-margin-top vl-template-help" data-ng-show="tpl==activeTpl"
+                ><i data-translate="">{{ 'createhelp-' + tpl.extra }}</i></span
+              >
             </a>
           </div>
         </div>
