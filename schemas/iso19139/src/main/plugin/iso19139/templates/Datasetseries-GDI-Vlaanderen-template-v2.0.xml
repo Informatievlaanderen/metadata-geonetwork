@@ -114,7 +114,7 @@
       <gmd:citation>
         <gmd:CI_Citation>
           <gmd:title>
-            <gco:CharacterString>Serie van geo datasets</gco:CharacterString>
+            <gco:CharacterString>Serie van geografische datasets</gco:CharacterString>
           </gmd:title>
           <gmd:alternateTitle>
             <gco:CharacterString/>
