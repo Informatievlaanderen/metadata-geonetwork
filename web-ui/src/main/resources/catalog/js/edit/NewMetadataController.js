@@ -422,10 +422,14 @@
             .join();
         }
 
+        function localeCompare(a, b) {
+          return (a || "").localeCompare(b || "");
+        }
+
         // Sort template list
         function compare(a, b) {
           // we can already figure out the title sort
-          var titleSort = a.resourceTitle.localeCompare(b.resourceTitle);
+          var titleSort = localeCompare(a.resourceTitle, b.resourceTitle);
           // merge the badge information into one sortable set of information
           var aBadges = badges[a._id];
           var bBadges = badges[b._id];
@@ -437,12 +441,10 @@
           // proceed with getting region and profile badges so we can sort on those
           var aRegions = joinType(aBadges, "region");
           var bRegions = joinType(bBadges, "region");
-          var aProfiles = joinType(aBadges, "profile");
-          var bProfiles = joinType(bBadges, "profile");
           // calculate the sort
-          var regionSort = aRegions.localeCompare(bRegions);
-          var profileSort = aProfiles.localeCompare(bProfiles);
-          return -regionSort || titleSort || profileSort;
+          var regionSort = localeCompare(aRegions, bRegions);
+          var classnameSort = localeCompare(a.classname, b.classname);
+          return -regionSort || classnameSort || titleSort;
         }
 
         tpls.sort(compare);
