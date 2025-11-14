@@ -42,11 +42,8 @@
               data-ng-class="{'active': type.key == activeType}"
             >
               <i class="fa {{getTypeIcon(type.key)}} fa-3x"></i>
-              <!-- specific to VL: quick hack to make sure objectencatalogus is properly positioned in the left menu -->
-              <p>
-                {{(type.label | translate | lowercase).replace('objectencatalogus',
-                'objecten-catalogus')}}
-              </p>
+              <!-- could not get 'series' to be translated by nl-custom.json, something else is overriding it. Prepending the key with 'type-' to circumvent the problem. -->
+              <p>{{'type-'+type.key | translate}}</p>
             </a>
           </div>
         </div>
@@ -88,7 +85,9 @@
               >
                 {{ b.key }}
               </span>
-              <span class="gn-margin-top vl-template-help" data-ng-show="tpl==activeTpl"
+              <span
+                class="gn-margin-top vl-template-help"
+                data-ng-show="tpl==activeTpl && tpl.extra !== 'null'"
                 ><i data-translate="">{{ 'createhelp-' + tpl.extra }}</i></span
               >
             </a>
