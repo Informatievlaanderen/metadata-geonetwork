@@ -24,7 +24,7 @@
 
 <sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron">
 
-  <sch:title xmlns="http://www.w3.org/2001/XMLSchema">DCAT-AP High Value Dataset (HVD)</sch:title>
+  <sch:title xmlns="http://www.w3.org/2001/XMLSchema">High Value Dataset (HVD)</sch:title>
   <sch:ns prefix="gml" uri="http://www.opengis.net/gml"/>
   <sch:ns prefix="gmd" uri="http://standards.iso.org/iso/19115/-3/gmd"/>
   <sch:ns prefix="gmx" uri="http://standards.iso.org/iso/19115/-3/gmx"/>
@@ -239,8 +239,10 @@
       -->
       <sch:let name="hvdCategories"
                value="*:identificationInfo/*/*:descriptiveKeywords/*[
-               *:thesaurusName/*/*:title/*:CharacterString = 'High-value dataset categories'
-               or *:thesaurusName/*/*:title/*:Anchor/@xlink:href = 'http://data.europa.eu/bna/asd487ae75']/*:keyword/*[text() != '']"/>
+                        *:thesaurusName/*/*:title/*:CharacterString = 'High-value dataset categories'
+                        or *:thesaurusName/*/*:title/*:Anchor/@xlink:href = 'http://data.europa.eu/bna/asd487ae75'
+                        or *:thesaurusName/*/*/*/*:code/*:Anchor[ends-with(@xlink:href, 'external.theme.high-value-dataset-category')]
+                      ]/*:keyword/*[text() != '']"/>
       <sch:let name="hasOneOrMoreKeywordEncodingHvdCategory"
                value="count($hvdCategories) > 0"/>
 
@@ -306,10 +308,13 @@
           * More strict, at least one?
           * TODO: non INSPIRE datasets?
       -->
+
+      <!-- Disabling these rules for now, as they were not part of the ISO/DCAT HVD discussion in VL.-->
+      <!--
       <sch:let name="implementingRules"
                value="*:dataQualityInfo/*/*:report/*/*:result/*/*:specification/*/
                                     *:title[starts-with(*:Anchor/@xlink:href, 'https://inspire.ec.europa.eu/id/document')]"/>
-      <!-- TODO: Relax with has a specification ? or CharacterString starting with INSPIRE Data Specification... ? -->
+      TODO: Relax with has a specification ? or CharacterString starting with INSPIRE Data Specification... ?
       <sch:let name="hasOneOrMoreDataSpecConformityForINSPIRE"
                value="count($implementingRules) > 0"/>
 
@@ -317,6 +322,7 @@
                   diagnostics="rule.hvd.conformity.mandatory-failure-en rule.hvd.conformity.mandatory-failure-fr"/>
       <sch:report test="$hasOneOrMoreDataSpecConformityForINSPIRE"
                   diagnostics="rule.hvd.conformity.mandatory-success-en rule.hvd.conformity.mandatory-success-fr"/>
+      -->
 
 
       <!--
