@@ -301,6 +301,8 @@
         <value>standards/iso19139/labels/gmd:DQ_ThematicClassificationCorrectness+gmd:DQ_AbsoluteExternalPositionalAccuracy+gmd:DQ_AccuracyOfATimeMeasurement+gmd:DQ_CompletenessCommission+gmd:DQ_CompletenessOmission+gmd:DQ_ConceptualConsistency+gmd:DQ_ConformanceResult+gmd:DQ_DataQuality+gmd:DQ_DomainConsistency+gmd:DQ_EvaluationMethodTypeCode+gmd:DQ_FormatConsistency+gmd:DQ_GriddedDataPositionalAccuracy+gmd:DQ_NonQuantitativeAttributeAccuracy+gmd:DQ_QuantitativeAttributeAccuracy+gmd:DQ_RelativeInternalPositionalAccuracy+gmd:DQ_TemporalConsistency+gmd:DQ_TemporalValidity+gmd:DQ_ThematicClassificationCorrectness+gmd:DQ_TopologicalConsistency+gmd:DQ_QuantitativeResult</value>
         <value>db/MetadataCategory+Operation+Group+StatusValue+Source+Translations</value>
         <value>json/custom</value>
+        <!--  DCAT codelists  -->
+        <value>standards/dcat-ap/codelists/dcat:Resource</value>
       </util:list>
     </entry>
     <entry key="admin">
@@ -321,6 +323,8 @@
         <value>standards/iso19115-3.2018/codelists/indeterminatePosition</value>
         <value>db/MetadataCategory+Operation+Group+StatusValue+Source+Translations</value>
         <value>json/custom</value>
+        <!--  DCAT codelists  -->
+        <value>standards/dcat-ap/codelists/dcat:Resource</value>
       </util:list>
     </entry>
   </util:map>

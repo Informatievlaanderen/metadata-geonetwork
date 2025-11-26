@@ -133,5 +133,7 @@
   "recordsAssociatedToVirtualCatalog": "zugehörige(r) Datensatz(e)",
   "success": "Erfolg",
   "successes": "Erfolge",
+  "nextResource": "Nächste Ressource",
+  "previousResource": "Vorherige Ressource",
   "---end-of-file---": ""
 }
