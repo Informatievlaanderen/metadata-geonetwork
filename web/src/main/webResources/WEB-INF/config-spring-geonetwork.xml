@@ -292,7 +292,7 @@
     </entry>
     <entry key="search">
       <util:list>
-        <value>json/core+search+v4+custom</value>
+        <value>json/core+search+v4</value>
         <value>json/schemas</value>
         <value>standards/iso19139/codelists/gmd:MD_TopicCategoryCode+gmd:MD_ScopeCode+gmd:MD_MaintenanceFrequencyCode+gmd:MD_ProgressCode+gmd:MD_SpatialRepresentationTypeCode</value>
         <value>standards/iso19115-3.2018/codelists/indeterminatePosition</value>
@@ -300,24 +300,27 @@
         <value>standards/iso19139/codelists/gmd:CI_DateTypeCode+gmd:CI_RoleCode+gmd:DS_InitiativeTypeCode+gmd:DS_AssociationTypeCode</value>
         <value>standards/iso19139/labels/gmd:DQ_ThematicClassificationCorrectness+gmd:DQ_AbsoluteExternalPositionalAccuracy+gmd:DQ_AccuracyOfATimeMeasurement+gmd:DQ_CompletenessCommission+gmd:DQ_CompletenessOmission+gmd:DQ_ConceptualConsistency+gmd:DQ_ConformanceResult+gmd:DQ_DataQuality+gmd:DQ_DomainConsistency+gmd:DQ_EvaluationMethodTypeCode+gmd:DQ_FormatConsistency+gmd:DQ_GriddedDataPositionalAccuracy+gmd:DQ_NonQuantitativeAttributeAccuracy+gmd:DQ_QuantitativeAttributeAccuracy+gmd:DQ_RelativeInternalPositionalAccuracy+gmd:DQ_TemporalConsistency+gmd:DQ_TemporalValidity+gmd:DQ_ThematicClassificationCorrectness+gmd:DQ_TopologicalConsistency+gmd:DQ_QuantitativeResult</value>
         <value>db/MetadataCategory+Operation+Group+StatusValue+Source+Translations</value>
+        <value>json/custom</value>
       </util:list>
     </entry>
     <entry key="admin">
       <util:list>
-        <value>json/core+search+admin+v4+custom</value>
+        <value>json/core+search+admin+v4</value>
         <value>json/schemas</value>
         <value>db/MetadataCategory+Operation+Group+StatusValue+Source+Translations</value>
+        <value>json/custom</value>
       </util:list>
     </entry>
     <entry key="editor">
       <util:list>
-        <value>json/core+search+editor+v4+custom</value>
+        <value>json/core+search+editor+v4</value>
         <value>json/schemas</value>
         <value>standards/iso19139/codelists/gmd:MD_TopicCategoryCode+gmd:MD_ScopeCode+gmd:MD_MaintenanceFrequencyCode+gmd:MD_ProgressCode+gmd:MD_SpatialRepresentationTypeCode</value>
         <!-- VL: taking the dut localisation for these -->
         <value>standards/iso19139/codelists/gmd:CI_DateTypeCode+gmd:CI_RoleCode+gmd:DS_InitiativeTypeCode+gmd:DS_AssociationTypeCode</value>
         <value>standards/iso19115-3.2018/codelists/indeterminatePosition</value>
         <value>db/MetadataCategory+Operation+Group+StatusValue+Source+Translations</value>
+        <value>json/custom</value>
       </util:list>
     </entry>
   </util:map>
