@@ -9,7 +9,7 @@
                 exclude-result-prefixes="#all"
                 version="2.0">
 
-  <xsl:variable name="dataTheme" select="document('./thesauri/datatheme.rdf')"/>
+  <xsl:variable name="dataTheme" select="document('./thesauri/belgif-datatheme.rdf')"/>
 
   <xsl:template name="mapTopicCatToKeywordElement">
     <xsl:param name="topicCategories" as="node()*"/>
