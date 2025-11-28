@@ -94,10 +94,15 @@
     }
   ]);
   module.directive("gnContributeMenu", [
+    "$location",
     function () {
       return {
         replace: true,
-        templateUrl: "../../catalog/components/toolbar/partials/menu-contribute.html"
+        templateUrl: "../../catalog/components/toolbar/partials/menu-contribute.html",
+        link: function ($scope) {
+          // VL: only show the contribute menu on the main portal
+          $scope.showContributeMenu = window.location.pathname.indexOf("/srv") === 0;
+        }
       };
     }
   ]);
