@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [8.4.1-SNAPSHOT]
 
+### vlaanderen
+- Contribute menu only available in main portal now - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/47677)
+
+
 ## [8.4.0] - 2025-11-18
 
 ### vlaanderen
