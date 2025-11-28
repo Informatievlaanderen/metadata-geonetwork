@@ -428,6 +428,7 @@
     "attributeType": "Type",
     "attributeCode": "Code",
     "transfertPrivilegesFinished": "{{metadata}} fiche(s) transférée(s).",
+    "transfertPrivilegesError": "Error transferring metadata ownership.",
     "valueName": "Nom",
     "xmlView": "Vue XML",
     "downloadRecord": "Consulter la fiche (XML)",
