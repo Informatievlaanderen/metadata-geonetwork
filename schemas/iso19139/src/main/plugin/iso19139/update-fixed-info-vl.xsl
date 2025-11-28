@@ -438,6 +438,35 @@
   </xsl:template>
 
 
+  <!--
+  override first date for specific thesauri (hvd category, eli, ...)
+  also see registry-to-skos.xsl for how it's done in 19115-3, Thesaurus.java for getting data, thesaurus-transformation.xsl for xml serialisation
+  todo figure out a durable way, basing ourselves on the thesaurus (hvd categ has some dates but are not parsed, eli has no dates, ...)
+  -->
+  <xsl:template match="gmd:descriptiveKeywords/*/gmd:thesaurusName[gmd:CI_Citation/gmd:title/*/@xlink:href='http://data.europa.eu/r5r/applicableLegislation']/*/gmd:date[1]" priority="9000">
+    <gmd:date>
+      <gmd:CI_Date>
+        <gmd:date>
+          <gco:Date>2022-12-21</gco:Date>
+        </gmd:date>
+        <gmd:dateType>
+          <gmd:CI_DateTypeCode codeListValue="publication" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" />
+        </gmd:dateType>
+      </gmd:CI_Date>
+    </gmd:date>
+  </xsl:template>
+  <xsl:template match="gmd:descriptiveKeywords/*/gmd:thesaurusName[gmd:CI_Citation/gmd:title/*/@xlink:href='http://data.europa.eu/bna/asd487ae75']/*/gmd:date[1]" priority="9000">
+    <gmd:date>
+      <gmd:CI_Date>
+        <gmd:date>
+          <gco:Date>2023-09-05</gco:Date>
+        </gmd:date>
+        <gmd:dateType>
+          <gmd:CI_DateTypeCode codeListValue="creation" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" />
+        </gmd:dateType>
+      </gmd:CI_Date>
+    </gmd:date>
+  </xsl:template>
 
   <!-- TODO: Continue incremental check on update-fixed-info diff: http://gitlab.gim.be/gim-geonetwork/core-geonetwork/-/commits/clients/aiv/main/schemas/iso19139/src/main/plugin/iso19139/update-fixed-info.xsl   -->
 </xsl:stylesheet>
