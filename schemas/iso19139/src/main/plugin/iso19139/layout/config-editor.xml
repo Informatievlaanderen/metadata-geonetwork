@@ -578,6 +578,9 @@
         <thesaurus key="external.theme.eu-applicable-legislation"
                    fieldset="false"
                    transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.theme.high-value-dataset-category"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
       </thesaurusList>
     <sidePanel>
       <directive data-gn-overview-manager=""
