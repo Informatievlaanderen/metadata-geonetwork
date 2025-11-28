@@ -42,8 +42,11 @@
               data-ng-class="{'active': type.key == activeType}"
             >
               <i class="fa {{getTypeIcon(type.key)}} fa-3x"></i>
-              <!-- could not get 'series' to be translated by nl-custom.json, something else is overriding it. Prepending the key with 'type-' to circumvent the problem. -->
-              <p>{{'type-'+type.key | translate}}</p>
+              <!-- specific to VL: quick hack to make sure objectencatalogus is properly positioned in the left menu -->
+              <p>
+                {{(type.label | translate | capitalize).replace('Objectencatalogus',
+                'Objecten-catalogus')}}
+              </p>
             </a>
           </div>
         </div>

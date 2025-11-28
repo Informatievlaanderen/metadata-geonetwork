@@ -439,8 +439,24 @@
             return titleSort;
           }
           // get the schemas - these are contained in the 'profile' badges under classname
-          var aSchema = aBadges.filter(function(b) { return b.type === 'profile'; }).map(function(b) { return b.classname; }).sort().join()
-          var bSchema = bBadges.filter(function(b) { return b.type === 'profile'; }).map(function(b) { return b.classname; }).sort().join()
+          var aSchema = aBadges
+            .filter(function (b) {
+              return b.type === "profile";
+            })
+            .map(function (b) {
+              return b.classname;
+            })
+            .sort()
+            .join();
+          var bSchema = bBadges
+            .filter(function (b) {
+              return b.type === "profile";
+            })
+            .map(function (b) {
+              return b.classname;
+            })
+            .sort()
+            .join();
           // proceed with getting region and profile badges so we can sort on those
           var aRegions = joinType(aBadges, "region");
           var bRegions = joinType(bBadges, "region");
