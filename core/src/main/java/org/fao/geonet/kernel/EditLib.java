@@ -575,14 +575,23 @@ public class EditLib {
                     }
                 }
                 if (indexOfRequiredPortion > 0) {
-                    final String requiredXPath = xpathProperty.substring(0, indexOfRequiredPortion);
-                    final SelectResult selectResult = trySelectNode(metadataRecord, metadataSchema, requiredXPath, false);
-
+                    final String requiredXPath =
+                        xpathProperty.substring(0, indexOfRequiredPortion);
+                    final SelectResult selectResult = trySelectNode(metadataRecord,
+                        metadataSchema,
+                        requiredXPath,
+                        false);
                     if (selectResult != null) {
-                        if (selectResult.result == null || isCreateMode) {
-                            isUpdated = createAndAddFromXPath(metadataRecord, metadataSchema, requiredXPath, value);
-                        } else if (selectResult.result instanceof Element) {
-                            isUpdated = createAndAddFromXPath((Element) selectResult.result,
+                        Object elem = selectResult.result;
+                        if (elem == null) {
+                            isUpdated = createAndAddFromXPath(metadataRecord,
+                                metadataSchema,
+                                requiredXPath,
+                                value);
+                        } else if (elem instanceof Element) {
+                            Element element = (Element) elem;
+
+                            isUpdated = createAndAddFromXPath(element,
                                 metadataSchema,
                                 xpathProperty.substring(indexOfRequiredPortion),
                                 value);
@@ -591,7 +600,10 @@ public class EditLib {
                         }
                     }
                 } else {
-                    isUpdated = createAndAddFromXPath(metadataRecord, metadataSchema, xpathProperty, value);
+                    isUpdated = createAndAddFromXPath(metadataRecord,
+                        metadataSchema,
+                        xpathProperty,
+                        value);
                 }
             } else {
                 // Update or delete matching node(s) ...
