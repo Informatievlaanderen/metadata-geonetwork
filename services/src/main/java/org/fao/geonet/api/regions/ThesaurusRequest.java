@@ -58,15 +58,17 @@ public class ThesaurusRequest extends Request {
     private final KeywordSearchParamsBuilder searchBuilder;
     private final Thesaurus thesaurus;
     private final SingleThesaurusFinder finder;
+    private final boolean includeDescendants;
 
     private final Set<String> localesToLoad;
 
 
-    public ThesaurusRequest(ServiceContext context, WeakHashMap<String, Map<String, String>> categoryTranslations, Set<String> localesToLoad, Thesaurus thesaurus) {
+    public ThesaurusRequest(ServiceContext context, WeakHashMap<String, Map<String, String>> categoryTranslations, Set<String> localesToLoad, Thesaurus thesaurus, boolean includeDescendants) {
         this.localesToLoad = localesToLoad;
         this.serviceContext = context;
         this.categoryTranslations = categoryTranslations;
         this.thesaurus = thesaurus;
+        this.includeDescendants = includeDescendants;
         this.searchBuilder = new KeywordSearchParamsBuilder(thesaurus.getIsoLanguageMapper());
         for (String lang : localesToLoad) {
             searchBuilder.addLang(lang);
@@ -88,8 +90,7 @@ public class ThesaurusRequest extends Request {
             categoryIdParam = "";
         }
 
-        // VL-specific: our region thesauri go deeper than just one level. Multiple hops need to be supported (gemeente > arrondissement > provincie > gewest)
-        if(categoryIdParam.startsWith("https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Vlaamse-Administratieve-Eenheden/")) {
+        if (includeDescendants) {
             searchBuilder.relationshipBroader(categoryIdParam, KeywordSearchType.MATCH, false, 3);
         } else {
             searchBuilder.relationship(categoryIdParam, KeywordRelation.BROADER, KeywordSearchType.MATCH, false);

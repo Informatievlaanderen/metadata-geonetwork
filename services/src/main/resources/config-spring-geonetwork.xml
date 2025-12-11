@@ -61,18 +61,21 @@
     <constructor-arg ref="languages"/>
     <property name="cacheAllRegionsInMemory" value="true"/>
     <property name="thesaurusName" value="external.place.GDI-Vlaanderenregions-1983"/>
+    <property name="includeDescendants" value="true"/>
   </bean>
 
   <bean id="Vl2019RegionsDAO" class="org.fao.geonet.api.regions.ThesaurusBasedRegionsDAO">
     <constructor-arg ref="languages"/>
     <property name="cacheAllRegionsInMemory" value="true"/>
     <property name="thesaurusName" value="external.place.GDI-Vlaanderenregions-2019"/>
+    <property name="includeDescendants" value="true"/>
   </bean>
 
   <bean id="Vl2025RegionsDAO" class="org.fao.geonet.api.regions.ThesaurusBasedRegionsDAO">
     <constructor-arg ref="languages"/>
     <property name="cacheAllRegionsInMemory" value="true"/>
     <property name="thesaurusName" value="external.place.GDI-Vlaanderenregions-2025"/>
+    <property name="includeDescendants" value="true"/>
   </bean>
 
   <bean id="MetadataRegionsDAO" class="org.fao.geonet.api.regions.MetadataRegionDAO">
