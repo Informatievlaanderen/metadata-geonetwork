@@ -61,6 +61,7 @@ public class ThesaurusBasedRegionsDAO extends RegionsDAO {
     private final WeakHashMap<String, Map<String, String>> categoryIdMap = new WeakHashMap<String, Map<String, String>>();
     private final GeometryFactory factory = new GeometryFactory();
     private String thesaurusName = "external.place.regions";
+    private boolean includeDescendants;
 
     public ThesaurusBasedRegionsDAO(Set<String> localesToLoad) {
         this.localesToLoad = Collections.unmodifiableSet(localesToLoad);
@@ -70,12 +71,16 @@ public class ThesaurusBasedRegionsDAO extends RegionsDAO {
     public Request createSearchRequest(ServiceContext context) throws Exception {
         Thesaurus thesaurus = getThesaurus(context);
 
-        return new ThesaurusRequest(context, this.categoryIdMap, localesToLoad, thesaurus);
+        return new ThesaurusRequest(context, this.categoryIdMap, localesToLoad, thesaurus, includeDescendants);
     }
 
     public synchronized void setThesaurusName(String thesaurusName) {
         super.clearCaches();
         this.thesaurusName = thesaurusName;
+    }
+
+    public void setIncludeDescendants(boolean includeDescendants) {
+        this.includeDescendants = includeDescendants;
     }
 
     private synchronized Thesaurus getThesaurus(ServiceContext context) throws Exception {
