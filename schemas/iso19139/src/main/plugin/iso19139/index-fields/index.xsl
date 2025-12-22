@@ -649,7 +649,7 @@
                     </keyword>
                   </xsl:for-each>
 
-                  <xsl:if test="$dataGovBeThemeKeywordCount = 0 and $thesaurusId = 'geonetwork.thesaurus.external.theme.datatheme'">
+                  <xsl:if test="$dataGovBeThemeKeywordCount = 0 and $thesaurusId = 'geonetwork.thesaurus.external.theme.belgif-datatheme'">
                     <xsl:variable name="mappedKeywords">
                       <xsl:for-each select="$mappedTopic/keyword">
                         <xsl:sort select="gmd:Anchor/@xlink:href"/>
@@ -666,10 +666,10 @@
           </xsl:variable>
           <xsl:copy-of select="$thesaurus"/>
 
-          <xsl:if test="not($thesaurus//info[@id = 'geonetwork.thesaurus.external.theme.datatheme'])">
+          <xsl:if test="not($thesaurus//info[@id = 'geonetwork.thesaurus.external.theme.belgif-datatheme'])">
             <thesaurus>
-              <info type="theme" field="th_datatheme"
-                    id="geonetwork.thesaurus.external.theme.datatheme"
+              <info type="theme" field="th_belgif-datatheme"
+                    id="geonetwork.thesaurus.external.theme.belgif-datatheme"
                     uri=""
                     title="Data.gov.be themes"/>
               <keywords>

@@ -134,5 +134,7 @@
   "recordsAssociatedToVirtualCatalog": "record(s) associated.",
   "success": "success",
   "successes": "successes",
+  "nextResource": "Next resource",
+  "previousResource": "Previous resource",
   "---end-of-file---": ""
 }

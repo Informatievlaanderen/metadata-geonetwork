@@ -64,7 +64,7 @@ describe('Templates', () => {
 
     // then
     // the record is valid
-    cy.get('button#gn-editor-btn-save').click()
+    cy.get('button#gn-editor-btn-save').click({force: true})
     cy.wait(1000)
     cy.get('button').contains('Valideren').click()
     cy.wait(1000)
