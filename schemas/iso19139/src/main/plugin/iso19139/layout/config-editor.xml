@@ -300,7 +300,7 @@
 
       Exclude all thesaurus already used in the metadata:
       -->
-      <directiveAttributes data-include="xpath::string-join(('external.place.GDI-Vlaanderenregios,external.theme.inspire-theme,external.theme.gemet,external.theme.featureconcept,external.theme.GDI-Vlaanderen-trefwoorden,external.theme.GDI-Vlaanderen-service-types,external.theme.inspire-service-taxonomy,external.theme.belgif-data-theme,external.theme.SpatialScope,external.theme.PriorityDataset,external.theme.high-value-dataset-category,external.theme.eu-applicable-legislation', *//gmd:thesaurusName/*/gmd:identifier/*/
+      <directiveAttributes data-include="xpath::string-join(('external.place.GDI-Vlaanderenregios,external.theme.inspire-theme,external.theme.gemet,external.theme.featureconcept,external.theme.GDI-Vlaanderen-trefwoorden,external.theme.GDI-Vlaanderen-service-types,external.theme.inspire-service-taxonomy,external.theme.belgif-datatheme,external.theme.SpatialScope,external.theme.PriorityDataset,external.theme.high-value-dataset-category,external.theme.eu-applicable-legislation', *//gmd:thesaurusName/*/gmd:identifier/*/
                                             gmd:code/gmx:Anchor/
                                               concat('-', substring-after(text()[. != ''], 'geonetwork.thesaurus.'))), ',')"/>
     </for>
@@ -544,7 +544,7 @@
           displayTooltipsMode="onhover"
           hideTimeInCalendar="true">
       <thesaurusList>
-        <thesaurus key="external.theme.belgif-data-theme"
+        <thesaurus key="external.theme.belgif-datatheme"
                    fieldset="false"
                    transformations="to-iso19139-keyword-with-anchor"/>
         <thesaurus key="external.theme.GDI-Vlaanderen-service-types"
