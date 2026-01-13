@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Contribute menu only available in main portal now - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/47677)
 - DCAT3 update - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/47956) / [pr-core](https://github.com/metadata101/dcat-ap/pull/102)
 
+### core
+- Added OSLO Datastandaarden thesaurus for use in ISO - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/48724) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/127)
+- Fix for adding children to dcat:Catalog records - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/130)
 
 ## [8.4.0] - 2025-11-18
 
