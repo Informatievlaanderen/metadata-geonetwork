@@ -38,7 +38,6 @@ $$
       array ['public', 'messageproducerentity'],
       array ['public', 'metadatacateg'],
       array ['public', 'metadatadraft'],
-      array ['public', 'metadatafiledownloads'],
       array ['public', 'metadatafileuploads'],
       array ['public', 'metadataidentifiertemplate'],
       array ['public', 'metadatalink'],
