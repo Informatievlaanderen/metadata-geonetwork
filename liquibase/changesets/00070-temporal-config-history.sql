@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset joachim:00068-temporal-config-history endDelimiter://
+--changeset joachim:00070-temporal-config-history endDelimiter://
 
 DO
 $$

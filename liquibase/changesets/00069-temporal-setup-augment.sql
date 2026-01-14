@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset joachim:00067-temporal-setup-augment endDelimiter://
+--changeset joachim:00069-temporal-setup-augment endDelimiter://
 
 DO
 $$
@@ -8,16 +8,16 @@ $$
     create schema if not exists public_augment;
 
     -- create augmented tables
-    -- public_augment.metadata_data
+    -- > public_augment.metadata_data
     create sequence if not exists public_augment.metadata_data_id;
     create table public_augment.metadata_data
     (
       data_id serial not null primary key,
       data    text   not null
     );
-    -- index the data column - can't use btree here
+    -- >> index the data column - can't use btree here
     create index metadata_data_data ON public_augment.metadata_data USING HASH (data);
-    -- public_augment.metadata
+    -- > public_augment.metadata
     create table public_augment.metadata
     (
       like public.metadata
@@ -102,7 +102,7 @@ create or replace trigger augment
   for each row
 execute procedure public_augment.augment_metadata();
 
--- trigger a fake update so all records are processed by the augment function at least once
+-- trigger a no-op update so all records are processed by the augment function at least once
 update public.metadata
 set popularity = popularity
 where id > -1;
