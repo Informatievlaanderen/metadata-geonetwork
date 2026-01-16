@@ -43,6 +43,12 @@
   </changeSet>
 
   <changeSet author="joachim" id="00033-add-dp-digitaalvlaanderen" contextFilter="loc">
+    <!-- only add groups when they're not already present -->
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">
+        select count(*) from groups where id = 103
+      </sqlCheck>
+    </preConditions>
     <insert tableName="groups">
       <column name="id" value="103"/>
       <column name="name" value="DataPublicatie Digitaal Vlaanderen"/>

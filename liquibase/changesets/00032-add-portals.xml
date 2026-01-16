@@ -76,6 +76,12 @@
     </insert>
   </changeSet>
   <changeSet author="joachim" id="00032-groups" contextFilter="loc">
+    <!-- only add groups when they're not already present -->
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">
+        select count(*) from groups where id = 100
+      </sqlCheck>
+    </preConditions>
     <insert tableName="groups">
       <column name="id" value="100"/>
       <column name="name" value="Datapublicatie ABC"/>
