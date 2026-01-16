@@ -2180,6 +2180,13 @@
                   </gmx:Anchor>
                 </gmd:otherConstraints>
               </snippet>
+              <snippet label="vl-cc4">
+                <gmd:otherConstraints>
+                  <gmx:Anchor xlink:href="https://creativecommons.org/licenses/by/4.0/">
+                    Creative Commons – Naamsvermelding 4.0 Internationaal
+                  </gmx:Anchor>
+                </gmd:otherConstraints>
+              </snippet>
               <snippet label="vl-Licentievoorhergebruikoptevragen">
                 <gmd:otherConstraints>
                   <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">
