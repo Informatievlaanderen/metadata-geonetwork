@@ -159,6 +159,7 @@
     "exportCSV": "Export (CSV)",
     "exportPDF": "Export (PDF)",
     "exportMEF": "Export (ZIP)",
+    "exportMEF-excludeAttachments": "Export (ZIP) without attachments",
     "welcomeText": "Hier finden Sie Daten, Dienste und Karten und vieles mehr.",
     "searchOver": "Suche <strong>{{records}}</strong> Datensätze, Dienste und Karten, ...",
     "browseBy": "Filtern nach",

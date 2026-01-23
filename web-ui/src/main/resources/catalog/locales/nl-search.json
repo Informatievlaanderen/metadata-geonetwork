@@ -159,6 +159,7 @@
     "exportCSV": "Exporteer (CSV)",
     "exportPDF": "Exporteer (PDF)",
     "exportMEF": "Exporteer (ZIP)",
+    "exportMEF-excludeAttachments": "Exporteer (ZIP) zonder bijlages",
     "welcomeText": "Hier vindt u data, services, kaarten en meer.",
     "searchOver": "Zoek in <strong>{{records}}</strong> datasets, services en kaarten",
     "browseBy": "Blader per",

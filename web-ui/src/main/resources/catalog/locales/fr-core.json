@@ -608,5 +608,7 @@
     "quality": "Qualité",
     "download": "Téléchargement",
     "links": "Liens",
-    "saveToFile": "Enregistrer dans un fichier."
+    "saveToFile": "Enregistrer dans un fichier.",
+    "attachmentsExportLimitExceededSingle": "Attachments exceed the export size limit for this record.",
+    "attachmentsExportLimitExceededBatch": "Attachments exceed the export size limit for the selected records."
 }

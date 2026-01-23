@@ -608,5 +608,7 @@
     "quality": "Kwaliteit",
     "download": "Download bestand",
     "links": "Links",
-    "saveToFile": "Bewaren als bestand."
+    "saveToFile": "Bewaren als bestand.",
+    "attachmentsExportLimitExceededSingle": "De grootte van de bijlages van dit record overschrijden de exportlimiet.",
+    "attachmentsExportLimitExceededBatch": "De grootte van de bijlages van de geselecteerde records overschrijden de exportlimiet."
 }
