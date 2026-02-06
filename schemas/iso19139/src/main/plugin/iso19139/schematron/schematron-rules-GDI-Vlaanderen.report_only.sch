@@ -87,4 +87,34 @@
       <sch:report test="$check-order or $check-presence"><sch:value-of select="$loc/strings/alert.M900.1"/>&#160;<sch:value-of select="$begin-position"/>&#160;<sch:value-of select="$loc/strings/alert.M900.2"/>&#160;<sch:value-of select="$end-position"/>.</sch:report>
     </sch:rule>
   </sch:pattern>
+
+  <!-- At least one of equivalentScale or distance is needed -->
+  <sch:pattern>
+    <sch:title>VL Extra: Idealiter is er een resolutie met op zijn minst een schaal of afstand aanwezig.</sch:title>
+    <sch:rule context="//gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+      <sch:let name="check-presence" value="./gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale or ./gmd:spatialResolution/gmd:MD_Resolution/gmd:distance"/>
+      <sch:assert test="$check-presence">Gewenste elementen werden niet gevonden.</sch:assert>
+      <sch:report test="$check-presence">Gewenste elementen werden gevonden.</sch:report>
+    </sch:rule>
+  </sch:pattern>
+
+  <!-- A scale denominator should be a positive integer. Type test for gco:Integer already happens in the xsd validation. -->
+  <sch:pattern>
+    <sch:title>VL Extra: De noemer in een resolutieschaal zou een positieve integer moeten zijn.</sch:title>
+    <sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo//gmd:MD_RepresentativeFraction/gmd:denominator">
+      <sch:let name="check" value="number(.) > 0"/>
+      <sch:assert test="$check">In de plaats van een positieve integer werd <sch:value-of select="string(.)"/> gevonden.</sch:assert>
+      <sch:report test="$check">Een positieve noemer werd ingevuld: <sch:value-of select="number(.)"/>.</sch:report>
+    </sch:rule>
+  </sch:pattern>
+
+  <!-- A resolution distance should be a positive integer. Type test for gco:Integer already happens in the xsd validation. -->
+  <sch:pattern>
+    <sch:title>VL Extra: De afstand gebruikt in een resolutie zou een positieve integer moeten zijn.</sch:title>
+    <sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo//gmd:spatialResolution/gmd:MD_Resolution/gmd:distance">
+      <sch:let name="check" value="number(.) > 0"/>
+      <sch:assert test="$check">In de plaats van een positieve integer werd <sch:value-of select="string(.)"/> gevonden.</sch:assert>
+      <sch:report test="$check">Een positieve afstand werd ingevuld: <sch:value-of select="number(.)"/>.</sch:report>
+    </sch:rule>
+  </sch:pattern>
 </sch:schema>
