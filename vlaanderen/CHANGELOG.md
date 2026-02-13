@@ -17,6 +17,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added OSLO Datastandaarden thesaurus for use in ISO - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/48724) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/127)
 - Fix for adding children to dcat:Catalog records - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/130)
 - Fix for duplicated fields when using DCAT templates - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/141) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/132)
+- Improvements for mobilityDCAT-AP
+  - Validation improvements, related to `dcat:theme` - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/143)
+  - Property `accrualPeriodicity` can now be set properly - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/144)
+  - DataService validation of mandatory properties - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/145)
+  - Various label and translation improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/146)
+  - Recommended schematron validation for removed properties - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/147)
 
 ## [8.4.0] - 2025-11-18
 
