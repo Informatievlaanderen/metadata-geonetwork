@@ -2338,6 +2338,7 @@
             return !this.isAnonymous();
           },
           canCreateTemplate: function () {
+            return false; //Not allowed for anyone in the Flemmish fork.
             var profile =
                 gnGlobalSettings.gnCfg.mods.editor.minUserProfileToCreateTemplate || "",
               fnName =
