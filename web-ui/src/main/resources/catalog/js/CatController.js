@@ -2338,13 +2338,14 @@
             return !this.isAnonymous();
           },
           canCreateTemplate: function () {
-            var profile =
-                gnGlobalSettings.gnCfg.mods.editor.minUserProfileToCreateTemplate || "",
-              fnName =
-                profile !== ""
-                  ? "is" + profile[0].toUpperCase() + profile.substring(1) + "OrMore"
-                  : "";
-            return angular.isFunction(this[fnName]) ? this[fnName]() : this.isConnected();
+            // var profile =
+            //     gnGlobalSettings.gnCfg.mods.editor.minUserProfileToCreateTemplate || "",
+            //   fnName =
+            //     profile !== ""
+            //       ? "is" + profile[0].toUpperCase() + profile.substring(1) + "OrMore"
+            //       : "";
+            // return angular.isFunction(this[fnName]) ? this[fnName]() : this.isConnected();
+            return false;
           },
           canImportMetadata: function () {
             var profile = gnConfig["metadata.import.userprofile"] || "Editor",
