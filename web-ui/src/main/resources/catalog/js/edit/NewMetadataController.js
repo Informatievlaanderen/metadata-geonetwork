@@ -276,9 +276,9 @@
             { type: "profile", key: "metadata-DCAT v2.0" },
             { type: "profile", key: "HealthDCAT-AP v2.0" }
           ],
-          "Mobility dataset": [
+          "mobility-dcat2-dataset.xml": [
             { type: "region", key: "EU" },
-            { type: "profile", key: "mobilityDCAT-AP v2.0" }
+            { type: "profile", key: "mobilityDCAT-AP v1.1.0" }
           ],
           "Mobility dataset vl": [
             { type: "region", key: "VL" },
