@@ -103,8 +103,8 @@
     <sch:title>VL Extra: De noemer in een resolutieschaal zou een positieve integer moeten zijn.</sch:title>
     <sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo//gmd:MD_RepresentativeFraction/gmd:denominator">
       <sch:let name="check" value="number(.) > 0"/>
-      <sch:assert test="$check">In de plaats van een positieve integer werd <sch:value-of select="string(.)"/> gevonden.</sch:assert>
-      <sch:report test="$check">Een positieve noemer werd ingevuld: <sch:value-of select="number(.)"/>.</sch:report>
+      <sch:assert test="$check">Er werd geen positieve integer gevonden.</sch:assert>
+      <sch:report test="$check">Een positieve integer werd gevonden.</sch:report>
     </sch:rule>
   </sch:pattern>
 
@@ -113,8 +113,8 @@
     <sch:title>VL Extra: De afstand gebruikt in een resolutie zou een positieve integer moeten zijn.</sch:title>
     <sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo//gmd:spatialResolution/gmd:MD_Resolution/gmd:distance">
       <sch:let name="check" value="number(.) > 0"/>
-      <sch:assert test="$check">In de plaats van een positieve integer werd <sch:value-of select="string(.)"/> gevonden.</sch:assert>
-      <sch:report test="$check">Een positieve afstand werd ingevuld: <sch:value-of select="number(.)"/>.</sch:report>
+      <sch:assert test="$check">Er werd geen positieve integer gevonden.</sch:assert>
+      <sch:report test="$check">Een positieve integer werd gevonden.</sch:report>
     </sch:rule>
   </sch:pattern>
 </sch:schema>
