@@ -100,7 +100,7 @@
       >
         <span data-translate="">workflow</span>
       </li>
-      <li data-ng-if="displayEnableWorkflowOption(user)">
+      <li data-ng-if="displayEnableWorkflowOption(user) && md.isHarvested != 'true'">
         <a
           role="menuitem"
           href=""
