@@ -17,12 +17,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added OSLO Datastandaarden thesaurus for use in ISO - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/48724) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/127)
 - Fix for adding children to dcat:Catalog records - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/130)
 - Fix for duplicated fields when using DCAT templates - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/141) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/132)
-- Improvements for mobilityDCAT-AP
+- mobilityDCAT-AP
   - Validation improvements, related to `dcat:theme` - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/143)
   - Property `accrualPeriodicity` can now be set properly - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/144)
   - DataService validation of mandatory properties - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/145)
-  - Various label and translation improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/146)
+  - Various label and translation improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/146) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/156)
   - Recommended schematron validation for removed properties - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/147)
+  - Missing elements and improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/150)
+  - BE NAP mandatory recommendations - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/151)
+  - Updates to cardinality checks - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/154)
+- DCAT3
+  - Bugfix for duplicated dcatap:applicableLegislation elements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/153) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/159)
+  - DatasetSeries / Title xpath pointer config - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/155)
+  - Editor / Series and associated records improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/157)
+  - Introducing extra properties - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/163)
+- DCAT-AP-VL
+  - Added OSLO standards thesaurus to DCAT-AP - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/158)
+
 
 ## [8.4.0] - 2025-11-18
 
