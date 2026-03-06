@@ -278,7 +278,8 @@
           ],
           "mobility-dcat2-dataset.xml": [
             { type: "region", key: "EU" },
-            { type: "profile", key: "mobilityDCAT-AP v1.1.0" }
+            { type: "profile", key: "mobilityDCAT-AP v1.1.0" },
+            { type: "profile", key: "DCAT-AP v2.0" }
           ],
           "Mobility dataset vl": [
             { type: "region", key: "VL" },
