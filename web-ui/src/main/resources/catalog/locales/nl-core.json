@@ -610,5 +610,13 @@
     "links": "Links",
     "saveToFile": "Bewaren als bestand.",
     "attachmentsExportLimitExceededSingle": "De grootte van de bijlages van dit record overschrijden de exportlimiet.",
-    "attachmentsExportLimitExceededBatch": "De grootte van de bijlages van de geselecteerde records overschrijden de exportlimiet."
+    "attachmentsExportLimitExceededBatch": "De grootte van de bijlages van de geselecteerde records overschrijden de exportlimiet.",
+    "metadataDeleteConfirm": "Wil je het record '{{title}}' echt verwijderen?",
+    "metadataBatchDeleteConfirm": "Wil je de geselecteerde metadata echt verwijderen?",
+    "batchDeleteTitle": "Batchverwijdering metadata",
+    "metadataDeletedWithNoErrors": "Metadata succesvol verwijderd",
+    "typeToConfirm": "Typ het bevestigingswoord.",
+    "metadataDeleteConfirmActionWordLabel": "Schrijf <strong>DELETE</strong> om de metadataverwijdering te bevestigen. De actie zal direct plaatsvinden.",
+    "anonymousAccessCreatedError": "Er trad een fout op bij het aanmaken van anonieme toegang: {{errorDescription}}",
+    "anonymousAccessCreatedWarning": "Zorg ervoor dat je de link kopieert van de anonieme toegang. Je zal het hierna niet meer kunnen opvragen!"
 }

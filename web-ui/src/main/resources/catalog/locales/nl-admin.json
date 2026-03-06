@@ -1632,5 +1632,9 @@
     "datahubEnabled": "Enable Datahub interface for this portal",
     "datahubInfo": "This Datahub interface is accessible <a href='../../{{uuid}}/datahub'>here</a>.",
     "datahubPluginNotInstalled-help": "De Datahub plugin is niet geïnstalleerd. Bekijk de <a href='https://docs.geonetwork-opensource.org/4.4/install-guide/plugins/#datahub-integration-gn-datahub-integration' target='_blank'>gerelateerde documentatie</a> voor meer informatie over installatie en gebruik",
-    "harvesterErrorRetrieveSources": "Fout bij het ophalen van remote catalogi"
+    "harvesterErrorRetrieveSources": "Fout bij het ophalen van remote catalogi",
+    "anonymousAccessList": "Anonieme toegangslijst tot niet-gepubliceerde records",
+    "anonymousAccessListDelete": "Trek toegang in",
+    "anonymousAccessListEmpty": "Geen anonieme toegang te tonen",
+    "anonymousAccessDeleted": "Anonieme toegang ingetrokken"
 }

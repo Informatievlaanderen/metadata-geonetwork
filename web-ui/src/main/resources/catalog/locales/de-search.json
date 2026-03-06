@@ -560,5 +560,8 @@
     "indexingErrorMsg-temporalDateRangeLowerGreaterThanUpper": "Warnung / Feld resourceTemporalDateRange / Die untere Bereichsgrenze {{lowerBound}} kann nicht größer als die obere Grenze {{upperBound}} sein. Datumsbereich nicht indiziert.",
     "indexingErrorMsg-temporalRangeLowerGreaterThanUpper": "Warnung/Feld resourceTemporalDateRange/Untere Bereichsgrenze {{lowerBound}} kann nicht größer sein als die obere Grenze {{upperBound}}.",
     "indexingErrorMsg-schemaNotRegistered": "Datensatz {{record}} / Schema „{{schema}}“ ist in diesem Katalog nicht registriert. Installieren Sie es oder entfernen Sie diese Datensätze. Datensatz ist indexiert als  Indexierungs-Fehler bzw. einer Fehler-Flag.",
-    "indexingErrorMsg-indexingStyleSheetError": "Das Indizierungs-Stylesheet enthält Fehler: {{message}}\nDie Metadaten werden als _indexingError=1 im Index markiert."
+    "indexingErrorMsg-indexingStyleSheetError": "Das Indizierungs-Stylesheet enthält Fehler: {{message}}\nDie Metadaten werden als _indexingError=1 im Index markiert.",
+    "createAnonymousAccess": "Share unpublished record preview",
+    "deleteAnonymousAccess": "Revoke unpublished record preview",
+    "anonymousAccessTo": "Anonymous access to {{title}}"
 }
