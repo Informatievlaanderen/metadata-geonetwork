@@ -560,5 +560,8 @@
     "indexingErrorMsg-temporalDateRangeLowerGreaterThanUpper": "Waarschuwing / Veld resourceTemporalDateRange / Ondergrens {{lowerBound}} kan niet groter zijn dan bovengrens {{upperBound}}. Datumbereik niet geïndexeerd.",
     "indexingErrorMsg-temporalRangeLowerGreaterThanUpper": "Waarschuwing / Veld resourceTemporalDateRange / Ondergrens {{lowerBound}} kan niet groter zijn dan bovengrens {{upperBound}}.",
     "indexingErrorMsg-schemaNotRegistered": "Record {{record}} / Schema '{{schema}}' is niet geregistreerd in deze catalogus. Installeer het of verwijder de overeenkomstige records. Het record werd gemarkeerd met indexingError in de index.",
-    "indexingErrorMsg-indexingStyleSheetError": "Index stylesheet bevat fouten: \"{{message}}\". De metadata werd gemarkeerd in de index met _indexingError=1."
+    "indexingErrorMsg-indexingStyleSheetError": "Index stylesheet bevat fouten: \"{{message}}\". De metadata werd gemarkeerd in de index met _indexingError=1.",
+    "createAnonymousAccess": "Deel preview van ongepubliceerd record",
+    "deleteAnonymousAccess": "Trek preview in van ongepubliceerd record",
+    "anonymousAccessTo": "Anonieme toegang tot {{title}}"
 }

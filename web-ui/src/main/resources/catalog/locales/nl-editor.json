@@ -122,6 +122,8 @@
     "datasetNotFound": "Dataset niet gevonden - 404",
     "datasets": "Datasets",
     "dateMode": "Datum of datumtijd",
+    "dateOnlyMode": "Datum",
+    "dateTimeMode": "Datum en tijd",
     "description": "Omschrijving",
     "directory": "Map pad",
     "directoryEntries": "inzendingen",

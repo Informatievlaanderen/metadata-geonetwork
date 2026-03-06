@@ -1632,5 +1632,9 @@
     "datahubEnabled": "Datahub-Schnittstelle für dieses Portal aktivieren",
     "datahubInfo": "Auf diese Datahub-Schnittstelle kann <a href='../../{{uuid}}/datahub'>hier</a> zugegriffen werden.",
     "datahubPluginNotInstalled-help": "Das Datahub-Plugin ist nicht installiert. Bitte beziehen sie sich auf  <a href='https://docs.geonetwork-opensource.org/4.4/install-guide/plugins/#datahub-integration-gn-datahub-integration' target='_blank'>die entsprechende Dokumentation für mehr Informationen</a> oder die Installation und den Gebrauch.",
-    "harvesterErrorRetrieveSources": "Error retrieving remote catalogs"
+    "harvesterErrorRetrieveSources": "Error retrieving remote catalogs",
+    "anonymousAccessList": "Anonymous access list to unpublished records",
+    "anonymousAccessListDelete": "Revoke access",
+    "anonymousAccessListEmpty": "No anonymous access to display",
+    "anonymousAccessDeleted": "Anonymous access revoked"
 }

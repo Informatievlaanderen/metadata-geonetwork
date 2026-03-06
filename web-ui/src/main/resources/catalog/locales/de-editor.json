@@ -122,6 +122,8 @@
     "datasetNotFound": "Dataset not found - 404",
     "datasets": "Datensätze",
     "dateMode": "Datum oder Datum und Uhrzeit",
+    "dateOnlyMode": "Datumsangaben",
+    "dateTimeMode": "Datum und Uhrzeit",
     "description": "Beschreibung",
     "directory": "Dateipfad",
     "directoryEntries": "Einträge",
