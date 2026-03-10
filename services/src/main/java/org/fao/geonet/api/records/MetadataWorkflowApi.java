@@ -544,6 +544,15 @@ public class MetadataWorkflowApi {
             }
         }
 
+        // Block workflow activation for harvested records
+        if (metadataStatusValue.getStatusValue().getType() == StatusValueType.workflow
+            && metadataStatus.getStatus(metadata.getId()) == null
+            && metadata.getHarvestInfo().isHarvested()) {
+            throw new FeatureNotEnabledException(
+                "Workflow cannot be enabled for harvested records")
+                .withMessageKey("exception.resourceNotEnabled.harvestedWorkflow")
+                .withDescriptionKey("exception.resourceNotEnabled.harvestedWorkflow.description");
+        }
         // --- only allow the owner of the record to set its status
         if (!accessManager.isOwner(context, String.valueOf(metadata.getId()))) {
             throw new SecurityException(
