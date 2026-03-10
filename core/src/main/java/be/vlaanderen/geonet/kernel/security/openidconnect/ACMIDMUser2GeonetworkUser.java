@@ -5,7 +5,6 @@ import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.security.openidconnect.OidcUser2GeonetworkUser;
 import org.fao.geonet.kernel.security.openidconnect.SimpleOidcUser;
 import org.fao.geonet.repository.UserGroupRepository;
-import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.utils.Log;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -91,12 +90,12 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
      */
     @Transactional
     public void updateUserGroupsForClient(User user, Profile profile) {
-        userGroupRepository.deleteAll(userGroupRepository.findAll(UserGroupSpecs.hasUserId(user.getId())));
         if (profile.equals(Profile.Administrator)) {
             // As we are assigning to a group, it is UserAdmin instead
             profile = Profile.UserAdmin;
         }
         Profile finalProfile = profile;
+        Set<UserGroup> desiredGroups = new HashSet<>();
         groupRepository.findAll().stream()
             .filter(g -> g.getId() >= 100)
             .forEach(g -> {
@@ -104,7 +103,7 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
                 usergroup.setGroup(g);
                 usergroup.setUser(user);
                 usergroup.setProfile(finalProfile);
-                userGroupRepository.save(usergroup);
+                desiredGroups.add(usergroup);
 
                 if(finalProfile.equals(Profile.Reviewer)) {
                     // when you are a Reviewer, GeoNetwork expects you to have the Editor role as well
@@ -112,9 +111,10 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
                     editorUserGroup.setGroup(g);
                     editorUserGroup.setUser(user);
                     editorUserGroup.setProfile(Profile.Editor);
-                    userGroupRepository.save(editorUserGroup);
+                    desiredGroups.add(editorUserGroup);
                 }
             });
+        userGroupRepository.updateUserGroups(user.getId(), desiredGroups);
     }
 
     private Profile getClientProfile(Set<String> scopes) {
@@ -150,9 +150,6 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
 
     @Transactional
     public void updateGroups(Map<Profile, List<String>> profileGroups, User user, OidcIdToken idToken) {
-        // First we remove all previous groups
-        userGroupRepository.deleteAll(userGroupRepository.findAll(UserGroupSpecs.hasUserId(user.getId())));
-
         // ACM/IDM specific claims
         String userOrgCode = idToken.getClaimAsString("vo_orgcode");
         String userOrgName = idToken.getClaimAsString("vo_orgnaam");
@@ -163,6 +160,7 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
             user.getName(), user.getEmail(), userOrgCode, userOrgName, doelgroepCode, doelgroepNaam));
 
         // Now we add the groups
+        Set<UserGroup> desiredGroups = new HashSet<>();
         for (Profile p : profileGroups.keySet()) {
             List<String> groups = profileGroups.get(p);
             for (String technicalGroupName : groups) {
@@ -226,12 +224,13 @@ public class ACMIDMUser2GeonetworkUser extends OidcUser2GeonetworkUser {
                     ug.setGroup(group);
                     ug.setUser(user);
                     ug.setProfile(Profile.Editor);
-                    userGroupRepository.save(ug);
+                    desiredGroups.add(ug);
                 }
 
-                userGroupRepository.save(usergroup);
+                desiredGroups.add(usergroup);
             }
         }
+        userGroupRepository.updateUserGroups(user.getId(), desiredGroups);
     }
 
     private String computeGroupName(String userOrgCode,
