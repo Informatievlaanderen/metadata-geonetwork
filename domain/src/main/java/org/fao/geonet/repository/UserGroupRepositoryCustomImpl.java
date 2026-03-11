@@ -26,6 +26,7 @@
  */
 package org.fao.geonet.repository;
 
+import com.google.common.collect.Sets;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.domain.UserGroup;
 import org.fao.geonet.domain.UserGroupId;
@@ -98,16 +99,10 @@ public class UserGroupRepositoryCustomImpl implements UserGroupRepositoryCustom 
      public void updateUserGroups(int userId, Set<UserGroup> newUserGroups) {
          UserGroupRepository userGroupRepository = ApplicationContextHolder.get().getBean(UserGroupRepository.class);
 
-         List<UserGroup> currentUserGroupLists = userGroupRepository.findAll(UserGroupSpecs.hasUserId(userId));
-         Set<UserGroup> currentUserGroups = new HashSet<>(currentUserGroupLists);
+         Set<UserGroup> currentUserGroups = new HashSet<>(userGroupRepository.findAll(UserGroupSpecs.hasUserId(userId)));
 
-         // If the new user groups are not the same as what is in the database then update database so that they are the same.
-         if (!newUserGroups.equals(currentUserGroups)) {
-             userGroupRepository.deleteAll(UserGroupSpecs.hasUserId(userId));
-             for (UserGroup ug : newUserGroups) {
-                 userGroupRepository.save(ug);
-             }
-         }
+         userGroupRepository.deleteAll(Sets.difference(currentUserGroups, newUserGroups));
+         userGroupRepository.saveAll(Sets.difference(newUserGroups, currentUserGroups));
     }
 
 }
