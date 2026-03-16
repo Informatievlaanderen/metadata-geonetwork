@@ -680,14 +680,7 @@
           });
         }
 
-        // Open record not in current portal as a remote record
-        if (!gnGlobalSettings.isDefaultNode && this.origin === "catalog") {
-          this.remoteUrl =
-            "../../srv/" +
-            gnGlobalSettings.iso3lang +
-            "/catalog.search#/metadata/" +
-            this._id;
-        } else if (this.origin === "remote") {
+        if (this.origin === "remote") {
           this.remoteUrl = this.properties.url;
           this.uuid = this._id;
         }
