@@ -20,20 +20,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added OSLO Datastandaarden thesaurus for use in ISO - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/48724) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/127)
 - Fix for adding children to dcat:Catalog records - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/130)
 - Fix for duplicated fields when using DCAT templates - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/141) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/132)
+- Validation bugfix - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/165)
 - mobilityDCAT-AP
   - Validation improvements, related to `dcat:theme` - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/143)
   - Property `accrualPeriodicity` can now be set properly - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/144)
   - DataService validation of mandatory properties - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/145)
-  - Various label and translation improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/146) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/156)
+  - Various label and translation improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/146) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/156) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/167) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/172) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/175)
   - Recommended schematron validation for removed properties - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/147)
   - Missing elements and improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/150)
   - BE NAP mandatory recommendations - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/151)
   - Updates to cardinality checks - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/154)
+  - Rights statement type using thesaurus - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/171)
+  - Data standard comformity can now be specified using thesaurus - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/179)
 - DCAT3
-  - Bugfix for duplicated dcatap:applicableLegislation elements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/153) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/159)
+  - Bugfix for duplicated `dcatap:applicableLegislation` elements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/153) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/159)
   - DatasetSeries / Title xpath pointer config - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/155)
   - Editor / Series and associated records improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/157)
   - Introducing extra properties - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/163)
+  - Templates are now monolingual - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/168) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/169)
+  - If no languages are defined they are automatically added if needed - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/160)
+  - Improved Vcard support - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/174)
 - DCAT-AP-VL
   - Added OSLO standards thesaurus to DCAT-AP - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/158)
 
