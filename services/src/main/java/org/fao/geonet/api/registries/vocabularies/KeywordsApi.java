@@ -493,8 +493,8 @@ public class KeywordsApi {
                 }
             }
 
-
-        uri = URLDecoder.decode(uri, StandardCharsets.UTF_8);
+        // removed here: https://github.com/geonetwork/core-geonetwork/pull/8636
+        // uri = URLDecoder.decode(uri, StandardCharsets.UTF_8);
 
         if (uri == null) {
             descKeys = new Element("descKeys");
