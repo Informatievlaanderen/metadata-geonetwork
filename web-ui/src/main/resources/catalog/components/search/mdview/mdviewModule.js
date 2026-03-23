@@ -103,6 +103,8 @@
         gnGlobalSettings.gnCfg.mods.recordview.showStatusWatermarkFor;
       $scope.showStatusTopBarFor =
         gnGlobalSettings.gnCfg.mods.recordview.showStatusTopBarFor;
+      $scope.harvestedSourceName = null;
+      $scope.harvestedSourceSearchUrl = null;
 
       gnConfigService.load().then(function (c) {
         $scope.isRecordHistoryEnabled = gnConfig["metadata.history.enabled"];
@@ -376,6 +378,27 @@
         }
       }
       $scope.$watch("mdView.recordsLoaded", loadFormatter);
+
+      $scope.$watch("mdView.recordsLoaded", function (loaded) {
+        if (loaded !== true) return;
+        var record = $scope.mdView.current.record;
+        if (!record || record.isHarvested !== "true" || !record.harvesterUuid) {
+          $scope.harvestedSourceName = null;
+          $scope.harvestedSourceSearchUrl = null;
+          return;
+        }
+        $http
+          .get("../api/sources/" + record.harvesterUuid, { cache: true })
+          .then(function (response) {
+            $scope.harvestedSourceName = response.data.name;
+            var params = {};
+            params["harvesterUuid"] = {};
+            params["harvesterUuid"][record.harvesterUuid] = true;
+            $scope.harvestedSourceSearchUrl =
+              "catalog.search#/search?query_string=" +
+              encodeURIComponent(angular.toJson(params));
+          });
+      });
 
       $scope.sortByCategory = function (cat) {
         return $filter("translate")("cat-" + cat);

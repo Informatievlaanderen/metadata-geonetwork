@@ -168,7 +168,8 @@
     ["groupOwner", "group"],
     ["groupPublishedId", "group"],
     ["sourceCatalogue", "source"],
-    ["nonOgcwxsSourceCatalog.keyword", "source"]
+    ["nonOgcwxsSourceCatalog.keyword", "source"],
+    ["harvesterUuid", "source"]
   ]);
 
   module.service("gnFacetSorter", [
