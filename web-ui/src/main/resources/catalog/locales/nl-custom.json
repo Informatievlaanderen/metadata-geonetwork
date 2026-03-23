@@ -14,6 +14,7 @@
   "dataset": "dataset",
   "disclaimer": "Disclaimer",
   "exportDCAT": "Exporteer (RDF/XML)",
+  "facet-harvesterUuid": "Harvester",
   "facet-MD_LegalConstraintsUseLimitationObject.default.keyword": "Toegangsrechten",
   "facet-OrgForResourceObject": "Organisatie",
   "facet-accessRights": "Toegankelijkheid",
