@@ -276,8 +276,7 @@
           ],
           "mobility-dcat2-dataset.xml": [
             { type: "region", key: "EU" },
-            { type: "profile", key: labels.mobility2 },
-            { type: "profile", key: labels.dcatap2 }
+            { type: "profile", key: labels.mobility2 }
           ],
           "mobility-plus-dcatapvl-2-dataset.xml": [
             { type: "region", key: "VL" },
@@ -325,8 +324,7 @@
           ],
           "mobility-dcat2-service.xml": [
             { type: "region", key: "EU" },
-            { type: "profile", key: labels.mobility2 },
-            { type: "profile", key: labels.dcatap2 }
+            { type: "profile", key: labels.mobility2 }
           ],
           "mobility-plus-dcatapvl-2-service.xml": [
             { type: "region", key: "VL" },
@@ -337,9 +335,7 @@
 
         // add classnames for styling
         for (var fileName in badgeDefinitions) {
-          console.log(fileName);
           badgeDefinitions[fileName].forEach(function (b) {
-            console.log(b);
             if (b.type === "region") {
               b.classname = b.key.toLowerCase();
             } else if (b.type === "profile") {
