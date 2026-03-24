@@ -28,7 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - DataService validation of mandatory properties - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/145)
   - Various label and translation improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/146) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/156) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/167) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/172) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/175)
   - Recommended schematron validation for removed properties - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/147)
-  - Missing elements and improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/150)
+  - Missing elements and improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/150) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/184)
   - BE NAP mandatory recommendations - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/151)
   - Updates to cardinality checks - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/154)
   - Rights statement type using thesaurus - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/171)
@@ -38,9 +38,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - DatasetSeries / Title xpath pointer config - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/155)
   - Editor / Series and associated records improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/157)
   - Introducing extra properties - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/163)
-  - Templates are now monolingual - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/168) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/169)
+  - Templates are now monolingual - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/168) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/169) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/183)
   - If no languages are defined they are automatically added if needed - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/160)
   - Improved Vcard support - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/174)
+  - Added templates - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/185) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/186)
 - DCAT-AP-VL
   - Added OSLO standards thesaurus to DCAT-AP - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/158)
 
