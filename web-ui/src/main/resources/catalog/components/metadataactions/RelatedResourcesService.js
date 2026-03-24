@@ -177,16 +177,9 @@
         var url = $filter("gnLocalized")(r.url) || r.url;
 
         if (url.indexOf(siteUrl) == 0) {
-          var useCurrentPortal = true;
-
-          if (r && r.origin === "catalog") {
-            useCurrentPortal = false;
-          }
-
-          if (useCurrentPortal) {
-            return (window.location.hash = "#/metadata/" + r.id);
-          } else {
-            // Replace the portal node with the catalog default node
+          // If the record belongs to a different subcatalog,
+          // open it in that subcatalog's context.
+          if (r.sourceCatalogue && r.sourceCatalogue !== gnGlobalSettings.nodeId) {
             var mdUrl =
               window.location.origin +
               window.location.pathname +
@@ -194,11 +187,27 @@
               "#/metadata/" +
               r.id;
             mdUrl = mdUrl.replace(
-              "/" + gnConfig.env.node + "/",
+              "/" + gnGlobalSettings.nodeId + "/",
+              "/" + r.sourceCatalogue + "/"
+            );
+            return window.open(mdUrl, "_blank");
+          }
+          // On a subcatalog, open catalog-origin records in the default node
+          // (they may not be accessible within the subcatalog's filtered context).
+          if (!gnGlobalSettings.isDefaultNode && r && r.origin === "catalog") {
+            var mdUrl =
+              window.location.origin +
+              window.location.pathname +
+              window.location.search +
+              "#/metadata/" +
+              r.id;
+            mdUrl = mdUrl.replace(
+              "/" + gnGlobalSettings.nodeId + "/",
               "/" + gnConfig.env.defaultNode + "/"
             );
             return window.open(mdUrl, "_blank");
           }
+          return (window.location.hash = "#/metadata/" + r.id);
         } else {
           return openLink(r);
         }

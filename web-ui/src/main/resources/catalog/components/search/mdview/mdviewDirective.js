@@ -38,8 +38,9 @@
     "gnMdViewObj",
     "gnMdView",
     "gnGlobalSettings",
+    "gnConfig",
     "$filter",
-    function (gnMdViewObj, gnMdView, gnGlobalSettings, $filter) {
+    function (gnMdViewObj, gnMdView, gnGlobalSettings, gnConfig, $filter) {
       return {
         restrict: "A",
         scope: {
@@ -78,15 +79,28 @@
                 );
               }
 
-              // If the record belongs to a different subcatalog,
-              // replace the node in the URL with the record's sourceCatalogue.
+              // If on the default node and the record belongs to a
+              // subcatalog, redirect into that subcatalog's context.
               if (
+                gnGlobalSettings.isDefaultNode &&
                 scope.md.sourceCatalogue &&
                 scope.md.sourceCatalogue !== gnGlobalSettings.nodeId
               ) {
                 url = url.replace(
                   "/" + gnGlobalSettings.nodeId + "/",
                   "/" + scope.md.sourceCatalogue + "/"
+                );
+              }
+              // If on a subcatalog and the record doesn't belong here,
+              // redirect to the default node (srv).
+              if (
+                !gnGlobalSettings.isDefaultNode &&
+                scope.md.sourceCatalogue &&
+                scope.md.sourceCatalogue !== gnGlobalSettings.nodeId
+              ) {
+                url = url.replace(
+                  "/" + gnGlobalSettings.nodeId + "/",
+                  "/" + gnConfig.env.defaultNode + "/"
                 );
               }
               var url =
