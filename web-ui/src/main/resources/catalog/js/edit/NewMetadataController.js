@@ -232,115 +232,104 @@
         var result = {};
 
         // badge definitions (translatable) based on template filenames stored in 'extra'
+        var labels = {
+          "metadatadcat2": "metadata-DCAT 2021-04-22",
+          "dcatap2": "DCAT-AP 2.0.0",
+          "dcatap3": "DCAT-AP 3.0.1",
+          "dcatapvl2": "DCAT-AP VL 2019-10-03",
+          "dcatapvl3": "DCAT-AP VL 2026-02-12",
+          "mobility2": "mobilityDCAT-AP 1.1.0",
+          "mobility3": "mobilityDCAT-AP 3.0.0",
+          "iso19139": "ISO 19139/GDI",
+          "iso19110": "ISO 19139/GDI"
+        }
         var badgeDefinitions = {
           // catalog
           "dcat-ap-vl-virtualcatalogue.xml": [
             { type: "region", key: "EU" },
-            { type: "profile", key: "DCAT-AP v2.0" }
+            { type: "profile", key: labels.dcatap2 }
           ],
           // dataset
           "dcat-ap-dataset.xml": [
             { type: "region", key: "EU" },
-            { type: "profile", key: "DCAT-AP v2.0" }
+            { type: "profile", key: labels.dcatap2 }
           ],
           "dcat-ap3-dataset.xml": [
             { type: "region", key: "EU" },
-            { type: "profile", key: "DCAT-AP v3.0" }
+            { type: "profile", key: labels.dcatap3 }
           ],
           "metadata-dcat-dataset.xml": [
             { type: "region", key: "VL" },
-            { type: "profile", key: "metadata-DCAT v2.0" }
-          ],
-          "metadata-dcat3-dataset.xml": [
-            { type: "region", key: "VL" },
-            { type: "profile", key: "metadata-DCAT v3.0" }
+            { type: "profile", key: labels.metadatadcat2 }
           ],
           "dcat-ap-vl-dataset.xml": [
             { type: "region", key: "VL" },
-            { type: "profile", key: "DCAT-AP VL v2.0" }
+            { type: "profile", key: labels.dcatapvl2 }
           ],
           "dcat-ap-vl3-dataset.xml": [
             { type: "region", key: "VL" },
-            { type: "profile", key: "DCAT-AP VL v3.0" }
+            { type: "profile", key: labels.dcatapvl3 }
           ],
           "Dataset-GDI-Vlaanderen-template-v2.0.xml": [
             { type: "region", key: "VL" },
-            { type: "profile", key: "ISO 19139/GDI" }
-          ],
-          "Health dataset": [
-            { type: "region", key: "EU" },
-            { type: "profile", key: "HealthDCAT-AP v2.0" }
-          ],
-          "Health dataset vl": [
-            { type: "region", key: "VL" },
-            { type: "profile", key: "metadata-DCAT v2.0" },
-            { type: "profile", key: "HealthDCAT-AP v2.0" }
+            { type: "profile", key: labels.iso19139 }
           ],
           "mobility-dcat2-dataset.xml": [
             { type: "region", key: "EU" },
-            { type: "profile", key: "mobilityDCAT-AP v1.1.0" },
-            { type: "profile", key: "DCAT-AP v2.0" }
+            { type: "profile", key: labels.mobility2 }
           ],
-          "Mobility dataset vl": [
+          "mobility-plus-dcatapvl-2-dataset.xml": [
             { type: "region", key: "VL" },
-            { type: "profile", key: "mobilityDCAT-AP v2.0" },
-            { type: "profile", key: "metadata-DCAT v2.0" }
-          ],
-          "Stat dataset": [
-            { type: "region", key: "EU" },
-            { type: "profile", key: "StatDCAT-AP v2.0" }
-          ],
-          "Stat dataset VL": [
-            { type: "region", key: "VL" },
-            { type: "profile", key: "StatDCAT-AP v2.0" },
-            { type: "profile", key: "metadata-DCAT v2.0" }
+            { type: "profile", key: labels.mobility2 },
+            { type: "profile", key: labels.dcatapvl2 }
           ],
           // feature catalogue
           "ObjectenCatalogus-GDI-Vlaanderen-template-v2.0.xml": [
             { type: "region", key: "VL" },
-            { type: "profile", key: "ISO 19110/GDI" }
+            { type: "profile", key: labels.iso19110 }
           ],
           // series
           "dcat-ap3-series.xml": [
             { type: "region", key: "EU" },
-            { type: "profile", key: "DCAT-AP v3.0" }
-          ],
-          "metadata-dcat3-series.xml": [
-            { type: "region", key: "VL" },
-            { type: "profile", key: "metadata-DCAT v3.0" }
+            { type: "profile", key: labels.dcatap3 }
           ],
           "Datasetseries-GDI-Vlaanderen-template-v2.0.xml": [
             { type: "region", key: "VL" },
-            { type: "profile", key: "ISO 19139/GDI" }
+            { type: "profile", key: labels.iso19139 }
           ],
           // service
           "dcat-ap-service.xml": [
             { type: "region", key: "EU" },
-            { type: "profile", key: "DCAT-AP v2.0" }
+            { type: "profile", key: labels.dcatap2 }
           ],
           "dcat-ap3-service.xml": [
             { type: "region", key: "EU" },
-            { type: "profile", key: "DCAT-AP v3.0" }
+            { type: "profile", key: labels.dcatap3 }
           ],
           "metadata-dcat-service.xml": [
             { type: "region", key: "VL" },
-            { type: "profile", key: "metadata-DCAT v2.0" }
-          ],
-          "metadata-dcat3-service.xml": [
-            { type: "region", key: "VL" },
-            { type: "profile", key: "metadata-DCAT v3.0" }
+            { type: "profile", key: labels.metadatadcat2 }
           ],
           "dcat-ap-vl-service.xml": [
             { type: "region", key: "VL" },
-            { type: "profile", key: "DCAT-AP VL v2.0" }
+            { type: "profile", key: labels.dcatapvl2 }
           ],
           "dcat-ap-vl3-service.xml": [
             { type: "region", key: "VL" },
-            { type: "profile", key: "DCAT-AP VL v3.0" }
+            { type: "profile", key: labels.dcatapvl3 }
           ],
           "Service-GDI-Vlaanderen-template-v2.0.xml": [
             { type: "region", key: "VL" },
-            { type: "profile", key: "ISO 19139/GDI" }
+            { type: "profile", key: labels.iso19139 }
+          ],
+          "mobility-dcat2-service.xml": [
+            { type: "region", key: "EU" },
+            { type: "profile", key: labels.mobility2 }
+          ],
+          "mobility-plus-dcatapvl-2-service.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: labels.mobility2 },
+            { type: "profile", key: labels.dcatapvl2 }
           ]
         };
 
