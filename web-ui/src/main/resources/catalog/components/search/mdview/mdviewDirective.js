@@ -77,6 +77,18 @@
                   gnGlobalSettings.gnCfg.mods.recordview.appUrl
                 );
               }
+
+              // If the record belongs to a different subcatalog,
+              // replace the node in the URL with the record's sourceCatalogue.
+              if (
+                scope.md.sourceCatalogue &&
+                scope.md.sourceCatalogue !== gnGlobalSettings.nodeId
+              ) {
+                url = url.replace(
+                  "/" + gnGlobalSettings.nodeId + "/",
+                  "/" + scope.md.sourceCatalogue + "/"
+                );
+              }
               var url =
                 url +
                 "#/" +

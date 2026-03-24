@@ -142,6 +142,7 @@ public class EsSearchManager implements ISearchManager {
             .add("resourceEdition")
             .add("resourceIdentifier")
             .add("rdfResourceIdentifier")
+            .add("sourceCatalogue")
             .add("th_GDI-Vlaanderen-trefwoorden")
             .add("MD_LegalConstraintsOtherConstraintsObject")
             .build();
