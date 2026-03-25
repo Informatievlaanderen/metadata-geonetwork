@@ -233,16 +233,16 @@
 
         // badge definitions (translatable) based on template filenames stored in 'extra'
         var labels = {
-          "metadatadcat2": "metadata-DCAT 2021-04-22",
-          "dcatap2": "DCAT-AP 2.0.0",
-          "dcatap3": "DCAT-AP 3.0.1",
-          "dcatapvl2": "DCAT-AP VL 2019-10-03",
-          "dcatapvl3": "DCAT-AP VL 2026-02-12",
-          "mobility2": "mobilityDCAT-AP 1.1.0",
-          "mobility3": "mobilityDCAT-AP 3.0.0",
-          "iso19139": "ISO 19139/GDI",
-          "iso19110": "ISO 19139/GDI"
-        }
+          metadatadcat2: "metadata-DCAT 2021-04-22",
+          dcatap2: "DCAT-AP 2.0.0",
+          dcatap3: "DCAT-AP 3.0.1",
+          dcatapvl2: "DCAT-AP VL 2019-10-03",
+          dcatapvl3: "DCAT-AP VL 2026-02-12",
+          mobility2: "mobilityDCAT-AP 1.1.0",
+          mobility3: "mobilityDCAT-AP 3.0.0",
+          iso19139: "ISO 19139/GDI",
+          iso19110: "ISO 19139/GDI"
+        };
         var badgeDefinitions = {
           // catalog
           "dcat-ap-vl-virtualcatalogue.xml": [
