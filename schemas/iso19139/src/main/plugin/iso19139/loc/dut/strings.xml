@@ -35,7 +35,7 @@
   <vl-add-DQ_CompletenessOmission>Volledigheid</vl-add-DQ_CompletenessOmission>
   <vl-add-DQ_ThematicClassificationCorrectness>Thematische classificatie</vl-add-DQ_ThematicClassificationCorrectness>
   <vl-add-conformity>Conformiteit</vl-add-conformity>
-  <vl-add-crs-1094>High Water (EPSG(version 8.0 released 10/8/2012):1094)</vl-add-crs-1094>
+  <vl-add-crs-1094>High water (version 8.0 released 10/8/2012) (EPSG:1094)</vl-add-crs-1094>
   <vl-add-crs-21500>Belge 1950 (Brussels) / Belge Lambert 50 (EPSG:21500)</vl-add-crs-21500>
   <vl-add-crs-23031>ED50 / UTM zone 31N (EPSG:23031)</vl-add-crs-23031>
   <vl-add-crs-23032>ED50 / UTM zone 32N (EPSG:23032)</vl-add-crs-23032>
