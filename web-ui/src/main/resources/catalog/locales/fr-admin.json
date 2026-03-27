@@ -581,6 +581,8 @@
     "recordsStatistics": "Statistiques sur les fiches",
     "recordsType": "Type de fiches",
     "refreshHarvester": "Mettre à jour",
+    "reindexHarvesterRecords": "Reindex <strong>{{records}}</strong> records",
+    "reindexHarvesterRecordsHelp": "Reindex all records of the harvester.",
     "reindexRecords": "Réindexer {{records}} fiche(s) associée(s)",
     "reindexRecords-help": "Après la mise à jour des mots clés, quand les fiches utilisent des XLinks, le cache de XLinks doit être vidé et ces fiches doivent être réindéxées.",
     "related": "Associé",
