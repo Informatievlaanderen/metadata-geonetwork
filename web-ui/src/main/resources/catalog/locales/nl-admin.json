@@ -581,6 +581,8 @@
     "recordsStatistics": "metadata statistieken",
     "recordsType": "Type metadata items",
     "refreshHarvester": "Vernieuwen harvester",
+    "reindexHarvesterRecords": "Herindexeer <strong>{{records}}</strong> records",
+    "reindexHarvesterRecordsHelp": "Herindexeer alle records van de harvester.",
     "reindexRecords": "Herindexeer {{records}} gerelateerde item ( s )",
     "reindexRecords-help": "Na het aanpassen van keywords, dienen records die Xlinks naar deze thesaurus gebruiken, geherindexeerd worden.",
     "related": "verwant",
