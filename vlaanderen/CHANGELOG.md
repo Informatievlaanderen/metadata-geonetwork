@@ -23,7 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fix for duplicated fields when using DCAT templates - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/141) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/132)
 - Validation bugfix - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/165)
 - mobilityDCAT-AP
-  - Validation improvements, related to `dcat:theme` - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/143)
+  - Validation improvements, related to `dcat:theme` - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/143) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/189)
   - Property `accrualPeriodicity` can now be set properly - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/144)
   - DataService validation of mandatory properties - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/145)
   - Various label and translation improvements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/146) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/156) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/167) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/172) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/175)
@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - If no languages are defined they are automatically added if needed - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/160)
   - Improved Vcard support - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/174)
   - Added templates - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/185) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/186)
+  - Removed `dcat:Dataset/dct:rights` - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/190)
 - DCAT-AP-VL
   - Added OSLO standards thesaurus to DCAT-AP - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/158)
 
