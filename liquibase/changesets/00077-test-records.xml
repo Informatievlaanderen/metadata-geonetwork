@@ -33,6 +33,9 @@ from metadata where id = 108;
 
   <property name="test1.uuid" value="893c8f61-bcd8-40d8-aa41-0a7ebcd3f504"/>
   <property name="test2.uuid" value="bb4c9661-b40b-4393-992a-0b4c1f7ed901"/>
+  <property name="test3.uuid" value="a1b2c3d4-e5f6-7890-abcd-ef1234567890"/>
+  <property name="test4.uuid" value="b2c3d4e5-f6a7-8901-bcde-f12345678901"/>
+  <property name="harvester.uuid" value="d4e5f6a7-b8c9-0123-def0-123456789abc"/>
   <property name="groupid" value="1"/>
 
   <changeSet id="00077-test-records-1" author="joachim" contextFilter="!prd">
@@ -539,18 +542,92 @@ from metadata where id = 108;
     </insert>
   </changeSet>
 
+  <changeSet id="00077-harvester-source" author="vincent" contextFilter="!prd">
+    <insert tableName="sources">
+      <column name="creationdate" value="2026-04-06T10:00:00.000000Z"/>
+      <column name="islistableinheaderselector" value="n"/>
+      <column name="name" value="Test Harvester Bron"/>
+      <column name="type" value="harvester"/>
+      <column name="uuid" value="${harvester.uuid}"/>
+    </insert>
+    <insert tableName="sourcesdes">
+      <column name="iddes" value="${harvester.uuid}"/>
+      <column name="label" value="Test Harvester Bron"/>
+      <column name="langid" value="dut"/>
+    </insert>
+    <insert tableName="sourcesdes">
+      <column name="iddes" value="${harvester.uuid}"/>
+      <column name="label" value="Test Harvester Source"/>
+      <column name="langid" value="eng"/>
+    </insert>
+    <insert tableName="sourcesdes">
+      <column name="iddes" value="${harvester.uuid}"/>
+      <column name="label" value="Source de moissonnage test"/>
+      <column name="langid" value="fre"/>
+    </insert>
+    <insert tableName="sourcesdes">
+      <column name="iddes" value="${harvester.uuid}"/>
+      <column name="label" value="Test Harvester Quelle"/>
+      <column name="langid" value="ger"/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="00077-test-records-3-harvested-dcat" author="vincent" contextFilter="!prd">
+    <insert tableName="metadata">
+      <column name="changedate">2026-04-06T10:00:00.000000Z</column>
+      <column name="createdate">2026-04-06T10:00:00.000000Z</column>
+      <column name="displayorder">0</column>
+      <column name="groupowner">100</column>
+      <column name="isharvested">y</column>
+      <column name="harvestuuid">${harvester.uuid}</column>
+      <column name="istemplate">n</column>
+      <column name="owner">1</column>
+      <column name="popularity">0</column>
+      <column name="rating">0</column>
+      <column name="root">rdf:RDF</column>
+      <column name="schemaid">dcat-ap</column>
+      <column name="source">c678d0fb-894d-403f-b146-4b96706a1a16</column>
+      <column name="uuid">${test3.uuid}</column>
+      <column name="data">
+        <![CDATA[<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:spdx="http://spdx.org/rdf/terms#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:adms="http://www.w3.org/ns/adms#" xmlns:locn="http://www.w3.org/ns/locn#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2006/vcard/ns#" xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:schema="http://schema.org/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcatap="http://data.europa.eu/r5r/" xmlns:mdcat="https://data.vlaanderen.be/ns/metadata-dcat#" xmlns:mobilitydcatap="https://w3id.org/mobilitydcat-ap" xsi:schemaLocation="http://www.w3.org/1999/02/22-rdf-syntax-ns# http://www.openarchives.org/OAI/2.0/rdf.xsd">  <dcat:Catalog rdf:about="https://localhost:8080/geonetwork/srv/resources/catalogs/c678d0fb-894d-403f-b146-4b96706a1a16">    <dcat:contactPoint>      <vcard:Organization>        <vcard:organization-name>agentschap Digitaal Vlaanderen</vcard:organization-name>        <vcard:hasEmail rdf:resource="mailto:digitaal.vlaanderen@vlaanderen.be" />        <vcard:hasURL rdf:resource="https://www.vlaanderen.be/digitaal-vlaanderen" />      </vcard:Organization>    </dcat:contactPoint>    <dcat:dataset>      <dcat:Dataset rdf:about="http://localhost:8080/srv/resources/datasets/a1b2c3d4-e5f6-7890-abcd-ef1234567890">        <dcat:contactPoint>          <vcard:Organization rdf:about="https://contact.organisations/1">            <vcard:fn>Contact Punt</vcard:fn>            <vcard:organization-name xml:lang="nl">Punt's Organisatie</vcard:organization-name>            <vcard:hasEmail rdf:resource="mailto:contact@punt.be" />          </vcard:Organization>        </dcat:contactPoint>        <dcat:keyword xml:lang="nl">geharvest</dcat:keyword>        <dcat:keyword xml:lang="nl">test</dcat:keyword>        <dcat:theme>          <skos:Concept rdf:about="http://vocab.belgif.be/auth/datatheme/EDUC">            <skos:prefLabel xml:lang="nl">Onderwijs</skos:prefLabel>            <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme" />          </skos:Concept>        </dcat:theme>        <dct:accessRights>          <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC">            <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement" />            <skos:prefLabel xml:lang="nl">publiek</skos:prefLabel>            <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right" />          </skos:Concept>        </dct:accessRights>        <dct:description xml:lang="nl">Dit is een geharvest DCAT dataset record voor testdoeleinden.</dct:description>        <dct:identifier>a1b2c3d4-e5f6-7890-abcd-ef1234567890</dct:identifier>        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-04-06</dct:issued>        <dct:language>          <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NLD">            <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem" />            <skos:prefLabel xml:lang="nl">Nederlands</skos:prefLabel>            <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language" />          </skos:Concept>        </dct:language>        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-04-06</dct:modified>        <dct:publisher>          <foaf:Agent rdf:about="https://publisher.organisations.be/1">            <foaf:name xml:lang="nl">De Hoofduitgever</foaf:name>          </foaf:Agent>        </dct:publisher>        <dct:title xml:lang="nl">[test-7] Geharvest DCAT dataset</dct:title>        <mdcat:statuut>          <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA">            <skos:prefLabel xml:lang="nl">Vlaamse Open data</skos:prefLabel>            <skos:prefLabel xml:lang="en">Vlaamse Open data</skos:prefLabel>            <skos:prefLabel xml:lang="fr">Vlaamse Open data</skos:prefLabel>            <skos:prefLabel xml:lang="de">Vlaamse Open data</skos:prefLabel>            <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden" />          </skos:Concept>        </mdcat:statuut>      </dcat:Dataset>    </dcat:dataset>    <dcat:record>      <dcat:CatalogRecord rdf:about="http://localhost:8080/srv/api/records/a1b2c3d4-e5f6-7890-abcd-ef1234567890">        <foaf:primaryTopic rdf:resource="http://localhost:8080/srv/resources/datasets/a1b2c3d4-e5f6-7890-abcd-ef1234567890" />        <dct:modified>2026-04-06</dct:modified>        <dct:conformsTo>          <dct:Standard rdf:about="https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2019-10-03">            <dct:identifier>https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2019-10-03</dct:identifier>            <dct:title xml:lang="nl">DCAT-AP Vlaanderen</dct:title>          </dct:Standard>        </dct:conformsTo>        <dct:identifier>a1b2c3d4-e5f6-7890-abcd-ef1234567890</dct:identifier>      </dcat:CatalogRecord>    </dcat:record>    <dct:description xml:lang="nl">Deze catalogus bevat datasets ontsloten door agentschap Digitaal Vlaanderen</dct:description>    <dct:identifier>c678d0fb-894d-403f-b146-4b96706a1a16</dct:identifier>    <dct:issued>2019-09-01</dct:issued>    <dct:language>      <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NLD">        <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem" />        <skos:prefLabel xml:lang="nl">Nederlands</skos:prefLabel>        <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language" />      </skos:Concept>    </dct:language>    <dct:license>      <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0">        <dct:type>          <skos:Concept rdf:about="http://purl.org/adms/licencetype/PublicDomain">            <skos:prefLabel xml:lang="nl">Werk in het publiek domein</skos:prefLabel>            <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0" />          </skos:Concept>        </dct:type>        <dct:title xml:lang="nl">Creative Commons Zero verklaring</dct:title>      </dct:LicenseDocument>    </dct:license>    <dct:modified>2019-09-01</dct:modified>    <dct:publisher>      <foaf:Agent rdf:about="https://localhost:8080/geonetwork/srv/resources/organizations/agentschap%20Digitaal%20Vlaanderen">        <foaf:name xml:lang="nl">agentschap Digitaal Vlaanderen</foaf:name>      </foaf:Agent>    </dct:publisher>    <dct:title xml:lang="nl">Open Data Catalogus van agentschap Digitaal Vlaanderen</dct:title>    <foaf:homepage>      <foaf:Document rdf:about="http://localhost:8080/srv/dut/">        <foaf:name xml:lang="nl">Metadata Vlaanderen</foaf:name>      </foaf:Document>    </foaf:homepage>  </dcat:Catalog></rdf:RDF>]]>
+      </column>
+    </insert>
+  </changeSet>
+
+  <changeSet id="00077-test-records-4-harvested-iso" author="vincent" contextFilter="!prd">
+    <insert tableName="metadata">
+      <column name="changedate">2026-04-06T10:00:00.000000Z</column>
+      <column name="createdate">2026-04-06T10:00:00.000000Z</column>
+      <column name="displayorder">0</column>
+      <column name="groupowner">100</column>
+      <column name="isharvested">y</column>
+      <column name="harvestuuid">${harvester.uuid}</column>
+      <column name="istemplate">n</column>
+      <column name="owner">1</column>
+      <column name="popularity">0</column>
+      <column name="rating">0</column>
+      <column name="root">gmd:MD_Metadata</column>
+      <column name="schemaid">iso19139</column>
+      <column name="source">c678d0fb-894d-403f-b146-4b96706a1a16</column>
+      <column name="uuid">${test4.uuid}</column>
+      <column name="data">
+        <![CDATA[<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd"> <gmd:fileIdentifier> <gco:CharacterString>b2c3d4e5-f6a7-8901-bcde-f12345678901</gco:CharacterString> </gmd:fileIdentifier> <gmd:language> <gmd:LanguageCode codeList="https://www.loc.gov/standards/iso639-2/" codeListValue="dut">Nederlands</gmd:LanguageCode> </gmd:language> <gmd:characterSet> <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8">UTF-8</gmd:MD_CharacterSetCode> </gmd:characterSet> <gmd:hierarchyLevel> <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset" /> </gmd:hierarchyLevel> <gmd:contact> <gmd:CI_ResponsibleParty> <gmd:organisationName> <gco:CharacterString>agentschap Digitaal Vlaanderen</gco:CharacterString> </gmd:organisationName> <gmd:role> <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact" /> </gmd:role> </gmd:CI_ResponsibleParty> </gmd:contact> <gmd:dateStamp> <gco:DateTime>2026-04-06T10:00:00</gco:DateTime> </gmd:dateStamp> <gmd:metadataStandardName> <gco:CharacterString>ISO 19115</gco:CharacterString> </gmd:metadataStandardName> <gmd:metadataStandardVersion> <gco:CharacterString>2003/Cor 1:2006</gco:CharacterString> </gmd:metadataStandardVersion> <gmd:identificationInfo> <gmd:MD_DataIdentification> <gmd:citation> <gmd:CI_Citation> <gmd:title> <gco:CharacterString>[test-8] Geharvest ISO19139 dataset</gco:CharacterString> </gmd:title> <gmd:date> <gmd:CI_Date> <gmd:date> <gco:Date>2026-04-06</gco:Date> </gmd:date> <gmd:dateType> <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation" /> </gmd:dateType> </gmd:CI_Date> </gmd:date> </gmd:CI_Citation> </gmd:citation> <gmd:abstract> <gco:CharacterString>Dit is een geharvest ISO19139 dataset record voor testdoeleinden.</gco:CharacterString> </gmd:abstract> <gmd:pointOfContact> <gmd:CI_ResponsibleParty> <gmd:organisationName> <gco:CharacterString>agentschap Digitaal Vlaanderen</gco:CharacterString> </gmd:organisationName> <gmd:role> <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact" /> </gmd:role> </gmd:CI_ResponsibleParty> </gmd:pointOfContact> <gmd:language> <gmd:LanguageCode codeList="https://www.loc.gov/standards/iso639-2/" codeListValue="dut">Nederlands</gmd:LanguageCode> </gmd:language> <gmd:topicCategory> <gmd:MD_TopicCategoryCode>environment</gmd:MD_TopicCategoryCode> </gmd:topicCategory> </gmd:MD_DataIdentification> </gmd:identificationInfo></gmd:MD_Metadata>]]>
+      </column>
+    </insert>
+  </changeSet>
+
   <changeSet id="00077-test-records-publish-all" author="joachim" contextFilter="!prd">
     <sql>
       with content as (
-        select * from (select unnest(array[0,1,3,5,6]) op) ops, (select unnest(array['${test1.uuid}', '${test2.uuid}']) uuid) uuids
+        select * from (select unnest(array[0,1,3,5,6]) op) ops, (select unnest(array['${test1.uuid}', '${test2.uuid}', '${test3.uuid}', '${test4.uuid}']) uuid) uuids
       ) insert into operationallowed (groupid, metadataid, operationid) (select ${groupid}, metadata.id, content.op from content inner join metadata using (uuid));
     </sql>
     <sql>
-      with uuids as (select unnest(array['${test1.uuid}', '${test2.uuid}']) uuid)
+      with uuids as (select unnest(array['${test1.uuid}', '${test2.uuid}', '${test3.uuid}', '${test4.uuid}']) uuid)
       insert into metadatastatus (changedate, changemessage, metadataid, owner, userid, uuid, statusid) (select to_char(metadata.changedate::timestamptz+interval '1 minute', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"'), 'Enable workflow', metadata.id, 0, 1, uuid, 1 from uuids inner join metadata using (uuid));
     </sql>
     <sql>
-      with uuids as (select unnest(array['${test1.uuid}', '${test2.uuid}']) uuid)
+      with uuids as (select unnest(array['${test1.uuid}', '${test2.uuid}', '${test3.uuid}', '${test4.uuid}']) uuid)
       insert into metadatastatus (changedate, changemessage, metadataid, owner, userid, uuid, statusid) (select to_char(metadata.changedate::timestamptz+interval '2 minute', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"'), '', metadata.id, 0, 1, uuid, 2 from uuids inner join metadata using (uuid));
     </sql>
   </changeSet>
