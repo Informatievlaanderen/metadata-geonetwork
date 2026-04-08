@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### vlaanderen
 - Added new workflow status _approved-private_ for group-scoped publications - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51438)
 - Displaying harvester information for harvested DCAT records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51394)
+- Hiding specific unused view sections in sidebar - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51440)
 
 
 ## [8.5.0] - 2026-03-31
