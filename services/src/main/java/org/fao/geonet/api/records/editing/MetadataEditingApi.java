@@ -411,7 +411,8 @@ public class MetadataEditingApi {
                 if (((status.equals(StatusValue.Status.SUBMITTED))
                     // VL specific: custom status
                     || (status.equals(StatusValue.Status.APPROVED_FOR_PUBLISHED))
-                    || (status.equals(StatusValue.Status.APPROVED)))
+                    || (status.equals(StatusValue.Status.APPROVED))
+                    || (status.equals(StatusValue.Status.APPROVED_PRIVATE)))
                     && !isAllowedSubmitApproveInvalidMd) {
 
                     if (!forceValidationOnMdSave) {

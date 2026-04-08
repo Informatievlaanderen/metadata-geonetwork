@@ -564,7 +564,8 @@ public class MetadataWorkflowApi {
         if (((status.getStatus() == Integer.parseInt(StatusValue.Status.SUBMITTED))
             // VL specific: custom status
             || (status.getStatus() == Integer.parseInt(StatusValue.Status.APPROVED_FOR_PUBLISHED))
-            || (status.getStatus() == Integer.parseInt(StatusValue.Status.APPROVED)))
+            || (status.getStatus() == Integer.parseInt(StatusValue.Status.APPROVED))
+            || (status.getStatus() == Integer.parseInt(StatusValue.Status.APPROVED_PRIVATE)))
             && !isAllowedSubmitApproveInvalidMd) {
 
             metadataValidator.doValidate(metadata, context.getLanguage());

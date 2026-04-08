@@ -1,6 +1,7 @@
 @import "../../../style/custom/font.less";
 
 @fa-var-archive: "\f187";
+@fa-var-thumbs-up: "\f164";
 @fa-var-thumbs-down: "\f165";
 @fa-var-trash: "\f1f8";
 @fa-var-undo: "\f0e2";
@@ -49,6 +50,10 @@
 
 .gn-status-submitted_for_retired:before {
   content: @fa-var-archive;
+}
+
+.gn-status-approved_private:before {
+  content: @fa-var-thumbs-up;
 }
 
 // fix for slide toggle icon being too low

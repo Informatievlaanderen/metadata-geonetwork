@@ -682,6 +682,7 @@ public class DefaultStatusActions implements StatusActions {
         } else {
             String statusId = String.valueOf(status.getStatusValue().getId());
             if(Sets.newHashSet(StatusValue.Status.APPROVED,
+                StatusValue.Status.APPROVED_PRIVATE,
                 StatusValue.Status.RETIRED,
                 StatusValue.Status.REMOVED).contains(statusId)) {
                 userIdsToNotify.addAll(
@@ -852,6 +853,7 @@ public class DefaultStatusActions implements StatusActions {
         Sets.newHashSet(
                 StatusValue.Status.DRAFT,
                 StatusValue.Status.APPROVED,
+                StatusValue.Status.APPROVED_PRIVATE,
                 StatusValue.Status.RETIRED,
                 StatusValue.Status.SUBMITTED,
                 StatusValue.Status.REJECTED,
@@ -879,6 +881,10 @@ public class DefaultStatusActions implements StatusActions {
                 StatusValue.Status.SUBMITTED_FOR_RETIRED,
                 StatusValue.Status.SUBMITTED_FOR_REMOVED
         ));
+        result.get(StatusValue.Status.APPROVED_PRIVATE).addAll(Sets.newHashSet(
+            StatusValue.Status.SUBMITTED_FOR_RETIRED,
+            StatusValue.Status.SUBMITTED_FOR_REMOVED
+        ));
         result.get(StatusValue.Status.SUBMITTED_FOR_RETIRED).addAll(Sets.newHashSet(
             StatusValue.Status.REJECTED_FOR_RETIRED
         ));
@@ -903,22 +909,31 @@ public class DefaultStatusActions implements StatusActions {
         Map<String, Set<String>> result = getEditorFlow();
         result.get(StatusValue.Status.DRAFT).addAll(Sets.newHashSet(
                 StatusValue.Status.APPROVED_FOR_PUBLISHED,
-                StatusValue.Status.APPROVED
+                StatusValue.Status.APPROVED,
+                StatusValue.Status.APPROVED_PRIVATE
         ));
         result.get(StatusValue.Status.SUBMITTED).addAll(Sets.newHashSet(
                 StatusValue.Status.REJECTED,
                 StatusValue.Status.APPROVED_FOR_PUBLISHED,
-                StatusValue.Status.APPROVED
+                StatusValue.Status.APPROVED,
+                StatusValue.Status.APPROVED_PRIVATE
         ));
         result.get(StatusValue.Status.APPROVED_FOR_PUBLISHED).addAll(Sets.newHashSet(
                 StatusValue.Status.SUBMITTED,
                 StatusValue.Status.REJECTED,
                 StatusValue.Status.APPROVED,
+                StatusValue.Status.APPROVED_PRIVATE,
                 StatusValue.Status.REMOVED
         ));
         result.get(StatusValue.Status.APPROVED).addAll(Sets.newHashSet(
+                StatusValue.Status.APPROVED_PRIVATE,
                 StatusValue.Status.RETIRED,
                 StatusValue.Status.REMOVED
+        ));
+        result.get(StatusValue.Status.APPROVED_PRIVATE).addAll(Sets.newHashSet(
+            StatusValue.Status.APPROVED,
+            StatusValue.Status.RETIRED,
+            StatusValue.Status.REMOVED
         ));
         result.get(StatusValue.Status.SUBMITTED_FOR_RETIRED).addAll(Sets.newHashSet(
                 StatusValue.Status.RETIRED,
@@ -926,13 +941,16 @@ public class DefaultStatusActions implements StatusActions {
         ));
         result.get(StatusValue.Status.RETIRED).addAll(Sets.newHashSet(
                 StatusValue.Status.APPROVED,
+                StatusValue.Status.APPROVED_PRIVATE,
                 StatusValue.Status.REMOVED
         ));
         result.get(StatusValue.Status.REJECTED_FOR_RETIRED).addAll(Sets.newHashSet(
-                StatusValue.Status.APPROVED
+                StatusValue.Status.APPROVED,
+                StatusValue.Status.APPROVED_PRIVATE
         ));
         result.get(StatusValue.Status.SUBMITTED_FOR_REMOVED).addAll(Sets.newHashSet(
                 StatusValue.Status.APPROVED,
+                StatusValue.Status.APPROVED_PRIVATE,
                 StatusValue.Status.RETIRED,
                 StatusValue.Status.REMOVED
         ));
