@@ -190,6 +190,24 @@
       </div>
 
       <div
+        class="panel panel-default gn-margin-top gn-margin-bottom"
+        data-ng-if="mdView.current.record.isHarvested === 'true'"
+      >
+        <div class="panel-body">
+          <i class="fa fa-fw fa-cloud-download"></i>
+          {{'harvestedRecordVia' | translate}}
+          <a
+            data-ng-if="harvestedSourceName && harvestedSourceSearchUrl"
+            data-ng-href="{{harvestedSourceSearchUrl}}"
+            target="_blank"
+            rel="noopener"
+            >{{harvestedSourceName}}</a
+          >
+          <span data-ng-if="!harvestedSourceName">...</span>
+        </div>
+      </div>
+
+      <div
         data-ng-show="gnMdViewObj.usingFormatter"
         id="gn-metadata-display"
         class="gn-metadata-display"

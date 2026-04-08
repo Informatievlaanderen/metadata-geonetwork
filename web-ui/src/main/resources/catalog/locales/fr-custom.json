@@ -15,6 +15,7 @@
   "disclaimer": "Disclaimer",
   "exportDCAT": "Export (RDF/XML)",
   "facet-harvesterUuid": "Harvester",
+  "harvestedRecordVia": "Enregistrement moissonné via",
   "facet-MD_LegalConstraintsUseLimitationObject.default.keyword": "Droits d'accès",
   "facet-OrgForResourceObject": "Organisation",
   "facet-accessRights": "Accessibilité",

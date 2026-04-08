@@ -45,24 +45,6 @@
     data-types="parent"
   ></div>
 
-  <div
-    class="panel panel-default gn-margin-top gn-margin-bottom"
-    data-ng-if="mdView.current.record.isHarvested === 'true'"
-  >
-    <div class="panel-body">
-      <i class="fa fa-fw fa-cloud-download"></i>
-      Geharvest record via
-      <a
-        data-ng-if="harvestedSourceName && harvestedSourceSearchUrl"
-        data-ng-href="{{harvestedSourceSearchUrl}}"
-        target="_blank"
-        rel="noopener"
-        >{{harvestedSourceName}}</a
-      >
-      <span data-ng-if="!harvestedSourceName">...</span>
-    </div>
-  </div>
-
   <p data-ng-bind-html="(mdView.current.record.resourceAbstract) | linky | newlines"></p>
 
   <p data-ng-if="mdView.current.record.purpose">
