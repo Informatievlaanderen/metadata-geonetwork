@@ -7,10 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [8.5.1-SNAPSHOT]
 
 ### vlaanderen
+- Added new workflow status _approved-private_ for group-scoped publications - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51438)
 - Displaying harvester information for harvested DCAT records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51394)
 
 
-## [8.5.0-SNAPSHOT]
+## [8.5.0] - 2026-03-31
 
 ### vlaanderen
 - Contribute menu only available in main portal now - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/47677)
