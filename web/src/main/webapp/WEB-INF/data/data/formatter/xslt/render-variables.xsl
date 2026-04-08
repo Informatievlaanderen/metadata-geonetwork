@@ -47,6 +47,12 @@
   <!-- To display all views defined in config-editor.xml -->
   <xsl:param name="viewMenu" select="'false'"/>
 
+  <!-- To display the "provided by" content in the side panel -->
+  <xsl:param name="viewProvidedBy" select="'false'"/>
+
+  <!-- To display the "side access" content in the side panel -->
+  <xsl:param name="viewSideAccess" select="'false'"/>
+
   <!-- Define if the formatter output also the record as JSON-LD. -->
   <xsl:param name="withJsonLd" select="'true'"/>
 
