@@ -58,6 +58,7 @@
   "mailUs": "Mail us",
   "managedByDp": "<b>Warning</b><br/><i>{{groupName}}</i> is a DataPublicatie group. Your record will be assigned to a workflow that includes inspection by the DataPublicatie team.",
   "mdStatus-approved": "Approved and published",
+  "mdStatus-approved_private": "Published privately",
   "mdStatus-approved_for_published": "Ready for publication",
   "mdStatus-draft": "Draft",
   "mdStatus-rejected": "Rejected",

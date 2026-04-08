@@ -229,6 +229,7 @@ public class StatusValue extends Localized {
         public static final String REMOVED  = "12";
         public static final String REJECTED_FOR_RETIRED = "13";
         public static final String REJECTED_FOR_REMOVED = "14";
+        public static final String APPROVED_PRIVATE = "15";
     }
 
     /**
