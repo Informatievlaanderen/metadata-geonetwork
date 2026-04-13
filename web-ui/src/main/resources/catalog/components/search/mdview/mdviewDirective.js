@@ -38,8 +38,9 @@
     "gnMdViewObj",
     "gnMdView",
     "gnGlobalSettings",
+    "gnConfig",
     "$filter",
-    function (gnMdViewObj, gnMdView, gnGlobalSettings, $filter) {
+    function (gnMdViewObj, gnMdView, gnGlobalSettings, gnConfig, $filter) {
       return {
         restrict: "A",
         scope: {
@@ -75,6 +76,19 @@
               ) {
                 url = $filter("setUrlPlaceholder")(
                   gnGlobalSettings.gnCfg.mods.recordview.appUrl
+                );
+              }
+
+              // If on the default node and the record belongs to a
+              // subcatalog, redirect into that subcatalog's context.
+              if (
+                gnGlobalSettings.isDefaultNode &&
+                scope.md.sourceCatalogue &&
+                scope.md.sourceCatalogue !== gnGlobalSettings.nodeId
+              ) {
+                url = url.replace(
+                  "/" + gnGlobalSettings.nodeId + "/",
+                  "/" + scope.md.sourceCatalogue + "/"
                 );
               }
               var url =
