@@ -1494,6 +1494,7 @@
     <xsl:param name="editInfo"/>
     <xsl:param name="parentEditInfo" required="no"/>
     <xsl:param name="isRequired" required="no"/>
+    <xsl:param name="delConfirm" required="no"/>
 
     <xsl:if
       test="(($parentEditInfo and (
@@ -1510,7 +1511,9 @@
         $parentEditInfo else $editInfo"/>
 
       <a class="btn pull-right"
-         data-gn-click-and-spin="remove({$elementToRemove/@ref}, {$elementToRemove/@parent}, {$editInfo/@ref})"
+         data-gn-click-and-spin="{if ($delConfirm and $delConfirm != '')
+           then concat('removeWithConfirm(', $elementToRemove/@ref, ', ', $elementToRemove/@parent, ', ', $editInfo/@ref, ', ''', $delConfirm, ''')')
+           else concat('remove(', $elementToRemove/@ref, ', ', $elementToRemove/@parent, ', ', $editInfo/@ref, ')')}"
          data-gn-field-highlight-remove="{$editInfo/@ref}"
          data-toggle="tooltip" data-placement="top" title="{{{{'deleteField' | translate}}}}">
         <i class="fa fa-times text-danger gn-control"></i>

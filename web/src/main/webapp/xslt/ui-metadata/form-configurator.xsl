@@ -116,6 +116,7 @@
                                     else '/'"/>
     <xsl:if test="$isDisplayed">
       <xsl:variable name="del" select="@del"/>
+      <xsl:variable name="delConfirm" select="@delConfirm"/>
 
       <xsl:variable name="nodes">
         <saxon:call-template name="{concat('evaluate-', $schema)}">
@@ -161,6 +162,7 @@
 
                   <xsl:call-template name="render-form-field-control-remove">
                     <xsl:with-param name="editInfo" select="$refToDelete"/>
+                    <xsl:with-param name="delConfirm" select="$delConfirm"/>
                   </xsl:call-template>
                 </xsl:if>
               </legend>

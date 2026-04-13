@@ -619,6 +619,19 @@
           }
         );
       };
+      $scope.removeWithConfirm = function (ref, parent, domRef, confirmKey) {
+        $scope.pendingRemove = { ref: ref, parent: parent, domRef: domRef };
+        $scope.removeConfirmMessage = confirmKey;
+        $("#confirm-remove-element").modal("show");
+        return $q.resolve();
+      };
+      $scope.confirmRemove = function () {
+        var p = $scope.pendingRemove;
+        if (p) {
+          $scope.remove(p.ref, p.parent, p.domRef);
+          $scope.pendingRemove = null;
+        }
+      };
       $scope.removeAttribute = function (ref) {
         return gnEditor.removeAttribute(gnCurrentEdit.id, ref);
       };

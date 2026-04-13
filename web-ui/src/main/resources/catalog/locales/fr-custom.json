@@ -16,6 +16,8 @@
   "exportDCAT": "Export (RDF/XML)",
   "facet-harvesterUuid": "Harvester",
   "harvestedRecordVia": "Enregistrement moissonné via",
+  "confirmRemoveElementTitle": "Confirmer la suppression",
+  "removeApplicationProfileWarning": "Lors de la suppression d'un profil d'application, l'enregistrement peut contenir des champs en dehors du profil d'application sélectionné. Ceux-ci sont conservés, mais ne sont pas modifiables dans l'éditeur en vue standard ; ils le sont uniquement dans la vue XML.",
   "facet-MD_LegalConstraintsUseLimitationObject.default.keyword": "Droits d'accès",
   "facet-OrgForResourceObject": "Organisation",
   "facet-accessRights": "Accessibilité",
