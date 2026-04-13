@@ -16,6 +16,8 @@
   "exportDCAT": "Exporteer (RDF/XML)",
   "facet-harvesterUuid": "Harvester",
   "harvestedRecordVia": "Geharvest record via",
+  "confirmRemoveElementTitle": "Verwijdering bevestigen",
+  "removeApplicationProfileWarning": "Bij het verwijderen van het applicatieprofiel, bevat de record mogelijk velden buiten het gekozen applicatieprofiel. Die blijven bewaard maar zijn niet bewerkbaar in de editor in standaard-weergave, wel in de xml-weergave.",
   "facet-MD_LegalConstraintsUseLimitationObject.default.keyword": "Toegangsrechten",
   "facet-OrgForResourceObject": "Organisatie",
   "facet-accessRights": "Toegankelijkheid",

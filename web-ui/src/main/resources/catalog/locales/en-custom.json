@@ -16,6 +16,8 @@
   "exportDCAT": "Export (RDF/XML)",
   "facet-harvesterUuid": "Harvester",
   "harvestedRecordVia": "Harvested record via",
+  "confirmRemoveElementTitle": "Confirm removal",
+  "removeApplicationProfileWarning": "When removing an application profile, the record may contain fields that fall outside the selected application profile. These fields are retained but are not editable in the editor in the standard view; they can only be edited in the XML view.",
   "facet-MD_LegalConstraintsUseLimitationObject.default.keyword": "Access rights",
   "facet-OrgForResourceObject": "Organisation",
   "facet-accessRights": "Accessibility",
