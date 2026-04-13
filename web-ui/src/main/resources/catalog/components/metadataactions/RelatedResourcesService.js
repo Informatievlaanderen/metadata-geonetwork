@@ -192,21 +192,6 @@
             );
             return window.open(mdUrl, "_blank");
           }
-          // On a subcatalog, open catalog-origin records in the default node
-          // (they may not be accessible within the subcatalog's filtered context).
-          if (!gnGlobalSettings.isDefaultNode && r && r.origin === "catalog") {
-            var mdUrl =
-              window.location.origin +
-              window.location.pathname +
-              window.location.search +
-              "#/metadata/" +
-              r.id;
-            mdUrl = mdUrl.replace(
-              "/" + gnGlobalSettings.nodeId + "/",
-              "/" + gnConfig.env.defaultNode + "/"
-            );
-            return window.open(mdUrl, "_blank");
-          }
           return (window.location.hash = "#/metadata/" + r.id);
         } else {
           return openLink(r);
