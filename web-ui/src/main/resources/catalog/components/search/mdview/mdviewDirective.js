@@ -91,6 +91,18 @@
                   "/" + scope.md.sourceCatalogue + "/"
                 );
               }
+              // If on a subcatalog and the record doesn't belong here,
+              // redirect to the default node (srv).
+              if (
+                !gnGlobalSettings.isDefaultNode &&
+                scope.md.sourceCatalogue &&
+                scope.md.sourceCatalogue !== gnGlobalSettings.nodeId
+              ) {
+                url = url.replace(
+                  "/" + gnGlobalSettings.nodeId + "/",
+                  "/" + gnConfig.env.defaultNode + "/"
+                );
+              }
               var url =
                 url +
                 "#/" +

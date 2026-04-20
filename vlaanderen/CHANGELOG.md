@@ -13,6 +13,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added CC BY 4.0 license - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/48808) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/138)
 - Improved spatialResolution validation in ISO - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/49487)
 - Removed option to create Templates - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/49947?_a=files)
+- Redirect to subportal from subcatalog - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/50869)
+- Display confirmation when removing application profile - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51514)
 
 ### core
 - Added OSLO Datastandaarden thesaurus for use in ISO - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/48724) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/127)
