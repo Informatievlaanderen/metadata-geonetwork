@@ -1215,7 +1215,8 @@
           // * links by type eg. link:OGC
           columns: "@",
           labels: "@",
-          agg: "="
+          agg: "=",
+          catalogContext: "=?"
         },
         link: function (scope, element, attrs, controller) {
           var initialized = false;
