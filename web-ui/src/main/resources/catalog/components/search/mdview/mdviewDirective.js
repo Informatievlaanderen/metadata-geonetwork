@@ -48,7 +48,8 @@
           formatter: "=gnFormatter",
           records: "=gnRecords",
           selector: "@gnMetadataOpenSelector",
-          appUrl: "@?"
+          appUrl: "@?",
+          catalogContext: "=?"
         },
         link: function (scope, element, attrs, controller) {
           scope.$watch("md", function (n, o) {
@@ -79,16 +80,15 @@
                 );
               }
 
-              // If on the default node and the record belongs to a
-              // subcatalog, redirect into that subcatalog's context.
+              // When a catalog context is provided (e.g. viewing a virtual
+              // catalogue's children), navigate into that catalogue's portal.
               if (
-                gnGlobalSettings.isDefaultNode &&
-                scope.md.sourceCatalogue &&
-                scope.md.sourceCatalogue !== gnGlobalSettings.nodeId
+                scope.catalogContext &&
+                scope.catalogContext !== gnGlobalSettings.nodeId
               ) {
                 url = url.replace(
                   "/" + gnGlobalSettings.nodeId + "/",
-                  "/" + scope.md.sourceCatalogue + "/"
+                  "/" + scope.catalogContext + "/"
                 );
               }
               var url =
@@ -303,12 +303,14 @@
           function getPortals() {
             var url = "../api/sources?type=subportal";
             $http.get(url, { cache: true }).then(function (response) {
-              scope.displayBrowseCatalogButton =
-                gnGlobalSettings.nodeId === scope.record.uuid
-                  ? false
-                  : response.data.filter(function (p) {
-                      return p.uuid === scope.record.uuid;
-                    }).length === 1;
+              var hasPortal =
+                gnGlobalSettings.nodeId !== scope.record.uuid &&
+                response.data.filter(function (p) {
+                  return p.uuid === scope.record.uuid;
+                }).length === 1;
+
+              scope.displayBrowseCatalogButton = hasPortal;
+              scope.portalUuid = hasPortal ? scope.record.uuid : undefined;
 
               addDetailsToRecord();
             });
