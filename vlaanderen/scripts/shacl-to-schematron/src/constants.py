@@ -1,135 +1,15 @@
-shaclSpecsConfig = [
-    {
-        'name': 'schematron-rules-mdcat',
-        # 'level': 'sh:Violation',
-        'title': {
-            'dut': 'Metadata DCAT - Verplicht',
-            'eng': 'Metadata DCAT - Mandatory',
-            'fre': 'Metadata DCAT - Obligatoire',
-            'ger': 'Metadata DCAT - Obligatorisch'
-        },
-        'url': 'https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2022-04-21/shacl/metadata-voor-services-ap-SHACL.ttl',
-        'profile': 'https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat'
-    },
-    {
-      'name': 'schematron-rules-mdcat-rec',
-      'level': 'sh:Warning',
-      'title': {
-        'dut': 'Metadata DCAT - Aanbevolen',
-        'eng': 'Metadata DCAT - Recommended',
-        'fre': 'Metadata DCAT - Recommandé',
-        'ger': 'Metadata DCAT - Empfohlen'
-      },
-      'url': 'https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2022-04-21/shacl/metadata-voor-services-ap-SHACL.ttl',
-      'profile': 'https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat'
-    },
-    # {
-    #     'name': 'schematron-rules-dcat-ap-vl',
-    #     'level': 'sh:Violation',
-    #     'title': {
-    #         'dut': 'DCAT-AP-Vlaanderen - Verplicht',
-    #         'eng': 'DCAT-AP-Vlaanderen - Mandatory',
-    #         'fre': 'DCAT-AP-Vlaanderen - Obligatoire',
-    #         'ger': 'DCAT-AP-Vlaanderen - Obligatorisch'
-    #     },
-    #     'url': 'https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12/shacl/DCAT-AP-VL-SHACL.ttl',
-    #     'profile': 'https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL'
-    # },
-    # {
-    #   'name': 'schematron-rules-dcat-ap-vl',
-    #   'level': 'sh:Warning',
-    #   'title': {
-    #     'dut': 'DCAT-AP-Vlaanderen - Aanbevolen',
-    #     'eng': 'DCAT-AP-Vlaanderen - Recommended',
-    #     'fre': 'DCAT-AP-Vlaanderen - Recommandé',
-    #     'ger': 'DCAT-AP-Vlaanderen - Empfohlen'
-    #   },
-    #   'url': 'https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12/shacl/DCAT-AP-VL-SHACL.ttl',
-    #   'profile': 'https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL'
-    # },
-    {
-      'name': 'schematron-rules-mobility-110',
-      'level': 'sh:Violation',
-      'title': {
-        'dut': 'Mobility (v1.1.0)',
-        'eng': 'Mobility (v1.1.0)',
-        'fre': 'Mobility (v1.1.0)',
-        'ger': 'Mobility (v1.1.0)',
-      },
-      'url': 'https://raw.githubusercontent.com/mobilityDCAT-AP/mobilityDCAT-AP/refs/heads/gh-pages/releases/1.1.0/shaclShapes/mobilitydcat-ap_shacl_shapes.ttl',
-      'profile': 'https://w3id.org/mobilitydcat-ap/releases/1.1.0/'
-    },
-  {
-    'name': 'schematron-rules-mobility-110-rec',
-    'level': 'sh:Warning',
-    'title': {
-      'dut': 'Mobility - Recommended (v1.1.0)',
-      'eng': 'Mobility - Recommended (v1.1.0)',
-      'fre': 'Mobility - Recommended (v1.1.0)',
-      'ger': 'Mobility - Recommended (v1.1.0)',
-    },
-    'url': 'https://raw.githubusercontent.com/mobilityDCAT-AP/mobilityDCAT-AP/refs/heads/gh-pages/releases/1.1.0/shaclShapes/mobilitydcat-ap_shacl_shapes.ttl',
-    'profile': 'https://w3id.org/mobilitydcat-ap/releases/1.1.0/'
-  }
-    # {
-    #     'name': 'schematron-rules-mdcat-rec',
-    #     'title': {
-    #         'dut': 'Aanbevolen metadata-dcat',
-    #         'eng': 'Recommended metadata-dcat',
-    #         'fre': 'Recommended metadata-dcat',
-    #         'ger': 'Recommended metadata-dcat',
-    #     },
-    #     'url': 'https://raw.githubusercontent.com/Informatievlaanderen/OSLOthema-metadataVoorServices/validation/release/metadata_dcat.jsonld',
-    #     'profile': 'https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat',
-    #     'level': 'sh:Warning'
-    # },
-    # {
-    #     'name': 'schematron-rules-dcat-ap-vl',
-    #     'title': {
-    #         'dut': 'Bijkomende vereisten van DCAT-AP-Vlaanderen',
-    #         'eng': 'Mandatory DCAT-AP-Vl Rules',
-    #         'fre': 'Mandatory DCAT-AP-Vl Rules',
-    #         'ger': 'Mandatory DCAT-AP-Vl Rules',
-    #     },
-    #
-    #     'url': [
-    #         'https://raw.githubusercontent.com/Informatievlaanderen/OSLOthema-metadataVoorServices/validation/release/dcatapvl.jsonld',
-    #         # 'https://raw.githubusercontent.com/Informatievlaanderen/OSLOthema-metadataVoorServices/validation/release/dcatapvl-usagenotes.jsonld'
-    #         'https://raw.githubusercontent.com/Informatievlaanderen/OSLOthema-metadataVoorServices/6b6cc4a86c33f640b2d9825ff33f5dbb25251137/release/dcatapvl-usagenotes.jsonld'
-    #     ],
-    #     'profile': 'https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL'
-    # },
-    # {
-    #     'name': 'schematron-rules-dcat-ap-vl-rec',
-    #     'title': {
-    #         'dut': 'Aanbevolen DCAT-AP-Vlaanderen',
-    #         'eng': 'Recommended DCAT-AP-Vl Rules',
-    #         'fre': 'Recommended DCAT-AP-Vl Rules',
-    #         'ger': 'Recommended DCAT-AP-Vl Rules',
-    #     },
-    #     'url': [
-    #         'https://raw.githubusercontent.com/Informatievlaanderen/OSLOthema-metadataVoorServices/validation/release/dcatapvl.jsonld',
-    #         # 'https://raw.githubusercontent.com/Informatievlaanderen/OSLOthema-metadataVoorServices/validation/release/dcatapvl-usagenotes.jsonld'
-    #         'https://raw.githubusercontent.com/Informatievlaanderen/OSLOthema-metadataVoorServices/6b6cc4a86c33f640b2d9825ff33f5dbb25251137/release/dcatapvl-usagenotes.jsonld'
-    #     ],
-    #     'profile': 'https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL',
-    #     'level': 'sh:Warning'
-    # },
-    # {
-    #     'name': 'schematron-rules-dcat-ap',
-    #     'title': {
-    #         'dut': 'Aanbevolen DCAT-AP',
-    #         'eng': 'Recommended DCAT-AP Rules',
-    #         'fre': 'Recommended DCAT-AP Rules',
-    #         'ger': 'Recommended DCAT-AP Rules',
-    #     },
-    #     'url': [
-    #         'https://semiceu.github.io/DCAT-AP/releases/3.0.0/html/shacl/shapes_recommended.ttl'
-    #     ],
-    #     'profile': 'http://data.europa.eu/r5r#',
-    #     'level': 'sh:Warning'
-    # }
-]
+import os
+import yaml
+
+
+def _loadConfig():
+    config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'config.yaml'))
+    with open(config_path, 'r', encoding='utf-8') as f:
+        data = yaml.safe_load(f)
+    return data.get('specs', [])
+
+
+shaclSpecsConfig = _loadConfig()
 
 schOutput = '../core-geonetwork/schemas/dcat2/src/main/plugin/dcat2/schematron'
 locOutput = '../core-geonetwork/schemas/dcat2/src/main/plugin/dcat2/loc'
@@ -194,4 +74,3 @@ uriSwaps = {
 
 primaryLanguage = 'nl'
 fallbackLanguages = ['en']
-
