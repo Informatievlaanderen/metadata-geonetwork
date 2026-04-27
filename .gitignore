@@ -95,3 +95,4 @@ web/src/main/webapp/WEB-INF/data/data/resources/schemapublication
 docker-compose.dev.yml
 web/src/main/webapp/WEB-INF/data/config/schema_plugins/dcat2
 web/harvester*.log
+vlaanderen/scripts/shacl-to-schematron/core-geonetwork

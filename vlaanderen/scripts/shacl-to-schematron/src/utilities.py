@@ -6,23 +6,66 @@ from xml.dom import minidom
 
 import requests
 
-from constants import dcatNamespaces, fullnameSwaps, schNamespaces, uriSwaps
+from constants import dcatNamespaces, fallbackLanguages, fullnameSwaps, primaryLanguage, schNamespaces, uriSwaps
 
 
 def loadJsonUrl(url):
+    content_type = ''
+    text = ''
     if url.startswith('http://') or url.startswith('https://'):
-        text = requests.get(url).text
+        response = requests.get(url)
+        response.raise_for_status()
+        content_type = response.headers.get('Content-Type', '')
+        text = response.text
     else:
         file_path = abspath(url)
         logging.debug('Reading file ' + file_path)
-        file = open(file_path, 'r')
-        text = file.read()
-        file.close()
+        with open(file_path, 'r', encoding='utf-8') as file:
+            text = file.read()
+
+    if _isTurtleSource(url, content_type):
+        logging.debug('Converting Turtle source to JSON-LD: %s', url)
+        text = convertTurtleToJsonLd(text, url)
 
     return json.loads(text)
 
 
+def _isTurtleSource(url, content_type):
+    lower_url = url.lower().split('?', 1)[0]
+    lower_type = content_type.lower()
+    return lower_url.endswith('.ttl') or \
+        lower_url.endswith('.turtle') or \
+        'text/turtle' in lower_type or \
+        'application/x-turtle' in lower_type
+
+
+def convertTurtleToJsonLd(ttl_text, source=''):
+    try:
+        from rdflib import Graph
+    except ImportError as err:
+        raise ImportError('rdflib is required to convert Turtle SHACL files to JSON-LD') from err
+
+    graph = Graph()
+    graph.parse(data=ttl_text, format='turtle', publicID=source if source else None)
+    jsonld_text = graph.serialize(format='json-ld', indent=2)
+    return jsonld_text.decode('utf-8') if isinstance(jsonld_text, bytes) else jsonld_text
+
+
 def getFullName(uri):
+    if not isinstance(uri, str):
+        logging.error(
+            'getFullName expected str but received %s: %r',
+            type(uri).__name__,
+            uri
+        )
+        raise TypeError(
+            'getFullName expected uri as str, got {0}: {1!r}'.format(type(uri).__name__, uri)
+        )
+
+    # Already a compact prefixed name (e.g. "dct:issued")
+    if ':' in uri and '://' not in uri and not uri.startswith('_:'):
+        return fullnameSwaps.get(uri, uri)
+
     fullname = None
     for ns, nsUri in (list(dcatNamespaces.items()) + list(schNamespaces.items())):
         if str.startswith(uri, nsUri):
@@ -35,7 +78,7 @@ def getFullName(uri):
         else:
             return fullname
     else:
-        raise Exception('Could not find namespace for uri ' + uri)
+        raise Exception('Could not find namespace for uri ' + uri + '. Add its namespace to constants.py.')
 
 
 def safeRemove(arr, elem):
@@ -82,3 +125,94 @@ def castArray(var):
     if not isinstance(var, list):
         var = [var]
     return var
+
+
+def getLanguageValue(source, propertyName=None, preferredLanguage=None, fallbackLangs=None, default=''):
+    if propertyName is not None:
+        if not isinstance(source, dict) or propertyName not in source:
+            return default
+        source = source[propertyName]
+
+    if source is None:
+        return default
+
+    if isinstance(source, str):
+        return source
+
+    if isinstance(source, dict):
+        preferredLanguage = primaryLanguage if preferredLanguage is None else preferredLanguage
+        fallbackLangs = fallbackLanguages if fallbackLangs is None else fallbackLangs
+
+        if preferredLanguage in source and isinstance(source[preferredLanguage], str):
+            return source[preferredLanguage]
+
+        for lang in fallbackLangs:
+            if lang in source and isinstance(source[lang], str):
+                return source[lang]
+
+        for value in source.values():
+            if isinstance(value, str):
+                return value
+
+    return str(source) if source != '' else default
+
+
+def _collapseIri(iri):
+    """Convert a full IRI to a compact prefixed name using known namespaces, or return it as-is."""
+    for ns, nsUri in (list(dcatNamespaces.items()) + list(schNamespaces.items())):
+        if iri.startswith(nsUri):
+            compact = ns + ':' + iri[len(nsUri):]
+            return fullnameSwaps.get(compact, compact)
+    return iri
+
+
+def _extractJsonLdValue(values):
+    """
+    Normalise a JSON-LD value array to a plain Python value:
+    - list of language-tagged strings  -> {lang: value} dict  (e.g. sh:name)
+    - single {@id: iri}                -> compact prefixed name
+    - single {@value: x}               -> str(x)
+    - anything else                    -> returned unchanged
+    """
+    if not isinstance(values, list):
+        return values
+
+    # Language-tagged strings -> language map
+    if values and all(isinstance(v, dict) and '@language' in v for v in values):
+        return {v['@language']: v['@value'] for v in values}
+
+    # Single IRI reference
+    if len(values) == 1 and isinstance(values[0], dict) and '@id' in values[0]:
+        try:
+            return _collapseIri(values[0]['@id'])
+        except Exception:
+            return values[0]['@id']
+
+    # Single plain literal
+    if len(values) == 1 and isinstance(values[0], dict) and '@value' in values[0]:
+        return str(values[0]['@value'])
+
+    # Multiple IRI references
+    if all(isinstance(v, dict) and '@id' in v for v in values):
+        return [_collapseIri(v['@id']) for v in values]
+
+    return values
+
+
+def normalizeExpandedNode(node):
+    """
+    Convert an expanded JSON-LD node (full IRI keys + value arrays) to compact
+    form (prefixed keys + plain Python values) so SchematronRule can process it
+    the same way it handles compacted JSON-LD sources.
+
+    Special JSON-LD keys (@id, @type, @value, @language) are preserved unchanged.
+    """
+    result = {}
+    for key, value in node.items():
+        if key.startswith('@'):
+            result[key] = value  # keep @id, @type etc. as-is
+        else:
+            compact_key = _collapseIri(key)
+            result[compact_key] = _extractJsonLdValue(value)
+    return result
+

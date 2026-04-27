@@ -17,7 +17,12 @@ class SchematronGenerator:
         self.name = name
         self.title = title
         self.profile = profile
+        self.locKeyPrefix = self._getLocKeyPrefix()
         self.rules = self._getDefaultRules()
+        self.locEntries = {}
+        self._patternTitleIndex = 1
+        self._patternAssertIndex = 1
+        self._patternReportIndex = 1
 
     def addRule(self, rule):
         rulePattern = rule.getPatternElement()
@@ -26,20 +31,23 @@ class SchematronGenerator:
 
     def generateSchematron(self):
         root = schEl('sch', 'schema')
-        title = schSubEl(root, 'sch', 'title')
-        title.set('xmlns', 'http://www.w3.org/2001/XMLSchema')
-        title.text = '{$loc/strings/schematron.title}'
 
         for dcatNs in dcatNamespaces:
             nsEl = schSubEl(root, 'sch', 'ns')
             nsEl.set('prefix', dcatNs)
             nsEl.set('uri', dcatNamespaces[dcatNs])
 
+        title = schSubEl(root, 'sch', 'title')
+        title.set('xmlns', 'http://www.w3.org/2001/XMLSchema')
+        title.text = '{$loc/strings/schematron.title}'
+
         if self.profile is not None:
             addLet(root, 'profile', 'boolean(/*[starts-with(//dcat:CatalogRecord//dct:Standard/@rdf:about, \'{0}\')])'.format(self.profile))
 
         for rule in self.rules:
             root.append(rule)
+
+        self._externalizeRuleText(root)
 
         Path(schOutput).mkdir(parents=True, exist_ok=True)
         writeXmlToFile(root, Path(schOutput + '/' + self.name + '.sch').resolve())
@@ -50,7 +58,42 @@ class SchematronGenerator:
             root = ET.Element('strings')
             locTitle = ET.SubElement(root, 'schematron.title')
             locTitle.text = self.title[loc]
+            for key in sorted(self.locEntries.keys()):
+                locEl = ET.SubElement(root, key)
+                locEl.text = self.locEntries[key]
             writeXmlToFile(root, Path(locOutput + '/' + loc + '/' + self.name + '.xml').resolve())
+
+    def _externalizeRuleText(self, root):
+        for pattern in root.findall('sch:pattern', schNamespaces):
+            for title in pattern.findall('sch:title', schNamespaces):
+                self._localizeElementText(title, 'pattern.title', '_patternTitleIndex')
+
+            rule = pattern.find('sch:rule', schNamespaces)
+            if rule is None:
+                continue
+
+            for assertEl in rule.findall('sch:assert', schNamespaces):
+                self._localizeElementText(assertEl, 'pattern.assert', '_patternAssertIndex')
+
+            for reportEl in rule.findall('sch:report', schNamespaces):
+                self._localizeElementText(reportEl, 'pattern.report', '_patternReportIndex')
+
+    def _localizeElementText(self, element, keyPrefix, counterName):
+        if element.text is None:
+            return
+
+        text = element.text.strip()
+        if text == '' or text.startswith('$loc/strings/'):
+            return
+
+        currentIndex = getattr(self, counterName)
+        key = '{0}.{1}.{2}'.format(self.locKeyPrefix, keyPrefix, currentIndex)
+        self.locEntries[key] = text
+        element.text = '$loc/strings/{0}'.format(key)
+        setattr(self, counterName, currentIndex + 1)
+
+    def _getLocKeyPrefix(self):
+        return self.name.replace('schematron-rules-', '', 1)
 
     def _getDefaultRules(self):
         filename = Path('custom_rules/' + self.name + '.sch').resolve()
