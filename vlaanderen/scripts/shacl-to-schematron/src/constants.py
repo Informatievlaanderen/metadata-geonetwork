@@ -49,7 +49,9 @@ dcatNamespaces = {
     'content': 'http://www.w3.org/2011/content',
     'org': 'http://www.w3.org/ns/org',
     'dcat-ap': 'http://data.europa.eu/r5r/',
-    'dqv': 'http://www.w3.org/ns/dqv'
+    'dqv': 'http://www.w3.org/ns/dqv',
+    'eli': 'http://data.europa.eu/eli/ontology',
+    'time': 'http://www.w3.org/2006/time'
 }
 
 fullnameSwaps = {

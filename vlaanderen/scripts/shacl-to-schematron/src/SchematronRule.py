@@ -9,11 +9,11 @@ class SchematronRule:
 
     def __init__(self, prop, targetClass, withProfile):
         self.prop = prop
-        self.targetClass = targetClass
+        self.targetClass = castArray(targetClass)  # always a list
         self.withProfile = withProfile
 
     def getPatternElement(self):
-        rule = self._defineRule() if self.targetClass != 'dcat:Catalog' else None
+        rule = self._defineRule() if not all(c == 'dcat:Catalog' for c in self.targetClass) else None
         if rule is not None:
             pattern = schEl('sch', 'pattern')
             patternName = getLanguageValue(self.prop, 'sh:name')
@@ -36,24 +36,34 @@ class SchematronRule:
         else:
             return None
 
+    def _expandTargetClasses(self):
+        """Expand dcat:Resource to Dataset|DataService, deduplicate."""
+        expanded = []
+        for c in self.targetClass:
+            if c == 'dcat:Resource':
+                for ec in ['dcat:Dataset', 'dcat:DataService']:
+                    if ec not in expanded:
+                        expanded.append(ec)
+            else:
+                if c not in expanded:
+                    expanded.append(c)
+        return expanded
+
     def _getParentContext(self):
-        if self.targetClass == 'dcat:Resource':
-            return '//dcat:Dataset|//dcat:DataService' if not self.withProfile else '//dcat:Dataset[$profile]|//dcat:DataService[$profile]'
-        else:
-            context = '//' + self.targetClass
-            return context if not self.withProfile else context + '[$profile]'
+        classes = self._expandTargetClasses()
+        suffix = '[$profile]' if self.withProfile else ''
+        return '|'.join('//' + c + suffix for c in classes)
 
     def _getContext(self):
         fullname = getFullName(self.prop['sh:path'])
-        if self.withProfile:
-            fullname += '[$profile]'
-        if self.targetClass == 'dcat:Resource':
-            return '//dcat:Dataset/{0}|//dcat:DataService/{0}'.format(fullname)
-        else:
-            return '//{0}/{1}'.format(self.targetClass, fullname)
+        classes = self._expandTargetClasses()
+        prop_part = fullname + ('[$profile]' if self.withProfile else '')
+        return '|'.join('//{0}/{1}'.format(c, prop_part) for c in classes)
 
     def _getCleanContext(self):
-        return '//{0}/{1}'.format(self.targetClass, getFullName(self.prop['sh:path']))
+        fullname = getFullName(self.prop['sh:path'])
+        classes = self._expandTargetClasses()
+        return '|'.join('//{0}/{1}'.format(c, fullname) for c in classes)
 
     def _defineRule(self):
         try:

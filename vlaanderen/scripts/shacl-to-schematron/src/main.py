@@ -205,20 +205,23 @@ def hasTarget(node):
 
 
 def getTargetClass(shape):
-    targetClass = ''
     target_objects_of = shape.get('sh:targetObjectsOf')
-    target_class = shape.get('sh:targetClass')
+    target_classes_raw = shape.get('sh:targetClass')
 
-    if target_objects_of is None and target_class is None:
+    if target_objects_of is None and target_classes_raw is None:
         raise Exception('Target class could not be found in shape {0}'.format(shape.get('@id', '<unknown>')))
-    if target_objects_of is not None:
-        targetClass += (target_objects_of if ':' in target_objects_of else getFullName(target_objects_of)) + '/'
-    if target_class is not None:
-        targetClass += target_class if ':' in target_class else getFullName(target_class)
-    else:
-        targetClass += '*'
 
-    return targetClass
+    prefix = ''
+    if target_objects_of is not None:
+        prefix = (target_objects_of if ':' in target_objects_of else getFullName(target_objects_of)) + '/'
+
+    if target_classes_raw is not None:
+        raw_list = castArray(target_classes_raw)
+        classes = [tc if ':' in tc else getFullName(tc) for tc in raw_list]
+    else:
+        classes = ['*']
+
+    return [prefix + c for c in classes] if prefix else classes
 
 
 if __name__ == '__main__':
