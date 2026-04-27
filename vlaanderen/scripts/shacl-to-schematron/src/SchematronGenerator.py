@@ -3,8 +3,8 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from os.path import isfile
 
-from constants import dcatNamespaces, locOutput, schOutput, schNamespaces
-from utilities import addLet, writeXmlToFile, schEl, schSubEl
+from constants import dcatNamespaces, enableTranslation, locOutput, schOutput, schNamespaces, primaryLanguage
+from utilities import addLet, writeXmlToFile, schEl, schSubEl, translateText
 
 
 class SchematronGenerator:
@@ -53,14 +53,31 @@ class SchematronGenerator:
         writeXmlToFile(root, Path(schOutput + '/' + self.name + '.sch').resolve())
 
     def generateLocFiles(self):
+        _langMap = {'dut': 'nl', 'eng': 'en', 'fre': 'fr', 'ger': 'de'}
+
+        if not enableTranslation:
+            logging.debug('Translation disabled by configuration; localization files will use source text for all locales.')
+
         for loc in self.title:
             Path(locOutput + '/' + loc).mkdir(parents=True, exist_ok=True)
             root = ET.Element('strings')
             locTitle = ET.SubElement(root, 'schematron.title')
             locTitle.text = self.title[loc]
+
+            lang_code = _langMap.get(loc, loc)
+            primary_lang = _langMap.get(primaryLanguage, primaryLanguage)
+
             for key in sorted(self.locEntries.keys()):
                 locEl = ET.SubElement(root, key)
-                locEl.text = self.locEntries[key]
+                text = self.locEntries[key]
+
+                # Translate if target language differs from primary
+                if enableTranslation and lang_code != primary_lang:
+                    translated = translateText(text, targetLanguage=lang_code, sourceLanguage=primary_lang)
+                    locEl.text = translated
+                else:
+                    locEl.text = text
+
             writeXmlToFile(root, Path(locOutput + '/' + loc + '/' + self.name + '.xml').resolve())
 
     def _externalizeRuleText(self, root):

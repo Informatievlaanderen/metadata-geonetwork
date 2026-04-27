@@ -6,7 +6,7 @@ from xml.dom import minidom
 
 import requests
 
-from constants import dcatNamespaces, fallbackLanguages, fullnameSwaps, primaryLanguage, schNamespaces, uriSwaps
+from constants import dcatNamespaces, enableTranslation, fallbackLanguages, fullnameSwaps, primaryLanguage, schNamespaces, uriSwaps
 
 
 def loadJsonUrl(url):
@@ -215,4 +215,65 @@ def normalizeExpandedNode(node):
             compact_key = _collapseIri(key)
             result[compact_key] = _extractJsonLdValue(value)
     return result
+
+
+_translation_cache = {}
+
+
+def translateText(text, targetLanguage='en', sourceLanguage='nl'):
+    """
+    Translate text using argostranslate (power behind LibreTranslate).
+    Results are cached to avoid redundant API calls.
+
+    Args:
+        text: Text to translate
+        targetLanguage: Target language code (e.g., 'en', 'fr', 'de')
+        sourceLanguage: Source language code (default 'nl')
+
+    Returns:
+        Translated text, or original text if translation fails or models not installed.
+
+    Note:
+        Requires argostranslate language models to be installed.
+        Install with argospm, for example:
+        argospm install translate-nl_en translate-en_fr translate-en_de
+    """
+    if not enableTranslation:
+        return text
+
+    if not text or not isinstance(text, str) or targetLanguage == sourceLanguage:
+        return text
+
+    cache_key = (text, targetLanguage, sourceLanguage)
+    if cache_key in _translation_cache:
+        return _translation_cache[cache_key]
+
+    try:
+        import argostranslate.translate
+        logging.getLogger('argostranslate').setLevel(logging.WARNING)
+        logging.getLogger('argostranslate.utils').setLevel(logging.WARNING)
+
+        def _translate(src_text, src_lang, dst_lang):
+            return argostranslate.translate.translate(src_text, src_lang, dst_lang)
+
+        if sourceLanguage == 'nl' and targetLanguage in ['fr', 'de']:
+            intermediate = _translate(text, 'nl', 'en')
+            translated = _translate(intermediate, 'en', targetLanguage)
+        else:
+            translated = _translate(text, sourceLanguage, targetLanguage)
+
+        _translation_cache[cache_key] = translated
+        logging.debug('Translated "%s" to %s: "%s"', text[:30], targetLanguage, translated[:30])
+        return translated
+    except Exception as err:
+        logging.debug(
+            'Translation to %s failed for "%s": %s. Using original text. '
+            '(Hint: Install models with argospm, eg translate-nl_en translate-en_fr translate-en_de)',
+            targetLanguage, text[:30], str(err)
+        )
+        _translation_cache[cache_key] = text
+        return text
+
+
+
 

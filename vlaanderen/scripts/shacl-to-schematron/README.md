@@ -1,53 +1,237 @@
-# SHACL to Schematron conversion script
+# SHACL to Schematron Conversion Script
 
-This script can be used to convert a JSON-LD [SHACL](https://www.w3.org/TR/shacl/) specification file to GeoNetwork valid schematron validation files.
+Converts SHACL (RDF validation) specifications to Schematron XSD validation files for use in GeoNetwork metadata editors.
 
+## Overview
 
-# Delete schematron from db
+This tool automates the conversion of [SHACL](https://www.w3.org/TR/shacl/) specifications (in Turtle or JSON-LD format) into Schematron validation rules. The generated rules are deployed to GeoNetwork and automatically validate metadata against your configured profiles.
 
-When loading new schematrons **names**, the tables must be cleared first to then allow GeoNetwork to regenerate them
-```sql
-delete from schematroncriteria;
-delete from schematroncriteriagroup;
-delete from schematrondes;
-delete from schematron;
-```
+**Supported SHACL constraints:**
+- `sh:minCount` / `sh:maxCount` (cardinality)
+- `sh:datatype` (literal types: string, langString, anyURI, date/dateTime)
+- `sh:class` (resource class validation)
+- `sh:nodeKind` (IRI, Literal, BlankNodeOrIRI)
+- `sh:pattern` (regex validation)
+- `sh:or` (multiple alternative constraints)
+- `sh:uniqueLang` (language tag uniqueness)
+- `sh:hasValue` (exact value matching)
+- `sh:node` / `sh:property` (nested shape restrictions)
 
-## Install dependencies and run the script
+---
 
-Setup python environment:
+## Setup
 
-```shell
+### Prerequisites
+
+```bash
 sudo apt install python3.14-venv pip
 ```
 
-Create virtual environment, install dependencies and run the script:
-```shell
+### Installation
+
+```bash
 cd vlaanderen/scripts/shacl-to-schematron
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements.txt
+pip install -r requirements.txt
+```
+
+#### Localization
+
+The script generates localization files with all message strings in Dutch (`dut` locale). This allows GeoNetwork to display validation messages in Dutch by default.
+
+**Optional: Automatic Translation**
+
+To enable automatic translation to English, French, and German:
+
+1. Install optional dependencies:
+   ```bash
+   pip install -r requirements-optional.txt
+   ```
+
+2. Install translation models:
+   ```bash
+   .venv/bin/argospm update
+   .venv/bin/argospm install translate-nl_en
+   .venv/bin/argospm install translate-en_fr
+   .venv/bin/argospm install translate-en_de
+   ```
+
+3. Re-run the conversion. Translation will now happen automatically for all locales.
+
+The translation flow is:
+- Dutch → English: direct model (`translate-nl_en`)
+- Dutch → French: Dutch → English → French
+- Dutch → German: Dutch → English → German
+
+**Note:** If translation setup is skipped or fails, the script continues successfully and generates only Dutch localization files. You can also manually translate the generated Dutch loc files to other languages.
+
+---## Configuration
+
+Edit `config.yaml` to enable/disable profiles and add new SHACL sources:
+
+```yaml
+specs:
+  - name: schematron-rules-mdcat
+    level: sh:Violation        # optional: filter by severity
+    title:
+      dut: Metadata DCAT - Verplicht
+      eng: Metadata DCAT - Mandatory
+    url: https://example.com/shapes.ttl
+    profile: https://example.com/profile-uri
+```
+
+**Configuration fields:**
+- `name`: output filename prefix (generates `{name}.sch` + localization files)
+- `url`: Turtle/JSON-LD source (can be local file or HTTP URL)
+- `profile`: URI used to filter rules by profile context (optional)
+- `level`: filter rules by severity (`sh:Violation`, `sh:Warning`) (optional)
+- `title`: human-readable title in multiple languages (used in generated files)
+
+### Turtle Format Support
+
+The script automatically detects and converts Turtle (`.ttl`) files to JSON-LD before processing. 
+
+---
+
+## Running the Conversion
+
+```bash
 cd src
 python main.py
 ```
 
-## SHACL rules
+**Output:**
+- Schematron files: `../core-geonetwork/schemas/dcat2/src/main/plugin/dcat2/schematron/{name}.sch`
+- Localization files: `../core-geonetwork/schemas/dcat2/src/main/plugin/dcat2/loc/{language}/{name}.xml`
 
-See [configuration file](src/constants.py).
+Log output shows:
+- Profiles processed
+- Rules extracted and skipped
+- Statistics per profile
 
+### Localization
 
-* dcat-ap 2.1.1 https://semiceu.github.io/DCAT-AP/releases/2.1.1/ / here as well: shapes, range, recommended, ...,
-* dcat-ap 3.0.0 https://semiceu.github.io/DCAT-AP/releases/3.0.0/ / there are multiple files defined here (shapes.ttl, range.ttl, shapes_recommended.ttl),
-* mobility 1.1.0 https://mobilitydcat-ap.github.io/mobilityDCAT-AP/releases/1.1.0/index.html
-  * https://mobilitydcat-ap.github.io/mobilityDCAT-AP/releases/1.1.0/validationFiles/mobilitydcat-ap_shacl_shapes.ttl
-* mobility 3.0.0 https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/index.html / this one has two shacls, for basic and range constraints,
-* healthdcat-ap 6 https://healthdataeu.pages.code.europa.eu/healthdcat-ap/releases/release-6/ (based on dcat3, https://healthdataeu.pages.code.europa.eu/healthdcat-ap/releases/release-6/#validation-of-healthdcat-ap mentions multiple files, with an additional split for public and non-public
-* https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/ 
-  * https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2022-04-21/shacl/metadata-voor-services-ap-SHACL.ttl,
-* https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2022-04-21/
-  * https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2022-04-21/shacl/DCAT-AP-VL-20-SHACL.ttl
-* https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/ (current version, 3)
-  * https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12/shacl/DCAT-AP-VL-SHACL.ttl
+By default, the script generates localization files with all message strings in Dutch (`dut` locale).
 
+**To enable automatic translation to other languages:**
 
-Profile URI should match editor configuration. See https://github.com/metadata101/dcat-ap/blob/main/src/main/plugin/dcat-ap/dcat-profiles.xsl
+1. Install optional dependencies: `pip install -r requirements-optional.txt`
+2. Install language models:
+   - `.venv/bin/argospm update`
+   - `.venv/bin/argospm install translate-nl_en`
+   - `.venv/bin/argospm install translate-en_fr`
+   - `.venv/bin/argospm install translate-en_de`
+3. Re-run the conversion
+
+When translation is active, the script generates localization files for all configured languages:
+- `loc/dut/` — Dutch (original)
+- `loc/eng/` — English (auto-translated)
+- `loc/fre/` — French (auto-translated)
+- `loc/ger/` — German (auto-translated)
+
+**Manual translation (if auto-translation is not set up):**
+
+1. Copy the generated Dutch loc file: `loc/dut/schematron-rules-*.xml`
+2. Create translations for `eng`, `fre`, `ger` folders with the same filename
+3. Translate all `<{key}>` element text values, keeping keys unchanged
+4. Save to the appropriate language subfolder
+
+**Example structure:**
+```
+loc/
+├── dut/schematron-rules-mdcat.xml  (Dutch - generated by script)
+├── eng/schematron-rules-mdcat.xml  (English - auto-translated or manual)
+├── fre/schematron-rules-mdcat.xml  (French - auto-translated or manual)
+└── ger/schematron-rules-mdcat.xml  (German - auto-translated or manual)
+```
+---
+
+## Deploying to GeoNetwork
+
+After generating new Schematron files:
+
+### 1. Clear existing definitions from database
+
+```sql
+DELETE FROM schematroncriteria;
+DELETE FROM schematroncriteriagroup;
+DELETE FROM schematrondes;
+DELETE FROM schematron;
+```
+
+### 2. Copy generated files to GeoNetwork plugin directory
+
+```bash
+cp schematron/*.sch /path/to/geonetwork/gn-core/src/main/plugin/dcat2/schematron/
+cp -r loc/* /path/to/geonetwork/gn-core/src/main/plugin/dcat2/loc/
+```
+
+### 3. Restart GeoNetwork
+
+GeoNetwork will automatically load and register all `.sch` files or use the API http://localhost:8080/geonetwork/srv/api/standards/reload.
+
+### 4. Configure Editor Profiles
+
+Update your metadata editor XSL to reference the profile URIs you configured (see [dcat-profiles.xsl](https://github.com/metadata101/dcat-ap/blob/main/src/main/plugin/dcat-ap/dcat-profiles.xsl))
+
+---
+
+## Available SHACL Specifications
+
+### Flanders Profiles
+- **Metadata DCAT** (2022-04-21)
+  - URL: `https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2022-04-21/shacl/metadata-voor-services-ap-SHACL.ttl`
+  - Profile: `https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat`
+
+- **DCAT-AP-VL** (current: 3, 2026-02-12)
+  - URL: `https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12/shacl/DCAT-AP-VL-SHACL.ttl`
+  - Profile: `https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL`
+
+### European Profiles
+- **DCAT-AP 2.1.1 & 3.0.0**
+  - https://semiceu.github.io/DCAT-AP/releases/
+
+- **Mobility DCAT-AP 1.1.0**
+  - URL: `https://raw.githubusercontent.com/mobilityDCAT-AP/mobilityDCAT-AP/refs/heads/gh-pages/releases/1.1.0/shaclShapes/mobilitydcat-ap_shacl_shapes.ttl`
+  - Profile: `https://w3id.org/mobilitydcat-ap/releases/1.1.0/`
+
+### Health DCAT-AP 6
+- https://healthdataeu.pages.code.europa.eu/healthdcat-ap/releases/release-6/
+
+---
+
+## Troubleshooting
+
+### rdflib warnings about malformed literals
+- **Cause:** Source SHACL file has invalid typed literals (e.g., `"abc"^^xsd:integer`)
+- **Action:** These are logged at DEBUG level and don't block conversion. The script continues processing.
+- **Fix:** Report to the SHACL provider or manually correct the source file.
+
+### `TypeError: getFullName expected uri as str, got list`
+- **Cause:** SHACL property value is a list instead of string (usually from incomplete JSON-LD processing)
+- **Action:** Check the source SHACL file structure. Enable DEBUG logging for details.
+
+### No schematron rules generated
+- **Check:**
+  - Is the profile URI in `config.yaml` correct?
+  - Does your SHACL file have rules matching the configured severity level?
+  - Are required fields (`sh:name`, `sh:description`, `sh:path`) present?
+
+### Output files are empty or missing
+- **Check:** Verify the output directory paths in `constants.py` exist and are writable.
+- **Verify:** Check logs for errors during `generateSchematron()` or `generateLocFiles()`.
+
+---
+
+## Development
+
+### Adding New SHACL Constraint Types
+
+1. Add handling in `SchematronRule._defineRule()`, following the existing patterns
+2. Test with sample SHACL first
+3. Update this README with the new constraint type
+
+### Extending Localization
+
+Edit `SchematronGenerator` to support additional languages in loc/ output files.

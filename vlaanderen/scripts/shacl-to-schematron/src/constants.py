@@ -76,3 +76,4 @@ uriSwaps = {
 
 primaryLanguage = 'nl'
 fallbackLanguages = ['en']
+enableTranslation = False
