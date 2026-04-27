@@ -44,14 +44,14 @@ dcatNamespaces = {
     'generiek': 'http://data.vlaanderen.be/ns/generiek#',
     'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
     'sh': 'http://www.w3.org/ns/shacl#',
-    'mobilitydcatap': 'https://w3id.org/mobilitydcat-ap',
-    'oa': 'http://www.w3.org/ns/oa',
-    'content': 'http://www.w3.org/2011/content',
-    'org': 'http://www.w3.org/ns/org',
+    'mobilitydcatap': 'https://w3id.org/mobilitydcat-ap#',
+    'oa': 'http://www.w3.org/ns/oa#',
+    'content': 'http://www.w3.org/2011/content#',
+    'org': 'http://www.w3.org/ns/org#',
     'dcat-ap': 'http://data.europa.eu/r5r/',
-    'dqv': 'http://www.w3.org/ns/dqv',
-    'eli': 'http://data.europa.eu/eli/ontology',
-    'time': 'http://www.w3.org/2006/time'
+    'dqv': 'http://www.w3.org/ns/dqv#',
+    'eli': 'http://data.europa.eu/eli/ontology#',
+    'time': 'http://www.w3.org/2006/time#'
 }
 
 fullnameSwaps = {
