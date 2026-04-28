@@ -10,6 +10,20 @@ import requests
 from constants import dcatNamespaces, enableTranslation, fallbackLanguages, fullnameSwaps, primaryLanguage, schNamespaces, uriSwaps
 
 
+def _applyUriSwap(uri):
+    if not isinstance(uri, str):
+        return uri
+
+    if uri in uriSwaps:
+        return uriSwaps[uri]
+
+    for source, target in uriSwaps.items():
+        if uri.startswith(source):
+            return target + uri[len(source):]
+
+    return uri
+
+
 def loadJsonUrl(url):
     content_type = ''
     text = ''
@@ -63,6 +77,7 @@ def getFullName(uri, source=None):
             'getFullName expected uri as str, got {0}: {1!r}'.format(type(uri).__name__, uri)
         )
 
+    uri = _applyUriSwap(uri)
     source_hint = '' if source is None else ' (source: {0})'.format(source)
 
     # Blank nodes are not valid QName targets for Schematron/XPath contexts.
@@ -177,6 +192,7 @@ def _collapseIri(iri):
     #         'Normalization should resolve SHACL references before QName conversion.'.format(iri)
     #     )
 
+    iri = _applyUriSwap(iri)
     for ns, nsUri in (list(dcatNamespaces.items()) + list(schNamespaces.items())):
         if iri.startswith(nsUri):
             compact = ns + ':' + iri[len(nsUri):]

@@ -76,12 +76,11 @@ def generateFromSpec(config):
                             targetClass,
                             bool(config['profile'])
                         )
+                        schematron.addRule(rule)
                         if rule.isCardinalityRule():
                             hasCardinalityRules = True
                             stats['cardinalityProcessed'] += 1
                             cardinalitySchematron.addCardinalityRule(rule)
-                        else:
-                            schematron.addRule(rule)
                     else:
                         stats['skipped'] += 1
         # If ttl are converted to JSON-LD, then we have an array
@@ -100,12 +99,11 @@ def generateFromSpec(config):
                         )
                         isCardinality = rule.isCardinalityRule()
                         logging.debug('   * Property %s (severity: %s, isCardinality: %s)', prop.get('sh:path'), prop.get('sh:severity'), isCardinality)
+                        schematron.addRule(rule)
                         if isCardinality:
                             hasCardinalityRules = True
                             stats['cardinalityProcessed'] += 1
                             cardinalitySchematron.addCardinalityRule(rule)
-                        else:
-                            schematron.addRule(rule)
                     else:
                         stats['skipped'] += 1
         else:

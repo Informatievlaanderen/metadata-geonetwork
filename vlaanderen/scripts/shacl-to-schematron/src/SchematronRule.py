@@ -1,7 +1,7 @@
 import logging
 import json
 
-from constants import expressions, omitRules
+from constants import classAliases, expressions, omitRules
 from utilities import addLet, getFullName, getLanguageValue, normalizeExpandedNode, safeRemove, schEl, schSubEl, swapURI, castArray
 
 
@@ -41,7 +41,7 @@ class SchematronRule:
         return pattern
 
     def getPatternElement(self):
-        rule = self._defineRule() if not all(c == 'dcat:Catalog' for c in self.targetClass) else None
+        rule = self._defineRule()
         if rule is not None:
             pattern = schEl('sch', 'pattern')
             patternName = getLanguageValue(self.prop, 'sh:name')
@@ -64,16 +64,19 @@ class SchematronRule:
             return None
 
     def _expandTargetClasses(self):
-        """Expand dcat:Resource to Dataset|DataService, deduplicate."""
+        """Expand dcat:Resource to Dataset|DataService|DatasetSeries, deduplicate."""
         expanded = []
         for c in self.targetClass:
             if c == 'dcat:Resource':
-                for ec in ['dcat:Dataset', 'dcat:DataService']:
+                for ec in ['dcat:Dataset', 'dcat:DataService', 'dcat:DatasetSeries']:
                     if ec not in expanded:
                         expanded.append(ec)
             else:
                 if c not in expanded:
                     expanded.append(c)
+                for alias in classAliases.get(c, []):
+                    if alias not in expanded:
+                        expanded.append(alias)
         return expanded
 
     def _getParentContext(self):
@@ -96,55 +99,26 @@ class SchematronRule:
         try:
             rule = schEl('sch', 'rule')
             fullname = getFullName(self.prop['sh:path'], 'sh:path')
+            nodeKind = self._normalizeNodeKind(self.prop.get('sh:nodeKind'))
 
             if self.prop['@id'] in omitRules:
                 return None
 
             # Collect all assertion conditions for this property
             assertions = []
-            has_cardinality = 'sh:minCount' in self.prop or 'sh:maxCount' in self.prop
             context_set = False
 
-            # Handle cardinality constraints (can be combined with other constraints)
-            if 'sh:minCount' in self.prop and 'sh:maxCount' in self.prop:
-                rule.set('context', self._getParentContext())
-                context_set = True
-                addLet(rule, 'validMin', 'count({0}) >= {1}'.format(fullname, self.prop['sh:minCount']))
-                addLet(rule, 'validMax', 'count({0}) <= {1}'.format(fullname, self.prop['sh:maxCount']))
-                assertions.append(['validMin', 'validMax'])
-
-            elif 'sh:maxCount' in self.prop:
-                rule.set('context', self._getParentContext())
-                context_set = True
-                addLet(rule, 'validMax', 'count({0}) <= {1}'.format(fullname, self.prop['sh:maxCount']))
-                assertions.append('validMax')
-
-            elif 'sh:minCount' in self.prop:
-                rule.set('context', self._getParentContext())
-                context_set = True
-                addLet(rule, 'validMin', 'count({0}) >= {1}'.format(fullname, self.prop['sh:minCount']))
-                assertions.append('validMin')
-
-            # Handle other constraints - these are now processed independently
-            # to allow combination with cardinality constraints
-
-            if 'sh:class' in self.prop and not has_cardinality:
+            # Handle non-cardinality constraints. Cardinalities are generated in dedicated files.
+            if 'sh:class' in self.prop:
                 if not context_set:
                     rule.set('context', self._getContext())
                     context_set = True
                 className = getFullName(self.prop['sh:class'], 'sh:class')
-                localXpath = className if className != 'dcat:Resource' else 'dcat:Dataset|dcat:DataService'
-                globalXpath = '//' + className if className != 'dcat:Resource' else '(//dcat:Dataset|//dcat:DataService)'
                 addLet(rule, 'resource', '@rdf:resource')
-                if fullname == 'vcard:hasEmail':
-                    addLet(rule, 'validClass', 'matches($resource, {0})'.format(expressions['email']))
-                elif className == 'dcat:DataService' or className == 'dcat:Dataset' or className == 'rdfs:Resource':
-                    addLet(rule, 'validClass', 'matches($resource, {0})'.format(expressions['uri']))
-                else:
-                    addLet(rule, 'validClass', 'count({0}) = 1 or count({1}[@rdf:about = $resource]) = 1'.format(localXpath, globalXpath))
+                addLet(rule, 'validClass', self._buildClassValidationExpression(className, fullname, '$resource'))
                 assertions.append('validClass')
 
-            if 'sh:uniqueLang' in self.prop and self.prop['sh:uniqueLang'] == 'true' and not has_cardinality:
+            if 'sh:uniqueLang' in self.prop and self._isTruthyConstraint(self.prop['sh:uniqueLang']):
                 if not context_set:
                     rule.set('context', self._getContext())
                     context_set = True
@@ -153,14 +127,14 @@ class SchematronRule:
                 addLet(rule, 'isUniqueLang', 'count(preceding-sibling::{0}[string() = string($current) and @xml:lang = $current/@xml:lang]) = 0'.format(target))
                 assertions.append('isUniqueLang')
 
-            if 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') in ['rdfs:Literal', 'xs:string'] and not has_cardinality:
+            if 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') in ['rdfs:Literal', 'xs:string']:
                 if not context_set:
                     rule.set('context', self._getContext())
                     context_set = True
                 addLet(rule, 'isLiteral', 'normalize-space(.) != \'\'')
                 assertions.append('isLiteral')
 
-            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') == 'rdf:langString' and not has_cardinality:
+            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') == 'rdf:langString':
                 if not context_set:
                     rule.set('context', self._getContext())
                     context_set = True
@@ -168,7 +142,7 @@ class SchematronRule:
                 addLet(rule, 'hasLang', 'normalize-space(@xml:lang) != \'\'')
                 assertions.append(['isLiteral', 'hasLang'])
 
-            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') == 'xs:anyURI' and not has_cardinality:
+            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') == 'xs:anyURI':
                 if not context_set:
                     rule.set('context', self._getContext())
                     context_set = True
@@ -176,7 +150,7 @@ class SchematronRule:
                 addLet(rule, 'isURI', 'matches(@rdf:resource, {0})'.format(expressions['uri']))
                 assertions.append(['isNotEmpty', 'isURI'])
 
-            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') in ['xs:dateTime', 'xs:date'] and not has_cardinality:
+            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') in ['xs:dateTime', 'xs:date']:
                 if not context_set:
                     rule.set('context', self._getContext())
                     context_set = True
@@ -184,7 +158,7 @@ class SchematronRule:
                 addLet(rule, 'isDate', 'matches(., {0})'.format(expressions['dateAndDateTime']))
                 assertions.append(['isNotEmpty', 'isDate'])
 
-            if self._hasConceptSchemeNodeRestriction() and not has_cardinality:
+            if self._hasConceptSchemeNodeRestriction():
                 if not context_set:
                     rule.set('context', self._getContext())
                     context_set = True
@@ -193,34 +167,50 @@ class SchematronRule:
                 addLet(rule, 'hasValue', "skos:Concept/skos:inScheme/@rdf:resource = '{0}'".format(value))
                 assertions.append('hasValue')
 
-            elif 'sh:hasValue' in self.prop and not has_cardinality:
+            elif 'sh:hasValue' in self.prop:
                 if not context_set:
                     rule.set('context', self._getContext())
                     context_set = True
                 addLet(rule, 'hasValue', "string() = '{0}' or */@rdf:about = '{0}' or ./@rdf:resource = '{0}'".format(self.prop['sh:hasValue']))
                 assertions.append('hasValue')
 
-            if 'sh:or' in self.prop and not has_cardinality:
+            if 'sh:or' in self.prop:
                 alternatives = self._getOrAlternatives()
-                iriPatterns = [alt['sh:pattern'] for alt in alternatives if alt.get('sh:nodeKind') == 'sh:IRI' and 'sh:pattern' in alt]
-                if len(iriPatterns) > 0:
+                iriPatterns = [
+                    alt['sh:pattern'] for alt in alternatives
+                    if self._normalizeNodeKind(alt.get('sh:nodeKind')) == 'sh:IRI' and 'sh:pattern' in alt
+                ]
+                classAlternatives = [
+                    getFullName(alt['sh:class'], 'sh:or/sh:class') for alt in alternatives if 'sh:class' in alt
+                ]
+                if len(iriPatterns) > 0 or len(classAlternatives) > 0:
                     if not context_set:
                         rule.set('context', self._getContext())
                         context_set = True
                     addLet(rule, 'resource', '(@rdf:resource, */@rdf:about)[1]')
-                    addLet(rule, 'isIRI', 'matches($resource, {0})'.format(expressions['uri']))
-                    addLet(rule, 'matchesOrPattern', self._buildOrPatternExpression(iriPatterns))
-                    assertions.append(['isIRI', 'matchesOrPattern'])
+                    alternativeChecks = []
+
+                    if len(iriPatterns) > 0:
+                        iriPatternExpr = self._buildOrPatternExpression(iriPatterns)
+                        alternativeChecks.append('(matches($resource, {0}) and {1})'.format(expressions['uri'], iriPatternExpr))
+
+                    if len(classAlternatives) > 0:
+                        classChecks = [
+                            self._buildClassValidationExpression(className, fullname, '$resource') for className in classAlternatives
+                        ]
+                        alternativeChecks.append('({0})'.format(' or '.join(classChecks)))
+
+                    addLet(rule, 'matchesOrAlternative', '({0})'.format(' or '.join(alternativeChecks)))
+                    assertions.append('matchesOrAlternative')
                 else:
                     self._logMissingRuleConversion()
-                    return None
 
-            if 'sh:pattern' in self.prop and not has_cardinality:
+            if 'sh:pattern' in self.prop:
                 if not context_set:
                     rule.set('context', self._getContext())
                     context_set = True
                 patternValue = self.prop['sh:pattern']
-                if 'sh:nodeKind' in self.prop and self.prop['sh:nodeKind'] == 'sh:IRI':
+                if nodeKind == 'sh:IRI':
                     addLet(rule, 'resource', '(@rdf:resource, */@rdf:about)[1]')
                     addLet(rule, 'isIRI', 'matches($resource, {0})'.format(expressions['uri']))
                     addLet(rule, 'matchesPattern', "matches($resource, '{0}')".format(patternValue))
@@ -230,7 +220,7 @@ class SchematronRule:
                     assertions.append('matchesPattern')
 
             # sh:nodeKind constraints - these can be combined with cardinality
-            if 'sh:nodeKind' in self.prop and self.prop['sh:nodeKind'] == 'sh:IRI':
+            if nodeKind == 'sh:IRI':
                 if not context_set:
                     rule.set('context', self._getContext())
                     context_set = True
@@ -242,7 +232,7 @@ class SchematronRule:
                 else:
                     assertions.append('isIRI')
 
-            elif 'sh:nodeKind' in self.prop and self.prop['sh:nodeKind'] == 'sh:IRIOrLiteral':
+            elif nodeKind == 'sh:IRIOrLiteral':
                 if not context_set:
                     rule.set('context', self._getContext())
                     context_set = True
@@ -250,19 +240,27 @@ class SchematronRule:
                 addLet(rule, 'isIRI', 'matches($resource, {0})'.format(expressions['uri']))
                 assertions.append('isIRI')
 
-            elif 'sh:nodeKind' in self.prop and self.prop['sh:nodeKind'] == 'sh:Literal':
+            elif nodeKind == 'sh:Literal':
                 if not context_set:
                     rule.set('context', self._getContext())
                     context_set = True
                 addLet(rule, 'isLiteral', "count(@rdf:resource) = 0 and count(@rdf:about) = 0 and count(*[not(starts-with(name(), 'geonet:'))]) = 0")
                 assertions.append('isLiteral')
 
-            elif 'sh:nodeKind' in self.prop and self.prop['sh:nodeKind'] == 'sh:BlankNodeOrIRI':
-                # Currently not implemented - return None to skip this rule
-                return None
+            elif nodeKind == 'sh:BlankNodeOrIRI':
+                if not context_set:
+                    rule.set('context', self._getContext())
+                    context_set = True
+                addLet(rule, 'resource', '(@rdf:resource, */@rdf:about)[1]')
+                addLet(rule, 'isIRI', 'matches($resource, {0})'.format(expressions['uri']))
+                addLet(rule, 'isBlankNode', 'count(@rdf:resource) = 0 and count(@rdf:about) = 0 and count(*[not(starts-with(name(), \'geonet:\'))]) >= 1')
+                addLet(rule, 'isBlankNodeOrIRI', '$isIRI or $isBlankNode')
+                assertions.append('isBlankNodeOrIRI')
 
             # If no assertions were collected or no context was set, handle accordingly
             if not assertions:
+                if self.isCardinalityRule():
+                    return None
                 self._logMissingRuleConversion()
                 return None
 
@@ -321,15 +319,6 @@ class SchematronRule:
         return '{0} - {1}'.format(element, self._getRuleKindLabel())
 
     def _getRuleKindLabel(self):
-        if 'sh:minCount' in self.prop and 'sh:maxCount' in self.prop:
-            return 'cardinality between {0} and {1}'.format(self.prop['sh:minCount'], self.prop['sh:maxCount'])
-
-        if 'sh:minCount' in self.prop:
-            return 'minimum cardinality {0}'.format(self.prop['sh:minCount'])
-
-        if 'sh:maxCount' in self.prop:
-            return 'maximum cardinality {0}'.format(self.prop['sh:maxCount'])
-
         if 'sh:class' in self.prop:
             return 'class {0}'.format(self._formatConstraintValue(self.prop['sh:class'], 'sh:class'))
 
@@ -361,18 +350,18 @@ class SchematronRule:
         if self.prop.get('sh:nodeKind') == 'sh:Literal':
             return 'literal constraint'
 
+        if 'sh:minCount' in self.prop and 'sh:maxCount' in self.prop:
+            return 'cardinality between {0} and {1}'.format(self.prop['sh:minCount'], self.prop['sh:maxCount'])
+
+        if 'sh:minCount' in self.prop:
+            return 'minimum cardinality {0}'.format(self.prop['sh:minCount'])
+
+        if 'sh:maxCount' in self.prop:
+            return 'maximum cardinality {0}'.format(self.prop['sh:maxCount'])
+
         return 'constraint'
 
     def _getDefaultMessageText(self):
-        if 'sh:minCount' in self.prop and 'sh:maxCount' in self.prop:
-            return 'Cardinality must be between {0} and {1}'.format(self.prop['sh:minCount'], self.prop['sh:maxCount'])
-
-        if 'sh:minCount' in self.prop:
-            return 'At least {0} value(s) are required'.format(self.prop['sh:minCount'])
-
-        if 'sh:maxCount' in self.prop:
-            return 'At most {0} value(s) are allowed'.format(self.prop['sh:maxCount'])
-
         if 'sh:class' in self.prop:
             return 'Referenced resource must be of type {0}'.format(self._formatConstraintValue(self.prop['sh:class'], 'sh:class'))
 
@@ -415,7 +404,30 @@ class SchematronRule:
         if self.prop.get('sh:nodeKind') == 'sh:Literal':
             return 'Value must be a literal'
 
+        if 'sh:minCount' in self.prop and 'sh:maxCount' in self.prop:
+            return 'Cardinality must be between {0} and {1}'.format(self.prop['sh:minCount'], self.prop['sh:maxCount'])
+
+        if 'sh:minCount' in self.prop:
+            return 'At least {0} value(s) are required'.format(self.prop['sh:minCount'])
+
+        if 'sh:maxCount' in self.prop:
+            return 'At most {0} value(s) are allowed'.format(self.prop['sh:maxCount'])
+
         return 'Value does not satisfy the SHACL constraint'
+
+    def _isTruthyConstraint(self, value):
+        if isinstance(value, bool):
+            return value
+        if isinstance(value, str):
+            return value.strip().lower() in ['true', '1']
+        return bool(value)
+
+    def _normalizeNodeKind(self, value):
+        if not isinstance(value, str):
+            return value
+        if value.startswith('shacl:'):
+            return 'sh:' + value.split(':', 1)[1]
+        return value
 
     def _formatConstraintValue(self, value, source=None):
         if isinstance(value, str):
@@ -448,6 +460,30 @@ class SchematronRule:
     def _buildOrPatternExpression(self, patterns):
         checks = ["matches($resource, '{0}')".format(pattern) for pattern in patterns]
         return '({0})'.format(' or '.join(checks))
+
+    def _buildClassValidationExpression(self, className, fullname, resourceVar):
+        if fullname == 'vcard:hasEmail':
+            return 'matches({0}, {1})'.format(resourceVar, expressions['email'])
+
+        if className == 'dcat:DataService' or className == 'dcat:Dataset' or className == 'rdfs:Resource':
+            return 'matches({0}, {1})'.format(resourceVar, expressions['uri'])
+
+        classCandidates = [className]
+        for alias in classAliases.get(className, []):
+            if alias not in classCandidates:
+                classCandidates.append(alias)
+
+        if className == 'dcat:Resource':
+            localXpath = 'dcat:Dataset|dcat:DataService|dcat:DatasetSeries'
+            globalXpath = '(//dcat:Dataset|//dcat:DataService|//dcat:DatasetSeries)'
+        elif len(classCandidates) == 1:
+            localXpath = classCandidates[0]
+            globalXpath = '//' + classCandidates[0]
+        else:
+            localXpath = '|'.join(classCandidates)
+            globalXpath = '(//{0})'.format('|//'.join(classCandidates))
+
+        return 'count({0}) = 1 or count({1}[@rdf:about = {2}]) = 1'.format(localXpath, globalXpath, resourceVar)
 
     def _getCardinalityPatternId(self):
         classes = self._expandTargetClasses()

@@ -65,6 +65,14 @@ fullnameSwaps = {
     'mdcat:bronMetadataRecordLandingspagina': 'mdcat:landingpageVoorBronMetadata'
 }
 
+# Equivalent class aliases that can appear in SHACL or XML content.
+classAliases = {
+    'foaf:Agent': ['dct:Agent'],
+    'dct:Agent': ['foaf:Agent'],
+    'vcard:Organization': ['vcard:Kind'],
+    'vcard:Kind': ['vcard:Organization']
+}
+
 omitRules = [
     'https://data.vlaanderen.be/shacl/metadata_dcat#CatalogusRecordShape/0311d40d6c8081dc49766336ad753baee5d276f2'
 ]
@@ -76,7 +84,8 @@ expressions = {
 }
 
 uriSwaps = {
-    'https://vocab.belgif.be/auth/datatheme': 'http://vocab.belgif.be/auth/datatheme'
+    'https://vocab.belgif.be/auth/datatheme': 'http://vocab.belgif.be/auth/datatheme',
+    'https://data.vlaanderen.be/ns/generiek#': 'http://data.vlaanderen.be/ns/generiek#'
 }
 
 primaryLanguage = 'nl'
