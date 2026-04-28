@@ -42,7 +42,7 @@ class SchematronGenerator:
         title.text = '{$loc/strings/schematron.title}'
 
         if self.profile is not None:
-            addLet(root, 'profile', 'boolean(/*[starts-with(//dcat:CatalogRecord//dct:Standard/@rdf:about, \'{0}\')])'.format(self.profile))
+            addLet(root, 'profile', 'boolean(//dcat:CatalogRecord//dct:Standard/@rdf:about = \'{0}\')'.format(self.profile))
 
         for rule in self.rules:
             root.append(rule)
