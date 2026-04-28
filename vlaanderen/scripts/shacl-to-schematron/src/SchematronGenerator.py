@@ -1,4 +1,5 @@
 import logging
+import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from os.path import isfile
@@ -9,11 +10,12 @@ from utilities import addLet, writeXmlToFile, schEl, schSubEl, translateText
 
 class SchematronGenerator:
 
-    def __init__(self, name, title, profile=None, includeCardinalityAbstract=False):
+    def __init__(self, name, title, profile=None, includeCardinalityAbstract=False, schematronTitle=None):
         self.name = name
         self.title = title
         self.profile = profile
         self.includeCardinalityAbstract = includeCardinalityAbstract
+        self.schematronTitle = schematronTitle if schematronTitle is not None else self._getSchematronTitle(title)
         self.locKeyPrefix = self._getLocKeyPrefix()
         self.rules = self._getDefaultRules()
         if self.includeCardinalityAbstract:
@@ -47,7 +49,9 @@ class SchematronGenerator:
         title.text = '{$loc/strings/schematron.title}'
 
         if self.profile is not None:
-            addLet(root, 'profile', 'boolean(//dcat:CatalogRecord//dct:Standard/@rdf:about = \'{0}\')'.format(self.profile))
+            # TODO: Check if profile is use or better to use admin toggle based on XPath rules?
+            addLet(root, 'profile', 'true()')
+            # addLet(root, 'profile', 'boolean(//dcat:CatalogRecord//dct:Standard/@rdf:about = \'{0}\')'.format(self.profile))
 
         for rule in self.rules:
             root.append(rule)
@@ -67,7 +71,7 @@ class SchematronGenerator:
             Path(locOutput + '/' + loc).mkdir(parents=True, exist_ok=True)
             root = ET.Element('strings')
             locTitle = ET.SubElement(root, 'schematron.title')
-            locTitle.text = self.title[loc]
+            locTitle.text = self.schematronTitle[loc]
 
             lang_code = _langMap.get(loc, loc)
             primary_lang = _langMap.get(primaryLanguage, primaryLanguage)
@@ -129,10 +133,36 @@ class SchematronGenerator:
             return {}
 
         return {
-            'cardinality.title': 'Cardinality check (#context / #element)',
-            'cardinality.assert': 'Expected cardinality for #element in #context is between #min and #max, found #nodecount.',
-            'cardinality.report': 'Cardinality for #element in #context is between #min and #max (#nodecount found).'
+            # Already in schematron-shared.xml
+            # 'cardinality.title': 'Cardinality check (#context / #element)',
+            # 'cardinality.assert': 'Expected cardinality for #element in #context is between #min and #max, found #nodecount.',
+            # 'cardinality.report': 'Cardinality for #element in #context is between #min and #max (#nodecount found).'
         }
+
+    def _getSchematronTitle(self, defaultTitle):
+        if not self.includeCardinalityAbstract:
+            return defaultTitle
+
+        suffixes = {
+            'dut': 'Kardinaliteiten',
+            'eng': 'Cardinalities',
+            'fre': 'Cardinalités',
+            'ger': 'Kardinalitäten'
+        }
+
+        cardinalityTitle = {}
+        for loc, title in defaultTitle.items():
+            suffix = suffixes.get(loc, 'Cardinalities')
+            if ' - ' not in title:
+                cardinalityTitle[loc] = '{0} - {1}'.format(title, suffix)
+                continue
+
+            baseTitle, titleQualifier = title.split(' - ', 1)
+            qualifierMatch = re.match(r'^(.*?)(\s*\([^)]*\))?$', titleQualifier)
+            qualifierSuffix = qualifierMatch.group(2) if qualifierMatch is not None and qualifierMatch.group(2) is not None else ''
+            cardinalityTitle[loc] = '{0} - {1}{2}'.format(baseTitle, suffix, qualifierSuffix)
+
+        return cardinalityTitle
 
     def _buildCardinalityAbstractPattern(self):
         pattern = schEl('sch', 'pattern')

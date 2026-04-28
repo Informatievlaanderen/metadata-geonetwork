@@ -49,8 +49,7 @@ class SchematronRule:
             pattern.set('id', self.prop['@id'])
 
             title = schSubEl(pattern, 'sch', 'title')
-            description = getLanguageValue(self.prop, 'sh:description')
-            baseTitle = '{0} - {1}'.format(patternName.capitalize(), description)
+            baseTitle = self._getPatternTitle(patternName)
             if 'vl:rule' in self.prop and self.prop['vl:rule'] != '':
                 title.text = self.prop['vl:rule'] + '. ' + baseTitle
             else:
@@ -101,134 +100,181 @@ class SchematronRule:
             if self.prop['@id'] in omitRules:
                 return None
 
+            # Collect all assertion conditions for this property
+            assertions = []
+            has_cardinality = 'sh:minCount' in self.prop or 'sh:maxCount' in self.prop
+            context_set = False
+
+            # Handle cardinality constraints (can be combined with other constraints)
             if 'sh:minCount' in self.prop and 'sh:maxCount' in self.prop:
                 rule.set('context', self._getParentContext())
+                context_set = True
                 addLet(rule, 'validMin', 'count({0}) >= {1}'.format(fullname, self.prop['sh:minCount']))
                 addLet(rule, 'validMax', 'count({0}) <= {1}'.format(fullname, self.prop['sh:maxCount']))
-                self._defineReport(['validMin', 'validMax'], rule)
+                assertions.append(['validMin', 'validMax'])
 
             elif 'sh:maxCount' in self.prop:
                 rule.set('context', self._getParentContext())
+                context_set = True
                 addLet(rule, 'validMax', 'count({0}) <= {1}'.format(fullname, self.prop['sh:maxCount']))
-                self._defineReport('validMax', rule)
+                assertions.append('validMax')
 
             elif 'sh:minCount' in self.prop:
                 rule.set('context', self._getParentContext())
+                context_set = True
                 addLet(rule, 'validMin', 'count({0}) >= {1}'.format(fullname, self.prop['sh:minCount']))
-                self._defineReport('validMin', rule)
+                assertions.append('validMin')
 
-            elif 'sh:class' in self.prop:
-                rule.set('context', self._getContext())
+            # Handle other constraints - these are now processed independently
+            # to allow combination with cardinality constraints
+
+            if 'sh:class' in self.prop and not has_cardinality:
+                if not context_set:
+                    rule.set('context', self._getContext())
+                    context_set = True
                 className = getFullName(self.prop['sh:class'], 'sh:class')
                 localXpath = className if className != 'dcat:Resource' else 'dcat:Dataset|dcat:DataService'
                 globalXpath = '//' + className if className != 'dcat:Resource' else '(//dcat:Dataset|//dcat:DataService)'
                 addLet(rule, 'resource', '@rdf:resource')
-                if className == 'dcat:DataService' or className == 'dcat:Dataset' or className == 'rdfs:Resource':
+                if fullname == 'vcard:hasEmail':
+                    addLet(rule, 'validClass', 'matches($resource, {0})'.format(expressions['email']))
+                elif className == 'dcat:DataService' or className == 'dcat:Dataset' or className == 'rdfs:Resource':
                     addLet(rule, 'validClass', 'matches($resource, {0})'.format(expressions['uri']))
                 else:
                     addLet(rule, 'validClass', 'count({0}) = 1 or count({1}[@rdf:about = $resource]) = 1'.format(localXpath, globalXpath))
-                self._defineReport('validClass', rule)
+                assertions.append('validClass')
 
-            elif 'sh:uniqueLang' in self.prop and self.prop['sh:uniqueLang'] == 'true':
-                rule.set('context', self._getContext())
+            if 'sh:uniqueLang' in self.prop and self.prop['sh:uniqueLang'] == 'true' and not has_cardinality:
+                if not context_set:
+                    rule.set('context', self._getContext())
+                    context_set = True
                 target = getFullName(self.prop['sh:path'], 'sh:path')
                 addLet(rule, 'current', '.')
                 addLet(rule, 'isUniqueLang', 'count(preceding-sibling::{0}[string() = string($current) and @xml:lang = $current/@xml:lang]) = 0'.format(target))
-                self._defineReport('isUniqueLang', rule)
+                assertions.append('isUniqueLang')
 
-            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') in ['rdfs:Literal', 'xs:string']:
-                rule.set('context', self._getContext())
+            if 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') in ['rdfs:Literal', 'xs:string'] and not has_cardinality:
+                if not context_set:
+                    rule.set('context', self._getContext())
+                    context_set = True
                 addLet(rule, 'isLiteral', 'normalize-space(.) != \'\'')
-                self._defineReport('isLiteral', rule)
+                assertions.append('isLiteral')
 
-            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') == 'rdf:langString':
-                rule.set('context', self._getContext())
+            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') == 'rdf:langString' and not has_cardinality:
+                if not context_set:
+                    rule.set('context', self._getContext())
+                    context_set = True
                 addLet(rule, 'isLiteral', 'normalize-space(.) != \'\'')
                 addLet(rule, 'hasLang', 'normalize-space(@xml:lang) != \'\'')
-                self._defineReport(['isLiteral', 'hasLang'], rule)
+                assertions.append(['isLiteral', 'hasLang'])
 
-            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') == 'xs:anyURI':
-                rule.set('context', self._getContext())
+            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') == 'xs:anyURI' and not has_cardinality:
+                if not context_set:
+                    rule.set('context', self._getContext())
+                    context_set = True
                 addLet(rule, 'isNotEmpty', 'normalize-space(@rdf:resource) != \'\'')
                 addLet(rule, 'isURI', 'matches(@rdf:resource, {0})'.format(expressions['uri']))
-                self._defineReport(['isNotEmpty', 'isURI'], rule)
+                assertions.append(['isNotEmpty', 'isURI'])
 
-            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') in ['xs:dateTime', 'xs:date']:
-                rule.set('context', self._getContext())
+            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') in ['xs:dateTime', 'xs:date'] and not has_cardinality:
+                if not context_set:
+                    rule.set('context', self._getContext())
+                    context_set = True
                 addLet(rule, 'isNotEmpty', 'normalize-space(.) != \'\'')
                 addLet(rule, 'isDate', 'matches(., {0})'.format(expressions['dateAndDateTime']))
-                self._defineReport(['isNotEmpty', 'isDate'], rule)
+                assertions.append(['isNotEmpty', 'isDate'])
 
-            elif self._hasConceptSchemeNodeRestriction():
-                rule.set('context', self._getContext())
+            if self._hasConceptSchemeNodeRestriction() and not has_cardinality:
+                if not context_set:
+                    rule.set('context', self._getContext())
+                    context_set = True
                 localProp = self._getNodePropertyRestriction()
                 value = swapURI(localProp['sh:hasValue'])
                 addLet(rule, 'hasValue', "skos:Concept/skos:inScheme/@rdf:resource = '{0}'".format(value))
-                self._defineReport('hasValue', rule)
+                assertions.append('hasValue')
 
-            elif 'sh:hasValue' in self.prop:
-                rule.set('context', self._getContext())
+            elif 'sh:hasValue' in self.prop and not has_cardinality:
+                if not context_set:
+                    rule.set('context', self._getContext())
+                    context_set = True
                 addLet(rule, 'hasValue', "string() = '{0}' or */@rdf:about = '{0}' or ./@rdf:resource = '{0}'".format(self.prop['sh:hasValue']))
-                self._defineReport('hasValue', rule)
+                assertions.append('hasValue')
 
-            elif 'sh:or' in self.prop:
+            if 'sh:or' in self.prop and not has_cardinality:
                 alternatives = self._getOrAlternatives()
                 iriPatterns = [alt['sh:pattern'] for alt in alternatives if alt.get('sh:nodeKind') == 'sh:IRI' and 'sh:pattern' in alt]
                 if len(iriPatterns) > 0:
-                    rule.set('context', self._getContext())
-                    addLet(rule, 'resource', '@rdf:resource')
+                    if not context_set:
+                        rule.set('context', self._getContext())
+                        context_set = True
+                    addLet(rule, 'resource', '(@rdf:resource, */@rdf:about)[1]')
                     addLet(rule, 'isIRI', 'matches($resource, {0})'.format(expressions['uri']))
                     addLet(rule, 'matchesOrPattern', self._buildOrPatternExpression(iriPatterns))
-                    self._defineReport(['isIRI', 'matchesOrPattern'], rule)
+                    assertions.append(['isIRI', 'matchesOrPattern'])
                 else:
                     self._logMissingRuleConversion()
                     return None
 
-            elif 'sh:pattern' in self.prop:
-                rule.set('context', self._getContext())
+            if 'sh:pattern' in self.prop and not has_cardinality:
+                if not context_set:
+                    rule.set('context', self._getContext())
+                    context_set = True
                 patternValue = self.prop['sh:pattern']
                 if 'sh:nodeKind' in self.prop and self.prop['sh:nodeKind'] == 'sh:IRI':
-                    addLet(rule, 'resource', '@rdf:resource')
+                    addLet(rule, 'resource', '(@rdf:resource, */@rdf:about)[1]')
                     addLet(rule, 'isIRI', 'matches($resource, {0})'.format(expressions['uri']))
                     addLet(rule, 'matchesPattern', "matches($resource, '{0}')".format(patternValue))
-                    self._defineReport(['isIRI', 'matchesPattern'], rule)
+                    assertions.append(['isIRI', 'matchesPattern'])
                 else:
                     addLet(rule, 'matchesPattern', "matches(normalize-space(.), '{0}')".format(patternValue))
-                    self._defineReport('matchesPattern', rule)
+                    assertions.append('matchesPattern')
 
-            elif 'sh:nodeKind' in self.prop and self.prop['sh:nodeKind'] == 'sh:IRI':
-                rule.set('context', self._getContext())
-                addLet(rule, 'resource', '@rdf:resource')
+            # sh:nodeKind constraints - these can be combined with cardinality
+            if 'sh:nodeKind' in self.prop and self.prop['sh:nodeKind'] == 'sh:IRI':
+                if not context_set:
+                    rule.set('context', self._getContext())
+                    context_set = True
+                addLet(rule, 'resource', '(@rdf:resource, */@rdf:about)[1]')
                 addLet(rule, 'isIRI', 'matches($resource, {0})'.format(expressions['uri']))
                 if fullname == 'foaf:mbox':
                     addLet(rule, 'isMailto', "starts-with(lower-case($resource), 'mailto:')")
-                    self._defineReport(['isIRI', 'isMailto'], rule)
+                    assertions.append(['isIRI', 'isMailto'])
                 else:
-                    self._defineReport('isIRI', rule)
+                    assertions.append('isIRI')
 
             elif 'sh:nodeKind' in self.prop and self.prop['sh:nodeKind'] == 'sh:IRIOrLiteral':
-                rule.set('context', self._getContext())
-                addLet(rule, 'resource', '@rdf:resource')
+                if not context_set:
+                    rule.set('context', self._getContext())
+                    context_set = True
+                addLet(rule, 'resource', '(@rdf:resource, */@rdf:about)[1]')
                 addLet(rule, 'isIRI', 'matches($resource, {0})'.format(expressions['uri']))
-                self._defineReport('isIRI', rule)
+                assertions.append('isIRI')
 
             elif 'sh:nodeKind' in self.prop and self.prop['sh:nodeKind'] == 'sh:Literal':
-                rule.set('context', self._getContext())
+                if not context_set:
+                    rule.set('context', self._getContext())
+                    context_set = True
                 addLet(rule, 'isLiteral', "count(@rdf:resource) = 0 and count(@rdf:about) = 0 and count(*[not(starts-with(name(), 'geonet:'))]) = 0")
-                self._defineReport('isLiteral', rule)
+                assertions.append('isLiteral')
 
             elif 'sh:nodeKind' in self.prop and self.prop['sh:nodeKind'] == 'sh:BlankNodeOrIRI':
-                # rule.set('context', self._getContext())
-                # addLet(rule, 'isBlankNode', 'count(@rdf:resource) = 0')
-                # addLet(rule, 'isIRI', 'count(@rdf:resource) = 1 and count(*) < 1')
-                # addLet(rule, 'isBlankNodeOrIRI', '$isBlankNode or $isIRI')
-                # self._defineReport('isBlankNodeOrIRI', rule)
+                # Currently not implemented - return None to skip this rule
                 return None
 
-            else:
+            # If no assertions were collected or no context was set, handle accordingly
+            if not assertions:
                 self._logMissingRuleConversion()
                 return None
 
+            # Apply all collected assertions to the rule
+            # Flatten assertions list: some items may be lists themselves
+            flattened_assertions = []
+            for assertion in assertions:
+                if isinstance(assertion, list):
+                    flattened_assertions.extend(assertion)
+                else:
+                    flattened_assertions.append(assertion)
+            self._defineReport(flattened_assertions, rule)
             return rule
         except Exception as err:
             raise RuntimeError(
@@ -255,7 +301,129 @@ class SchematronRule:
     def _getMessageText(self):
         vlMessage = self.prop['vl:message'] if 'vl:message' in self.prop else None
         messageSource = vlMessage if vlMessage else self.prop['sh:message'] if 'sh:message' in self.prop else self.prop.get('sh:description', '')
-        return getLanguageValue(messageSource)
+        messageText = getLanguageValue(messageSource, default='').strip()
+        return messageText if messageText != '' else self._getDefaultMessageText()
+
+    def _getPatternTitle(self, patternName):
+        description = getLanguageValue(self.prop, 'sh:description', default='').strip()
+        patternName = (patternName or '').strip()
+
+        if patternName != '' and description != '':
+            return '{0} - {1}'.format(patternName.capitalize(), description)
+        if patternName != '':
+            return patternName.capitalize()
+        if description != '':
+            return description
+        return self._getDefaultPatternTitle()
+
+    def _getDefaultPatternTitle(self):
+        element = self._formatConstraintValue(self.prop.get('sh:path'), 'sh:path')
+        return '{0} - {1}'.format(element, self._getRuleKindLabel())
+
+    def _getRuleKindLabel(self):
+        if 'sh:minCount' in self.prop and 'sh:maxCount' in self.prop:
+            return 'cardinality between {0} and {1}'.format(self.prop['sh:minCount'], self.prop['sh:maxCount'])
+
+        if 'sh:minCount' in self.prop:
+            return 'minimum cardinality {0}'.format(self.prop['sh:minCount'])
+
+        if 'sh:maxCount' in self.prop:
+            return 'maximum cardinality {0}'.format(self.prop['sh:maxCount'])
+
+        if 'sh:class' in self.prop:
+            return 'class {0}'.format(self._formatConstraintValue(self.prop['sh:class'], 'sh:class'))
+
+        if 'sh:uniqueLang' in self.prop and self.prop['sh:uniqueLang'] == 'true':
+            return 'unique language constraint'
+
+        if 'sh:datatype' in self.prop:
+            return 'datatype {0}'.format(self._formatConstraintValue(self.prop['sh:datatype'], 'sh:datatype'))
+
+        if self._hasConceptSchemeNodeRestriction():
+            localProp = self._getNodePropertyRestriction()
+            return 'concept scheme {0}'.format(self._formatConstraintValue(localProp.get('sh:hasValue', 'required value')))
+
+        if 'sh:hasValue' in self.prop:
+            return 'fixed value {0}'.format(self._formatConstraintValue(self.prop['sh:hasValue']))
+
+        if 'sh:or' in self.prop:
+            return 'alternative constraint'
+
+        if 'sh:pattern' in self.prop:
+            return 'IRI pattern' if self.prop.get('sh:nodeKind') == 'sh:IRI' else 'pattern'
+
+        if self.prop.get('sh:nodeKind') == 'sh:IRI':
+            return 'IRI constraint'
+
+        if self.prop.get('sh:nodeKind') == 'sh:IRIOrLiteral':
+            return 'IRI or literal constraint'
+
+        if self.prop.get('sh:nodeKind') == 'sh:Literal':
+            return 'literal constraint'
+
+        return 'constraint'
+
+    def _getDefaultMessageText(self):
+        if 'sh:minCount' in self.prop and 'sh:maxCount' in self.prop:
+            return 'Cardinality must be between {0} and {1}'.format(self.prop['sh:minCount'], self.prop['sh:maxCount'])
+
+        if 'sh:minCount' in self.prop:
+            return 'At least {0} value(s) are required'.format(self.prop['sh:minCount'])
+
+        if 'sh:maxCount' in self.prop:
+            return 'At most {0} value(s) are allowed'.format(self.prop['sh:maxCount'])
+
+        if 'sh:class' in self.prop:
+            return 'Referenced resource must be of type {0}'.format(self._formatConstraintValue(self.prop['sh:class'], 'sh:class'))
+
+        if 'sh:uniqueLang' in self.prop and self.prop['sh:uniqueLang'] == 'true':
+            return 'Values must not reuse the same language tag'
+
+        if 'sh:datatype' in self.prop:
+            datatype = self._formatConstraintValue(self.prop['sh:datatype'], 'sh:datatype')
+            if datatype in ['rdfs:Literal', 'xs:string']:
+                return 'Value must be a non-empty literal'
+            if datatype == 'rdf:langString':
+                return 'Value must be a non-empty language-tagged literal'
+            if datatype == 'xs:anyURI':
+                return 'Value must be a non-empty URI'
+            if datatype in ['xs:dateTime', 'xs:date']:
+                return 'Value must be a valid {0}'.format(datatype)
+            return 'Value must match datatype {0}'.format(datatype)
+
+        if self._hasConceptSchemeNodeRestriction():
+            localProp = self._getNodePropertyRestriction()
+            return 'Value must belong to concept scheme {0}'.format(localProp.get('sh:hasValue', 'the required scheme'))
+
+        if 'sh:hasValue' in self.prop:
+            return 'Value must be {0}'.format(self.prop['sh:hasValue'])
+
+        if 'sh:or' in self.prop:
+            return 'Value must satisfy at least one of the allowed alternatives'
+
+        if 'sh:pattern' in self.prop:
+            if self.prop.get('sh:nodeKind') == 'sh:IRI':
+                return 'IRI must match the required pattern'
+            return 'Value must match the required pattern'
+
+        if self.prop.get('sh:nodeKind') == 'sh:IRI':
+            return 'Value must be a mailto IRI' if self._formatConstraintValue(self.prop.get('sh:path'), 'sh:path') == 'foaf:mbox' else 'Value must be an IRI'
+
+        if self.prop.get('sh:nodeKind') == 'sh:IRIOrLiteral':
+            return 'Value must be an IRI or a literal'
+
+        if self.prop.get('sh:nodeKind') == 'sh:Literal':
+            return 'Value must be a literal'
+
+        return 'Value does not satisfy the SHACL constraint'
+
+    def _formatConstraintValue(self, value, source=None):
+        if isinstance(value, str):
+            try:
+                return getFullName(value, source) if (':/' in value or value.startswith('http://') or value.startswith('https://') or value.startswith('_:')) else value
+            except Exception:
+                return value
+        return str(value)
 
     def _hasConceptSchemeNodeRestriction(self):
         node_property = self._getNodePropertyRestriction()

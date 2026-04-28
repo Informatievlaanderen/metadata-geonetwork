@@ -48,7 +48,8 @@ def generateFromSpec(config):
         _getCardinalitySchematronName(config),
         config['title'],
         config['profile'],
-        includeCardinalityAbstract=True
+        includeCardinalityAbstract=True,
+        schematronTitle=config.get('cardinalityTitle')
     )
     hasCardinalityRules = False
     for url in castArray(config['url']):

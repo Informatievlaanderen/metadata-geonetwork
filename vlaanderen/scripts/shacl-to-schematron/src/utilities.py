@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 import xml.etree.ElementTree as ET
 from os.path import abspath
 from xml.dom import minidom
@@ -232,6 +233,28 @@ def normalizeExpandedNode(node):
 
 
 _translation_cache = {}
+_qname_pattern = re.compile(r'\b[a-zA-Z_][\w.-]*:[a-zA-Z_][\w.-]*\b')
+
+
+def _protectTechnicalTokens(text):
+    """Replace QName-like technical tokens with placeholders before translation."""
+    tokens = []
+
+    def _replace(match):
+        token = match.group(0)
+        placeholder = '__GN_QNAME_{0}__'.format(len(tokens))
+        tokens.append(token)
+        return placeholder
+
+    protected = _qname_pattern.sub(_replace, text)
+    return protected, tokens
+
+
+def _restoreTechnicalTokens(text, tokens):
+    restored = text
+    for idx, token in enumerate(tokens):
+        restored = restored.replace('__GN_QNAME_{0}__'.format(idx), token)
+    return restored
 
 
 def translateText(text, targetLanguage='en', sourceLanguage='nl'):
@@ -267,14 +290,19 @@ def translateText(text, targetLanguage='en', sourceLanguage='nl'):
         logging.getLogger('argostranslate').setLevel(logging.WARNING)
         logging.getLogger('argostranslate.utils').setLevel(logging.WARNING)
 
+        # Keep namespace-prefixed tokens such as dct:title or mdcat:levensfase intact.
+        protected_text, protected_tokens = _protectTechnicalTokens(text)
+
         def _translate(src_text, src_lang, dst_lang):
             return argostranslate.translate.translate(src_text, src_lang, dst_lang)
 
         if sourceLanguage == 'nl' and targetLanguage in ['fr', 'de']:
-            intermediate = _translate(text, 'nl', 'en')
+            intermediate = _translate(protected_text, 'nl', 'en')
             translated = _translate(intermediate, 'en', targetLanguage)
         else:
-            translated = _translate(text, sourceLanguage, targetLanguage)
+            translated = _translate(protected_text, sourceLanguage, targetLanguage)
+
+        translated = _restoreTechnicalTokens(translated, protected_tokens)
 
         _translation_cache[cache_key] = translated
         logging.debug('Translated "%s" to %s: "%s"', text[:30], targetLanguage, translated[:30])
