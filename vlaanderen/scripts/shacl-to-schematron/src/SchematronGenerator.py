@@ -9,23 +9,28 @@ from utilities import addLet, writeXmlToFile, schEl, schSubEl, translateText
 
 class SchematronGenerator:
 
-    def __init__(self, name, title, profile=None):
-        if len(name) >= 40:
-            logging.error('Schematron file name "{0}" too long, must not be above 40 characters'.format(name))
-            exit(1)
-
+    def __init__(self, name, title, profile=None, includeCardinalityAbstract=False):
         self.name = name
         self.title = title
         self.profile = profile
+        self.includeCardinalityAbstract = includeCardinalityAbstract
         self.locKeyPrefix = self._getLocKeyPrefix()
         self.rules = self._getDefaultRules()
-        self.locEntries = {}
+        if self.includeCardinalityAbstract:
+            self.rules.append(self._buildCardinalityAbstractPattern())
+        self.locEntries = self._getDefaultLocEntries()
         self._patternTitleIndex = 1
         self._patternAssertIndex = 1
         self._patternReportIndex = 1
 
     def addRule(self, rule):
         rulePattern = rule.getPatternElement()
+        if rulePattern is not None:
+            self.rules.append(rulePattern)
+
+    def addCardinalityRule(self, rule):
+        rulePattern = rule.getCardinalityPatternElement()
+        # logging.debug('     * Add cardinality rule %s', ET.tostring(rulePattern))
         if rulePattern is not None:
             self.rules.append(rulePattern)
 
@@ -82,6 +87,9 @@ class SchematronGenerator:
 
     def _externalizeRuleText(self, root):
         for pattern in root.findall('sch:pattern', schNamespaces):
+            if pattern.get('abstract') == 'true':
+                continue
+
             for title in pattern.findall('sch:title', schNamespaces):
                 self._localizeElementText(title, 'pattern.title', '_patternTitleIndex')
 
@@ -115,3 +123,43 @@ class SchematronGenerator:
     def _getDefaultRules(self):
         filename = Path('custom_rules/' + self.name + '.sch').resolve()
         return ET.parse(filename).findall('sch:pattern', schNamespaces) if isfile(filename) else []
+
+    def _getDefaultLocEntries(self):
+        if not self.includeCardinalityAbstract:
+            return {}
+
+        return {
+            'cardinality.title': 'Cardinality check (#context / #element)',
+            'cardinality.assert': 'Expected cardinality for #element in #context is between #min and #max, found #nodecount.',
+            'cardinality.report': 'Cardinality for #element in #context is between #min and #max (#nodecount found).'
+        }
+
+    def _buildCardinalityAbstractPattern(self):
+        pattern = schEl('sch', 'pattern')
+        pattern.set('abstract', 'true')
+        pattern.set('id', 'CardinalityCheck')
+
+        title = schSubEl(pattern, 'sch', 'title')
+        title.text = "geonet:replacePlaceholders($loc/strings/cardinality.title, ('#context', '#element'), ('$context', '$element'))"
+
+        rule = schSubEl(pattern, 'sch', 'rule')
+        rule.set('context', '$context')
+
+        assertEl = schSubEl(rule, 'sch', 'assert')
+        assertEl.set('test', "count($element) >= $min and ('$max' = 'n' or count($element) <= $max)")
+        valueOfAssert = schSubEl(assertEl, 'sch', 'value-of')
+        valueOfAssert.set(
+            'select',
+            "geonet:replacePlaceholders($loc/strings/cardinality.assert, ('#context', '#element', '#min', '#max', '#nodecount'), ('$context', '$element', '$min', '$max', string(count($element))))"
+        )
+
+        reportEl = schSubEl(rule, 'sch', 'report')
+        reportEl.set('test', "count($element) >= $min and ('$max' = 'n' or count($element) <= $max)")
+        valueOfReport = schSubEl(reportEl, 'sch', 'value-of')
+        valueOfReport.set(
+            'select',
+            "geonet:replacePlaceholders($loc/strings/cardinality.report, ('#context', '#element', '#min', '#max', '#nodecount'), ('$context', '$element', '$min', '$max', string(count($element))))"
+        )
+
+        return pattern
+

@@ -51,7 +51,7 @@ def convertTurtleToJsonLd(ttl_text, source=''):
     return jsonld_text.decode('utf-8') if isinstance(jsonld_text, bytes) else jsonld_text
 
 
-def getFullName(uri):
+def getFullName(uri, source=None):
     if not isinstance(uri, str):
         logging.error(
             'getFullName expected str but received %s: %r',
@@ -62,8 +62,14 @@ def getFullName(uri):
             'getFullName expected uri as str, got {0}: {1!r}'.format(type(uri).__name__, uri)
         )
 
-    # Blank node identifiers (e.g. "_:nf79004c4948e45dbb3e83364b276dd54b14") – return as-is
+    source_hint = '' if source is None else ' (source: {0})'.format(source)
+
+    # Blank nodes are not valid QName targets for Schematron/XPath contexts.
     if uri.startswith('_:'):
+        logging.error(
+            'Blank node identifier {0!r} cannot be converted to a QName{1}. '
+            'This usually means a JSON-LD @id reference was not resolved during normalization.'.format(uri, source_hint)
+        )
         return uri
 
     # Already a compact prefixed name (e.g. "dct:issued")
@@ -163,6 +169,13 @@ def getLanguageValue(source, propertyName=None, preferredLanguage=None, fallback
 
 def _collapseIri(iri):
     """Convert a full IRI to a compact prefixed name using known namespaces, or return it as-is."""
+    # TODO: Check if strict check is needed. We may generate sch rules with bad XPath in such case.
+    #    if isinstance(iri, str) and iri.startswith('_:'):
+    #     raise ValueError(
+    #         'Blank node identifier {0!r} leaked into IRI compaction (_collapseIri). '
+    #         'Normalization should resolve SHACL references before QName conversion.'.format(iri)
+    #     )
+
     for ns, nsUri in (list(dcatNamespaces.items()) + list(schNamespaces.items())):
         if iri.startswith(nsUri):
             compact = ns + ':' + iri[len(nsUri):]
@@ -187,10 +200,7 @@ def _extractJsonLdValue(values):
 
     # Single IRI reference
     if len(values) == 1 and isinstance(values[0], dict) and '@id' in values[0]:
-        try:
-            return _collapseIri(values[0]['@id'])
-        except Exception:
-            return values[0]['@id']
+        return _collapseIri(values[0]['@id'])
 
     # Single plain literal
     if len(values) == 1 and isinstance(values[0], dict) and '@value' in values[0]:

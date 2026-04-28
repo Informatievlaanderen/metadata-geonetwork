@@ -32,6 +32,7 @@ def generateFromSpec(config):
         'specUrls': 0,
         'candidates': 0,
         'processed': 0,
+        'cardinalityProcessed': 0,
         'skipped': 0,
         'skippedNoTarget': 0,
         'skippedMissingPropertyRef': 0,
@@ -43,6 +44,13 @@ def generateFromSpec(config):
                  config.get('level', 'no-level')
                  )
     schematron = SchematronGenerator(config['name'], config['title'], config['profile'])
+    cardinalitySchematron = SchematronGenerator(
+        _getCardinalitySchematronName(config),
+        config['title'],
+        config['profile'],
+        includeCardinalityAbstract=True
+    )
+    hasCardinalityRules = False
     for url in castArray(config['url']):
         stats['specUrls'] += 1
         logging.info('Loading spec: %s', url)
@@ -54,7 +62,7 @@ def generateFromSpec(config):
             for shape in shapes:
                 if not hasTarget(shape):
                     stats['skippedNoTarget'] += 1
-                    logging.debug('Skipping shape without target: %s', shape.get('@id', '<unknown>'))
+                    logging.debug('  * Skipping shape without target: %s', shape.get('@id', '<unknown>'))
                     continue
 
                 targetClass = getTargetClass(shape)
@@ -62,26 +70,41 @@ def generateFromSpec(config):
                     stats['candidates'] += 1
                     if shouldBeAdded(config, prop):
                         stats['processed'] += 1
-                        schematron.addRule(SchematronRule(
+                        rule = SchematronRule(
                             prop,
                             targetClass,
                             bool(config['profile'])
-                        ))
+                        )
+                        if rule.isCardinalityRule():
+                            hasCardinalityRules = True
+                            stats['cardinalityProcessed'] += 1
+                            cardinalitySchematron.addCardinalityRule(rule)
+                        else:
+                            schematron.addRule(rule)
                     else:
                         stats['skipped'] += 1
         # If ttl are converted to JSON-LD, then we have an array
         elif isinstance(spec, list):
             for shape, properties in resolveNodeShapesAndProperties(spec, stats):
                 targetClass = getTargetClass(shape)
+                logging.debug(' * Shape %s (target: %s)', shape.get('rdfs:label', '<unknown>'), targetClass)
                 for prop in properties:
                     stats['candidates'] += 1
                     if shouldBeAdded(config, prop):
                         stats['processed'] += 1
-                        schematron.addRule(SchematronRule(
+                        rule = SchematronRule(
                             prop,
                             targetClass,
                             bool(config['profile'])
-                        ))
+                        )
+                        isCardinality = rule.isCardinalityRule()
+                        logging.debug('   * Property %s (severity: %s, isCardinality: %s)', prop.get('sh:path'), prop.get('sh:severity'), isCardinality)
+                        if isCardinality:
+                            hasCardinalityRules = True
+                            stats['cardinalityProcessed'] += 1
+                            cardinalitySchematron.addCardinalityRule(rule)
+                        else:
+                            schematron.addRule(rule)
                     else:
                         stats['skipped'] += 1
         else:
@@ -91,11 +114,16 @@ def generateFromSpec(config):
 
     schematron.generateSchematron()
     schematron.generateLocFiles()
+    if hasCardinalityRules:
+        cardinalitySchematron.generateSchematron()
+        cardinalitySchematron.generateLocFiles()
     logging.info(
-        '=== Profile done: %s | urls=%d candidates=%d processed=%d skipped=%d (no-target=%d missing-ref=%d invalid-spec=%d) ===',
+        '=== Profile done: %s | urls=%d candidates=%d processed=%d cardinality=%d/%d skipped=%d (no-target=%d missing-ref=%d invalid-spec=%d) ===',
         config['name'],
         stats['specUrls'],
         stats['candidates'],
+        stats['processed'],
+        stats['cardinalityProcessed'],
         stats['processed'],
         stats['skipped'],
         stats['skippedNoTarget'],
@@ -120,9 +148,9 @@ def getSeverity(prop):
     if SHACL_SEVERITY in prop:
         severity = castArray(prop[SHACL_SEVERITY])
         if len(severity) > 0 and isinstance(severity[0], dict) and '@id' in severity[0]:
-            return getFullName(severity[0]['@id'])
+            return getFullName(severity[0]['@id'], 'sh:severity')
         if len(severity) > 0 and isinstance(severity[0], str):
-            return getFullName(severity[0])
+            return getFullName(severity[0], 'sh:severity')
 
     return None
 
@@ -213,15 +241,25 @@ def getTargetClass(shape):
 
     prefix = ''
     if target_objects_of is not None:
-        prefix = (target_objects_of if ':' in target_objects_of else getFullName(target_objects_of)) + '/'
+        prefix = getFullName(target_objects_of, 'sh:targetObjectsOf') + '/'
 
     if target_classes_raw is not None:
         raw_list = castArray(target_classes_raw)
-        classes = [tc if ':' in tc else getFullName(tc) for tc in raw_list]
+        classes = [getFullName(tc, 'sh:targetClass') for tc in raw_list]
     else:
         classes = ['*']
 
     return [prefix + c for c in classes] if prefix else classes
+
+
+def _getCardinalitySchematronName(config):
+    if 'cardinalityName' in config and config['cardinalityName']:
+        return config['cardinalityName']
+
+    base_name = config['name']
+    if base_name.endswith('-rec'):
+        return base_name[:-4] + '-cardinalities-rec'
+    return base_name + '-cardinalities'
 
 
 if __name__ == '__main__':
@@ -232,6 +270,7 @@ if __name__ == '__main__':
         'specUrls': 0,
         'candidates': 0,
         'processed': 0,
+        'cardinalityProcessed': 0,
         'skipped': 0,
         'skippedNoTarget': 0,
         'skippedMissingPropertyRef': 0,
@@ -244,16 +283,19 @@ if __name__ == '__main__':
         globalStats['specUrls'] += profileStats['specUrls']
         globalStats['candidates'] += profileStats['candidates']
         globalStats['processed'] += profileStats['processed']
+        globalStats['cardinalityProcessed'] += profileStats['cardinalityProcessed']
         globalStats['skipped'] += profileStats['skipped']
         globalStats['skippedNoTarget'] += profileStats['skippedNoTarget']
         globalStats['skippedMissingPropertyRef'] += profileStats['skippedMissingPropertyRef']
         globalStats['skippedInvalidSpec'] += profileStats['skippedInvalidSpec']
 
     logging.info(
-        'Conversion finished | profiles=%d urls=%d candidates=%d processed=%d skipped=%d (no-target=%d missing-ref=%d invalid-spec=%d)',
+        'Conversion finished | profiles=%d urls=%d candidates=%d processed=%d cardinality=%d/%d skipped=%d (no-target=%d missing-ref=%d invalid-spec=%d)',
         globalStats['profiles'],
         globalStats['specUrls'],
         globalStats['candidates'],
+        globalStats['processed'],
+        globalStats['cardinalityProcessed'],
         globalStats['processed'],
         globalStats['skipped'],
         globalStats['skippedNoTarget'],

@@ -12,6 +12,34 @@ class SchematronRule:
         self.targetClass = castArray(targetClass)  # always a list
         self.withProfile = withProfile
 
+    def isCardinalityRule(self):
+        return 'sh:minCount' in self.prop or 'sh:maxCount' in self.prop
+
+    def getCardinalityPatternElement(self):
+        if not self.isCardinalityRule() or self.prop.get('@id') in omitRules:
+            return None
+
+        pattern = schEl('sch', 'pattern')
+        pattern.set('is-a', 'CardinalityCheck')
+        pattern.set('id', self._getCardinalityPatternId())
+
+        context = self._getParentContext()
+        element = getFullName(self.prop['sh:path'], 'sh:path')
+        min_count = str(self.prop.get('sh:minCount', '0'))
+        max_count = str(self.prop.get('sh:maxCount', 'n'))
+
+        for name, value in [
+            ('context', context),
+            ('element', element),
+            ('min', min_count),
+            ('max', max_count)
+        ]:
+            param = schSubEl(pattern, 'sch', 'param')
+            param.set('name', name)
+            param.set('value', value)
+
+        return pattern
+
     def getPatternElement(self):
         rule = self._defineRule() if not all(c == 'dcat:Catalog' for c in self.targetClass) else None
         if rule is not None:
@@ -55,20 +83,20 @@ class SchematronRule:
         return '|'.join('//' + c + suffix for c in classes)
 
     def _getContext(self):
-        fullname = getFullName(self.prop['sh:path'])
+        fullname = getFullName(self.prop['sh:path'], 'sh:path')
         classes = self._expandTargetClasses()
         prop_part = fullname + ('[$profile]' if self.withProfile else '')
         return '|'.join('//{0}/{1}'.format(c, prop_part) for c in classes)
 
     def _getCleanContext(self):
-        fullname = getFullName(self.prop['sh:path'])
+        fullname = getFullName(self.prop['sh:path'], 'sh:path')
         classes = self._expandTargetClasses()
         return '|'.join('//{0}/{1}'.format(c, fullname) for c in classes)
 
     def _defineRule(self):
         try:
             rule = schEl('sch', 'rule')
-            fullname = getFullName(self.prop['sh:path'])
+            fullname = getFullName(self.prop['sh:path'], 'sh:path')
 
             if self.prop['@id'] in omitRules:
                 return None
@@ -91,7 +119,7 @@ class SchematronRule:
 
             elif 'sh:class' in self.prop:
                 rule.set('context', self._getContext())
-                className = getFullName(self.prop['sh:class'])
+                className = getFullName(self.prop['sh:class'], 'sh:class')
                 localXpath = className if className != 'dcat:Resource' else 'dcat:Dataset|dcat:DataService'
                 globalXpath = '//' + className if className != 'dcat:Resource' else '(//dcat:Dataset|//dcat:DataService)'
                 addLet(rule, 'resource', '@rdf:resource')
@@ -103,29 +131,29 @@ class SchematronRule:
 
             elif 'sh:uniqueLang' in self.prop and self.prop['sh:uniqueLang'] == 'true':
                 rule.set('context', self._getContext())
-                target = getFullName(self.prop['sh:path'])
+                target = getFullName(self.prop['sh:path'], 'sh:path')
                 addLet(rule, 'current', '.')
                 addLet(rule, 'isUniqueLang', 'count(preceding-sibling::{0}[string() = string($current) and @xml:lang = $current/@xml:lang]) = 0'.format(target))
                 self._defineReport('isUniqueLang', rule)
 
-            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype']) in ['rdfs:Literal', 'xs:string']:
+            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') in ['rdfs:Literal', 'xs:string']:
                 rule.set('context', self._getContext())
                 addLet(rule, 'isLiteral', 'normalize-space(.) != \'\'')
                 self._defineReport('isLiteral', rule)
 
-            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype']) == 'rdf:langString':
+            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') == 'rdf:langString':
                 rule.set('context', self._getContext())
                 addLet(rule, 'isLiteral', 'normalize-space(.) != \'\'')
                 addLet(rule, 'hasLang', 'normalize-space(@xml:lang) != \'\'')
                 self._defineReport(['isLiteral', 'hasLang'], rule)
 
-            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype']) == 'xs:anyURI':
+            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') == 'xs:anyURI':
                 rule.set('context', self._getContext())
                 addLet(rule, 'isNotEmpty', 'normalize-space(@rdf:resource) != \'\'')
                 addLet(rule, 'isURI', 'matches(@rdf:resource, {0})'.format(expressions['uri']))
                 self._defineReport(['isNotEmpty', 'isURI'], rule)
 
-            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype']) in ['xs:dateTime', 'xs:date']:
+            elif 'sh:datatype' in self.prop and getFullName(self.prop['sh:datatype'], 'sh:datatype') in ['xs:dateTime', 'xs:date']:
                 rule.set('context', self._getContext())
                 addLet(rule, 'isNotEmpty', 'normalize-space(.) != \'\'')
                 addLet(rule, 'isDate', 'matches(., {0})'.format(expressions['dateAndDateTime']))
@@ -214,7 +242,7 @@ class SchematronRule:
 
     def _defineReport(self, varNames, rule):
         messageDescription = self._getMessageText()
-        message = '{0} ({1})'.format(messageDescription, getFullName(self.prop['sh:path']))
+        message = '{0} ({1})'.format(messageDescription, getFullName(self.prop['sh:path'], 'sh:path'))
         varNames = castArray(varNames)
         test = ' and '.join(map(lambda varName: '$' + varName, varNames))
         assertEl = schSubEl(rule, 'sch', 'assert')
@@ -252,6 +280,16 @@ class SchematronRule:
     def _buildOrPatternExpression(self, patterns):
         checks = ["matches($resource, '{0}')".format(pattern) for pattern in patterns]
         return '({0})'.format(' or '.join(checks))
+
+    def _getCardinalityPatternId(self):
+        classes = self._expandTargetClasses()
+        class_part = '_'.join(self._sanitizePatternIdPart(c) for c in classes)
+        element_part = self._sanitizePatternIdPart(getFullName(self.prop['sh:path'], 'sh:path'))
+        rule_part = self._sanitizePatternIdPart(self.prop.get('@id', 'rule'))
+        return '{0}_{1}_{2}'.format(class_part, element_part, rule_part)
+
+    def _sanitizePatternIdPart(self, value):
+        return ''.join(ch if ch.isalnum() else '_' for ch in value).strip('_')
 
     def _getNodePropertyRestriction(self):
         node = self.prop.get('sh:node')
