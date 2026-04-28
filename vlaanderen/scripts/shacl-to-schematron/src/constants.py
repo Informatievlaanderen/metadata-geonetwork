@@ -11,8 +11,8 @@ def _loadConfig():
 
 shaclSpecsConfig = _loadConfig()
 
-schOutput = '../core-geonetwork/schemas/dcat2/src/main/plugin/dcat2/schematron'
-locOutput = '../core-geonetwork/schemas/dcat2/src/main/plugin/dcat2/loc'
+schOutput = '../output/schematron'
+locOutput = '../output/loc'
 
 schNamespaces = {
     'sch': 'http://purl.oclc.org/dsdl/schematron',
