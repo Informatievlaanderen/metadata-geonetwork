@@ -62,8 +62,12 @@ def getFullName(uri):
             'getFullName expected uri as str, got {0}: {1!r}'.format(type(uri).__name__, uri)
         )
 
+    # Blank node identifiers (e.g. "_:nf79004c4948e45dbb3e83364b276dd54b14") – return as-is
+    if uri.startswith('_:'):
+        return uri
+
     # Already a compact prefixed name (e.g. "dct:issued")
-    if ':' in uri and '://' not in uri and not uri.startswith('_:'):
+    if ':' in uri and '://' not in uri:
         return fullnameSwaps.get(uri, uri)
 
     fullname = None

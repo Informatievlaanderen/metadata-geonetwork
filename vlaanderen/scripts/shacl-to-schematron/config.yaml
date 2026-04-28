@@ -1,4 +1,128 @@
 specs:
+  # DCAT-AP 3.0.0
+  # See https://semiceu.github.io/DCAT-AP/releases/3.0.0/#validation-of-dcat-ap
+  # Multiple SHACL files are defined.
+  # TODO: Check if the rules are correctly dispatched.
+  # TODO: No message or description in rules?
+  - name: schematron-rules-dcat-ap-300
+    url: https://semiceu.github.io/DCAT-AP/releases/3.0.0/html/shacl/shapes.ttl
+    level: sh:Violation
+    title:
+      dut: DCAT-AP (v3.0.0)
+      eng: DCAT-AP (v3.0.0)
+      fre: DCAT-AP (v3.0.0)
+      ger: DCAT-AP (v3.0.0)
+    profile: http://data.europa.eu/r5r/
+  - name: schematron-rules-dcat-ap-300-rec
+    url: https://semiceu.github.io/DCAT-AP/releases/3.0.0/html/shacl/shapes_recommended.ttl
+    level: sh:Warning
+    title:
+      dut: DCAT-AP - Recommended (v3.0.0)
+      eng: DCAT-AP - Recommended (v3.0.0)
+      fre: DCAT-AP - Recommended (v3.0.0)
+      ger: DCAT-AP - Recommended (v3.0.0)
+    profile: http://data.europa.eu/r5r/
+
+
+  # DCAT-AP 2.1.1
+  # See https://semiceu.github.io/DCAT-AP/releases/2.1.1/
+  # TODO: Check if the rules are correctly dispatched.
+  # TODO: No message or description in rules?
+  - name: schematron-rules-dcat-ap-211
+    url: https://github.com/SEMICeu/DCAT-AP/raw/refs/heads/master/releases/2.1.1/dcat-ap_2.1.1_shacl_shapes.ttl
+    level: sh:Violation
+    title:
+      dut: DCAT-AP (v2.1.1)
+      eng: DCAT-AP (v2.1.1)
+      fre: DCAT-AP (v2.1.1)
+      ger: DCAT-AP (v2.1.1)
+    profile: http://data.europa.eu/r5r/
+  - name: schematron-rules-dcat-ap-211-rec
+    url: https://github.com/SEMICeu/DCAT-AP/raw/refs/heads/master/releases/2.1.1/dcat-ap_2.1.1_shacl_shapes_recommended.ttl
+    level: sh:Warning
+    title:
+      dut: DCAT-AP - Recommended (v2.1.1)
+      eng: DCAT-AP - Recommended (v2.1.1)
+      fre: DCAT-AP - Recommended (v2.1.1)
+      ger: DCAT-AP - Recommended (v2.1.1)
+    profile: http://data.europa.eu/r5r/
+
+
+  # DCAT HVD
+  # See https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/#validation
+  # TODO: Recommended is emtpy.
+  - name: schematron-rules-dcat-ap-hvd
+    url: https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/html/hvd-SHACL-full.ttl
+#    level: sh:Violation
+#    Rules about legislation is not a violation? http://data.europa.eu/eli/reg_impl/2023/138/oj
+#    <https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd#dcat:DataServiceShape/HVDELI> rdfs:seeAlso "https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd#DataService.applicablelegislation";
+#    shacl:description "The applicable legislation must be set to the HVD IR ELI."@en;
+#    shacl:path <http://data.europa.eu/r5r/applicableLegislation> ;
+#    shacl:hasValue <http://data.europa.eu/eli/reg_impl/2023/138/oj> ;
+#    <https://purl.eu/ns/shacl#message> "The applicable legislation must be set to the HVD IR ELI."@en .
+    title:
+      dut: High Value Datasets (v3.0.0)
+      eng: High Value Datasets (v3.0.0)
+      fre: High Value Datasets (v3.0.0)
+      ger: High Value Datasets (v3.0.0)
+    profile: https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/html/
+  - name: schematron-rules-dcat-ap-hvd-rec
+    url: https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/html/hvd-SHACL-full.ttl
+    level: sh:Warning
+    title:
+      dut: High Value Datasets - Recommended (v3.0.0)
+      eng: High Value Datasets - Recommended (v3.0.0)
+      fre: High Value Datasets - Recommended (v3.0.0)
+      ger: High Value Datasets - Recommended (v3.0.0)
+    profile: https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/html/
+
+
+  # Mobility DCAT-AP 1.1.0
+  # See https://mobilitydcat-ap.github.io/mobilityDCAT-AP/releases/1.1.0/index.html#validation-guidance
+  - name: schematron-rules-mobility-110
+    url: https://raw.githubusercontent.com/mobilityDCAT-AP/mobilityDCAT-AP/refs/heads/gh-pages/releases/1.1.0/shaclShapes/mobilitydcat-ap_shacl_shapes.ttl
+    level: sh:Violation
+    title:
+      dut: Mobility (v1.1.0)
+      eng: Mobility (v1.1.0)
+      fre: Mobility (v1.1.0)
+      ger: Mobility (v1.1.0)
+    profile: https://w3id.org/mobilitydcat-ap/releases/1.1.0/
+  - name: schematron-rules-mobility-110-rec
+    url: https://raw.githubusercontent.com/mobilityDCAT-AP/mobilityDCAT-AP/refs/heads/gh-pages/releases/1.1.0/shaclShapes/mobilitydcat-ap_shacl_shapes.ttl
+    level: sh:Warning
+    title:
+      dut: Mobility - Recommended (v1.1.0)
+      eng: Mobility - Recommended (v1.1.0)
+      fre: Mobility - Recommended (v1.1.0)
+      ger: Mobility - Recommended (v1.1.0)
+    profile: https://w3id.org/mobilitydcat-ap/releases/1.1.0/
+
+
+  # DCAT-AP Mobility 3.0.0
+  # See https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/index.html#validation-guidance
+  - name: schematron-rules-mobility-300
+    url: https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/shaclShapes/mobilitydcat-ap-shacl-ranges.ttl
+    level: sh:Violation
+    title:
+      dut: Mobility (v3.0.0)
+      eng: Mobility (v3.0.0)
+      fre: Mobility (v3.0.0)
+      ger: Mobility (v3.0.0)
+    profile: https://w3id.org/mobilitydcat-ap#
+  - name: schematron-rules-mobility-300-rec
+    url: https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/shaclShapes/mobilitydcat-ap-shacl-ranges.ttl
+    level: sh:Warning
+    title:
+      dut: Mobility - Recommended (v3.0.0)
+      eng: Mobility - Recommended (v3.0.0)
+      fre: Mobility - Recommended (v3.0.0)
+      ger: Mobility - Recommended (v3.0.0)
+    profile: https://w3id.org/mobilitydcat-ap#
+
+
+  # MDCAT
+  # See https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat
   - name: schematron-rules-mdcat
     url: https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2022-04-21/shacl/metadata-voor-services-ap-SHACL.ttl
     # level: sh:Violation
@@ -8,7 +132,6 @@ specs:
       fre: Metadata DCAT - Obligatoire
       ger: Metadata DCAT - Obligatorisch
     profile: https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat
-
   - name: schematron-rules-mdcat-rec
     url: https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2022-04-21/shacl/metadata-voor-services-ap-SHACL.ttl
     level: sh:Warning
@@ -19,6 +142,9 @@ specs:
       ger: Metadata DCAT - Empfohlen
     profile: https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat
 
+
+  # DCAT-AP-VL
+  # See https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/
   - name: schematron-rules-dcat-ap-vl
     url: https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12/shacl/DCAT-AP-VL-SHACL.ttl
 #    level: sh:Violation
@@ -28,7 +154,6 @@ specs:
       fre: DCAT-AP-Vlaanderen - Obligatoire
       ger: DCAT-AP-Vlaanderen - Obligatorisch
     profile: https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL
-
   - name: schematron-rules-dcat-ap-vl-rec
     url: https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12/shacl/DCAT-AP-VL-SHACL.ttl
     level: sh:Warning
@@ -39,22 +164,5 @@ specs:
       ger: DCAT-AP-Vlaanderen - Empfohlen
     profile: https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL
 
-  - name: schematron-rules-mobility-110
-    url: https://raw.githubusercontent.com/mobilityDCAT-AP/mobilityDCAT-AP/refs/heads/gh-pages/releases/1.1.0/shaclShapes/mobilitydcat-ap_shacl_shapes.ttl
-    level: sh:Violation
-    title:
-      dut: Mobility (v1.1.0)
-      eng: Mobility (v1.1.0)
-      fre: Mobility (v1.1.0)
-      ger: Mobility (v1.1.0)
-    profile: https://w3id.org/mobilitydcat-ap/releases/1.1.0/
 
-  - name: schematron-rules-mobility-110-rec
-    url: https://raw.githubusercontent.com/mobilityDCAT-AP/mobilityDCAT-AP/refs/heads/gh-pages/releases/1.1.0/shaclShapes/mobilitydcat-ap_shacl_shapes.ttl
-    level: sh:Warning
-    title:
-      dut: Mobility - Recommended (v1.1.0)
-      eng: Mobility - Recommended (v1.1.0)
-      fre: Mobility - Recommended (v1.1.0)
-      ger: Mobility - Recommended (v1.1.0)
-    profile: https://w3id.org/mobilitydcat-ap/releases/1.1.0/
+# TODO: Healthdcat-ap https://healthdataeu.pages.code.europa.eu/healthdcat-ap/releases/release-6/

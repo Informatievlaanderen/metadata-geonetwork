@@ -179,25 +179,7 @@ Update your metadata editor XSL to reference the profile URIs you configured (se
 
 ## Available SHACL Specifications
 
-### Flanders Profiles
-- **Metadata DCAT** (2022-04-21)
-  - URL: `https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2022-04-21/shacl/metadata-voor-services-ap-SHACL.ttl`
-  - Profile: `https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat`
-
-- **DCAT-AP-VL** (current: 3, 2026-02-12)
-  - URL: `https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12/shacl/DCAT-AP-VL-SHACL.ttl`
-  - Profile: `https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL`
-
-### European Profiles
-- **DCAT-AP 2.1.1 & 3.0.0**
-  - https://semiceu.github.io/DCAT-AP/releases/
-
-- **Mobility DCAT-AP 1.1.0**
-  - URL: `https://raw.githubusercontent.com/mobilityDCAT-AP/mobilityDCAT-AP/refs/heads/gh-pages/releases/1.1.0/shaclShapes/mobilitydcat-ap_shacl_shapes.ttl`
-  - Profile: `https://w3id.org/mobilitydcat-ap/releases/1.1.0/`
-
-### Health DCAT-AP 6
-- https://healthdataeu.pages.code.europa.eu/healthdcat-ap/releases/release-6/
+See [config.yaml](config.yaml) for currently configured SHACL sources and profiles. You can add new specifications by editing this file.
 
 ---
 
