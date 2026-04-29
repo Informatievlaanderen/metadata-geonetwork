@@ -1,22 +1,22 @@
 import logging
+import json
 import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from os.path import isfile
 
-from constants import dcatNamespaces, locOutput, schOutput, schNamespaces
-from utilities import addLet, writeXmlToFile, schEl, schSubEl, translateText
+from constants import dcatNamespaces, locOutput, schOutput, schNamespaces, primaryLanguage
+from utilities import addLet, normalizeLanguageCode, writeXmlToFile, schEl, schSubEl, translateText
 
 
 class SchematronGenerator:
 
-    def __init__(self, name, title, profile=None, includeCardinalityAbstract=False, schematronTitle=None, condition=None, enableTranslation=False, primaryLanguage='en'):
+    def __init__(self, name, title, profile=None, includeCardinalityAbstract=False, schematronTitle=None, condition=None, enableTranslation=False):
         self.name = name
         self.title = title
         self.profile = profile
         self.condition = condition
         self.enableTranslation = enableTranslation
-        self.primaryLanguage = primaryLanguage
         self.includeCardinalityAbstract = includeCardinalityAbstract
         self.schematronTitle = schematronTitle if schematronTitle is not None else self._getSchematronTitle(title)
         self.locKeyPrefix = self._getLocKeyPrefix()
@@ -25,6 +25,7 @@ class SchematronGenerator:
             self.rules.append(self._buildCardinalityAbstractPattern())
             self.rules.append(self._buildMultilingualCardinalityAbstractPattern())
         self.locEntries = self._getDefaultLocEntries()
+        self.locEntriesByLanguage = {}
         self._patternTitleIndex = 1
         self._patternAssertIndex = 1
         self._patternReportIndex = 1
@@ -64,7 +65,6 @@ class SchematronGenerator:
         writeXmlToFile(root, Path(schOutput + '/' + self.name + '.sch').resolve())
 
     def generateLocFiles(self):
-        _langMap = {'dut': 'nl', 'eng': 'en', 'fre': 'fr', 'ger': 'de'}
 
         if not self.enableTranslation:
             logging.debug('Translation disabled by configuration; localization files will use source text for all locales.')
@@ -75,19 +75,28 @@ class SchematronGenerator:
             locTitle = ET.SubElement(root, 'schematron.title')
             locTitle.text = self.schematronTitle[loc]
 
-            lang_code = _langMap.get(loc, loc)
-            primary_lang = _langMap.get(self.primaryLanguage, self.primaryLanguage)
+            lang_code = normalizeLanguageCode(loc)
+            primary_lang = normalizeLanguageCode(primaryLanguage)
 
             for key in sorted(self.locEntries.keys()):
                 locEl = ET.SubElement(root, key)
                 text = self.locEntries[key]
+                localized = self.locEntriesByLanguage.get(key, {})
 
-                # Translate if target language differs from primary
+
+                if lang_code in localized:
+                    locEl.text = localized[lang_code]
+                    continue
+
+                source_text = localized.get(primary_lang, text)
+
+                # Translate only when target and source differ after normalization.
+                logging.debug('Localization key=%s language=%s source=%s', key, lang_code, primary_lang)
                 if self.enableTranslation and lang_code != primary_lang:
-                    translated = translateText(text, targetLanguage=lang_code, sourceLanguage=primary_lang)
+                    translated = translateText(source_text, targetLanguage=lang_code, sourceLanguage=primary_lang)
                     locEl.text = translated
                 else:
-                    locEl.text = text
+                    locEl.text = source_text
 
             writeXmlToFile(root, Path(locOutput + '/' + loc + '/' + self.name + '.xml').resolve())
 
@@ -119,6 +128,20 @@ class SchematronGenerator:
 
         currentIndex = getattr(self, counterName)
         key = '{0}.{1}.{2}'.format(self.locKeyPrefix, keyPrefix, currentIndex)
+
+        localizedTextJson = element.attrib.pop('data-localized-texts', None)
+        if localizedTextJson:
+            try:
+                localizedText = json.loads(localizedTextJson)
+                if isinstance(localizedText, dict):
+                    self.locEntriesByLanguage[key] = {
+                        normalizeLanguageCode(lang): value
+                        for lang, value in localizedText.items()
+                        if normalizeLanguageCode(lang) != '' and isinstance(value, str) and value.strip() != ''
+                    }
+            except Exception as err:
+                logging.warning('Invalid data-localized-texts payload on %s: %s', key, err)
+
         self.locEntries[key] = text
         element.text = '$loc/strings/{0}'.format(key)
         setattr(self, counterName, currentIndex + 1)

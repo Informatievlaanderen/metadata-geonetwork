@@ -103,4 +103,5 @@ uriSwaps = {
     'https://data.vlaanderen.be/ns/generiek#': 'http://data.vlaanderen.be/ns/generiek#'
 }
 
+primaryLanguage = 'en'
 fallbackLanguages = ['en']

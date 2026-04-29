@@ -7,7 +7,18 @@ from xml.dom import minidom
 
 import requests
 
-from constants import dcatNamespaces, fallbackLanguages, fullnameSwaps, schNamespaces, uriSwaps
+from constants import dcatNamespaces, fallbackLanguages, fullnameSwaps, schNamespaces, uriSwaps, primaryLanguage
+
+
+LANGUAGE_CODE_ALIASES = {
+    'dut': 'nl',
+    'nld': 'nl',
+    'eng': 'en',
+    'fre': 'fr',
+    'fra': 'fr',
+    'ger': 'de',
+    'deu': 'de'
+}
 
 
 def _applyUriSwap(uri):
@@ -183,6 +194,59 @@ def getLanguageValue(source, propertyName=None, preferredLanguage=None, fallback
     return str(source) if source != '' else default
 
 
+def normalizeLanguageCode(languageCode):
+    if not isinstance(languageCode, str) or languageCode.strip() == '':
+        return ''
+
+    normalized = languageCode.strip().lower().replace('_', '-')
+    if normalized in LANGUAGE_CODE_ALIASES:
+        return LANGUAGE_CODE_ALIASES[normalized]
+
+    # Keep regional variants (for example nl-be) under their base language.
+    base = normalized.split('-', 1)[0]
+    return LANGUAGE_CODE_ALIASES.get(base, base)
+
+
+def getLanguageValues(source, propertyName=None, defaultLanguage=None):
+    if propertyName is not None:
+        if not isinstance(source, dict) or propertyName not in source:
+            return {}
+        source = source[propertyName]
+
+    if source is None:
+        return {}
+
+    normalized_default = normalizeLanguageCode(defaultLanguage or primaryLanguage)
+
+    if isinstance(source, str):
+        text = source.strip()
+        if text == '':
+            return {}
+        return {normalized_default if normalized_default != '' else 'und': text}
+
+    if isinstance(source, dict):
+        localized = {}
+        for lang, value in source.items():
+            if not isinstance(value, str):
+                continue
+            text = value.strip()
+            if text == '':
+                continue
+
+            normalized_lang = normalizeLanguageCode(lang)
+            key = normalized_lang if normalized_lang != '' else (normalized_default if normalized_default != '' else 'und')
+
+            if key not in localized:
+                localized[key] = text
+        return localized
+
+    text = str(source).strip()
+    if text == '':
+        return {}
+
+    return {normalized_default if normalized_default != '' else 'und': text}
+
+
 def _collapseIri(iri):
     """Convert a full IRI to a compact prefixed name using known namespaces, or return it as-is."""
     # TODO: Check if strict check is needed. We may generate sch rules with bad XPath in such case.
@@ -250,6 +314,11 @@ def normalizeExpandedNode(node):
 
 _translation_cache = {}
 _qname_pattern = re.compile(r'\b[a-zA-Z_][\w.-]*:[a-zA-Z_][\w.-]*\b')
+_qname_placeholder_template = '__GN_QNAME_{0}__'
+_qname_placeholder_recovery_pattern = re.compile(
+    r'_*(?:(?:__)?GN[_\s-]*QNAME[_\s-]*(\d+)(?:__)?|ZZ\s*QNAME\s*(\d+)\s*ZZ)_*',
+    flags=re.IGNORECASE
+)
 
 
 def _protectTechnicalTokens(text):
@@ -258,7 +327,7 @@ def _protectTechnicalTokens(text):
 
     def _replace(match):
         token = match.group(0)
-        placeholder = 'ZZQNAME{0}ZZ'.format(len(tokens))
+        placeholder = _qname_placeholder_template.format(len(tokens))
         tokens.append(token)
         return placeholder
 
@@ -267,17 +336,18 @@ def _protectTechnicalTokens(text):
 
 
 def _restoreTechnicalTokens(text, tokens):
-    restored = text
-    for idx, token in enumerate(tokens):
-        restored = restored.replace('ZZQNAME{0}ZZ'.format(idx), token)
-        restored = restored.replace('__GN_QNAME_{0}__'.format(idx), token)
-        restored = re.sub(
-            r'_*(?:ZZ\s*QNAME\s*{0}\s*ZZ|GN\s*QNAME\s*{0}|GN[_\s-]*QNAME[_\s-]*{0})_*'.format(idx),
-            token,
-            restored,
-            flags=re.IGNORECASE
-        )
-    return restored
+    def _replace(match):
+        raw_index = match.group(1) if match.group(1) is not None else match.group(2)
+        idx = int(raw_index)
+        return tokens[idx] if 0 <= idx < len(tokens) else match.group(0)
+
+    return _qname_placeholder_recovery_pattern.sub(_replace, text)
+
+
+def _hasUnresolvedTechnicalTokens(text):
+    if not isinstance(text, str):
+        return False
+    return _qname_placeholder_recovery_pattern.search(text) is not None
 
 
 def translateText(text, targetLanguage='en', sourceLanguage='nl'):
@@ -296,7 +366,7 @@ def translateText(text, targetLanguage='en', sourceLanguage='nl'):
     Note:
         Requires argostranslate language models to be installed.
         Install with argospm, for example:
-        argospm install translate-nl_en translate-en_fr translate-en_de
+        argospm install translate-en_nl translate-en_fr translate-en_de
     """
     if not text or not isinstance(text, str) or targetLanguage == sourceLanguage:
         return text
@@ -324,13 +394,17 @@ def translateText(text, targetLanguage='en', sourceLanguage='nl'):
 
         translated = _restoreTechnicalTokens(translated, protected_tokens)
 
+        if _hasUnresolvedTechnicalTokens(translated):
+            logging.debug('Translation left unresolved technical placeholders. Using source text: "%s"', text[:60])
+            translated = text
+
         _translation_cache[cache_key] = translated
         logging.debug('Translated "%s" to %s: "%s"', text[:30], targetLanguage, translated[:30])
         return translated
     except Exception as err:
         logging.debug(
             'Translation to %s failed for "%s": %s. Using original text. '
-            '(Hint: Install models with argospm, eg translate-nl_en translate-en_fr translate-en_de)',
+            '(Hint: Install models with argospm, eg translate-en_nl translate-en_fr translate-en_de)',
             targetLanguage, text[:30], str(err)
         )
         _translation_cache[cache_key] = text

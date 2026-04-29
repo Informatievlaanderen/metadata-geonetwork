@@ -1,8 +1,8 @@
 import logging
 import json
 
-from constants import classAliases, expressions, omitRules
-from utilities import addLet, getFullName, getLanguageValue, normalizeExpandedNode, safeRemove, schEl, schSubEl, swapURI, castArray
+from constants import classAliases, expressions, omitRules, primaryLanguage
+from utilities import addLet, getFullName, getLanguageValue, getLanguageValues, normalizeExpandedNode, safeRemove, schEl, schSubEl, swapURI, castArray
 
 
 class SchematronRule:
@@ -263,7 +263,7 @@ class SchematronRule:
                 if not context_set:
                     rule.set('context', self._getContext())
                     context_set = True
-                addLet(rule, 'isLiteral', "count(@rdf:resource) = 0 and count(@rdf:about) = 0 and count(*[not(starts-with(name(), 'geonet:'))]) = 0")
+                addLet(rule, 'isLiteral', "normalize-space(.) != ''")
                 assertions.append('isLiteral')
 
             elif nodeKind == 'sh:BlankNodeOrIRI':
@@ -304,22 +304,45 @@ class SchematronRule:
             ) from err
 
     def _defineReport(self, varNames, rule):
-        messageDescription = self._getMessageText()
-        message = '{0} ({1})'.format(messageDescription, getFullName(self.prop['sh:path'], 'sh:path'))
+        messageTranslations = self._getMessageTranslations()
+        messageDescription = self._getMessageText(messageTranslations)
+        pathText = getFullName(self.prop['sh:path'], 'sh:path')
+        message = '{0} ({1})'.format(messageDescription, pathText)
         varNames = castArray(varNames)
         test = ' and '.join(map(lambda varName: '$' + varName, varNames))
+
+        localizedMessages = {
+            lang: '{0} ({1})'.format(text, pathText)
+            for lang, text in messageTranslations.items()
+            if isinstance(text, str) and text.strip() != ''
+        }
+
         assertEl = schSubEl(rule, 'sch', 'assert')
         assertEl.set('test', test)
+        assertEl.set('data-localized-texts', json.dumps(localizedMessages, ensure_ascii=False, sort_keys=True))
         assertEl.text = message
         reportEl = schSubEl(rule, 'sch', 'report')
         reportEl.set('test', test)
+        reportEl.set('data-localized-texts', json.dumps(localizedMessages, ensure_ascii=False, sort_keys=True))
         reportEl.text = message
 
-    def _getMessageText(self):
+    def _getMessageText(self, messageTranslations=None):
+        messageTranslations = self._getMessageTranslations() if messageTranslations is None else messageTranslations
+        if 'en' in messageTranslations and messageTranslations['en'].strip() != '':
+            return messageTranslations['en']
+
+        return getLanguageValue(messageTranslations, preferredLanguage='en', fallbackLangs=['en'], default=self._getDefaultMessageText()).strip()
+
+    def _getMessageTranslations(self):
         vlMessage = self.prop['vl:message'] if 'vl:message' in self.prop else None
-        messageSource = vlMessage if vlMessage else self.prop['sh:message'] if 'sh:message' in self.prop else self.prop.get('sh:description', '')
-        messageText = getLanguageValue(messageSource, default='').strip()
-        return messageText if messageText != '' else self._getDefaultMessageText()
+        messageSource = vlMessage if vlMessage else self.prop['sh:message'] if 'sh:message' in self.prop else self.prop.get('sh:description')
+        messageTranslations = getLanguageValues(messageSource)
+        defaultMessage = self._getDefaultMessageText()
+
+        if 'en' not in messageTranslations or messageTranslations['en'].strip() == '':
+            messageTranslations['en'] = defaultMessage
+
+        return messageTranslations
 
     def _getPatternTitle(self, patternName):
         description = getLanguageValue(self.prop, 'sh:description', default='').strip()
