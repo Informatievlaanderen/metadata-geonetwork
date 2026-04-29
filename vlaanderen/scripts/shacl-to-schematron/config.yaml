@@ -52,6 +52,7 @@ specs:
   # See https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/#validation
   # TODO: HVD is not a profile so check how to trigger it
   # TODO: Recommended is emtpy.
+  # //dcatap:applicableLegislation[@rdf:resource='http://data.europa.eu/eli/reg_impl/2023/138/oj']
   - name: schematron-rules-dcat-ap-hvd
     url: https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/html/hvd-SHACL-full.ttl
 #    level: sh:Violation
@@ -102,8 +103,9 @@ specs:
 
   # DCAT-AP Mobility 3.0.0
   # See https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/index.html#validation-guidance
+  # TODO: Multiple files https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/shaclShapes/mobilitydcat-ap-shacl.ttl, https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/shaclShapes/mobilitydcat-ap-shacl-ranges.ttl
   - name: schematron-rules-mobility-300
-    url: https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/shaclShapes/mobilitydcat-ap-shacl-ranges.ttl
+    url: https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/shaclShapes/mobilitydcat-ap-shacl.ttl
     level: sh:Violation
     title:
       dut: Mobility (v3.0.0)
@@ -112,7 +114,7 @@ specs:
       ger: Mobility (v3.0.0)
     profile: https://w3id.org/mobilitydcat-ap/drafts/latest/
   - name: schematron-rules-mobility-300-rec
-    url: https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/shaclShapes/mobilitydcat-ap-shacl-ranges.ttl
+    url: https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/shaclShapes/mobilitydcat-ap-shacl.ttl
     level: sh:Warning
     title:
       dut: Mobility - Recommended (v3.0.0)
