@@ -56,6 +56,7 @@ To enable automatic translation to English, French, and German:
    ```bash
    .venv/bin/argospm update
    .venv/bin/argospm install translate-nl_en
+   .venv/bin/argospm install translate-en_nl
    .venv/bin/argospm install translate-en_fr
    .venv/bin/argospm install translate-en_de
    ```
@@ -123,7 +124,8 @@ By default, the script generates localisation files with all message strings in 
    - `.venv/bin/argospm install translate-nl_en`
    - `.venv/bin/argospm install translate-en_fr`
    - `.venv/bin/argospm install translate-en_de`
-3. Re-run the conversion
+3. Set `enableTranslation = True` in `constants.py`
+4. Re-run the conversion
 
 When translation is active, the script generates localisation files for all configured languages:
 - `loc/dut/` — Dutch (original)
