@@ -10,10 +10,11 @@ from utilities import addLet, writeXmlToFile, schEl, schSubEl, translateText
 
 class SchematronGenerator:
 
-    def __init__(self, name, title, profile=None, includeCardinalityAbstract=False, schematronTitle=None):
+    def __init__(self, name, title, profile=None, includeCardinalityAbstract=False, schematronTitle=None, condition=None):
         self.name = name
         self.title = title
         self.profile = profile
+        self.condition = condition
         self.includeCardinalityAbstract = includeCardinalityAbstract
         self.schematronTitle = schematronTitle if schematronTitle is not None else self._getSchematronTitle(title)
         self.locKeyPrefix = self._getLocKeyPrefix()
@@ -49,10 +50,8 @@ class SchematronGenerator:
         title.set('xmlns', 'http://www.w3.org/2001/XMLSchema')
         title.text = '{$loc/strings/schematron.title}'
 
-        if self.profile is not None:
-            # TODO: Check if profile is use or better to use admin toggle based on XPath rules?
-            addLet(root, 'profile', 'true()')
-            # addLet(root, 'profile', 'boolean(//dcat:CatalogRecord//dct:Standard/@rdf:about = \'{0}\')'.format(self.profile))
+        if self.profile is not None or self.condition is not None:
+            addLet(root, 'profile', self.condition if self.condition else 'true()')
 
         for rule in self.rules:
             root.append(rule)

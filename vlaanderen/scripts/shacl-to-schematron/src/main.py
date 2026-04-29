@@ -43,13 +43,19 @@ def generateFromSpec(config):
                  config.get('profile', 'no-profile'),
                  config.get('level', 'no-level')
                  )
-    schematron = SchematronGenerator(config['name'], config['title'], config['profile'])
+    schematron = SchematronGenerator(
+        config['name'],
+        config['title'],
+        config['profile'],
+        condition=config.get('condition')
+    )
     cardinalitySchematron = SchematronGenerator(
         _getCardinalitySchematronName(config),
         config['title'],
         config['profile'],
         includeCardinalityAbstract=True,
-        schematronTitle=config.get('cardinalityTitle')
+        schematronTitle=config.get('cardinalityTitle'),
+        condition=config.get('condition')
     )
     hasCardinalityRules = False
     for url in castArray(config['url']):

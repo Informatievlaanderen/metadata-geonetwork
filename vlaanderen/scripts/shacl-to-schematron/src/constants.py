@@ -6,7 +6,22 @@ def _loadConfig():
     config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'config.yaml'))
     with open(config_path, 'r', encoding='utf-8') as f:
         data = yaml.safe_load(f)
-    return data.get('specs', [])
+    specs = data.get('specs', [])
+
+    # Inject a default condition for every spec when not explicitly configured.
+    for spec in specs:
+        if spec.get('condition'):
+            continue
+
+        profile = spec.get('profile')
+        if profile:
+            spec['condition'] = 'true()'
+            # TODO: Disabled profile activation of omitRules
+            # spec['condition'] = "boolean(//dcat:CatalogRecord//dct:Standard/@rdf:about = '{0}')".format(profile)
+        else:
+            spec['condition'] = 'true()'
+
+    return specs
 
 
 shaclSpecsConfig = _loadConfig()

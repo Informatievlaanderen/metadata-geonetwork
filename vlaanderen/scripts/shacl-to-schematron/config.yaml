@@ -68,6 +68,7 @@ specs:
       fre: High Value Datasets (v3.0.0)
       ger: High Value Datasets (v3.0.0)
     profile: https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/html/
+    condition: boolean(//dcat-ap:applicableLegislation[@rdf:resource='http://data.europa.eu/eli/reg_impl/2023/138/oj'])
   - name: schematron-rules-dcat-ap-hvd-rec
     url: https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/html/hvd-SHACL-full.ttl
     level: sh:Warning
@@ -77,6 +78,7 @@ specs:
       fre: High Value Datasets - Recommended (v3.0.0)
       ger: High Value Datasets - Recommended (v3.0.0)
     profile: https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/html/
+    condition: boolean(//dcat-ap:applicableLegislation[@rdf:resource='http://data.europa.eu/eli/reg_impl/2023/138/oj'])
 
 
   # Mobility DCAT-AP 1.1.0
