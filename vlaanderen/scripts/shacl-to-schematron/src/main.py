@@ -47,7 +47,9 @@ def generateFromSpec(config):
         config['name'],
         config['title'],
         config['profile'],
-        condition=config.get('condition')
+        condition=config.get('condition'),
+        enableTranslation=config['enableTranslation'],
+        primaryLanguage=config['primaryLanguage']
     )
     cardinalitySchematron = SchematronGenerator(
         _getCardinalitySchematronName(config),
@@ -55,7 +57,9 @@ def generateFromSpec(config):
         config['profile'],
         includeCardinalityAbstract=True,
         schematronTitle=config.get('cardinalityTitle'),
-        condition=config.get('condition')
+        condition=config.get('condition'),
+        enableTranslation=config['enableTranslation'],
+        primaryLanguage=config['primaryLanguage']
     )
     hasCardinalityRules = False
     for url in castArray(config['url']):

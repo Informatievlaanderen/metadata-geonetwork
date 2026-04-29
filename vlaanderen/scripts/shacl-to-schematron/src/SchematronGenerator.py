@@ -4,17 +4,19 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from os.path import isfile
 
-from constants import dcatNamespaces, enableTranslation, locOutput, schOutput, schNamespaces, primaryLanguage
+from constants import dcatNamespaces, locOutput, schOutput, schNamespaces
 from utilities import addLet, writeXmlToFile, schEl, schSubEl, translateText
 
 
 class SchematronGenerator:
 
-    def __init__(self, name, title, profile=None, includeCardinalityAbstract=False, schematronTitle=None, condition=None):
+    def __init__(self, name, title, profile=None, includeCardinalityAbstract=False, schematronTitle=None, condition=None, enableTranslation=False, primaryLanguage='en'):
         self.name = name
         self.title = title
         self.profile = profile
         self.condition = condition
+        self.enableTranslation = enableTranslation
+        self.primaryLanguage = primaryLanguage
         self.includeCardinalityAbstract = includeCardinalityAbstract
         self.schematronTitle = schematronTitle if schematronTitle is not None else self._getSchematronTitle(title)
         self.locKeyPrefix = self._getLocKeyPrefix()
@@ -64,7 +66,7 @@ class SchematronGenerator:
     def generateLocFiles(self):
         _langMap = {'dut': 'nl', 'eng': 'en', 'fre': 'fr', 'ger': 'de'}
 
-        if not enableTranslation:
+        if not self.enableTranslation:
             logging.debug('Translation disabled by configuration; localization files will use source text for all locales.')
 
         for loc in self.title:
@@ -74,14 +76,14 @@ class SchematronGenerator:
             locTitle.text = self.schematronTitle[loc]
 
             lang_code = _langMap.get(loc, loc)
-            primary_lang = _langMap.get(primaryLanguage, primaryLanguage)
+            primary_lang = _langMap.get(self.primaryLanguage, self.primaryLanguage)
 
             for key in sorted(self.locEntries.keys()):
                 locEl = ET.SubElement(root, key)
                 text = self.locEntries[key]
 
                 # Translate if target language differs from primary
-                if enableTranslation and lang_code != primary_lang:
+                if self.enableTranslation and lang_code != primary_lang:
                     translated = translateText(text, targetLanguage=lang_code, sourceLanguage=primary_lang)
                     locEl.text = translated
                 else:

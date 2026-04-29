@@ -7,7 +7,7 @@ from xml.dom import minidom
 
 import requests
 
-from constants import dcatNamespaces, enableTranslation, fallbackLanguages, fullnameSwaps, primaryLanguage, schNamespaces, uriSwaps
+from constants import dcatNamespaces, fallbackLanguages, fullnameSwaps, schNamespaces, uriSwaps
 
 
 def _applyUriSwap(uri):
@@ -291,9 +291,6 @@ def translateText(text, targetLanguage='en', sourceLanguage='nl'):
         Install with argospm, for example:
         argospm install translate-nl_en translate-en_fr translate-en_de
     """
-    if not enableTranslation:
-        return text
-
     if not text or not isinstance(text, str) or targetLanguage == sourceLanguage:
         return text
 
