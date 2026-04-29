@@ -43,13 +43,14 @@ def generateFromSpec(config):
                  config.get('profile', 'no-profile'),
                  config.get('level', 'no-level')
                  )
+    primaryLanguage = config['primaryLanguage']
     schematron = SchematronGenerator(
         config['name'],
         config['title'],
         config['profile'],
         condition=config.get('condition'),
         enableTranslation=config['enableTranslation'],
-        primaryLanguage=config['primaryLanguage']
+        primaryLanguage=primaryLanguage
     )
     cardinalitySchematron = SchematronGenerator(
         _getCardinalitySchematronName(config),
@@ -59,7 +60,7 @@ def generateFromSpec(config):
         schematronTitle=config.get('cardinalityTitle'),
         condition=config.get('condition'),
         enableTranslation=config['enableTranslation'],
-        primaryLanguage=config['primaryLanguage']
+        primaryLanguage=primaryLanguage
     )
     hasCardinalityRules = False
     for url in castArray(config['url']):
@@ -84,7 +85,8 @@ def generateFromSpec(config):
                         rule = SchematronRule(
                             prop,
                             targetClass,
-                            bool(config['profile'])
+                            bool(config['profile']),
+                            primaryLanguage=primaryLanguage
                         )
                         schematron.addRule(rule)
                         if rule.isCardinalityRule():
@@ -105,7 +107,8 @@ def generateFromSpec(config):
                         rule = SchematronRule(
                             prop,
                             targetClass,
-                            bool(config['profile'])
+                            bool(config['profile']),
+                            primaryLanguage=primaryLanguage
                         )
                         isCardinality = rule.isCardinalityRule()
                         logging.debug('   * Property %s (severity: %s, isCardinality: %s)', prop.get('sh:path'), prop.get('sh:severity'), isCardinality)

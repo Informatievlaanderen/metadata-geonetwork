@@ -9,7 +9,6 @@ import requests
 
 from constants import dcatNamespaces, fallbackLanguages, fullnameSwaps, schNamespaces, uriSwaps
 
-
 def _applyUriSwap(uri):
     if not isinstance(uri, str):
         return uri
@@ -153,7 +152,7 @@ def castArray(var):
     return var
 
 
-def getLanguageValue(source, propertyName=None, preferredLanguage=None, fallbackLangs=None, default=''):
+def getLanguageValue(source, primaryLanguage, propertyName=None, preferredLanguage=None, fallbackLangs=None, default=''):
     if propertyName is not None:
         if not isinstance(source, dict) or propertyName not in source:
             return default

@@ -7,10 +7,11 @@ from utilities import addLet, getFullName, getLanguageValue, normalizeExpandedNo
 
 class SchematronRule:
 
-    def __init__(self, prop, targetClass, withProfile):
+    def __init__(self, prop, targetClass, withProfile, primaryLanguage):
         self.prop = prop
         self.targetClass = castArray(targetClass)  # always a list
-        self.withProfile = withProfile
+        self.withProfile = withProfile,
+        self.primaryLanguage = primaryLanguage
 
     def isCardinalityRule(self):
         return 'sh:minCount' in self.prop or 'sh:maxCount' in self.prop
@@ -63,7 +64,7 @@ class SchematronRule:
         rule = self._defineRule()
         if rule is not None:
             pattern = schEl('sch', 'pattern')
-            patternName = getLanguageValue(self.prop, 'sh:name')
+            patternName = getLanguageValue(self.prop, self.primaryLanguage, 'sh:name')
             pattern.set('name', patternName)
             pattern.set('id', self.prop['@id'])
 
@@ -318,11 +319,11 @@ class SchematronRule:
     def _getMessageText(self):
         vlMessage = self.prop['vl:message'] if 'vl:message' in self.prop else None
         messageSource = vlMessage if vlMessage else self.prop['sh:message'] if 'sh:message' in self.prop else self.prop.get('sh:description', '')
-        messageText = getLanguageValue(messageSource, default='').strip()
+        messageText = getLanguageValue(messageSource, self.primaryLanguage, default='').strip()
         return messageText if messageText != '' else self._getDefaultMessageText()
 
     def _getPatternTitle(self, patternName):
-        description = getLanguageValue(self.prop, 'sh:description', default='').strip()
+        description = getLanguageValue(self.prop, self.primaryLanguage, 'sh:description', default='').strip()
         patternName = (patternName or '').strip()
 
         if patternName != '' and description != '':
