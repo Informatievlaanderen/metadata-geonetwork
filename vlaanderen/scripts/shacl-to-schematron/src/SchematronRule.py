@@ -20,7 +20,7 @@ class SchematronRule:
             return None
 
         pattern = schEl('sch', 'pattern')
-        pattern.set('is-a', 'CardinalityCheck')
+        pattern.set('is-a', self._getCardinalityPatternType())
         pattern.set('id', self._getCardinalityPatternId())
 
         context = self._getParentContext()
@@ -39,6 +39,25 @@ class SchematronRule:
             param.set('value', value)
 
         return pattern
+
+    def _getCardinalityPatternType(self):
+        return 'MultilingualCardinalityCheck' if self._isLangStringDatatype() else 'CardinalityCheck'
+
+    def _isLangStringDatatype(self):
+        datatype = self.prop.get('sh:datatype')
+        if datatype is None:
+            return False
+
+        for candidate in castArray(datatype):
+            if not isinstance(candidate, str):
+                continue
+            try:
+                if getFullName(candidate, 'sh:datatype') == 'rdf:langString':
+                    return True
+            except Exception:
+                continue
+
+        return False
 
     def getPatternElement(self):
         rule = self._defineRule()

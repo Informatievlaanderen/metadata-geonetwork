@@ -20,6 +20,7 @@ class SchematronGenerator:
         self.rules = self._getDefaultRules()
         if self.includeCardinalityAbstract:
             self.rules.append(self._buildCardinalityAbstractPattern())
+            self.rules.append(self._buildMultilingualCardinalityAbstractPattern())
         self.locEntries = self._getDefaultLocEntries()
         self._patternTitleIndex = 1
         self._patternAssertIndex = 1
@@ -133,10 +134,7 @@ class SchematronGenerator:
             return {}
 
         return {
-            # Already in schematron-shared.xml
-            # 'cardinality.title': 'Cardinality check (#context / #element)',
-            # 'cardinality.assert': 'Expected cardinality for #element in #context is between #min and #max, found #nodecount.',
-            # 'cardinality.report': 'Cardinality for #element in #context is between #min and #max (#nodecount found).'
+            # Keys may be provided by schematron-shared.xml in deployed environments.
         }
 
     def _getSchematronTitle(self, defaultTitle):
@@ -189,6 +187,42 @@ class SchematronGenerator:
         valueOfReport.set(
             'select',
             "geonet:replacePlaceholders($loc/strings/cardinality.report, ('#context', '#element', '#min', '#max', '#nodecount'), ('$context', '$element', '$min', '$max', string(count($element))))"
+        )
+
+        return pattern
+
+    def _buildMultilingualCardinalityAbstractPattern(self):
+        pattern = schEl('sch', 'pattern')
+        pattern.set('abstract', 'true')
+        pattern.set('id', 'MultilingualCardinalityCheck')
+
+        title = schSubEl(pattern, 'sch', 'title')
+        title.text = "geonet:replacePlaceholders($loc/strings/multilingual.cardinality.title, ('#context', '#element'), ('$context', '$element'))"
+
+        rule = schSubEl(pattern, 'sch', 'rule')
+        rule.set('context', '$context')
+
+        testExpr = (
+            "(count($element[@xml:lang]) = 0 or count($element[not(@xml:lang)]) = 0) and "
+            "((count(distinct-values($element/@xml:lang)) = count($element[@xml:lang])) or '$max' = 'n') and "
+            "((count($element[not(@xml:lang)]) <= 1) or '$max' = 'n') and "
+            "(count(distinct-values($element/@xml:lang)) >= $min or (count($element[not(@xml:lang)]) >= $min))"
+        )
+
+        assertEl = schSubEl(rule, 'sch', 'assert')
+        assertEl.set('test', testExpr)
+        valueOfAssert = schSubEl(assertEl, 'sch', 'value-of')
+        valueOfAssert.set(
+            'select',
+            "geonet:replacePlaceholders($loc/strings/multilingual.cardinality.assert, ('#min'), ('$min'))"
+        )
+
+        reportEl = schSubEl(rule, 'sch', 'report')
+        reportEl.set('test', testExpr)
+        valueOfReport = schSubEl(reportEl, 'sch', 'value-of')
+        valueOfReport.set(
+            'select',
+            "geonet:replacePlaceholders($loc/strings/multilingual.cardinality.report, ('#min'), ('$min'))"
         )
 
         return pattern
