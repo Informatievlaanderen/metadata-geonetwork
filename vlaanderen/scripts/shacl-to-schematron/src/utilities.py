@@ -258,7 +258,7 @@ def _protectTechnicalTokens(text):
 
     def _replace(match):
         token = match.group(0)
-        placeholder = '__GN_QNAME_{0}__'.format(len(tokens))
+        placeholder = 'ZZQNAME{0}ZZ'.format(len(tokens))
         tokens.append(token)
         return placeholder
 
@@ -269,7 +269,14 @@ def _protectTechnicalTokens(text):
 def _restoreTechnicalTokens(text, tokens):
     restored = text
     for idx, token in enumerate(tokens):
+        restored = restored.replace('ZZQNAME{0}ZZ'.format(idx), token)
         restored = restored.replace('__GN_QNAME_{0}__'.format(idx), token)
+        restored = re.sub(
+            r'_*(?:ZZ\s*QNAME\s*{0}\s*ZZ|GN\s*QNAME\s*{0}|GN[_\s-]*QNAME[_\s-]*{0})_*'.format(idx),
+            token,
+            restored,
+            flags=re.IGNORECASE
+        )
     return restored
 
 
