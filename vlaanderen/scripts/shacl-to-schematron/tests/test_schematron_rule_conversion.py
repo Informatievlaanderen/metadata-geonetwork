@@ -118,6 +118,81 @@ class SchematronRuleConversionTest(unittest.TestCase):
         assert_el = rule_el.find('sch:assert', schNamespaces)
         self.assertEqual('$isIRI and $isMailto', assert_el.get('test'))
 
+    def test_message_priority_prefers_sh_message_over_description(self):
+        rule = SchematronRule(
+            self._base_prop(**{
+                'sh:datatype': 'xs:string',
+                'sh:message': {
+                    'en': 'Message from SHACL message'
+                },
+                'sh:description': {
+                    'en': 'Message from description'
+                }
+            }),
+            ['dcat:Dataset'],
+            False
+        )
+
+        pattern = rule.getPatternElement()
+        self.assertIsNotNone(pattern)
+        assert_el = pattern.find('sch:rule/sch:assert', schNamespaces)
+        self.assertIsNotNone(assert_el)
+        self.assertIn('Message from SHACL message (dct:title)', assert_el.text)
+
+    def test_message_priority_prefers_vl_message_over_description(self):
+        rule = SchematronRule(
+            self._base_prop(**{
+                'sh:datatype': 'xs:string',
+                'vl:message': {
+                    'en': 'Message from VL'
+                },
+                'sh:description': {
+                    'en': 'Message from description'
+                }
+            }),
+            ['dcat:Dataset'],
+            False
+        )
+
+        pattern = rule.getPatternElement()
+        self.assertIsNotNone(pattern)
+        assert_el = pattern.find('sch:rule/sch:assert', schNamespaces)
+        self.assertIsNotNone(assert_el)
+        self.assertIn('Message from VL (dct:title)', assert_el.text)
+
+    def test_message_priority_uses_description_when_sh_message_missing(self):
+        rule = SchematronRule(
+            self._base_prop(**{
+                'sh:datatype': 'xs:string',
+                'sh:description': {
+                    'en': 'Message from description'
+                }
+            }),
+            ['dcat:Dataset'],
+            False
+        )
+
+        pattern = rule.getPatternElement()
+        self.assertIsNotNone(pattern)
+        assert_el = pattern.find('sch:rule/sch:assert', schNamespaces)
+        self.assertIsNotNone(assert_el)
+        self.assertIn('Message from description (dct:title)', assert_el.text)
+
+    def test_message_priority_falls_back_to_default_message(self):
+        rule = SchematronRule(
+            self._base_prop(**{
+                'sh:datatype': 'xs:string'
+            }),
+            ['dcat:Dataset'],
+            False
+        )
+
+        pattern = rule.getPatternElement()
+        self.assertIsNotNone(pattern)
+        assert_el = pattern.find('sch:rule/sch:assert', schNamespaces)
+        self.assertIsNotNone(assert_el)
+        self.assertIn('Value must be a non-empty literal (dct:title)', assert_el.text)
+
     def test_generate_schematron_writes_externalized_localized_output(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             output_dir = Path(tmpdir) / 'schematron'
