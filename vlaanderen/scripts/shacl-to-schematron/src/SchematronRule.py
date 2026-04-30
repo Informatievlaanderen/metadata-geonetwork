@@ -344,8 +344,9 @@ class SchematronRule:
 
         return messageTranslations
 
+
     def _getPatternTitle(self, patternName):
-        description = getLanguageValue(self.prop, 'sh:description', default='').strip()
+        description = getLanguageValue(self.prop, self.primaryLanguage, 'sh:description', default='').strip()
         patternName = (patternName or '').strip()
 
         if patternName != '' and description != '':

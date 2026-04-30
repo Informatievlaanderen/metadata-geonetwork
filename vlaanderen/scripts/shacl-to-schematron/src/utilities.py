@@ -20,7 +20,6 @@ LANGUAGE_CODE_ALIASES = {
     'deu': 'de'
 }
 
-
 def _applyUriSwap(uri):
     if not isinstance(uri, str):
         return uri
