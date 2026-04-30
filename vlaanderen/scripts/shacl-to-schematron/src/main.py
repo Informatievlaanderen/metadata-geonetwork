@@ -43,22 +43,26 @@ def generateFromSpec(config):
                  config.get('profile', 'no-profile'),
                  config.get('level', 'no-level')
                  )
+    cardinalityOnly = bool(config.get('cardinalityOnly', False))
+    enableTranslation = bool(config.get('enableTranslation', False))
+
     schematron = SchematronGenerator(
         config['name'],
         config['title'],
         config['profile'],
         condition=config.get('condition'),
-        enableTranslation=config['enableTranslation']
-    )
+        enableTranslation=enableTranslation
+    ) if not cardinalityOnly else None
+
     cardinalitySchematron = SchematronGenerator(
-        _getCardinalitySchematronName(config),
+        config['name'] if cardinalityOnly else _getCardinalitySchematronName(config),
         config['title'],
         config['profile'],
         includeCardinalityAbstract=True,
         schematronTitle=config.get('cardinalityTitle'),
         condition=config.get('condition'),
-        enableTranslation=config['enableTranslation']
-    )
+        enableTranslation=enableTranslation
+    ) if cardinalityOnly else None
     hasCardinalityRules = False
     for url in castArray(config['url']):
         stats['specUrls'] += 1
@@ -77,18 +81,23 @@ def generateFromSpec(config):
                 targetClass = getTargetClass(shape)
                 for prop in shape['sh:property']:
                     stats['candidates'] += 1
-                    if shouldBeAdded(config, prop):
-                        stats['processed'] += 1
-                        rule = SchematronRule(
-                            prop,
-                            targetClass,
-                            bool(config['profile'])
-                        )
-                        schematron.addRule(rule)
+                    rule = SchematronRule(
+                        prop,
+                        targetClass,
+                        bool(config['profile'])
+                    )
+
+                    if cardinalityOnly:
                         if rule.isCardinalityRule():
                             hasCardinalityRules = True
+                            stats['processed'] += 1
                             stats['cardinalityProcessed'] += 1
                             cardinalitySchematron.addCardinalityRule(rule)
+                        else:
+                            stats['skipped'] += 1
+                    elif shouldBeAdded(config, prop):
+                        stats['processed'] += 1
+                        schematron.addRule(rule)
                     else:
                         stats['skipped'] += 1
         # If ttl are converted to JSON-LD, then we have an array
@@ -98,20 +107,25 @@ def generateFromSpec(config):
                 logging.debug(' * Shape %s (target: %s)', shape.get('rdfs:label', '<unknown>'), targetClass)
                 for prop in properties:
                     stats['candidates'] += 1
-                    if shouldBeAdded(config, prop):
-                        stats['processed'] += 1
-                        rule = SchematronRule(
-                            prop,
-                            targetClass,
-                            bool(config['profile'])
-                        )
-                        isCardinality = rule.isCardinalityRule()
-                        logging.debug('   * Property %s (severity: %s, isCardinality: %s)', prop.get('sh:path'), prop.get('sh:severity'), isCardinality)
-                        schematron.addRule(rule)
+                    rule = SchematronRule(
+                        prop,
+                        targetClass,
+                        bool(config['profile'])
+                    )
+                    isCardinality = rule.isCardinalityRule()
+                    logging.debug('   * Property %s (severity: %s, isCardinality: %s)', prop.get('sh:path'), prop.get('sh:severity'), isCardinality)
+
+                    if cardinalityOnly:
                         if isCardinality:
                             hasCardinalityRules = True
+                            stats['processed'] += 1
                             stats['cardinalityProcessed'] += 1
                             cardinalitySchematron.addCardinalityRule(rule)
+                        else:
+                            stats['skipped'] += 1
+                    elif shouldBeAdded(config, prop):
+                        stats['processed'] += 1
+                        schematron.addRule(rule)
                     else:
                         stats['skipped'] += 1
         else:
@@ -119,9 +133,11 @@ def generateFromSpec(config):
             stats['skippedInvalidSpec'] += 1
             continue
 
-    schematron.generateSchematron()
-    schematron.generateLocFiles()
-    if hasCardinalityRules:
+    if schematron is not None:
+        schematron.generateSchematron()
+        schematron.generateLocFiles()
+
+    if cardinalityOnly and hasCardinalityRules:
         cardinalitySchematron.generateSchematron()
         cardinalitySchematron.generateLocFiles()
     logging.info(

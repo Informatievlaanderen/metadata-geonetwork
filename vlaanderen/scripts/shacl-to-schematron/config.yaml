@@ -13,7 +13,7 @@ specs:
       fre: DCAT-AP (v3.0.0)
       ger: DCAT-AP (v3.0.0)
     profile: https://interoperable-europe.ec.europa.eu/collection/semic-support-centre/solution/dcat-application-profile-data-portals-europe/release/300
-    enableTranslation: True
+    enableTranslation: true
   - name: schematron-rules-dcat-ap-300-rec
     url: https://semiceu.github.io/DCAT-AP/releases/3.0.0/html/shacl/shapes_recommended.ttl
     level: sh:Warning
@@ -23,7 +23,19 @@ specs:
       fre: DCAT-AP - Recommended (v3.0.0)
       ger: DCAT-AP - Recommended (v3.0.0)
     profile: https://interoperable-europe.ec.europa.eu/collection/semic-support-centre/solution/dcat-application-profile-data-portals-europe/release/300
-    enableTranslation: True
+    enableTranslation: true
+  - name: schematron-rules-dcat-ap-300-cardinalities
+    url:
+     - https://semiceu.github.io/DCAT-AP/releases/3.0.0/html/shacl/shapes.ttl
+     - https://semiceu.github.io/DCAT-AP/releases/3.0.0/html/shacl/shapes_recommended.ttl
+    title:
+      dut: DCAT-AP (v3.0.0)
+      eng: DCAT-AP (v3.0.0)
+      fre: DCAT-AP (v3.0.0)
+      ger: DCAT-AP (v3.0.0)
+    profile: https://interoperable-europe.ec.europa.eu/collection/semic-support-centre/solution/dcat-application-profile-data-portals-europe/release/300
+    cardinalityOnly: true
+    enableTranslation: true
 
   # DCAT-AP 2.1.1
   # See https://semiceu.github.io/DCAT-AP/releases/2.1.1/
@@ -38,7 +50,7 @@ specs:
       fre: DCAT-AP (v2.1.1)
       ger: DCAT-AP (v2.1.1)
     profile: https://joinup.ec.europa.eu/collection/semic-support-centre/solution/dcat-application-profile-data-portals-europe/release/200
-    enableTranslation: True
+    enableTranslation: true
   - name: schematron-rules-dcat-ap-211-rec
     url: https://github.com/SEMICeu/DCAT-AP/raw/refs/heads/master/releases/2.1.1/dcat-ap_2.1.1_shacl_shapes_recommended.ttl
     level: sh:Warning
@@ -48,7 +60,20 @@ specs:
       fre: DCAT-AP - Recommended (v2.1.1)
       ger: DCAT-AP - Recommended (v2.1.1)
     profile: https://joinup.ec.europa.eu/collection/semic-support-centre/solution/dcat-application-profile-data-portals-europe/release/200
-    enableTranslation: True
+    enableTranslation: true
+  - name: schematron-rules-dcat-ap-211-cardinalities
+    url:
+      - https://github.com/SEMICeu/DCAT-AP/raw/refs/heads/master/releases/2.1.1/dcat-ap_2.1.1_shacl_shapes.ttl
+      - https://github.com/SEMICeu/DCAT-AP/raw/refs/heads/master/releases/2.1.1/dcat-ap_2.1.1_shacl_shapes_recommended.ttl
+    title:
+      dut: DCAT-AP (v2.1.1)
+      eng: DCAT-AP (v2.1.1)
+      fre: DCAT-AP (v2.1.1)
+      ger: DCAT-AP (v2.1.1)
+    profile: https://joinup.ec.europa.eu/collection/semic-support-centre/solution/dcat-application-profile-data-portals-europe/release/200
+    cardinalityOnly: true
+    enableTranslation: true
+
 
   # DCAT HVD
   # See https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/#validation
@@ -69,7 +94,7 @@ specs:
       ger: High Value Datasets (v3.0.0)
     profile: https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/html/
     condition: boolean(//dcat-ap:applicableLegislation[@rdf:resource='http://data.europa.eu/eli/reg_impl/2023/138/oj'])
-    enableTranslation: True
+    enableTranslation: true
   - name: schematron-rules-dcat-ap-hvd-rec
     url: https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/html/hvd-SHACL-full.ttl
     level: sh:Warning
@@ -80,7 +105,19 @@ specs:
       ger: High Value Datasets - Recommended (v3.0.0)
     profile: https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/html/
     condition: boolean(//dcat-ap:applicableLegislation[@rdf:resource='http://data.europa.eu/eli/reg_impl/2023/138/oj'])
-    enableTranslation: True
+    enableTranslation: true
+  - name: schematron-rules-dcat-ap-hvd-cardinalities
+    url: https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/html/hvd-SHACL-full.ttl
+    title:
+      dut: High Value Datasets (v3.0.0)
+      eng: High Value Datasets (v3.0.0)
+      fre: High Value Datasets (v3.0.0)
+      ger: High Value Datasets (v3.0.0)
+    profile: https://semiceu.github.io/DCAT-AP/releases/3.0.0-hvd/html/
+    condition: boolean(//dcat-ap:applicableLegislation[@rdf:resource='http://data.europa.eu/eli/reg_impl/2023/138/oj'])
+    cardinalityOnly: true
+    enableTranslation: true
+
 
   # Mobility DCAT-AP 1.1.0
   # See https://mobilitydcat-ap.github.io/mobilityDCAT-AP/releases/1.1.0/index.html#validation-guidance
@@ -93,7 +130,7 @@ specs:
       fre: Mobility (v1.1.0)
       ger: Mobility (v1.1.0)
     profile: https://w3id.org/mobilitydcat-ap/releases/1.1.0/
-    enableTranslation: True
+    enableTranslation: true
   - name: schematron-rules-mobility-110-rec
     url: https://raw.githubusercontent.com/mobilityDCAT-AP/mobilityDCAT-AP/refs/heads/gh-pages/releases/1.1.0/shaclShapes/mobilitydcat-ap_shacl_shapes.ttl
     level: sh:Warning
@@ -103,7 +140,18 @@ specs:
       fre: Mobility - Recommended (v1.1.0)
       ger: Mobility - Recommended (v1.1.0)
     profile: https://w3id.org/mobilitydcat-ap/releases/1.1.0/
-    enableTranslation: True
+    enableTranslation: true
+  - name: schematron-rules-mobility-110-cardinalities
+    url: https://raw.githubusercontent.com/mobilityDCAT-AP/mobilityDCAT-AP/refs/heads/gh-pages/releases/1.1.0/shaclShapes/mobilitydcat-ap_shacl_shapes.ttl
+    title:
+      dut: Mobility (v1.1.0)
+      eng: Mobility (v1.1.0)
+      fre: Mobility (v1.1.0)
+      ger: Mobility (v1.1.0)
+    profile: https://w3id.org/mobilitydcat-ap/releases/1.1.0/
+    cardinalityOnly: true
+    enableTranslation: true
+
 
   # DCAT-AP Mobility 3.0.0
   # See https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/index.html#validation-guidance
@@ -117,7 +165,7 @@ specs:
       fre: Mobility (v3.0.0)
       ger: Mobility (v3.0.0)
     profile: https://w3id.org/mobilitydcat-ap/drafts/latest/
-    enableTranslation: True
+    enableTranslation: true
   - name: schematron-rules-mobility-300-rec
     url: https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/shaclShapes/mobilitydcat-ap-shacl.ttl
     level: sh:Warning
@@ -127,7 +175,18 @@ specs:
       fre: Mobility - Recommended (v3.0.0)
       ger: Mobility - Recommended (v3.0.0)
     profile: https://w3id.org/mobilitydcat-ap/drafts/latest/
-    enableTranslation: True
+    enableTranslation: true
+  - name: schematron-rules-mobility-300-cardinalities
+    url: https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/shaclShapes/mobilitydcat-ap-shacl.ttl
+    title:
+      dut: Mobility (v3.0.0)
+      eng: Mobility (v3.0.0)
+      fre: Mobility (v3.0.0)
+      ger: Mobility (v3.0.0)
+    profile: https://w3id.org/mobilitydcat-ap/drafts/latest/
+    cardinalityOnly: true
+    enableTranslation: true
+
 
   # MDCAT
   # See https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat
@@ -140,7 +199,7 @@ specs:
       fre: Metadata DCAT - Obligatoire
       ger: Metadata DCAT - Obligatorisch
     profile: https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2021-04-22
-    enableTranslation: True
+    enableTranslation: true
   - name: schematron-rules-mdcat-rec
     url: https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2022-04-21/shacl/metadata-voor-services-ap-SHACL.ttl
     level: sh:Warning
@@ -150,7 +209,17 @@ specs:
       fre: Metadata DCAT - Recommandé
       ger: Metadata DCAT - Empfohlen
     profile: https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2021-04-22
-    enableTranslation: True
+    enableTranslation: true
+  - name: schematron-rules-mdcat-cardinalities
+    url: https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2022-04-21/shacl/metadata-voor-services-ap-SHACL.ttl
+    title:
+      dut: Metadata DCAT - Verplicht
+      eng: Metadata DCAT - Mandatory
+      fre: Metadata DCAT - Obligatoire
+      ger: Metadata DCAT - Obligatorisch
+    profile: https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2021-04-22
+    cardinalityOnly: true
+    enableTranslation: true
 
 
   # DCAT-AP-VL
@@ -164,7 +233,7 @@ specs:
       fre: DCAT-AP-Vlaanderen - Obligatoire
       ger: DCAT-AP-Vlaanderen - Obligatorisch
     profile: https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12
-    enableTranslation: True
+    enableTranslation: true
   - name: schematron-rules-dcat-ap-vl-rec
     url: https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12/shacl/DCAT-AP-VL-SHACL.ttl
     level: sh:Warning
@@ -174,7 +243,17 @@ specs:
       fre: DCAT-AP-Vlaanderen - Recommandé
       ger: DCAT-AP-Vlaanderen - Empfohlen
     profile: https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12
-    enableTranslation: True
+    enableTranslation: true
+  - name: schematron-rules-dcat-ap-vl-cardinalities
+    url: https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12/shacl/DCAT-AP-VL-SHACL.ttl
+    title:
+      dut: DCAT-AP-Vlaanderen - Verplicht
+      eng: DCAT-AP-Vlaanderen - Mandatory
+      fre: DCAT-AP-Vlaanderen - Obligatoire
+      ger: DCAT-AP-Vlaanderen - Obligatorisch
+    profile: https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12
+    cardinalityOnly: true
+    enableTranslation: true
 
 
 # TODO: Healthdcat-ap https://healthdataeu.pages.code.europa.eu/healthdcat-ap/releases/release-6/
