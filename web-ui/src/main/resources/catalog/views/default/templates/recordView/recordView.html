@@ -189,6 +189,11 @@
         </div>
       </div>
 
+      <!-- Rating from the current subcatalog. Rendered once here so it is
+           shown for every record type and works regardless of which view is
+           used (a schema's xsl-view formatter or the Angular type templates). -->
+      <div data-gn-virtual-catalog-record-details="mdView.current.record.uuid"></div>
+
       <div
         data-ng-show="gnMdViewObj.usingFormatter"
         id="gn-metadata-display"
