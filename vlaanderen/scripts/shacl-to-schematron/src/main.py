@@ -116,7 +116,7 @@ def generateFromSpec(config):
                     logging.debug('   * Property %s (severity: %s, isCardinality: %s)', prop.get('sh:path'), prop.get('sh:severity'), isCardinality)
 
                     if cardinalityOnly:
-                        if isCardinality:
+                        if isCardinality and not rule.prop.get('sh:path').startswith('_:'):
                             hasCardinalityRules = True
                             stats['processed'] += 1
                             stats['cardinalityProcessed'] += 1
