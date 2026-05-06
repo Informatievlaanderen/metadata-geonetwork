@@ -40,7 +40,8 @@
     "gnGlobalSettings",
     "gnConfig",
     "$filter",
-    function (gnMdViewObj, gnMdView, gnGlobalSettings, gnConfig, $filter) {
+    "$q",
+    function (gnMdViewObj, gnMdView, gnGlobalSettings, gnConfig, $filter, $q) {
       return {
         restrict: "A",
         scope: {
@@ -69,37 +70,66 @@
 
             var hyperlinkTagName = "A";
             if (element.get(0).tagName === hyperlinkTagName) {
-              var url = scope.appUrl || window.location.pathname + window.location.search;
+              var portalPromise =
+                gnGlobalSettings.serviceMetadataForPortalPromise || $q.when(null);
 
-              if (
-                gnGlobalSettings.gnCfg.mods.recordview.appUrl &&
-                gnGlobalSettings.gnCfg.mods.recordview.appUrl.indexOf("http") === 0
-              ) {
-                url = $filter("setUrlPlaceholder")(
-                  gnGlobalSettings.gnCfg.mods.recordview.appUrl
-                );
-              }
+              portalPromise.then(function (portalMd) {
+                var url =
+                  scope.appUrl || window.location.pathname + window.location.search;
 
-              // When a catalog context is provided (e.g. viewing a virtual
-              // catalogue's children), navigate into that catalogue's portal.
-              if (
-                scope.catalogContext &&
-                scope.catalogContext !== gnGlobalSettings.nodeId
-              ) {
-                url = url.replace(
-                  "/" + gnGlobalSettings.nodeId + "/",
-                  "/" + scope.catalogContext + "/"
-                );
-              }
-              var url =
-                url +
-                "#/" +
-                (scope.md.draft == "y" ? "metadraf" : "metadata") +
-                "/" +
-                scope.md.uuid +
-                (scope.formatter === undefined || scope.formatter == "" ? "" : formatter);
+                if (
+                  gnGlobalSettings.gnCfg.mods.recordview.appUrl &&
+                  gnGlobalSettings.gnCfg.mods.recordview.appUrl.indexOf("http") === 0
+                ) {
+                  url = $filter("setUrlPlaceholder")(
+                    gnGlobalSettings.gnCfg.mods.recordview.appUrl
+                  );
+                }
 
-              element.attr("href", url);
+                // From the default node, an explicit catalog context (e.g.
+                // a virtual catalogue's children list) routes navigation into
+                // that catalogue's portal.
+                if (
+                  gnGlobalSettings.isDefaultNode &&
+                  scope.catalogContext &&
+                  scope.catalogContext !== gnGlobalSettings.nodeId
+                ) {
+                  url = url.replace(
+                    "/" + gnGlobalSettings.nodeId + "/",
+                    "/" + scope.catalogContext + "/"
+                  );
+                }
+
+                // From a subportal, only records the subportal explicitly
+                // contains (its virtualCatalogRecords) are reachable in the
+                // filtered view. Anything else — the subportal's own record,
+                // records from other subportals, unrelated linked records —
+                // falls back to the default node so the link resolves.
+                if (!gnGlobalSettings.isDefaultNode) {
+                  var portalRecords = (portalMd && portalMd.virtualCatalogRecords) || [];
+                  var inPortal = portalRecords.some(function (r) {
+                    return r.uuid === scope.md.uuid;
+                  });
+                  if (!inPortal) {
+                    url = url.replace(
+                      "/" + gnGlobalSettings.nodeId + "/",
+                      "/" + gnConfig.env.defaultNode + "/"
+                    );
+                  }
+                }
+
+                url =
+                  url +
+                  "#/" +
+                  (scope.md.draft == "y" ? "metadraf" : "metadata") +
+                  "/" +
+                  scope.md.uuid +
+                  (scope.formatter === undefined || scope.formatter == ""
+                    ? ""
+                    : formatter);
+
+                element.attr("href", url);
+              });
             } else {
               element.on("click", function (e) {
                 gnMdView.setLocationUuid(scope.md.uuid, formatter);

@@ -194,33 +194,40 @@
         })()
       };
 
-      $scope.sourcesOptions.promise.then(function (d) {
-        var serviceMetadataUuidForPortal = null;
+      // Expose the portal's service metadata as a promise so directives that
+      // need to know which records belong to the current subportal (e.g. for
+      // navigation routing) can wait for it without depending on scope chains.
+      gnGlobalSettings.serviceMetadataForPortalPromise =
+        $scope.sourcesOptions.promise.then(function (d) {
+          var serviceMetadataUuidForPortal = null;
 
-        // Check if the source for the current node has a service metadata
-        for (var i = 0; i < d.length; i++) {
-          if ($scope.nodeId == "srv" && angular.isUndefined(d[i].id)) {
-            serviceMetadataUuidForPortal = d[i].serviceRecord;
-            break;
-          } else if (d[i].id == $scope.nodeId) {
-            serviceMetadataUuidForPortal = d[i].serviceRecord;
-            break;
+          // Check if the source for the current node has a service metadata
+          for (var i = 0; i < d.length; i++) {
+            if ($scope.nodeId == "srv" && angular.isUndefined(d[i].id)) {
+              serviceMetadataUuidForPortal = d[i].serviceRecord;
+              break;
+            } else if (d[i].id == $scope.nodeId) {
+              serviceMetadataUuidForPortal = d[i].serviceRecord;
+              break;
+            }
           }
-        }
 
-        if (serviceMetadataUuidForPortal != null) {
+          if (serviceMetadataUuidForPortal == null) {
+            return null;
+          }
+
           $scope.serviceMetadataForPortal = null;
 
           // Retrieve the service metadata
           // Use main portal, otherwise the query applies the portal filter
           // and doesn't find the metadata
-          gnMetadataManager
+          return gnMetadataManager
             .getMdObjByUuidInPortal("srv", serviceMetadataUuidForPortal, undefined)
             .then(function (md) {
               $scope.serviceMetadataForPortal = md;
+              return md;
             });
-        }
-      });
+        });
 
       /**
        * Keep a reference on main cat scope

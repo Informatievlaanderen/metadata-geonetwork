@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Display harvested source information and link for harvested records in the record view - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/50868)
 - Redirect to subportal from subcatalog - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/50869)
 - Display confirmation when removing application profile - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51514)
+- Opening a record from subcatalog now keeps you in the subcatalog as well as displays the ratings - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51993)
 
 ### core
 - Added OSLO Datastandaarden thesaurus for use in ISO - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/48724) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/127)
