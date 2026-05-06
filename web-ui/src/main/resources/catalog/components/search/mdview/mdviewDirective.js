@@ -106,8 +106,7 @@
                 // records from other subportals, unrelated linked records —
                 // falls back to the default node so the link resolves.
                 if (!gnGlobalSettings.isDefaultNode) {
-                  var portalRecords =
-                    (portalMd && portalMd.virtualCatalogRecords) || [];
+                  var portalRecords = (portalMd && portalMd.virtualCatalogRecords) || [];
                   var inPortal = portalRecords.some(function (r) {
                     return r.uuid === scope.md.uuid;
                   });

@@ -197,8 +197,8 @@
       // Expose the portal's service metadata as a promise so directives that
       // need to know which records belong to the current subportal (e.g. for
       // navigation routing) can wait for it without depending on scope chains.
-      gnGlobalSettings.serviceMetadataForPortalPromise = $scope.sourcesOptions.promise.then(
-        function (d) {
+      gnGlobalSettings.serviceMetadataForPortalPromise =
+        $scope.sourcesOptions.promise.then(function (d) {
           var serviceMetadataUuidForPortal = null;
 
           // Check if the source for the current node has a service metadata
@@ -227,8 +227,7 @@
               $scope.serviceMetadataForPortal = md;
               return md;
             });
-        }
-      );
+        });
 
       /**
        * Keep a reference on main cat scope
