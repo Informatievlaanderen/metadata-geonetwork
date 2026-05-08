@@ -37,7 +37,6 @@ class SchematronGenerator:
 
     def addCardinalityRule(self, rule):
         rulePattern = rule.getCardinalityPatternElement()
-        # logging.debug('     * Add cardinality rule %s', ET.tostring(rulePattern))
         if rulePattern is not None:
             self.rules.append(rulePattern)
 

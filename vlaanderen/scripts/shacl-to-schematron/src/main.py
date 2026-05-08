@@ -95,7 +95,7 @@ def generateFromSpec(config):
                             cardinalitySchematron.addCardinalityRule(rule)
                         else:
                             stats['skipped'] += 1
-                    elif shouldBeAdded(config, prop):
+                    elif not rule.isCardinalityRule() and shouldBeAdded(config, prop):
                         stats['processed'] += 1
                         schematron.addRule(rule)
                     else:
@@ -116,7 +116,7 @@ def generateFromSpec(config):
                     logging.debug('   * Property %s (severity: %s, isCardinality: %s)', prop.get('sh:path'), prop.get('sh:severity'), isCardinality)
 
                     if cardinalityOnly:
-                        if isCardinality and not rule.prop.get('sh:path').startswith('_:'):
+                        if isCardinality and not rule.prop.get('sh:path').startswith('_:') and getSeverity(rule.prop) == 'sh:Violation':
                             hasCardinalityRules = True
                             stats['processed'] += 1
                             stats['cardinalityProcessed'] += 1
@@ -175,7 +175,8 @@ def getSeverity(prop):
         if len(severity) > 0 and isinstance(severity[0], str):
             return getFullName(severity[0], 'sh:severity')
 
-    return None
+    # default value if not explicitly set
+    return 'sh:Violation'
 
 
 def resolveNodeShapesAndProperties(spec, stats=None):

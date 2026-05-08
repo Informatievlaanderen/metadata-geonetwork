@@ -100,13 +100,15 @@ class SchematronRule:
 
     def _getParentContext(self):
         classes = self._expandTargetClasses()
-        suffix = '[$profile]' if self.withProfile else ''
+        # suffix = '[$profile]' if self.withProfile else ''
+        suffix = ''
         return '|'.join('//' + c + suffix for c in classes)
 
     def _getContext(self):
         fullname = getFullName(self.prop['sh:path'], 'sh:path')
         classes = self._expandTargetClasses()
-        prop_part = fullname + ('[$profile]' if self.withProfile else '')
+        # prop_part = fullname + ('[$profile]' if self.withProfile else '')
+        prop_part = fullname
         return '|'.join('//{0}/{1}'.format(c, prop_part) for c in classes)
 
     def _getCleanContext(self):
@@ -389,6 +391,9 @@ class SchematronRule:
 
         if self.prop.get('sh:nodeKind') == 'sh:IRIOrLiteral':
             return 'IRI or literal constraint'
+
+        if self.prop.get('sh:nodeKind') == 'sh:BlankNodeOrIRI':
+          return 'BlankNode or IRI constraint'
 
         if self.prop.get('sh:nodeKind') == 'sh:Literal':
             return 'literal constraint'
