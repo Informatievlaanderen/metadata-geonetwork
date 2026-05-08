@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Displaying harvester information for harvested DCAT records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51394)
 - Hiding specific unused view sections in sidebar - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51440)
 
+### core
+- Fixed buttons that could not add elements, e.g., title and description - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/194)
+- Added DCAT3 validation - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/197)
+- Disabled bubbles in editor - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/201)
 
 ## [8.5.0] - 2026-03-31
 
