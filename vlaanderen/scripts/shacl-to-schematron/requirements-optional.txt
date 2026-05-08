@@ -1,0 +1,15 @@
+# Optional dependencies for additional features
+
+# Automatic translation of localization files to multiple languages
+# Uses argostranslate (the engine behind LibreTranslate)
+libretranslate~=1.9.5
+
+# After installing, install translation models with argospm:
+# .venv/bin/argospm update
+# .venv/bin/argospm install translate-nl_en
+# .venv/bin/argospm install translate-en_fr
+# .venv/bin/argospm install translate-en_de
+#
+# The script uses nl->en directly and nl->fr/de via English as a pivot.
+
+

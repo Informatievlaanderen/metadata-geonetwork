@@ -1,14 +1,667 @@
-# SHACL to Schematron conversion script
+# SHACL to Schematron Conversion Script
 
-This script can be used to convert a JSON-LD [SHACL](https://www.w3.org/TR/shacl/) specification file to GeoNetwork valid schematron validation files.
+Converts SHACL (RDF validation) specifications to Schematron XSD validation files for use in GeoNetwork metadata editors.
 
+## Overview
 
-# Delete schematron from db
+This tool automates the conversion of [SHACL](https://www.w3.org/TR/shacl/) specifications (in Turtle or JSON-LD format) into Schematron validation rules. The generated rules are deployed to GeoNetwork and automatically validate metadata against your configured profiles.
 
-When loading new schematrons **names**, the tables must be cleared first to then allow GeoNetwork to regenerate them
-```sql
-delete from schematroncriteria;
-delete from schematroncriteriagroup;
-delete from schematrondes;
-delete from schematron;
+**Supported SHACL constraints:**
+- `sh:minCount` / `sh:maxCount` (cardinality)
+- `sh:datatype` (literal types: string, langString, anyURI, date/dateTime)
+- `sh:class` (resource class validation)
+- `sh:nodeKind` (IRI, Literal, BlankNodeOrIRI)
+- `sh:pattern` (regex validation)
+- `sh:or` (multiple alternative constraints)
+- `sh:uniqueLang` (language tag uniqueness)
+- `sh:hasValue` (exact value matching)
+- `sh:node` / `sh:property` (nested shape restrictions)
+
+---
+
+## Setup
+
+### Prerequisites
+
+```bash
+# ubuntu
+sudo apt install python3.14-venv pip
+# arch
+sudo pacman -Sy python
 ```
+
+### Installation
+
+```bash
+cd vlaanderen/scripts/shacl-to-schematron
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+#### Localization
+
+The script generates localisation files with all message strings in Dutch (`dut` locale). This allows GeoNetwork to display validation messages in Dutch by default.
+
+**Optional: Automatic Translation**
+
+To enable automatic translation to English, French, and German:
+
+1. Install optional dependencies:
+   ```bash
+   pip install -r requirements-optional.txt
+   ```
+
+2. Install translation models:
+   ```bash
+   .venv/bin/argospm update
+   .venv/bin/argospm install translate-nl_en
+   .venv/bin/argospm install translate-en_nl
+   .venv/bin/argospm install translate-en_fr
+   .venv/bin/argospm install translate-en_de
+   ```
+
+3. Re-run the conversion. Translation will now happen automatically for all locales.
+
+The translation flow is:
+- Dutch → English: direct model (`translate-nl_en`)
+- Dutch → French: Dutch → English → French
+- Dutch → German: Dutch → English → German
+
+**Note:** If translation setup is skipped or fails, the script continues successfully and generates only Dutch localisation files. You can also manually translate the generated Dutch `loc` files to other languages.
+
+## Configuration
+
+Edit `config.yaml` to enable/disable profiles and add new SHACL sources:
+
+```yaml
+specs:
+  - name: schematron-rules-mdcat
+    level: sh:Violation        # optional: filter by severity
+    title:
+      dut: Metadata DCAT - Verplicht
+      eng: Metadata DCAT - Mandatory
+    url: https://example.com/shapes.ttl
+    profile: https://example.com/profile-uri
+```
+
+**Configuration fields:**
+- `name`: output filename prefix (generates `{name}.sch` + localisation files)
+- `url`: Turtle/JSON-LD source (can be local file or HTTP URL)
+- `profile`: URI used to filter rules by profile context (optional)
+- `level`: filter rules by severity (`sh:Violation`, `sh:Warning`) (optional)
+- `title`: human-readable title in multiple languages (used in generated files)
+
+### Turtle Format Support
+
+The script automatically detects and converts Turtle (`.ttl`) files to JSON-LD before processing. 
+
+## Running the Conversion
+
+```bash
+cd src
+python main.py
+```
+
+**Output:**
+- Schematron files: `../core-geonetwork/schemas/dcat2/src/main/plugin/dcat2/schematron/{name}.sch`
+- Localization files: `../core-geonetwork/schemas/dcat2/src/main/plugin/dcat2/loc/{language}/{name}.xml`
+
+Log output shows:
+- Profiles processed
+- Rules extracted and skipped
+- Statistics per profile
+
+### Localization
+
+By default, the script generates localisation files with all message strings in Dutch (`dut` locale).
+
+**To enable automatic translation to other languages:**
+
+1. Install optional dependencies: `pip install -r requirements-optional.txt`
+2. Install language models:
+   - `.venv/bin/argospm update`
+   - `.venv/bin/argospm install translate-nl_en`
+   - `.venv/bin/argospm install translate-en_fr`
+   - `.venv/bin/argospm install translate-en_de`
+3. Set `enableTranslation = True` in `constants.py`
+4. Re-run the conversion
+
+When translation is active, the script generates localisation files for all configured languages:
+- `loc/dut/` — Dutch (original)
+- `loc/eng/` — English (auto-translated)
+- `loc/fre/` — French (auto-translated)
+- `loc/ger/` — German (auto-translated)
+
+**Manual translation (if auto-translation is not set up):**
+
+1. Copy the generated Dutch loc file: `loc/dut/schematron-rules-*.xml`
+2. Create translations for `eng`, `fre`, `ger` folders with the same filename
+3. Translate all `<{key}>` element text values, keeping keys unchanged
+4. Save to the appropriate language subfolder
+
+**Example structure:**
+
+```
+loc/
+├── dut/schematron-rules-mdcat.xml  (Dutch - generated by script)
+├── eng/schematron-rules-mdcat.xml  (English - auto-translated or manual)
+├── fre/schematron-rules-mdcat.xml  (French - auto-translated or manual)
+└── ger/schematron-rules-mdcat.xml  (German - auto-translated or manual)
+```
+
+## Deploying to GeoNetwork
+
+After generating new Schematron files:
+
+### 1. Clear existing definitions from database
+
+```sql
+DELETE FROM schematroncriteria;
+DELETE FROM schematroncriteriagroup;
+DELETE FROM schematrondes;
+DELETE FROM schematron;
+```
+
+### 2. Copy generated files to GeoNetwork plugin directory
+
+```bash
+cp schematron/*.sch /path/to/geonetwork/gn-core/src/main/plugin/dcat2/schematron/
+cp -r loc/* /path/to/geonetwork/gn-core/src/main/plugin/dcat2/loc/
+```
+
+### 3. Restart GeoNetwork
+
+GeoNetwork will automatically load and register all `.sch` files or use the API http://localhost:8080/geonetwork/srv/api/standards/reload.
+
+### 4. Configure Editor Profiles
+
+Update your metadata editor XSL to reference the profile URIs you configured (see [dcat-profiles.xsl](https://github.com/metadata101/dcat-ap/blob/main/src/main/plugin/dcat-ap/dcat-profiles.xsl))
+
+## Available SHACL Specifications
+
+See [config.yaml](config.yaml) for currently configured SHACL sources and profiles. You can add new specifications by editing this file.
+
+## Comparison
+
+Note: comparison is not exhaustive, only a sample of rules was checked. 
+
+The goal would be to check if we can we consider that SHACL is the point of truth and that we can safely use the generated files, i.e.:
+
+* cardinality rules are correctly generated (looks likely)
+* SHACL constraints are properly converted to Schematron (currently most of them)
+
+Based on actual vs generated schematron comparison, we can highlight the main following points:
+
+* rules checking that an element uses a required vocabulary (checking `inScheme`) are missing in SHACL
+* SHACL never define rules about `isUniqueLang`
+
+### MDCAT
+
+| Type | Old | Generated | Comment                              | Status |
+|------|-----|----------|--------------------------------------|--------|
+| Cardinality | Empty | 56 | Rules were in mainly mandatory       | OK     |
+| Mandatory | 178 | 85 | Some missing rules                   | ~OK    |
+| Recommended | 12  | 11 | Missing rule for role (dcat:hadRole) | ~OK    |
+
+* Mandatory / Rules about cardinality are now in cardinality file (20 validMin + 50 validMax rules) vs 56 (can be explained by usage of CardinalityCheck abstract pattern)
+* Mandatory / isUniqueLang sections are missing (14 rules)
+* Mandatory / Missing rule / Shacl equivalent?
+
+```xml
+  <sch:pattern name="geometrie" id="https://data.vlaanderen.be/shacl/metadata_dcat#PlaatsShape/722a1f18cabb107c684fe4ca857876ade00b0d01">
+    <sch:title>Geometrie - de geografische beschrijving van een plaats (https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2021-04-22#Plaats%3Ageometrie)</sch:title>
+    <sch:rule context="//dct:Location/locn:geometry">
+      <sch:let name="isLiteral" value="normalize-space(.) != ''"/>
+      <sch:assert test="$isLiteral">De range van geometrie moet van het type &lt;http://www.w3.org/2000/01/rdf-schema#Literal&gt; zijn. (locn:geometry)</sch:assert>
+      <sch:report test="$isLiteral">De range van geometrie moet van het type &lt;http://www.w3.org/2000/01/rdf-schema#Literal&gt; zijn. (locn:geometry)</sch:report>
+    </sch:rule>
+  </sch:pattern>
+  ```
+  
+* Mandatory / Missing rule / Shacl equivalent?
+
+```xml
+  <sch:pattern>
+    <sch:title>At least one of vcard:hasEmail or vcard:hasURL is a required property of a contactpoint.</sch:title>
+    <sch:rule context="//dcat:contactPoint">
+      <sch:let name="hasEmail" value="normalize-space(vcard:Organization/vcard:hasEmail/@rdf:resource) != ''"/>
+      <sch:let name="hasUrl" value="normalize-space(vcard:Organization/vcard:hasURL/@rdf:resource) != ''"/>
+      <sch:assert test="$hasEmail or $hasUrl">A vcard:Organization does not have a vcard:hasEmail or a vcard:hasURL property.</sch:assert>
+      <sch:report test="$hasEmail or $hasUrl">A vcard:Organization has a vcard:hasEmail or a vcard:hasURL property.</sch:report>
+    </sch:rule>
+  </sch:pattern>
+```
+
+* Recommended / Missing rule / Not in SHACL shape:
+
+```xml
+  <sch:pattern name="rol" id="https://data.vlaanderen.be/shacl/metadata_dcat#RelatieQualificatieShape/110bcc4a81256c6b4b080feb1fd85186147a7841">
+    <sch:title>Rol - De functie hoe de entiteiten zich tot elkaar verhouden.  (https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/erkendestandaard/2021-04-22#RelatieQualificatie%3Arol)</sch:title>
+    <sch:rule context="//dcat:Relationship/dcat:hadRole">
+      <sch:let name="hasValue" value="skos:Concept/skos:inScheme/@rdf:resource = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType'"/>
+      <sch:assert test="$hasValue">Enkel waarden uit codelijst &lt;http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType&gt; verwacht voor rol (dcat:hadRole)</sch:assert>
+      <sch:report test="$hasValue">Enkel waarden uit codelijst &lt;http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType&gt; verwacht voor rol (dcat:hadRole)</sch:report>
+    </sch:rule>
+  </sch:pattern>
+```
+
+
+### DCAT-AP-VL
+
+SHACL file does not define any severity level, so all rules are generated as mandatory (and recommended rules are empty).
+
+| Type | Old | Generated | Comment                                                             | Status  |
+|------|-----|-----------|---------------------------------------------------------------------|---------|
+| Cardinality | 29  | 116 |                                                                     | OK      |
+| Mandatory | 118 | 119 | Mainly missing rule for element use keyword A. See below for others | ~OK     |
+| Recommended | 9   | 0         | Check about vocabularies not defined in SHACL                       | MISSING |
+
+
+#### Cardinality
+
+Actual schematron contains:
+```xml
+  <sch:pattern>
+    <sch:title>$loc/strings/pattern.title.4</sch:title>
+    <sch:rule context="//dcat:Dataset[$profile]|//dcat:DataService[$profile]">
+      <sch:let name="hasKeyword" value="count(dcat:keyword[normalize-space(.) != '']) &gt; 0"/>
+      <sch:assert test="$hasKeyword">$loc/strings/pattern.assert.4</sch:assert>
+      <sch:report test="$hasKeyword">$loc/strings/pattern.report.4</sch:report>
+    </sch:rule>
+  </sch:pattern>
+```
+to check that at least 1 keyword is present in Dataset and DataService.
+
+But the SHACL file defines:
+```ttl
+<https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12#DatasetShape> a shacl:NodeShape;
+...
+    a shacl:PropertyShape;
+    rdfs:label "trefwoord"@nl;
+    <http://purl.org/vocab/vann/usageNote> """De meertaligheid is hier verschillend als voor een beschrijvende eigenschap. 
+De taal van elk trefwoord moet aangeduid worden. Echter is het niet de verwachting dat elk trefwoord in elke taal vertaald wordt. Ook is het niet zo dat er slechts 1 trefwoord per taal is. Er kunnen (zullen) er meerdere zijn."""@nl;
+    shacl:datatype rdf:langString;
+    shacl:maxCount "n";
+    shacl:path dcat:keyword
+```
+
+generating:
+```xml
+  <sch:pattern is-a="CardinalityCheck" id="dcat_Dataset_dcat_keyword_n7c1928a983da40e19d90523f4e80ebbcb76">
+    <sch:param name="context" value="//dcat:Dataset[$profile]"/>
+    <sch:param name="element" value="dcat:keyword"/>
+    <sch:param name="min" value="0"/>
+    <sch:param name="max" value="n"/>
+  </sch:pattern>
+```
+
+Q: SHACL should define `minCount = 1` ?
+
+
+#### Mandatory
+
+The manual VL main file had lots of non-cardinality checks, for example:
+* mailto check on vcard:hasEmail
+* contact point must have email or URL
+* URI checks on vcard:Organization/vcard:hasEmail
+* CC0 check on dcat:Catalog/dct:license
+* "public” codelist check on dct:accessRights
+* keyword presence check on //dcat:Dataset|//dcat:DataService
+* datatype/lang/isUniqueLang checks
+* many class checks on CatalogRecord, Dataset, DataService, Distribution, etc.
+
+
+eg.
+
+* Missing rule on value check
+```xml
+<sch:pattern>
+  <sch:title>$loc/strings/pattern.title.2</sch:title>
+  <sch:rule context="//dcat:Catalog/dct:license[$profile]">
+    <sch:let name="cc0" value="./@rdf:resource = 'https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0' or ./dct:LicenseDocument/@rdf:about = 'https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0'"/>
+    <sch:assert test="$cc0 = true()">$loc/strings/pattern.assert.2</sch:assert>
+    <sch:report test="$cc0 = true()">$loc/strings/pattern.report.2</sch:report>
+  </sch:rule>
+</sch:pattern>
+```
+The SHACL file only refer to it in usage note:
+```ttl
+[
+  a shacl:PropertyShape;
+  shacl:path dc:license
+  rdfs:label "licentie"@nl;
+  <http://purl.org/vocab/vann/usageNote> """De licentie voor het Vlaams Open Data Portaal is vastgelegd op https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0 . 
+    <br/>
+    Meer informatie zie <a href=\"#wettelijkeinformatie\">hieronder</a>."""@nl;
+]
+```
+
+Q: Add this to SHACL shape?
+
+
+* Access right
+
+```xml
+<sch:pattern>
+  <sch:title>$loc/strings/pattern.title.3</sch:title>
+  <sch:rule context="//dcat:Dataset/dct:accessRights[$profile]|//dcat:DataService/dct:accessRights[$profile]">
+    <sch:let name="public" value="*/@rdf:about = 'http://publications.europa.eu/resource/authority/access-right/PUBLIC' or ./@rdf:resource = 'http://publications.europa.eu/resource/authority/access-right/PUBLIC'"/>
+    <sch:assert test="$public = true()">$loc/strings/pattern.assert.3</sch:assert>
+    <sch:report test="$public = true()">$loc/strings/pattern.report.3</sch:report>
+  </sch:rule>
+</sch:pattern>
+```
+
+Could be done with pattern? See mobility DCAT examples:
+```xml
+<sch:let name="matchesPattern" value="matches($resource, '^https://w3id\.org/mobilitydcat-ap/georeferencing-method/.+$')"/>
+```
+
+
+Q: Add this to SHACL shape?
+
+
+
+* `shacl:Literal` check produces
+
+```xml
+<sch:pattern name="publicatiedatum" id="_:n7c1928a983da40e19d90523f4e80ebbcb60">
+  <sch:title>$loc/strings/dcat-ap-vl.pattern.title.75</sch:title>
+  <sch:rule context="//dcat:DataService/dct:issued[$profile]">
+    <sch:let name="isLiteral" value="count(@rdf:resource) = 0 and count(@rdf:about) = 0 and count(*[not(starts-with(name(), 'geonet:'))]) = 0"/>
+```
+
+due to 
+
+```ttl
+  ], [
+    a shacl:PropertyShape;
+    rdfs:label "publicatiedatum"@nl;
+    rdfs:comment "Het tijdsmoment waarop de dataservice werd gepubliceerd door de uitgever."@nl;
+    rdfs:seeAlso <https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12#Dataservice.Publicatiedatum>;
+    shacl:description "Het tijdsmoment waarop de dataservice werd gepubliceerd door de uitgever."@nl;
+    shacl:maxCount "1";
+    shacl:name "publicatiedatum"@nl;
+    shacl:nodeKind shacl:Literal;
+    shacl:path dc:issued
+      ],
+```
+
+but `dct:issued` is also defined as `xsd:dateTime` in other shape:
+
+```ttl
+[
+    a shacl:PropertyShape;
+    rdfs:label "toegekend op"@nl;
+    rdfs:comment "Tijdstip waarop de identificator werd uitgegeven."@nl;
+    rdfs:seeAlso <https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12#Identificator.ToegekendOp>;
+    shacl:datatype xsd:dateTime;
+    shacl:description "Tijdstip waarop de identificator werd uitgegeven."@nl;
+    shacl:maxCount "1";
+    shacl:name "toegekend op"@nl;
+    shacl:path dc:issued
+```
+
+Q: 
+* Any reason for that in SHACL?
+* Maybe we should improve the isLiteral rule conversion also? It seems that actual rules check with normalize space
+
+```xml
+<sch:let name="isLiteral" value="normalize-space(.) != ''"/>
+```
+
+
+
+#### Recommended
+
+Old recommended tests included 8 rules checking that concept use proper vocabularies (Rules are not defined in SHACL?):
+* `//dcat:Dataset|//dcat:DataService | $dataThemes > 0`: Rule checking vocabulary is not in the SHACL file
+
+```xml
+  <sch:pattern>
+    <sch:title>$loc/strings/required.datatheme.title</sch:title>
+    <sch:rule context="//dcat:Dataset[$profile]|//dcat:DataService[$profile]">
+      <sch:let name="dataThemes" value="count(dcat:theme[starts-with(skos:Concept/@rdf:about, 'http://vocab.belgif.be/auth/datatheme')])"/>
+      <sch:assert test="$dataThemes &gt; 0">$loc/strings/required.language.assert</sch:assert>
+      <sch:report test="$dataThemes &gt; 0">$loc/strings/required.language.report</sch:report>
+    </sch:rule>
+  </sch:pattern>
+```
+
+* `//dcat:DataService/mdcat:levensfase | $hasValue`
+* `//dcat:DataService/mdcat:ontwikkelingstoestand | $hasValue`
+* `//dcat:DataService/dcat:theme | $hasValue`
+* `//dcat:DataService/dct:accessRights | $hasValue`
+* `//dcat:Dataset/dcat:theme | $hasValue`
+* `//dcat:Dataset/dct:accessRights | $hasValue`
+* `//dcat:Dataset/mdcat:statuut|//dcat:DataService/mdcat:statuut | $hasValue`
+
+And one about description in distribution:
+
+```xml
+  <sch:pattern name="beschrijving" id="https://data.vlaanderen.be/shacl/DCAT-AP-VL#UsageNoteDistributieShape/3">
+    <sch:title>Beschrijving - Een bondige tekstuele omschrijving van de catalogus.</sch:title>
+    <sch:rule context="//dcat:Distribution[$profile]">
+      <sch:let name="validMin" value="count(dct:description) &gt;= 1"/>
+      <sch:assert test="$validMin">Minimaal 1 waarden verwacht voor beschrijving (dct:description)</sch:assert>
+      <sch:report test="$validMin">Minimaal 1 waarden verwacht voor beschrijving (dct:description)</sch:report>
+    </sch:rule>
+  </sch:pattern>
+```
+
+But SHACL file define:
+
+```rdf
+<https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12#VoorbeeldweergaveShape> a shacl:NodeShape;
+  rdfs:label "Voorbeeldweergave"@nl;
+  rdfs:comment "Een afbeelding ter illustratie van de geassocieerde data."@nl;
+  shacl:closed false;
+  shacl:property [...[
+    a shacl:PropertyShape;
+    rdfs:label "beschrijving"@nl;
+    <http://purl.org/vocab/vann/usageNote> """Ter ondersteuning van WCAG.
+
+Omwille van de meertaligheid kunnen er meerdere waarden zijn. De gewenste interpretatie van de kardinaliteit is: per taal slechts 1 waarde."""@nl;
+    rdfs:comment "Een bondige tekstuele omschrijving van de afbeelding."@nl;
+    rdfs:seeAlso <https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2026-02-12#Voorbeeldweergave.Beschrijving>;
+    shacl:datatype rdf:langString;
+    shacl:description "Een bondige tekstuele omschrijving van de afbeelding."@nl;
+    shacl:maxCount "n";
+    shacl:name "beschrijving"@nl;
+    shacl:path dc:description
+  ],...
+  ];
+  shacl:targetClass dcat:Distribution .
+```
+
+Could that be a change in latest version of DCAT-AP-VL?
+
+
+
+
+### DCAT-AP-Mobility
+
+Version 3 defines more than one file
+https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/shaclShapes/mobilitydcat-ap-shacl.ttl
+https://mobilitydcat-ap.github.io/mobilityDCAT-AP/drafts/latest/shaclShapes/mobilitydcat-ap-shacl-ranges.ttl
+Q: We should probably merge the 2?
+
+
+Checked with Mobility 110 and 300.
+
+
+| Type | Old | Generated           | Comment                                                             | Status  |
+|------|-----|---------------------|---------------------------------------------------------------------|---------|
+| Cardinality | 56  | 59 (110) / 31 (300) |                                                                     | OK?     |
+| Mandatory | 1   | 75 (110) / 23 (300) |  | ~OK     |
+| Recommended | 40  | 0 (110) / 11 (300)  | See below for details                                               | MISSING |
+
+
+#### Cardinality
+
+To check in more details.
+
+#### Mandatory
+
+To check in more details.
+
+#### Recommended
+
+Actual rules contains `PropertyRemovedCheck` which is not generated
+
+```xml
+  <sch:pattern is-a="PropertyRemovedCheck" id="Distribution_Modified">
+    <sch:param name="context" value="dcat:Distribution"/>
+    <sch:param name="element" value="dct:modified"/>
+  </sch:pattern>
+```
+
+And the following rule is missing:
+
+```xml
+  <sch:pattern id="recommended_theme">
+    <sch:title>$loc/strings/recommended.dcat_theme_tran.title</sch:title>
+    <sch:rule context="//dcat:Dataset">
+      <sch:let name="tranDcatTheme" value="dcat:theme[skos:Concept/@rdf:about='http://vocab.belgif.be/auth/datatheme/TRAN' or skos:Concept/@rdf:about='http://publications.europa.eu/resource/authority/data-theme/TRAN']"/>
+      <sch:assert test="count($tranDcatTheme) = 1">$loc/strings/recommended.dcat_theme_tran.assert</sch:assert>
+      <sch:report test="count($tranDcatTheme) = 1">$loc/strings/recommended.dcat_theme_tran.report</sch:report>
+    </sch:rule>
+  </sch:pattern>
+```
+
+
+### DCAT-AP-HVD
+
+| Type | Old | Generated | Comment                                             | Status     |
+|------|-----|-----------|-----------------------------------------------------|------------|
+| Cardinality | 4   | 19        |                                                     | OK         |
+| Mandatory | 1   | 62        | Probably quite some overlap with DCAT-AP definition | OK         |
+| Recommended | 0   | 0         |                                                     | TO REMOVE? |
+
+
+#### Cardinality
+
+Number of rules is higher because:
+* rules are generated for each types (Dataset, DataService, DataSeries, ...)
+* rules in SHACL do not only focus on HVD elements
+
+#### Mandatory
+
+The actual rule about `http://data.europa.eu/eli/reg_impl/2023/138/oj` is existing based on SHACL definition:
+```ttl
+shacl:hasValue <http://data.europa.eu/eli/reg_impl/2023/138/oj> ;
+```
+
+Other rules defined for elements like `hvdCategory` are probably fine, but then we probably have quite some overlap with DCAT-AP (eg. rule about email).
+
+#### Recommended
+
+To remove. Files are empty.
+
+
+### DCAT-AP
+
+Multiple files are defined for DCAT-AP, but only the main one is used here for now (see [config.yaml](config.yaml)).
+
+| Type | Old | Generated | Comment                                       | Status |
+|------|-----|-----------|-----------------------------------------------|---|
+| Cardinality | 49  | 61        | Missing the MultilingualCardinalityCheck type |   |
+| Mandatory | 6   | 27        |                                               |   |
+| Recommended | 0   | 0         |                                               |  |
+
+
+#### Cardinality
+
+To add support for MultilingualCardinalityCheck.
+
+#### Mandatory
+
+Rule specific to GeoNetwork about language presence in CatalogRecord:
+```xml
+<sch:pattern>
+  <sch:title>$loc/strings/required.language.title</sch:title>
+  <sch:rule context="//dcat:Catalog/dcat:record/dcat:CatalogRecord">
+    <sch:let name="languages" value="count(dct:language/skos:Concept)"/>
+    <sch:assert test="$languages > 0">$loc/strings/required.language.assert</sch:assert>
+    <sch:report test="$languages > 0">$loc/strings/required.language.report</sch:report>
+  </sch:rule>
+</sch:pattern>
+```
+
+Quite some rules in old schematron were cardinality checks.
+
+Other generated rules are more strict.
+
+
+#### Recommended
+
+No content.
+
+
+## Questions
+
+
+* Should we exclude rules on Catalog?
+```xml
+<sch:param name="context" value="//dcat:Catalog[$profile]"/>
+```
+
+* Multilingual cardinality check
+
+```xml
+<sch:pattern abstract="true" id="MultilingualCardinalityCheck">
+  <sch:title>geonet:replacePlaceholders($loc/strings/multilingual.cardinality.title, ('#context', '#element'), ('$context', '$element'))</sch:title>
+  <sch:rule context="$context">
+    <sch:assert test="(count($element[@xml:lang]) = 0 or count($element[not(@xml:lang)]) = 0) and
+    ((count(distinct-values($element/@xml:lang)) = count($element[@xml:lang])) or '$max' = 'n') and
+    ((count($element[not(@xml:lang)]) &lt;= 1) or '$max' = 'n') and
+    (count(distinct-values($element/@xml:lang)) &gt;= $min or (count($element[not(@xml:lang)]) &gt;= $min))">
+      <sch:value-of select="geonet:replacePlaceholders($loc/strings/multilingual.cardinality.assert, ('#min'), ('$min'))"/>
+    </sch:assert>
+    <sch:report test="(count($element[@xml:lang]) = 0 or count($element[not(@xml:lang)]) = 0) and
+    ((count(distinct-values($element/@xml:lang)) = count($element[@xml:lang])) or '$max' = 'n') and
+    ((count($element[not(@xml:lang)]) &lt;= 1) or '$max' = 'n') and
+    (count(distinct-values($element/@xml:lang)) &gt;= $min or (count($element[not(@xml:lang)]) &gt;= $min))">
+      <sch:value-of select="geonet:replacePlaceholders($loc/strings/multilingual.cardinality.report, ('#min'), ('$min'))"/>
+    </sch:report>
+  </sch:rule>
+</sch:pattern>
+```
+
+## SHACL rule recommendations
+
+* Use message or description to define a human-readable message for the rule.
+
+## Troubleshooting
+
+### rdflib warnings about malformed literals
+- **Cause:** Source SHACL file has invalid typed literals (e.g., `"abc"^^xsd:integer`)
+- **Action:** These are logged at DEBUG level and don't block conversion. The script continues processing.
+- **Fix:** Report to the SHACL provider or manually correct the source file.
+
+### `TypeError: getFullName expected uri as str, got list`
+- **Cause:** SHACL property value is a list instead of string (usually from incomplete JSON-LD processing)
+- **Action:** Check the source SHACL file structure. Enable DEBUG logging for details.
+
+### No schematron rules generated
+- **Check:**
+  - Is the profile URI in `config.yaml` correct?
+  - Does your SHACL file have rules matching the configured severity level?
+  - Are required fields (`sh:name`, `sh:description`, `sh:path`) present?
+
+### Output files are empty or missing
+- **Check:** Verify the output directory paths in `constants.py` exist and are writable.
+- **Verify:** Check logs for errors during `generateSchematron()` or `generateLocFiles()`.
+
+## Development
+
+### Adding New SHACL Constraint Types
+
+1. Add handling in `SchematronRule._defineRule()`, following the existing patterns
+2. Test with sample SHACL first
+3. Update this README with the new constraint type
+
+### Extending Localization
+
+Edit `SchematronGenerator` to support additional languages in `loc/` output files.
