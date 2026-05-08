@@ -293,7 +293,20 @@ public class DefaultStatusActions implements StatusActions {
             // publish
             setAllOperations(String.valueOf(status.getMetadataId()));
         }
-        // if we're rejecting, automatically unpublish
+        // when private, handle equivalent to published, except for the privileges for the all group
+        else if (toStatusId.equals(StatusValue.Status.APPROVED_PRIVATE)) {
+            // if we have a draft copy that has a modified groupowner we need to take that into account as well
+            if(metadata instanceof MetadataDraft) {
+                MetadataDraft draft = (MetadataDraft) metadata;
+                Metadata approved = (Metadata) metadataRepository.findOne(draft.getApprovedVersion().getId());
+                if(!draft.getSourceInfo().getGroupOwner().equals(approved.getSourceInfo().getGroupOwner())) {
+                    useDraftGroupOwner(draft, approved);
+                }
+            }
+            // depublish
+            unsetAllOperations(metadataId);
+        }
+        // when retiring, depublish
         else if (toStatusId.equals(StatusValue.Status.RETIRED)) {
             unsetAllOperations(metadataId);
         }

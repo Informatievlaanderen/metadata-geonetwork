@@ -113,6 +113,16 @@ public class ApproveRecord implements ApplicationListener<MetadataStatusChanged>
 
                     }
                     break;
+                case StatusValue.Status.APPROVED_PRIVATE:
+                    try {
+                        Log.trace(Geonet.DATA_MANAGER, "Replacing contents of privately approved record (ID=" + event.getMd().getId()
+                            + ") with draft, if exists.");
+                        approveWithDraft(event);
+                    } catch (Exception e) {
+                        Log.error(Geonet.DATA_MANAGER, "Error upgrading status", e);
+
+                    }
+                    break;
             }
         } catch (Throwable e) {
             Log.error(Geonet.DATA_MANAGER, "Error changing workflow status of " + event.getMd(), e);

@@ -240,6 +240,7 @@
       <property name="listOfStatusCreatingDraft">
         <util:set>
           <util:constant static-field="org.fao.geonet.domain.StatusValue.Status.APPROVED"/>
+          <util:constant static-field="org.fao.geonet.domain.StatusValue.Status.APPROVED_PRIVATE"/>
           <util:constant static-field="org.fao.geonet.domain.StatusValue.Status.REJECTED_FOR_REMOVED"/>
           <util:constant static-field="org.fao.geonet.domain.StatusValue.Status.REJECTED_FOR_RETIRED"/>
           <util:constant static-field="org.fao.geonet.domain.StatusValue.Status.REMOVED"/>
