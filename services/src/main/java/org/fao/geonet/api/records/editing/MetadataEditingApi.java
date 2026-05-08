@@ -450,10 +450,10 @@ public class MetadataEditingApi {
                         throw new SecurityException(String.format("Only users with editor profile can submit."));
                     }
                 }
-                if (status.equals(StatusValue.Status.APPROVED)) {
+                if (status.equals(StatusValue.Status.APPROVED) || status.equals(StatusValue.Status.APPROVED_PRIVATE)) {
                     // Only reviewers can approve
                     if (isReviewer || isAdmin) {
-                        Integer changeToStatus = Integer.parseInt(StatusValue.Status.APPROVED);
+                        Integer changeToStatus = Integer.parseInt(status);
                         StatusValue statusValue = statusValueRepository.findById(changeToStatus).get();
 
                         MetadataStatus metadataStatus = new MetadataStatus();

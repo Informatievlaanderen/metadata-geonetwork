@@ -734,7 +734,7 @@ public class BaseMetadataUtils implements IMetadataUtils {
         MetadataStatus metadataStatus = ApplicationContextHolder.get().getBean(IMetadataStatus.class).getStatus(metadataId);
         if (metadataStatus != null) {
             String statusId = metadataStatus.getStatusValue().getId() + "";
-            isApproved = statusId.equals(StatusValue.Status.APPROVED);
+            isApproved = Set.of(StatusValue.Status.APPROVED, StatusValue.Status.APPROVED_PRIVATE).contains(statusId);
         }
         return isApproved;
     }
