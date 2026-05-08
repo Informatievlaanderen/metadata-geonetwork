@@ -293,8 +293,8 @@ public class DefaultStatusActions implements StatusActions {
             // publish
             setAllOperations(String.valueOf(status.getMetadataId()));
         }
-        // if we're rejecting, automatically unpublish
-        else if (toStatusId.equals(StatusValue.Status.RETIRED)) {
+        // depublish in the case of specific statuses
+        else if (toStatusId.equals(StatusValue.Status.RETIRED) || toStatusId.equals(StatusValue.Status.APPROVED_PRIVATE)) {
             unsetAllOperations(metadataId);
         }
         // if we're rejecting, automatically unpublish
