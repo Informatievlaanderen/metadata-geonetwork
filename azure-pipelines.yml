@@ -6,7 +6,7 @@
 ######
 # POOL
 ######
-pool: dv-prd-ubuntu2204
+pool: dv-prd-ubuntu2404
 
 ###########
 # VARIABLES
