@@ -427,6 +427,7 @@
   "staticPageStatus-HIDDEN": "Enkel zichtbaar voor een administrator",
   "staticPageStatus-PRIVATE": "Zichtbaar voor ingelogde gebruikers",
   "staticPageStatus-GROUPS": "Zichtbaar voor gebruikers die in de groepen zitten",
+  "staticPageStatus-GROUPS_AND_ADMIN": "Zichtbaar voor gebruikers die behoren tot de groepen en administrators",
   "staticPageStatus-PUBLIC": "Zichtbaar voor iedereen",
   "pageLink": "Link",
   "pageLink-help": "URL kan de volgende variabelen tussen '{' en '}' bevatten: <ul><li><strong>uuid</strong> voor het huidige metadata uuid </li><li><strong>id</strong> voor het huidige metadata id</li></ul>",
