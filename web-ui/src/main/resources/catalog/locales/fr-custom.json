@@ -116,6 +116,7 @@
   "createhelp-dcat-ap-vl-service.xml":"Utilisez ce modèle pour décrire un service de données ouvert flamand, conforme à DCAT2.",
   "createhelp-dcat-ap-vl-virtualcatalogue.xml":"Utilisez ce modèle pour créer un sous-catalogue, conforme à DCAT2. <br/><b>Attention</b>: cette fonctionnalité est en développement, vos retours sont les bienvenus.",
   "createhelp-dcat-ap-vl3-dataset.xml":"Utilisez ce modèle pour décrire un jeu de données ouvert flamand, conforme à DCAT3.",
+  "createhelp-dcat-ap-vl3-series.xml": "Utilisez ce modèle pour décrire une série d'ensembles de données ouverts flamands, conforme à DCAT3.",
   "createhelp-dcat-ap-vl3-service.xml":"Utilisez ce modèle pour décrire un service de données ouvert flamand, conforme à DCAT3.",
   "createhelp-dcat-ap3-dataset.xml":"Utilisez ce modèle pour décrire un jeu de données générique, conforme à DCAT3.",
   "createhelp-dcat-ap3-series.xml":"Utilisez ce modèle pour décrire une série de jeux de données génériques, conforme à DCAT3.",

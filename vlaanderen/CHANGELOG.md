@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Displaying harvester information for harvested DCAT records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51394)
 - Hiding specific unused view sections in sidebar - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51440)
 - Changed `du` to `de` in `GDI-Vlaanderen-trefwoorden.rdf` - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/52322)
+- Added `DCAT-AP-VL` series template - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/52367)
 
 ### core
 - Fixed buttons that could not add elements, e.g., title and description - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/194)
