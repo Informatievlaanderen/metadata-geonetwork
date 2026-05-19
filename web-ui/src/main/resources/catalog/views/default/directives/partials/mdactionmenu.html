@@ -222,7 +222,7 @@
         <a
           data-ng-if="!!f.url && md && shouldDisplayFormatter(md, f)"
           data-ng-href="{{::buildFormatter(f.url, md.uuid, mdView.current.record.draft, true)}}"
-          target="_blank"
+          download
         >
           <span class="fa fa-fw {{f.class}}"></span>&nbsp;
           <span>{{f.label | translate}}</span>
