@@ -116,6 +116,7 @@
   "createhelp-dcat-ap-vl-service.xml": "Gebruik dit sjabloon om een Vlaamse Open dataservice te beschrijven, conform DCAT2.",
   "createhelp-dcat-ap-vl-virtualcatalogue.xml": "Gebruik dit sjabloon om een subcatalogus aan te maken, conform DCAT2. <br/><b>Opgelet</b>: deze feature is in opbouw, feedback is welkom.",
   "createhelp-dcat-ap-vl3-dataset.xml": "Gebruik dit sjabloon om een Vlaamse Open dataset te beschrijven, conform DCAT3.",
+  "createhelp-dcat-ap-vl3-series.xml": "Gebruik dit sjabloon om een serie van Vlaamse Open datasets te beschrijven, conform DCAT3.",
   "createhelp-dcat-ap-vl3-service.xml": "Gebruik dit sjabloon om een Vlaamse Open dataservice te beschrijven, conform DCAT3.",
   "createhelp-dcat-ap3-dataset.xml": "Gebruik dit sjabloon om een generieke dataset te beschrijven, conform DCAT3.",
   "createhelp-dcat-ap3-series.xml": "Gebruik dit sjabloon om een serie van generieke datasets te beschrijven, conform DCAT3.",

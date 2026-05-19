@@ -115,6 +115,7 @@
   "createhelp-dcat-ap-vl-service.xml":"Verwenden Sie diese Vorlage, um einen offenen flämischen Datendienst zu beschreiben, gemäß DCAT2.",
   "createhelp-dcat-ap-vl-virtualcatalogue.xml":"Verwenden Sie diese Vorlage, um einen Unterkatalog zu erstellen, gemäß DCAT2. <br/><b>Achtung</b>: Diese Funktion befindet sich im Aufbau, Rückmeldungen sind willkommen.",
   "createhelp-dcat-ap-vl3-dataset.xml":"Verwenden Sie diese Vorlage, um einen offenen flämischen Datensatz zu beschreiben, gemäß DCAT3.",
+  "createhelp-dcat-ap-vl3-series.xml": "Verwenden Sie diese Vorlage, um eine Reihe flämischer offener Datensätze gemäß DCAT3 zu beschreiben.",
   "createhelp-dcat-ap-vl3-service.xml":"Verwenden Sie diese Vorlage, um einen offenen flämischen Datendienst zu beschreiben, gemäß DCAT3.",
   "createhelp-dcat-ap3-dataset.xml":"Verwenden Sie diese Vorlage, um einen generischen Datensatz zu beschreiben, gemäß DCAT3.",
   "createhelp-dcat-ap3-series.xml":"Verwenden Sie diese Vorlage, um eine Serie generischer Datensätze zu beschreiben, gemäß DCAT3.",

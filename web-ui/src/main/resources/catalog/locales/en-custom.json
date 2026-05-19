@@ -116,6 +116,7 @@
   "createhelp-dcat-ap-vl-service.xml":"Use this template to describe a Flemish open data service, conform to DCAT2.",
   "createhelp-dcat-ap-vl-virtualcatalogue.xml":"Use this template to create a subcatalogue, conform to DCAT2. <br/><b>Note</b>: this feature is under development; feedback is welcome.",
   "createhelp-dcat-ap-vl3-dataset.xml":"Use this template to describe a Flemish open dataset, conform to DCAT3.",
+  "createhelp-dcat-ap-vl3-series.xml": "Use this template to describe a series of Flemish Open datasets, conform to DCAT3.",
   "createhelp-dcat-ap-vl3-service.xml":"Use this template to describe a Flemish open data service, conform to DCAT3.",
   "createhelp-dcat-ap3-dataset.xml":"Use this template to describe a generic dataset, conform to DCAT3.",
   "createhelp-dcat-ap3-series.xml":"Use this template to describe a series of generic datasets, conform to DCAT3.",

@@ -304,6 +304,11 @@
             { type: "profile", key: labels.voc3 },
             { type: "profile", key: labels.dcatap3 }
           ],
+          "dcat-ap-vl3-series.xml": [
+            { type: "region", key: "VL" },
+            { type: "profile", key: labels.voc3 },
+            { type: "profile", key: labels.dcatapvl3 }
+          ],
           "Datasetseries-GDI-Vlaanderen-template-v2.0.xml": [
             { type: "region", key: "VL" },
             { type: "profile", key: labels.iso19139 }
