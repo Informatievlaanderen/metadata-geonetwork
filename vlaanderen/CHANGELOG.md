@@ -19,6 +19,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Disabled bubbles in editor - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/201)
 - Bugfix: privilege bypass in index - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/52321)
 - Fixed `mobilityDCAT-AP` schema issues, wrapper elements - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/202)
+- Added xsd date type to the relevant fields - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/212)
+- Adding hashtag to `mobilityDCAT-AP` namespace - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/211)
+- Added template for `DCAT-AP-VL` datasetseries - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/207)
+- Validation fixes VL - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/210)
+- MobilityDataStandard xsd changes - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/208)
+- Mobility oa:hasBody fixes - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/206)
+- Added default dct:spatial for main mobility Catalog - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/205)
 
 ## [8.5.0] - 2026-03-31
 
