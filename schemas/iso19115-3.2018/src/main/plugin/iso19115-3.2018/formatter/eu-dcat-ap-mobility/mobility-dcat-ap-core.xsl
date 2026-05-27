@@ -15,7 +15,7 @@
                 xmlns:dct="http://purl.org/dc/terms/"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-                xmlns:mobilitydcatap="https://w3id.org/mobilitydcat-ap"
+                xmlns:mobilitydcatap="https://w3id.org/mobilitydcat-ap#"
                 exclude-result-prefixes="#all">
 
   <!-- Import related templates -->
@@ -23,7 +23,7 @@
 
   <xsl:template name="create-namespaces-eu-dcat-mobilitydcatap">
     <xsl:call-template name="create-namespaces-eu-dcat-ap"/>
-    <xsl:namespace name="mobilitydcatap" select="'https://w3id.org/mobilitydcat-ap'"/>
+    <xsl:namespace name="mobilitydcatap" select="'https://w3id.org/mobilitydcat-ap#'"/>
   </xsl:template>
 
   <xsl:template mode="iso19115-3-to-dcat-resource"
