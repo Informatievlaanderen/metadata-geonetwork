@@ -1481,7 +1481,7 @@
     "ui-cookieWarningMoreInfoLink": "Link naar meer informatie over cookies",
     "ui-cookieWarningMoreInfoLink-help": "Als deze niet leeg is, wordt deze link weergegeven in de widget Cookiewaarschuwing en wordt de gebruiker uitgenodigd om meer informatie over cookies op te zoeken",
     "ui-cookieWarningRejectLink": "URL om gebruiker naar door te verwijzen, indien cookie waarschuwing afgewezen wordt",
-    "ui-cookieWarningRejectLink-help": "Indien niet leeg, wordt de gebruiker omgeleid naar deze URL bij het weigeren van cookies. Indien leeg zal GeoNework de gebruiker omleiden naar de laatst bezochte URL (history.back())",
+    "ui-cookieWarningRejectLink-help": "Indien niet leeg zal de gebruiker herleid worden naar deze URL wanneer de cookies worden afgewezen. Indien leeg zal GeoNetwork de gebruiker herleiden naar de laatst bezochte URL (history.back())",
     "styleVariable-gnMenubarBackgroundHover": "Achtergrond kleur bij muis over",
     "styleVariable-gnMenubarColorActive": "Active kleur",
     "metadata/pdfReport": "Metadata selectie - PDF Rapport",
