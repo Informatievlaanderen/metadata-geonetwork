@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### vlaanderen
 - Added new workflow status _approved-private_ for group-scoped publications - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51438) / [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/52164)
-- Displaying harvester information for harvested DCAT records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51394)
+- Displaying harvester information for harvested records - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51394)
 - Hiding specific unused view sections in sidebar - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/51440)
 - Changed `du` to `de` in `GDI-Vlaanderen-trefwoorden.rdf` - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/52322)
 - Added `DCAT-AP-VL` series template - [pr](https://agiv.visualstudio.com/Metadata/_git/MetadataGeonetwork/pullrequest/52367)
@@ -22,10 +22,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added xsd date type to the relevant fields - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/212)
 - Adding hashtag to `mobilityDCAT-AP` namespace - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/211)
 - Added template for `DCAT-AP-VL` datasetseries - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/207)
-- Validation fixes VL - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/210)
+- Validation fixes VL - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/210) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/220)
 - MobilityDataStandard xsd changes - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/208)
-- Mobility oa:hasBody fixes - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/206)
+- Mobility oa:hasBody fixes - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/206) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/221)
 - Added default dct:spatial for main mobility Catalog - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/205)
+- Enforcing `tel:` and `mailto:` protocols - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/219)
 
 ## [8.5.0] - 2026-03-31
 
