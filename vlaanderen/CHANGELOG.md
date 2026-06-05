@@ -24,9 +24,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added template for `DCAT-AP-VL` datasetseries - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/207)
 - Validation fixes VL - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/210) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/220)
 - MobilityDataStandard xsd changes - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/208)
-- Mobility oa:hasBody fixes - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/206) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/221)
+- Mobility oa:hasBody fixes - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/206) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/221) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/223)
 - Added default dct:spatial for main mobility Catalog - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/205)
-- Enforcing `tel:` and `mailto:` protocols - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/219)
+- Enforcing `tel:` and `mailto:` protocols - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/219) / [pr-dcat](https://github.com/metadata101/dcat-ap/pull/223)
+- Fix for empty `dcatap:hvdCategory` on creation - [pr-dcat](https://github.com/metadata101/dcat-ap/pull/224)
 
 ## [8.5.0] - 2026-03-31
 
